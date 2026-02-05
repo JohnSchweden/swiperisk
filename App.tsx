@@ -1,25 +1,33 @@
 
 import React, { useState, useEffect, useRef } from 'react';
-import { GameStage, PersonalityType, RoleType, GameState, Card, AppSource } from './types';
-import { PERSONALITIES, ROLE_CARDS } from './constants';
+import { GameStage, PersonalityType, RoleType, GameState, Card, AppSource, DeathType } from './types';
+import { PERSONALITIES, ROLE_CARDS, DEATH_ENDINGS, BOSS_FIGHT_QUESTIONS } from './constants';
 import { speak, getRoast } from './services/geminiService';
+
+const INITIAL_BUDGET = 10000000;
 
 const App: React.FC = () => {
   const [state, setState] = useState<GameState>({
     hype: 50,
     heat: 0,
+    budget: INITIAL_BUDGET,
     stage: GameStage.INTRO,
     personality: null,
     role: null,
     currentCardIndex: 0,
     history: [],
-    deathReason: null
+    deathReason: null,
+    deathType: null,
+    unlockedEndings: [],
+    bossFightAnswers: []
   });
 
   const [feedbackOverlay, setFeedbackOverlay] = useState<{
     text: string;
     lesson: string;
     choice: 'LEFT' | 'RIGHT';
+    fine: number;
+    violation: string;
   } | null>(null);
 
   const [roastInput, setRoastInput] = useState('');
@@ -27,6 +35,12 @@ const App: React.FC = () => {
   const [isRoasting, setIsRoasting] = useState(false);
   const [currentTime, setCurrentTime] = useState(new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }));
   const [countdown, setCountdown] = useState(3);
+  
+  // Boss fight state
+  const [currentBossQuestion, setCurrentBossQuestion] = useState(0);
+  const [bossTimeLeft, setBossTimeLeft] = useState(15);
+  const [showBossExplanation, setShowBossExplanation] = useState(false);
+  const [bossAnswered, setBossAnswered] = useState(false);
 
   // Clock update
   useEffect(() => {
@@ -35,6 +49,16 @@ const App: React.FC = () => {
     }, 10000);
     return () => clearInterval(timer);
   }, []);
+
+  // Boss fight timer
+  useEffect(() => {
+    if (state.stage === GameStage.BOSS_FIGHT && bossTimeLeft > 0 && !bossAnswered && !showBossExplanation) {
+      const timer = setTimeout(() => setBossTimeLeft(prev => prev - 1), 1000);
+      return () => clearTimeout(timer);
+    } else if (state.stage === GameStage.BOSS_FIGHT && bossTimeLeft === 0 && !bossAnswered) {
+      handleBossAnswer(false);
+    }
+  }, [state.stage, bossTimeLeft, bossAnswered, showBossExplanation]);
 
   // Initialization Countdown Logic
   useEffect(() => {
@@ -77,11 +101,14 @@ const App: React.FC = () => {
     
     const newHype = Math.max(0, state.hype + outcome.hype);
     const newHeat = Math.min(100, state.heat + outcome.heat);
+    const newBudget = state.budget - outcome.fine;
 
     setFeedbackOverlay({
       text: outcome.feedback[state.personality],
       lesson: outcome.lesson,
-      choice: direction
+      choice: direction,
+      fine: outcome.fine,
+      violation: outcome.violation
     });
 
     speak(outcome.feedback[state.personality], PERSONALITIES[state.personality].voice);
@@ -90,26 +117,100 @@ const App: React.FC = () => {
       ...prev,
       hype: newHype,
       heat: newHeat,
+      budget: newBudget,
       history: [...prev.history, { cardId: currentCard.id, choice: direction }]
     }));
   };
 
+  const determineDeathType = (budget: number, heat: number, hype: number): DeathType => {
+    if (budget <= 0) return DeathType.BANKRUPT;
+    if (heat >= 100) {
+      if (hype <= 10) return DeathType.REPLACED_BY_SCRIPT;
+      if (state.role === RoleType.FINANCE) return DeathType.PRISON;
+      if (state.role === RoleType.MARKETING) return DeathType.CONGRESS;
+      if (state.role === RoleType.MANAGER) return DeathType.AUDIT_FAILURE;
+      return DeathType.FLED_COUNTRY;
+    }
+    return DeathType.AUDIT_FAILURE;
+  };
+
   const nextIncident = () => {
     setFeedbackOverlay(null);
-    if (state.heat >= 100) {
-      setState(prev => ({ ...prev, stage: GameStage.GAME_OVER, deathReason: 'The auditors found your search history. Federal raid in progress.' }));
+    
+    // Check for game over conditions
+    if (state.budget <= 0) {
+      const deathType = DeathType.BANKRUPT;
+      setState(prev => ({
+        ...prev,
+        stage: GameStage.GAME_OVER,
+        deathType,
+        deathReason: DEATH_ENDINGS[deathType].description,
+        unlockedEndings: prev.unlockedEndings.includes(deathType) ? prev.unlockedEndings : [...prev.unlockedEndings, deathType]
+      }));
       return;
     }
-    if (state.hype <= 0) {
-      setState(prev => ({ ...prev, stage: GameStage.GAME_OVER, deathReason: 'The VCs pulled out. Your keycard is now invalid.' }));
+    
+    if (state.heat >= 100) {
+      const deathType = determineDeathType(state.budget, state.heat, state.hype);
+      setState(prev => ({
+        ...prev,
+        stage: GameStage.GAME_OVER,
+        deathType,
+        deathReason: DEATH_ENDINGS[deathType].description,
+        unlockedEndings: prev.unlockedEndings.includes(deathType) ? prev.unlockedEndings : [...prev.unlockedEndings, deathType]
+      }));
       return;
     }
 
     const cards = ROLE_CARDS[state.role!];
     if (state.currentCardIndex + 1 >= cards.length) {
-      setState(prev => ({ ...prev, stage: GameStage.SUMMARY }));
+      // Start boss fight instead of going directly to summary
+      setCurrentBossQuestion(0);
+      setBossTimeLeft(15);
+      setBossAnswered(false);
+      setShowBossExplanation(false);
+      setState(prev => ({ ...prev, stage: GameStage.BOSS_FIGHT }));
     } else {
       setState(prev => ({ ...prev, currentCardIndex: prev.currentCardIndex + 1 }));
+    }
+  };
+
+  const handleBossAnswer = (isCorrect: boolean) => {
+    setBossAnswered(true);
+    setShowBossExplanation(true);
+    
+    setState(prev => ({
+      ...prev,
+      bossFightAnswers: [...prev.bossFightAnswers, isCorrect]
+    }));
+
+    if (!isCorrect) {
+      // Wrong answer costs budget
+      setState(prev => ({ ...prev, budget: prev.budget - 1000000 }));
+    }
+  };
+
+  const nextBossQuestion = () => {
+    if (currentBossQuestion + 1 >= BOSS_FIGHT_QUESTIONS.length) {
+      // Boss fight complete
+      const correctAnswers = state.bossFightAnswers.filter(a => a).length;
+      if (correctAnswers >= 3) {
+        setState(prev => ({ ...prev, stage: GameStage.SUMMARY }));
+      } else {
+        const deathType = DeathType.AUDIT_FAILURE;
+        setState(prev => ({
+          ...prev,
+          stage: GameStage.GAME_OVER,
+          deathType,
+          deathReason: DEATH_ENDINGS[deathType].description,
+          unlockedEndings: prev.unlockedEndings.includes(deathType) ? prev.unlockedEndings : [...prev.unlockedEndings, deathType]
+        }));
+      }
+    } else {
+      setCurrentBossQuestion(prev => prev + 1);
+      setBossTimeLeft(15);
+      setBossAnswered(false);
+      setShowBossExplanation(false);
     }
   };
 
@@ -123,55 +224,75 @@ const App: React.FC = () => {
   };
 
   const restart = () => {
-    setState({
+    setState(prev => ({
       hype: 50,
       heat: 0,
+      budget: INITIAL_BUDGET,
       stage: GameStage.INTRO,
       personality: null,
       role: null,
       currentCardIndex: 0,
       history: [],
-      deathReason: null
-    });
+      deathReason: null,
+      deathType: null,
+      unlockedEndings: prev.unlockedEndings,
+      bossFightAnswers: []
+    }));
     setRoastOutput(null);
     setRoastInput('');
+    setCurrentBossQuestion(0);
+    setBossTimeLeft(15);
+    setBossAnswered(false);
+    setShowBossExplanation(false);
   };
 
+  const formatBudget = (amount: number) => {
+    if (amount >= 1000000) {
+      return `$${(amount / 1000000).toFixed(1)}M`;
+    }
+    return `$${amount.toLocaleString()}`;
+  };
+
+  const formatLabel = (s: string) =>
+    s === RoleType.HR ? 'HR' : s.replace(/_/g, ' ').toLowerCase().replace(/\b\w/g, (c) => c.toUpperCase());
+
   const renderIntro = () => (
-    <div className="flex flex-col items-center justify-center min-h-screen p-6 text-center bg-black">
-      <div className="mb-12 relative">
-        <div className="text-8xl font-black italic tracking-tighter mb-2 glitch-text">HYPERSCALE</div>
-        <div className="text-red-600 font-bold mono text-sm animate-pulse tracking-[0.4em]">PROJECT_ICARUS // OS_v0.92</div>
+    <div className="flex flex-col items-center justify-center min-h-screen p-4 md:p-6 text-center bg-black stage-transition safe-area-top safe-area-bottom">
+      <div className="mb-8 md:mb-12 relative fade-in">
+        <div className="text-5xl md:text-6xl font-bold glitch-text tracking-tighter mb-2">HYPERSCALE</div>
+        <div className="text-red-600 font-bold mono text-xs md:text-sm animate-pulse tracking-[0.4em]">project_icarus // os_v0.92</div>
       </div>
-      <p className="max-w-xl text-slate-500 mb-16 text-lg">
-        Move fast, break laws, and try not to get the CEO arrested.<br/>
-        AI Governance for people who hate compliance training.
+      <p className="max-w-xl text-slate-500 mb-12 md:mb-16 text-base md:text-lg px-4 fade-in" style={{ animationDelay: '0.2s' }}>
+      The CEO integrated an unhinged AI into every department. Keep the stock price high and the prison sentence short.<br/> <br/> 
+      Move fast, break laws, and try to survive the final audit. AI Governance for people who hate compliance training.
       </p>
       <button 
         onClick={handleStart}
-        className="px-16 py-5 bg-white text-black font-black text-2xl uppercase tracking-[0.2em] hover:bg-cyan-500 transition-all shadow-[0_0_30_px_rgba(255,255,255,0.2)]"
+        className="px-8 md:px-12 py-4 bg-white text-black font-bold text-lg md:text-xl tracking-wide hover:bg-cyan-400 transition-all duration-300 transform hover:scale-105 min-h-[48px]"
       >
-        BOOT SYSTEM
+        Boot system
       </button>
+      <div className="mt-8 md:mt-12 mono text-xs text-slate-600 px-4 text-center">WARNING: PREVIOUS COMPLIANCE OFFICER CURRENTLY PENDING LITIGATION</div>
     </div>
   );
 
   const renderPersonalitySelect = () => (
-    <div className="flex flex-col items-center justify-center min-h-screen p-6 bg-[#050505]">
-      <h2 className="text-4xl font-black mb-16 uppercase tracking-widest text-center italic">SELECT YOUR EMOTIONAL SUPPORT SYSTEM</h2>
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-8 w-full max-w-5xl">
-        {Object.entries(PERSONALITIES).map(([type, p]) => (
+    <div className="flex flex-col items-center justify-center min-h-screen p-4 md:p-6 bg-[#050505] safe-area-top safe-area-bottom">
+      <h2 className="text-3xl md:text-5xl font-black mb-8 md:mb-16 tracking-tight text-center fade-in px-4">Select your emotional support</h2>
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-8 w-full max-w-5xl px-4">
+        {Object.entries(PERSONALITIES).map(([type, p], index) => (
           <button 
             key={type}
             onClick={() => selectPersonality(type as PersonalityType)}
-            className="group p-10 bg-slate-900/50 border border-slate-800 hover:border-cyan-500 transition-all duration-500 flex flex-col items-center text-center rounded-2xl hover:-translate-y-2 shadow-xl"
+            className="group p-6 md:p-10 bg-slate-900/50 border border-slate-800 hover:border-cyan-500 flex flex-col items-center text-center rounded-2xl hover-scale shadow-xl"
+            style={{ animationDelay: `${index * 0.1}s` }}
           >
-            <div className="w-24 h-24 bg-slate-800 rounded-full mb-8 flex items-center justify-center group-hover:bg-cyan-500 transition-colors shadow-inner">
-               <i className={`fa-solid ${type === PersonalityType.ROASTER ? 'fa-user-ninja' : type === PersonalityType.ZEN_MASTER ? 'fa-leaf' : 'fa-rocket'} text-4xl group-hover:text-black`}></i>
+            <div className="w-16 h-16 md:w-24 md:h-24 bg-slate-800 rounded-full mb-4 md:mb-8 flex items-center justify-center group-hover:bg-cyan-500 transition-colors shadow-inner">
+               <i className={`fa-solid ${type === PersonalityType.ROASTER ? 'fa-user-ninja' : type === PersonalityType.ZEN_MASTER ? 'fa-leaf' : 'fa-rocket'} text-2xl md:text-4xl group-hover:text-black`}></i>
             </div>
-            <div className="text-2xl font-black mb-1">{p.name}</div>
-            <div className="text-cyan-400 text-xs mb-6 uppercase font-black tracking-widest">{p.title}</div>
-            <p className="text-slate-400 text-sm leading-relaxed">{p.description}</p>
+            <div className="text-xl md:text-2xl font-black mb-1">{p.name}</div>
+            <div className="text-cyan-400 text-xs mb-4 md:mb-6 font-black tracking-wide">{p.title}</div>
+            <p className="text-slate-400 text-xs md:text-sm leading-relaxed">{p.description}</p>
           </button>
         ))}
       </div>
@@ -179,28 +300,29 @@ const App: React.FC = () => {
   );
 
   const renderRoleSelect = () => (
-    <div className="flex flex-col items-center justify-center min-h-screen p-6 bg-[#050505]">
-       <div className="text-cyan-400 mb-6 mono text-xs flex items-center gap-2 tracking-widest">
-        <i className="fa-solid fa-circle-nodes animate-pulse"></i> HANDSHAKE_SUCCESS // {PERSONALITIES[state.personality!].name} CONNECTED
+    <div className="flex flex-col items-center justify-center min-h-screen p-4 md:p-6 bg-[#050505] safe-area-top safe-area-bottom">
+       <div className="text-cyan-400 mb-4 md:mb-6 mono text-xs flex items-center gap-2 tracking-wide fade-in px-4 text-center">
+        <i className="fa-solid fa-circle-nodes animate-pulse"></i> <span className="hidden sm:inline">handshake_success // </span>{PERSONALITIES[state.personality!].name} connected
       </div>
-      <h2 className="text-4xl font-black mb-16 uppercase tracking-widest text-center italic">SELECT CLEARANCE</h2>
-      <div className="grid grid-cols-2 md:grid-cols-3 gap-6 w-full max-w-2xl">
-        {Object.values(RoleType).map((role) => (
-          <button 
+      <h2 className="text-3xl md:text-5xl font-black mb-8 md:mb-16 tracking-tight text-center fade-in px-4">Select clearance</h2>
+      <div className="grid grid-cols-2 md:grid-cols-3 gap-4 md:gap-6 w-full max-w-2xl px-4">
+        {Object.values(RoleType).map((role, index) => (
+          <button
             key={role}
             onClick={() => selectRole(role)}
-            className="group p-8 bg-slate-900/50 border border-slate-800 hover:border-cyan-500 transition-all rounded-xl text-center hover:scale-105"
+            className="group p-6 md:p-8 bg-slate-900/50 border border-slate-800 hover:border-cyan-500 transition-all rounded-xl text-center hover-scale"
+            style={{ animationDelay: `${index * 0.08}s` }}
           >
-            <div className="text-4xl mb-4 text-slate-500 group-hover:text-cyan-400 transition-colors">
+            <div className="text-3xl md:text-4xl mb-3 md:mb-4 text-slate-500 group-hover:text-cyan-400 transition-colors">
               <i className={`fa-solid ${
-                role === RoleType.DEVELOPER ? 'fa-code' : 
-                role === RoleType.MARKETING ? 'fa-bullhorn' : 
-                role === RoleType.MANAGER ? 'fa-briefcase' : 
-                role === RoleType.HR ? 'fa-users' : 
+                role === RoleType.DEVELOPER ? 'fa-code' :
+                role === RoleType.MARKETING ? 'fa-bullhorn' :
+                role === RoleType.MANAGER ? 'fa-briefcase' :
+                role === RoleType.HR ? 'fa-users' :
                 role === RoleType.FINANCE ? 'fa-vault' : 'fa-broom'
               }`}></i>
             </div>
-            <div className="font-black text-xs uppercase tracking-widest text-slate-400 group-hover:text-white transition-colors">{role}</div>
+            <div className="font-black text-xs tracking-wide text-slate-400 group-hover:text-white transition-colors">{formatLabel(role)}</div>
           </button>
         ))}
       </div>
@@ -208,31 +330,32 @@ const App: React.FC = () => {
   );
 
   const renderInitializing = () => (
-    <div className="flex flex-col items-center justify-center min-h-screen p-6 bg-black text-cyan-500 font-mono">
-      <div className="w-full max-w-xl p-8 border border-cyan-900/50 bg-slate-900/20 rounded-lg shadow-2xl relative overflow-hidden">
+    <div className="flex flex-col items-center justify-center min-h-screen p-4 md:p-6 bg-black text-cyan-500 font-mono safe-area-top safe-area-bottom">
+      <div className="w-full max-w-xl p-4 md:p-8 border border-cyan-900/50 bg-slate-900/20 rounded-lg shadow-2xl relative overflow-hidden">
         <div className="absolute top-0 left-0 w-full h-1 bg-cyan-500/20 overflow-hidden">
           <div className="h-full bg-cyan-500 animate-[progress-shine_2s_infinite]" style={{ width: `${(3 - countdown) * 33.3}%` }}></div>
         </div>
-        <div className="mb-4 text-[10px] uppercase tracking-[0.3em] opacity-50 flex justify-between">
-          <span>System Initializing</span>
-          <span>{PERSONALITIES[state.personality!].name}_SECURE_LINK</span>
+        <div className="mb-4 text-[10px] tracking-[0.2em] opacity-50 flex justify-between">
+          <span>System initializing</span>
+          <span className="hidden sm:inline">{PERSONALITIES[state.personality!].name}_secure_link</span>
         </div>
-        <div className="space-y-2 mb-12">
-          <div className="text-xs">> Calibrating Governance Models... DONE</div>
-          <div className="text-xs">> Syncing {state.role} Clearance... DONE</div>
-          <div className="text-xs">> Bypassing Ethical Safeguards... <span className="text-red-500">WARNING</span></div>
-          <div className="text-xs">> Finalizing Neural Interface...</div>
+        <div className="space-y-2 mb-8 md:mb-12">
+          <div className="text-xs">{'>'} Calibrating governance models... done</div>
+          <div className="text-xs">{'>'} Syncing {state.role && formatLabel(state.role)} clearance... done</div>
+          <div className="text-xs">{'>'} Bypassing ethical safeguards... <span className="text-red-500">warning</span></div>
+          <div className="text-xs">{'>'} Loading $10M compliance budget... done</div>
+          <div className="text-xs">{'>'} Finalizing neural interface...</div>
         </div>
-        <div className="flex flex-col items-center py-10">
-          <div className="text-9xl font-black italic tracking-tighter animate-pulse drop-shadow-[0_0_20px_rgba(6,182,212,0.5)]">
-            {countdown > 0 ? countdown : 'START'}
+        <div className="flex flex-col items-center py-6 md:py-10">
+          <div className="text-4xl md:text-6xl font-black tracking-tighter animate-pulse drop-shadow-[0_0_20px_rgba(6,182,212,0.5)]">
+            {countdown > 0 ? countdown : 'Start'}
           </div>
-          <div className="mt-6 text-[10px] font-black uppercase tracking-[0.5em] text-slate-500">
-            Commencing Q4 Survival Protocol
+          <div className="mt-4 md:mt-6 text-[10px] font-black tracking-[0.3em] text-slate-500 text-center">
+            Commencing Q4 survival protocol
           </div>
         </div>
       </div>
-      <div className="mt-8 text-[8px] uppercase tracking-widest opacity-30 text-center max-w-xs">
+      <div className="mt-6 md:mt-8 text-[8px] tracking-wide opacity-30 text-center max-w-xs px-4">
         HyperScale Inc. is not liable for data breaches, federal lawsuits, or spontaneous AI consciousness.
       </div>
     </div>
@@ -244,95 +367,109 @@ const App: React.FC = () => {
     const personality = PERSONALITIES[state.personality!];
 
     return (
-      <div className="min-h-screen bg-[#0a0a0c] flex flex-col relative pt-12">
-        {/* Top HUD */}
-        <div className="absolute top-4 left-1/2 -translate-x-1/2 w-full max-w-4xl px-4 flex gap-10 items-center">
-          <div className="flex-1 space-y-1">
-            <div className="flex justify-between text-[10px] font-black tracking-widest mb-1">
-              <span className={state.hype < 20 ? 'text-red-500 animate-pulse' : 'text-cyan-400'}>📈 STOCK HYPE</span>
-              <span className="text-cyan-400">{state.hype}%</span>
+      <div className="min-h-screen bg-[#0a0a0c] flex flex-col relative pt-16 md:pt-12 pb-20 md:pb-12 safe-area-top safe-area-bottom">
+        {/* Top HUD - Budget Focused - Mobile Optimized */}
+        <div className="absolute top-2 md:top-4 left-1/2 -translate-x-1/2 w-full max-w-4xl px-3 md:px-4 flex flex-col md:flex-row gap-2 md:gap-6 items-stretch md:items-center">
+          <div className="flex-1 space-y-1 min-w-0">
+            <div className="flex justify-between text-[10px] font-black tracking-wide mb-1">
+              <span className={state.budget < 2000000 ? 'text-red-500 animate-pulse' : 'text-green-400'}>💰 Budget</span>
+              <span className={state.budget < 2000000 ? 'text-red-500' : 'text-green-400'}>{formatBudget(state.budget)}</span>
             </div>
             <div className="h-2 bg-slate-900 rounded border border-white/10 overflow-hidden bg-stripes p-[1px]">
-              <div className={`h-full transition-all duration-700 ${state.hype < 20 ? 'bg-red-500' : 'bg-cyan-500'}`} style={{ width: `${state.hype}%` }} />
+              <div 
+                className={`h-full progress-bar ${state.budget < 2000000 ? 'bg-red-500' : 'bg-green-500'}`} 
+                style={{ width: `${Math.min(100, (state.budget / INITIAL_BUDGET) * 100)}%` }} 
+              />
             </div>
           </div>
-          <div className="flex-1 space-y-1">
-            <div className="flex justify-between text-[10px] font-black tracking-widest mb-1">
-              <span className={state.heat > 80 ? 'text-yellow-400 animate-pulse' : 'text-orange-500'}>🔥 FEDERAL RISK</span>
-              <span className="text-orange-500">{state.heat}%</span>
+          <div className="flex gap-3 md:gap-6 w-full md:w-auto">
+            <div className="flex-1 md:w-28 space-y-1">
+              <div className="flex justify-between text-[10px] font-black tracking-wide mb-1">
+                <span className={state.heat > 80 ? 'text-yellow-400 animate-pulse' : 'text-orange-500'}>🔥 Risk</span>
+                <span className="text-orange-500">{state.heat}%</span>
+              </div>
+              <div className="h-2 bg-slate-900 rounded border border-white/10 overflow-hidden bg-stripes p-[1px]">
+                <div className={`h-full progress-bar ${state.heat > 80 ? 'bg-yellow-400' : 'bg-orange-600'}`} style={{ width: `${state.heat}%` }} />
+              </div>
             </div>
-            <div className="h-2 bg-slate-900 rounded border border-white/10 overflow-hidden bg-stripes p-[1px]">
-              <div className={`h-full transition-all duration-700 ${state.heat > 80 ? 'bg-yellow-400' : 'bg-orange-600'}`} style={{ width: `${state.heat}%` }} />
+            <div className="flex-1 md:w-28 space-y-1">
+              <div className="flex justify-between text-[10px] font-black tracking-wide mb-1">
+                <span className={state.hype < 20 ? 'text-red-500 animate-pulse' : 'text-cyan-400'}>📈 Hype</span>
+                <span className="text-cyan-400">{state.hype}%</span>
+              </div>
+              <div className="h-2 bg-slate-900 rounded border border-white/10 overflow-hidden bg-stripes p-[1px]">
+                <div className={`h-full progress-bar ${state.hype < 20 ? 'bg-red-500' : 'bg-cyan-500'}`} style={{ width: `${state.hype}%` }} />
+              </div>
             </div>
           </div>
         </div>
 
-        {/* Desktop Content */}
-        <div className="flex-1 flex items-center justify-center p-8 gap-8">
+        {/* Main Content - Responsive Layout */}
+        <div className="flex-1 flex flex-col lg:flex-row items-center justify-center p-3 md:p-8 gap-4 md:gap-8">
           
           {/* Main App Window */}
-          <div className="flex-1 max-w-2xl bg-slate-900/90 border border-slate-700 rounded-xl overflow-hidden shadow-2xl flex flex-col">
-            <div className="bg-slate-800 px-4 py-2 flex items-center justify-between border-b border-white/5">
-              <div className="flex items-center gap-2 text-[10px] mono font-bold text-slate-400">
+          <div className="flex-1 w-full max-w-full lg:max-w-[43rem] min-h-[350px] md:min-h-[520px] bg-slate-900/90 border border-slate-700 rounded-xl overflow-hidden shadow-2xl flex flex-col ticket-transition" key={state.currentCardIndex}>
+            <div className="bg-slate-800 px-3 md:px-4 py-2 flex items-center justify-between border-b border-white/5">
+              <div className="flex items-center gap-2 text-[10px] mono font-bold text-slate-400 truncate">
                 <i className={`fa-solid ${currentCard.source === AppSource.IDE ? 'fa-terminal' : 'fa-hashtag'}`}></i>
-                {currentCard.source} // {currentCard.context}
+                <span className="truncate">{currentCard.source} // {currentCard.context}</span>
               </div>
-              <div className="flex gap-1.5">
+              <div className="flex gap-1.5 shrink-0">
                 <div className="w-2.5 h-2.5 rounded-full bg-slate-600"></div>
                 <div className="w-2.5 h-2.5 rounded-full bg-slate-600"></div>
                 <div className="w-2.5 h-2.5 rounded-full bg-red-500/50"></div>
               </div>
             </div>
-            <div className="p-10 flex flex-col justify-between flex-1">
-              <div className="space-y-6">
+            <div className="p-4 md:p-10 flex flex-col justify-between flex-1">
+              <div className="space-y-3 md:space-y-6">
                 <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 rounded bg-slate-800 flex items-center justify-center border border-white/5">
-                     <i className="fa-solid fa-user-robot text-slate-500"></i>
+                  <div className="w-8 h-8 md:w-10 md:h-10 rounded bg-slate-800 flex items-center justify-center border border-white/5 shrink-0">
+                     <i className="fa-solid fa-user-robot text-slate-500 text-xs md:text-base"></i>
                   </div>
-                  <div>
-                    <div className="text-sm font-bold text-cyan-400">{currentCard.sender}</div>
-                    <div className="text-[10px] text-slate-500 mono">Project Icarus Incident #{(state.currentCardIndex + 1) * 324}</div>
+                  <div className="min-w-0">
+                    <div className="text-xs md:text-sm font-bold text-cyan-400 truncate">{currentCard.sender}</div>
+                    <div className="text-[9px] md:text-[10px] text-slate-500 mono truncate">Incident #{(state.currentCardIndex + 1) * 324}</div>
                   </div>
                 </div>
-                <p className="text-xl font-medium leading-relaxed italic text-slate-200">
+                <p className="text-base md:text-xl font-medium leading-relaxed text-slate-200">
                   "{currentCard.text}"
                 </p>
               </div>
-              <div className="flex gap-4 mt-12">
-                 <button onClick={() => handleChoice('LEFT')} className="flex-1 py-4 border border-red-500/50 text-red-500 font-bold uppercase tracking-widest hover:bg-red-500 hover:text-white transition-all rounded-lg">
+              <div className="flex flex-col sm:flex-row gap-3 md:gap-4 mt-6 md:mt-12">
+                 <button onClick={() => handleChoice('LEFT')} className="flex-1 py-3 md:py-4 px-4 border border-red-500/50 text-red-500 font-bold tracking-wide hover:bg-red-500 hover:text-white transition-all rounded-lg min-h-[48px]">
                    {currentCard.onLeft.label}
                  </button>
-                 <button onClick={() => handleChoice('RIGHT')} className="flex-1 py-4 bg-cyan-500 text-black font-black uppercase tracking-widest hover:bg-white transition-all rounded-lg">
+                 <button onClick={() => handleChoice('RIGHT')} className="flex-1 py-3 md:py-4 px-4 bg-cyan-500 text-black font-black tracking-wide hover:bg-white transition-all rounded-lg min-h-[48px]">
                    {currentCard.onRight.label}
                  </button>
               </div>
             </div>
           </div>
 
-          {/* Side Roaster Terminal */}
-          <div className="w-80 h-[500px] bg-black/80 border border-slate-800 rounded-xl overflow-hidden flex flex-col shadow-2xl">
+          {/* Side Roaster Terminal - Responsive */}
+          <div className="w-full lg:w-64 h-auto lg:h-[350px] bg-black/80 border border-slate-800 rounded-xl overflow-hidden flex flex-col shadow-2xl mt-2 lg:mt-0">
             <div className="bg-slate-900 px-4 py-2 border-b border-white/5 flex items-center justify-between">
-              <span className="text-[10px] mono font-bold text-green-500">ROAST_CON.exe</span>
+              <span className="text-[10px] mono font-bold text-green-500">roast_con.exe</span>
               <i className="fa-solid fa-minus text-[10px] text-slate-500"></i>
             </div>
             <div className="p-4 flex-1 flex flex-col">
-              <p className="text-[10px] mono text-green-700 mb-4">DESCRIBE WORKFLOW FOR GOVERNANCE REVIEW...</p>
+              <p className="text-[10px] mono text-green-700 mb-4 hidden sm:block">Describe workflow for governance review...</p>
               <textarea 
                 value={roastInput}
                 onChange={(e) => setRoastInput(e.target.value)}
                 placeholder="e.g. I use ChatGPT for company secrets..."
-                className="w-full h-32 bg-black border border-green-900/30 rounded p-3 text-xs mono text-green-500 focus:outline-none placeholder:text-green-900/50 resize-none mb-4"
+                className="w-full h-16 lg:h-32 bg-black border border-green-900/30 rounded p-3 text-xs mono text-green-500 focus:outline-none placeholder:text-green-900/50 resize-none mb-3"
               />
               <button 
                 onClick={handleRoast}
                 disabled={isRoasting}
-                className="w-full py-2 bg-green-900/20 border border-green-500/40 text-green-500 font-bold text-[10px] mono uppercase tracking-widest hover:bg-green-500 hover:text-black transition-all mb-4"
+                className="w-full py-2 bg-green-900/20 border border-green-500/40 text-green-500 font-bold text-[10px] mono tracking-wide hover:bg-green-500 hover:text-black transition-all mb-3 min-h-[44px]"
               >
-                {isRoasting ? 'SCANNING RISKS...' : 'INIT_ROAST'}
+                {isRoasting ? 'Scanning...' : 'Init roast'}
               </button>
               {roastOutput && (
-                <div className="bg-green-900/10 border border-green-500/20 p-3 rounded text-[10px] mono text-green-400 italic overflow-auto">
-                   <div className="mb-2 text-green-600 font-bold tracking-widest">>>> {personality.name}_RESPONSE:</div>
+                <div className="bg-green-900/10 border border-green-500/20 p-3 rounded text-[10px] mono text-green-400 italic overflow-auto max-h-24">
+                   <div className="mb-2 text-green-600 font-bold tracking-wide">{'>>>'} {personality.name}:</div>
                    {roastOutput}
                 </div>
               )}
@@ -340,56 +477,65 @@ const App: React.FC = () => {
           </div>
         </div>
 
-        {/* Taskbar */}
-        <div className="h-12 bg-slate-900/95 border-t border-white/5 flex items-center px-6 justify-between fixed bottom-0 w-full backdrop-blur-md">
-          <div className="flex items-center gap-6">
-             <button className="bg-slate-800 hover:bg-slate-700 px-4 py-1.5 rounded flex items-center gap-2 border border-white/5 transition-colors">
+        {/* Taskbar - Mobile Optimized */}
+        <div className="h-12 bg-slate-900/95 border-t border-white/5 flex items-center px-3 md:px-6 justify-between fixed bottom-0 w-full backdrop-blur-md safe-area-bottom">
+          <div className="flex items-center gap-2 md:gap-6">
+             <button className="bg-slate-800 hover:bg-slate-700 px-2 md:px-4 py-1.5 rounded flex items-center gap-2 border border-white/5 transition-colors min-h-[36px]">
                <i className="fa-solid fa-atom text-cyan-400"></i>
-               <span className="text-xs font-black uppercase tracking-widest">Start</span>
+               <span className="text-xs font-black tracking-wide hidden sm:inline">Start</span>
              </button>
-             <div className="flex gap-4">
+             <div className="flex gap-2 md:gap-4">
                <div className="w-8 h-8 rounded bg-slate-800 flex items-center justify-center border border-cyan-500/50 shadow-[0_0_10px_rgba(34,211,238,0.3)]">
                  <i className="fa-solid fa-comment-dots text-xs text-cyan-400"></i>
                </div>
-               <div className="w-8 h-8 rounded bg-slate-800 flex items-center justify-center border border-white/5 opacity-50">
+               <div className="w-8 h-8 rounded bg-slate-800 flex items-center justify-center border border-white/5 opacity-50 hidden sm:flex">
                  <i className="fa-solid fa-terminal text-xs text-slate-500"></i>
                </div>
              </div>
           </div>
-          <div className="flex items-center gap-6">
-            <div className="bg-black/50 px-3 py-1.5 rounded border border-white/5 flex items-center gap-3">
+          <div className="flex items-center gap-2 md:gap-6">
+            <div className="bg-black/50 px-2 md:px-3 py-1.5 rounded border border-white/5 flex items-center gap-2 md:gap-3">
                <div className="w-5 h-5 rounded-full bg-slate-800 flex items-center justify-center">
                  <i className={`fa-solid ${state.personality === PersonalityType.ROASTER ? 'fa-user-ninja' : state.personality === PersonalityType.ZEN_MASTER ? 'fa-leaf' : 'fa-rocket'} text-[10px] text-cyan-500`}></i>
                </div>
-               <span className="text-[10px] mono font-bold text-slate-400 tracking-tighter uppercase">{personality.name} ACTIVE</span>
+               <span className="text-[10px] mono font-bold text-slate-400 tracking-tighter hidden md:inline">{personality.name}</span>
             </div>
             <div className="text-right">
               <div className="text-xs mono font-bold text-slate-300">{currentTime}</div>
-              <div className="text-[8px] mono text-slate-500 uppercase tracking-widest">v0.92-PROD</div>
+              <div className="text-[8px] mono text-slate-500 tracking-wide hidden sm:block">v0.92-prod</div>
             </div>
           </div>
         </div>
 
-        {/* Feedback Modal */}
+        {/* Answer Window - Overlay with fine display */}
         {feedbackOverlay && (
-          <div className="fixed inset-0 z-50 flex items-center justify-center p-6 bg-black/95 backdrop-blur-xl animate-in fade-in duration-300">
-            <div className="w-full max-w-lg bg-slate-900 border border-slate-700 p-10 rounded-2xl text-center shadow-2xl">
-              <div className={`text-6xl mb-8 ${feedbackOverlay.choice === 'RIGHT' ? 'text-green-500' : 'text-red-500'}`}>
-                <i className={`fa-solid ${feedbackOverlay.choice === 'RIGHT' ? 'fa-check-double' : 'fa-triangle-exclamation'}`}></i>
+          <div className="fixed inset-0 z-50 flex items-center justify-center p-4 md:p-6 bg-black/70 backdrop-blur-sm">
+            <div className="w-full max-w-lg bg-slate-900 border border-slate-700 p-6 md:p-10 rounded-2xl text-center shadow-2xl max-h-[90vh] overflow-y-auto">
+              <div className={`text-4xl md:text-6xl mb-4 md:mb-6 ${feedbackOverlay.fine > 0 ? 'text-red-500' : 'text-green-500'}`}>
+                <i className={`fa-solid ${feedbackOverlay.fine > 0 ? 'fa-triangle-exclamation' : 'fa-circle-check'}`}></i>
               </div>
-              <div className="text-cyan-400 mono text-[10px] mb-4 uppercase font-bold tracking-[0.4em]">{personality.name}'S PERFORMANCE REVIEW</div>
-              <p className="text-2xl mb-10 italic text-slate-100 font-light leading-relaxed">"{feedbackOverlay.text}"</p>
               
-              <div className="bg-black/50 border border-white/5 p-8 rounded-xl text-left mb-10">
-                 <div className="text-[10px] font-bold text-slate-500 uppercase tracking-widest mb-4 border-b border-white/5 pb-2">Governance Alert</div>
-                 <p className="text-sm text-slate-400 leading-relaxed font-light">{feedbackOverlay.lesson}</p>
+              {feedbackOverlay.fine > 0 && (
+                <div className="mb-4 md:mb-6 p-3 md:p-4 bg-red-900/20 border border-red-500/30 rounded-lg">
+                  <div className="text-red-400 text-xs font-bold tracking-wide mb-1">Violation fine</div>
+                  <div className="text-2xl md:text-3xl font-black text-red-500">-{formatBudget(feedbackOverlay.fine)}</div>
+                  <div className="text-red-400/70 text-xs mt-1">{feedbackOverlay.violation}</div>
+                </div>
+              )}
+              
+              <div className="text-cyan-400 mono text-[10px] mb-3 md:mb-4 font-bold tracking-wide">{personality.name}'s review</div>
+              <p className="text-lg md:text-2xl mb-4 md:mb-8 italic text-slate-100 font-light leading-relaxed">"{feedbackOverlay.text}"</p>
+              
+              <div className="bg-black/50 border border-white/5 p-4 md:p-6 rounded-xl text-left mb-4 md:mb-8">
+                 <div className="text-[10px] font-bold text-slate-500 tracking-wide mb-3 border-b border-white/5 pb-2">Governance alert</div>
+                 <p className="text-xs md:text-sm text-slate-400 leading-relaxed font-light">{feedbackOverlay.lesson}</p>
               </div>
 
               <button 
                 onClick={nextIncident}
-                className="w-full py-5 bg-white text-black font-black uppercase tracking-widest hover:bg-cyan-500 transition-all rounded-lg shadow-xl transform active:scale-95"
+                className="w-full py-4 md:py-5 bg-white text-black font-black tracking-wide hover:bg-cyan-500 transition-all rounded-lg shadow-xl transform active:scale-95 min-h-[48px]"
               >
-                PROCEED TO NEXT TICKET
+                Next ticket
               </button>
             </div>
           </div>
@@ -398,6 +544,192 @@ const App: React.FC = () => {
     );
   };
 
+  const renderBossFight = () => {
+    const question = BOSS_FIGHT_QUESTIONS[currentBossQuestion];
+    const fixedAnswers = [question.correctAnswer, ...question.wrongAnswers];
+
+    return (
+      <div className="min-h-screen bg-[#0a0a0c] flex flex-col items-center justify-center p-4 md:p-8 safe-area-top safe-area-bottom">
+        <div className="w-full max-w-3xl">
+          <div className="text-center mb-6 md:mb-8">
+            <div className="text-4xl md:text-6xl mb-3 md:mb-4">
+              <i className="fa-solid fa-gavel text-yellow-500"></i>
+            </div>
+            <h2 className="text-2xl md:text-4xl font-black mb-2 tracking-tight text-yellow-500">Boss fight</h2>
+            <p className="text-slate-400 text-sm md:text-base">Negotiate with the External Auditor</p>
+          </div>
+
+          <div className="bg-slate-900 border border-slate-700 rounded-2xl p-4 md:p-8 shadow-2xl">
+            {/* Timer Bar */}
+            <div className="mb-4 md:mb-6">
+              <div className="flex justify-between text-xs text-slate-500 mb-2">
+                <span>Time remaining</span>
+                <span className={bossTimeLeft < 5 ? 'text-red-500' : ''}>{bossTimeLeft}s</span>
+              </div>
+              <div className="h-2 bg-slate-800 rounded overflow-hidden">
+                <div 
+                  className={`h-full transition-all duration-1000 ${bossTimeLeft < 5 ? 'bg-red-500' : 'bg-yellow-500'}`}
+                  style={{ width: `${(bossTimeLeft / 15) * 100}%` }}
+                />
+              </div>
+            </div>
+
+            {/* Question */}
+            <div className="mb-6 md:mb-8">
+              <div className="text-xs text-cyan-400 tracking-wide mb-3 md:mb-4">
+                Question {currentBossQuestion + 1} of {BOSS_FIGHT_QUESTIONS.length}
+              </div>
+              <p className="text-base md:text-xl font-medium text-slate-200 leading-relaxed">
+                {question.question}
+              </p>
+            </div>
+
+            {/* Answers */}
+            {!showBossExplanation ? (
+              <div className="space-y-2 md:space-y-3">
+                {fixedAnswers.map((answer, index) => {
+                  const isCorrect = answer === question.correctAnswer;
+                  return (
+                    <button
+                      key={index}
+                      onClick={() => handleBossAnswer(isCorrect)}
+                      disabled={bossAnswered}
+                      className="w-full p-3 md:p-4 bg-slate-800 border border-slate-700 rounded-lg text-left hover:bg-slate-700 hover:border-cyan-500 transition-all flex items-center gap-4 min-h-[48px]"
+                    >
+                      <div className="flex-1">
+                        <span className="text-cyan-400 font-mono mr-2">{String.fromCharCode(65 + index)}.</span>
+                        <span className="text-slate-300 text-sm md:text-base">{answer}</span>
+                      </div>
+                    </button>
+                  );
+                })}
+              </div>
+            ) : (
+              <div className="space-y-4">
+                <div className={`p-3 md:p-4 rounded-lg ${state.bossFightAnswers[state.bossFightAnswers.length - 1] ? 'bg-green-900/20 border border-green-500/30' : 'bg-red-900/20 border border-red-500/30'}`}>
+                  <div className={`text-sm font-bold mb-2 ${state.bossFightAnswers[state.bossFightAnswers.length - 1] ? 'text-green-400' : 'text-red-400'}`}>
+                    {state.bossFightAnswers[state.bossFightAnswers.length - 1] ? 'Correct!' : 'Incorrect'}
+                  </div>
+                  <p className="text-slate-400 text-xs md:text-sm">{question.explanation}</p>
+                </div>
+                <button
+                  onClick={nextBossQuestion}
+                  className="w-full py-3 md:py-4 bg-cyan-500 text-black font-black tracking-wide hover:bg-white transition-all rounded-lg min-h-[48px]"
+                >
+                  {currentBossQuestion + 1 >= BOSS_FIGHT_QUESTIONS.length ? 'Final result' : 'Next question'}
+                </button>
+              </div>
+            )}
+          </div>
+
+          {/* Score */}
+          <div className="mt-4 md:mt-6 text-center">
+            <div className="text-xs text-slate-500 tracking-wide mb-2">Correct answers</div>
+            <div className="text-xl md:text-2xl font-black text-cyan-400">
+              {state.bossFightAnswers.filter(a => a).length} / {state.bossFightAnswers.length}
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  };
+
+  const renderGameOver = () => {
+    const deathEnding = state.deathType ? DEATH_ENDINGS[state.deathType] : null;
+    
+    return (
+      <div className="min-h-screen bg-[#1a0505] flex flex-col items-center justify-center p-4 md:p-6 text-center safe-area-top safe-area-bottom">
+        {deathEnding && (
+          <>
+            <div className={`text-6xl md:text-9xl mb-4 md:mb-6 animate-pulse drop-shadow-[0_0_30px_rgba(220,38,38,0.5)] ${deathEnding.color}`}>
+              <i className={`fa-solid ${deathEnding.icon}`}></i>
+            </div>
+            <h2 className={`text-3xl md:text-6xl font-black mb-3 md:mb-4 tracking-tighter ${deathEnding.color}`}>
+              {deathEnding.title}
+            </h2>
+            <p className="max-w-md text-base md:text-xl mb-6 md:mb-8 text-slate-400 leading-relaxed px-4">
+              {deathEnding.description}
+            </p>
+          </>
+        )}
+        
+        {/* Collection Progress */}
+        <div className="mb-6 md:mb-8 p-4 md:p-6 bg-slate-900/50 border border-slate-800 rounded-xl">
+          <div className="text-xs text-slate-500 tracking-wide mb-3 md:mb-4">Ending collection</div>
+          <div className="flex gap-2 md:gap-3 justify-center flex-wrap">
+            {Object.values(DeathType).map((type) => (
+              <div 
+                key={type}
+                className={`w-10 h-10 md:w-12 md:h-12 rounded-lg flex items-center justify-center ${
+                  state.unlockedEndings.includes(type) 
+                    ? 'bg-cyan-500/20 border border-cyan-500' 
+                    : 'bg-slate-800 border border-slate-700 opacity-30'
+                }`}
+                title={DEATH_ENDINGS[type].title}
+              >
+                <i className={`fa-solid ${DEATH_ENDINGS[type].icon} ${state.unlockedEndings.includes(type) ? 'text-cyan-400' : 'text-slate-600'}`}></i>
+              </div>
+            ))}
+          </div>
+          <div className="mt-3 text-sm text-slate-400">
+            {state.unlockedEndings.length} / {Object.keys(DeathType).length} unlocked
+          </div>
+        </div>
+
+        <div className="mb-6 md:mb-8 p-3 md:p-4 bg-red-900/20 border border-red-500/30 rounded-lg">
+          <div className="text-red-400 text-xs font-bold tracking-wide mb-1">Final budget</div>
+          <div className="text-2xl md:text-3xl font-black text-red-500">{formatBudget(state.budget)}</div>
+        </div>
+
+        <button onClick={restart} className="px-8 md:px-16 py-4 md:py-5 bg-red-600 text-white font-black text-xl md:text-2xl tracking-wide hover:bg-white hover:text-red-600 transition-all shadow-xl min-h-[48px]">
+          Reboot system
+        </button>
+      </div>
+    );
+  };
+
+  const renderSummary = () => (
+    <div className="flex flex-col items-center justify-center min-h-screen p-4 md:p-6 text-center bg-[#051a0d] safe-area-top safe-area-bottom">
+       <div className="text-6xl md:text-9xl text-green-500 mb-6 md:mb-8 animate-bounce drop-shadow-[0_0_30px_rgba(34,197,94,0.4)]">
+        <i className="fa-solid fa-trophy"></i>
+      </div>
+      <h2 className="text-3xl md:text-6xl font-black mb-3 md:mb-4 tracking-tighter text-green-400">Quarter survived</h2>
+      <p className="max-w-md text-base md:text-xl mb-6 md:mb-8 text-slate-400 px-4">Against all odds, the company is still legal. You've earned a voucher for a synthetic coffee.</p>
+      
+      <div className="mb-6 md:mb-8 p-4 md:p-6 bg-green-900/20 border border-green-500/30 rounded-xl">
+        <div className="text-green-400 text-xs font-bold tracking-wide mb-1">Remaining budget</div>
+        <div className="text-3xl md:text-4xl font-black text-green-500">{formatBudget(state.budget)}</div>
+      </div>
+
+      {/* Collection Progress */}
+<div className="mb-6 md:mb-8 p-4 md:p-6 bg-slate-900/50 border border-slate-800 rounded-xl">
+        <div className="text-xs text-slate-500 tracking-wide mb-3 md:mb-4">Ending collection</div>
+        <div className="flex gap-2 md:gap-3 justify-center flex-wrap">
+            {Object.values(DeathType).map((type) => (
+              <div 
+                key={type}
+                className={`w-10 h-10 md:w-12 md:h-12 rounded-lg flex items-center justify-center ${
+                  state.unlockedEndings.includes(type) 
+                    ? 'bg-cyan-500/20 border border-cyan-500' 
+                    : 'bg-slate-800 border border-slate-700 opacity-30'
+                }`}
+                title={DEATH_ENDINGS[type].title}
+              >
+              <i className={`fa-solid ${DEATH_ENDINGS[type].icon} ${state.unlockedEndings.includes(type) ? 'text-cyan-400' : 'text-slate-600'}`}></i>
+            </div>
+          ))}
+        </div>
+        <div className="mt-3 text-sm text-slate-400">
+          {state.unlockedEndings.length} / {Object.keys(DeathType).length} unlocked
+        </div>
+      </div>
+
+      <button onClick={restart} className="px-8 md:px-16 py-4 md:py-5 bg-green-600 text-white font-black text-xl md:text-2xl tracking-wide hover:bg-white hover:text-green-600 transition-all shadow-xl min-h-[48px]">
+        Log off
+      </button>
+    </div>
+  );
+
   const renderStage = () => {
     switch (state.stage) {
       case GameStage.INTRO: return renderIntro();
@@ -405,37 +737,18 @@ const App: React.FC = () => {
       case GameStage.ROLE_SELECT: return renderRoleSelect();
       case GameStage.INITIALIZING: return renderInitializing();
       case GameStage.PLAYING: return renderGame();
-      case GameStage.GAME_OVER:
-        return (
-          <div className="flex flex-col items-center justify-center min-h-screen p-6 text-center bg-[#1a0505]">
-            <div className="text-9xl text-red-600 mb-8 animate-pulse drop-shadow-[0_0_30px_rgba(220,38,38,0.5)]">
-              <i className="fa-solid fa-skull-crossbones"></i>
-            </div>
-            <h2 className="text-6xl font-black italic mb-4 uppercase tracking-tighter">TERMINATED</h2>
-            <p className="max-w-md text-xl mb-12 text-slate-400 leading-relaxed">{state.deathReason}</p>
-            <button onClick={restart} className="px-16 py-5 bg-red-600 text-white font-black text-2xl uppercase tracking-[0.2em] hover:bg-white hover:text-red-600 transition-all shadow-xl">
-              REBOOT SYSTEM
-            </button>
-          </div>
-        );
-      case GameStage.SUMMARY:
-        return (
-          <div className="flex flex-col items-center justify-center min-h-screen p-6 text-center bg-[#051a0d]">
-             <div className="text-9xl text-green-500 mb-8 animate-bounce drop-shadow-[0_0_30px_rgba(34,197,94,0.4)]">
-              <i className="fa-solid fa-trophy"></i>
-            </div>
-            <h2 className="text-6xl font-black italic mb-4 uppercase tracking-tighter text-green-400">QUARTER SURVIVED</h2>
-            <p className="max-w-md text-xl mb-12 text-slate-400">Against all odds, the company is still legal. You've earned a voucher for a synthetic coffee.</p>
-            <button onClick={restart} className="px-16 py-5 bg-green-600 text-white font-black text-2xl uppercase tracking-[0.2em] hover:bg-white hover:text-green-600 transition-all shadow-xl">
-              LOG OFF
-            </button>
-          </div>
-        );
+      case GameStage.BOSS_FIGHT: return renderBossFight();
+      case GameStage.GAME_OVER: return renderGameOver();
+      case GameStage.SUMMARY: return renderSummary();
       default: return renderIntro();
     }
   };
 
-  return <div className="min-h-screen">{renderStage()}</div>;
+  return (
+    <div className="min-h-screen stage-transition" key={state.stage}>
+      {renderStage()}
+    </div>
+  );
 };
 
 export default App;

@@ -31,6 +31,8 @@ export interface Card {
     label: string;
     hype: number;
     heat: number;
+    fine: number;
+    violation: string;
     feedback: {
       [key in PersonalityType]: string;
     };
@@ -40,6 +42,8 @@ export interface Card {
     label: string;
     hype: number;
     heat: number;
+    fine: number;
+    violation: string;
     feedback: {
       [key in PersonalityType]: string;
     };
@@ -53,6 +57,7 @@ export enum GameStage {
   ROLE_SELECT = 'ROLE_SELECT',
   INITIALIZING = 'INITIALIZING',
   PLAYING = 'PLAYING',
+  BOSS_FIGHT = 'BOSS_FIGHT',
   GAME_OVER = 'GAME_OVER',
   SUMMARY = 'SUMMARY'
 }
@@ -60,10 +65,31 @@ export enum GameStage {
 export interface GameState {
   hype: number;
   heat: number;
+  budget: number;
   stage: GameStage;
   personality: PersonalityType | null;
   role: RoleType | null;
   currentCardIndex: number;
   history: { cardId: string; choice: 'LEFT' | 'RIGHT' }[];
   deathReason: string | null;
+  deathType: DeathType | null;
+  unlockedEndings: DeathType[];
+  bossFightAnswers: boolean[];
+}
+
+export enum DeathType {
+  BANKRUPT = 'BANKRUPT',
+  REPLACED_BY_SCRIPT = 'REPLACED_BY_SCRIPT',
+  CONGRESS = 'CONGRESS',
+  FLED_COUNTRY = 'FLED_COUNTRY',
+  PRISON = 'PRISON',
+  AUDIT_FAILURE = 'AUDIT_FAILURE'
+}
+
+export interface BossQuestion {
+  id: string;
+  question: string;
+  correctAnswer: string;
+  wrongAnswers: string[];
+  explanation: string;
 }

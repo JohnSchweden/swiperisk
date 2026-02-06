@@ -67,6 +67,37 @@
             background: linear-gradient(to left, transparent, rgba(239, 68, 68, 0.2));
         }
 
+        /* Swipe exit animations */
+        .swipe-exit-left {
+            animation: swipeExitLeft 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+        }
+
+        .swipe-exit-right {
+            animation: swipeExitRight 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+        }
+
+        @keyframes swipeExitLeft {
+            from {
+                transform: translateX(0) rotate(0deg);
+                opacity: 1;
+            }
+            to {
+                transform: translateX(-150%) rotate(-20deg);
+                opacity: 0;
+            }
+        }
+
+        @keyframes swipeExitRight {
+            from {
+                transform: translateX(0) rotate(0deg);
+                opacity: 1;
+            }
+            to {
+                transform: translateX(150%) rotate(20deg);
+                opacity: 0;
+            }
+        }
+
         .bg-stripes {
             background-image: repeating-linear-gradient(
                 45deg,
@@ -100,6 +131,15 @@
         @keyframes fadeIn {
             from { opacity: 0; }
             to { opacity: 1; }
+        }
+
+        @keyframes cursor-blink {
+            0%, 50% { opacity: 1; }
+            51%, 100% { opacity: 0; }
+        }
+
+        .cursor-blink {
+            animation: cursor-blink 1s step-end infinite;
         }
 
         .card-transition {
@@ -165,6 +205,7 @@
         /* Button hover transitions */
         button {
             transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            border-radius: 0 !important;
         }
 
         /* Progress bar smooth animation */
@@ -268,26 +309,26 @@
             scroll-behavior: smooth;
         }
 
+        /* Minimalist scrollbar - only visible when scrolling */
         ::-webkit-scrollbar {
-            width: 10px;
-            height: 10px;
+            width: 8px;
+            height: 8px;
+            background: transparent;
         }
 
         ::-webkit-scrollbar-track {
-            background: rgba(0, 0, 0, 0.1);
+            background: transparent;
         }
 
         ::-webkit-scrollbar-thumb {
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 5px;
+            background: linear-gradient(180deg, rgba(148, 163, 184, 0.35), rgba(148, 163, 184, 0.15));
+            border-radius: 9999px;
             border: 2px solid transparent;
-            background-clip: content-box;
+            background-clip: padding-box;
         }
 
         ::-webkit-scrollbar-thumb:hover {
-            background: rgba(255, 255, 255, 0.2);
-            border: 2px solid transparent;
-            background-clip: content-box;
+            background: linear-gradient(180deg, rgba(148, 163, 184, 0.5), rgba(148, 163, 184, 0.25));
         }
 
         ::-webkit-scrollbar-corner {
@@ -297,7 +338,17 @@
         /* Firefox scrollbar */
         * {
             scrollbar-width: thin;
-            scrollbar-color: rgba(255, 255, 255, 0.1) transparent;
+            scrollbar-color: rgba(148, 163, 184, 0.25) transparent;
+        }
+
+        /* Hide scrollbar utility for carousels */
+        .scrollbar-hide::-webkit-scrollbar {
+            display: none;
+        }
+
+        .scrollbar-hide {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
         }
 
         /* Prevent pull-to-refresh on mobile */

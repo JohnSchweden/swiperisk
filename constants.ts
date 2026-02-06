@@ -129,7 +129,7 @@ export const BOSS_FIGHT_QUESTIONS: BossQuestion[] = [
 ];
 
 export const ROLE_CARDS: Record<RoleType, Card[]> = {
-  [RoleType.DEVELOPER]: [
+  [RoleType.DEVELOPMENT]: [
     {
       id: 'dev_1',
       source: AppSource.IDE,
@@ -265,7 +265,7 @@ export const ROLE_CARDS: Record<RoleType, Card[]> = {
       }
     }
   ],
-  [RoleType.MANAGER]: [
+  [RoleType.MANAGEMENT]: [
     {
       id: 'man_attention_track',
       source: AppSource.SLACK,
@@ -469,7 +469,7 @@ export const ROLE_CARDS: Record<RoleType, Card[]> = {
       }
     }
   ],
-  [RoleType.CLEANER]: [
+  [RoleType.CLEANING]: [
     {
       id: 'cln_sticky_note',
       source: AppSource.SLACK,

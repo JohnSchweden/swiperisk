@@ -1,11 +1,11 @@
-
-import React, { useState, useEffect, useRef } from 'react';
-import { createPortal } from 'react-dom';
-import { GameStage, PersonalityType, RoleType, GameState, Card, AppSource, DeathType } from './types';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
+import { GameStage, PersonalityType, RoleType, GameState, AppSource, DeathType } from './types';
 import { PERSONALITIES, ROLE_CARDS, DEATH_ENDINGS, BOSS_FIGHT_QUESTIONS } from './constants';
 import { speak, getRoast } from './services/geminiService';
 
 const INITIAL_BUDGET = 10000000;
+const SWIPE_THRESHOLD = 100;
+const SWIPE_PREVIEW_THRESHOLD = 50;
 
 const App: React.FC = () => {
   const [state, setState] = useState<GameState>({
@@ -43,57 +43,15 @@ const App: React.FC = () => {
   const [showBossExplanation, setShowBossExplanation] = useState(false);
   const [bossAnswered, setBossAnswered] = useState(false);
 
-  // Basic mobile viewport detection (client-side only)
-  const [isMobile, setIsMobile] = useState(false);
-
-  useEffect(() => {
-    const updateIsMobile = () => {
-      if (typeof window !== 'undefined') {
-        setIsMobile(window.innerWidth < 768);
-      }
-    };
-
-    updateIsMobile();
-    window.addEventListener('resize', updateIsMobile);
-    return () => window.removeEventListener('resize', updateIsMobile);
-  }, []);
-
-  // Track if we're in a transition - uses ref for synchronous access
-  const blockClicksUntilRef = useRef(0);
-  const [blockerKey, setBlockerKey] = useState(0); // Force re-render when blocking starts
-  
-  const startTransition = () => {
-    // Block for 600ms from now - synchronous, immediate
-    blockClicksUntilRef.current = Date.now() + 600;
-    setBlockerKey(k => k + 1); // Trigger overlay render
-    // Clear block after delay
-    setTimeout(() => {
-      blockClicksUntilRef.current = 0;
-      setBlockerKey(k => k + 1); // Trigger overlay removal
-    }, 600);
-  };
-  
-  // Global click/touch interceptor - blocks events during transition window
-  useEffect(() => {
-    const handleGlobalClick = (e: MouseEvent | TouchEvent) => {
-      if (Date.now() < blockClicksUntilRef.current) {
-        e.preventDefault();
-        e.stopPropagation();
-        return false;
-      }
-    };
-    
-    // Capture phase to intercept before React handlers
-    document.addEventListener('click', handleGlobalClick, true);
-    document.addEventListener('touchstart', handleGlobalClick, true);
-    document.addEventListener('touchend', handleGlobalClick, true);
-    
-    return () => {
-      document.removeEventListener('click', handleGlobalClick, true);
-      document.removeEventListener('touchstart', handleGlobalClick, true);
-      document.removeEventListener('touchend', handleGlobalClick, true);
-    };
-  }, []);
+  // Swipe gesture state
+  const [swipeOffset, setSwipeOffset] = useState(0);
+  const [isDragging, setIsDragging] = useState(false);
+  const [swipeDirection, setSwipeDirection] = useState<'LEFT' | 'RIGHT' | null>(null);
+  const [cardExitDirection, setCardExitDirection] = useState<'LEFT' | 'RIGHT' | null>(null);
+  const cardRef = useRef<HTMLDivElement>(null);
+  const touchStartX = useRef(0);
+  const touchStartY = useRef(0);
+  const isHorizontalSwipe = useRef(false);
 
   // Clock update
   useEffect(() => {
@@ -138,16 +96,94 @@ const App: React.FC = () => {
     }
   }, [state.stage, state.personality]);
 
+  // Keyboard navigation for desktop
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (state.stage !== GameStage.PLAYING || feedbackOverlay) return;
+      
+      if (e.key === 'ArrowLeft') {
+        e.preventDefault();
+        handleSwipeChoice('LEFT');
+      } else if (e.key === 'ArrowRight') {
+        e.preventDefault();
+        handleSwipeChoice('RIGHT');
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [state.stage, feedbackOverlay, state.currentCardIndex]);
+
+  // Reset card exit animation when moving to next card
+  useEffect(() => {
+    setCardExitDirection(null);
+    setSwipeOffset(0);
+    setSwipeDirection(null);
+  }, [state.currentCardIndex]);
+
+  // Touch/Mouse gesture handlers
+  const handleTouchStart = useCallback((e: React.TouchEvent | React.MouseEvent) => {
+    if (state.stage !== GameStage.PLAYING || feedbackOverlay) return;
+    
+    const clientX = 'touches' in e ? e.touches[0].clientX : e.clientX;
+    const clientY = 'touches' in e ? e.touches[0].clientY : e.clientY;
+    
+    touchStartX.current = clientX;
+    touchStartY.current = clientY;
+    isHorizontalSwipe.current = false;
+    setIsDragging(true);
+  }, [state.stage, feedbackOverlay]);
+
+  const handleTouchMove = useCallback((e: React.TouchEvent | React.MouseEvent) => {
+    if (!isDragging || state.stage !== GameStage.PLAYING || feedbackOverlay) return;
+    
+    const clientX = 'touches' in e ? e.touches[0].clientX : e.clientX;
+    const clientY = 'touches' in e ? e.touches[0].clientY : e.clientY;
+    
+    const deltaX = clientX - touchStartX.current;
+    const deltaY = clientY - touchStartY.current;
+    
+    // Determine if this is a horizontal swipe
+    if (!isHorizontalSwipe.current && Math.abs(deltaX) > Math.abs(deltaY)) {
+      isHorizontalSwipe.current = true;
+    }
+    
+    if (isHorizontalSwipe.current) {
+      e.preventDefault?.();
+      setSwipeOffset(deltaX);
+      
+      // Update preview direction
+      if (Math.abs(deltaX) > SWIPE_PREVIEW_THRESHOLD) {
+        setSwipeDirection(deltaX > 0 ? 'RIGHT' : 'LEFT');
+      } else {
+        setSwipeDirection(null);
+      }
+    }
+  }, [isDragging, state.stage, feedbackOverlay]);
+
+  const handleTouchEnd = useCallback(() => {
+    if (!isDragging) return;
+    
+    setIsDragging(false);
+    
+    if (Math.abs(swipeOffset) > SWIPE_THRESHOLD) {
+      // Commit the swipe
+      const direction = swipeOffset > 0 ? 'RIGHT' : 'LEFT';
+      handleSwipeChoice(direction);
+    } else {
+      // Snap back
+      setSwipeOffset(0);
+      setSwipeDirection(null);
+    }
+  }, [isDragging, swipeOffset]);
+
   const handleStart = () => {
-    startTransition();
     setState(prev => ({ ...prev, stage: GameStage.PERSONALITY_SELECT }));
   };
   const selectPersonality = (p: PersonalityType) => {
-    startTransition();
     setState(prev => ({ ...prev, personality: p, stage: GameStage.ROLE_SELECT }));
   };
   const selectRole = (r: RoleType) => {
-    startTransition();
     setCountdown(3);
     setState(prev => ({ ...prev, role: r, stage: GameStage.INITIALIZING, currentCardIndex: 0 }));
   };
@@ -180,6 +216,15 @@ const App: React.FC = () => {
       budget: newBudget,
       history: [...prev.history, { cardId: currentCard.id, choice: direction }]
     }));
+  };
+
+  const handleSwipeChoice = (direction: 'LEFT' | 'RIGHT') => {
+    setCardExitDirection(direction);
+    
+    // Wait for exit animation then trigger choice
+    setTimeout(() => {
+      handleChoice(direction);
+    }, 300);
   };
 
   const determineDeathType = (budget: number, heat: number, hype: number): DeathType => {
@@ -320,16 +365,16 @@ const App: React.FC = () => {
     <div className="flex flex-col items-center justify-center min-h-screen p-4 md:p-6 text-center bg-black safe-area-top safe-area-bottom">
       <div className="mb-8 md:mb-12 relative">
         <div className="text-5xl md:text-6xl font-bold glitch-text tracking-tighter mb-2">HYPERSCALE</div>
-        <div className="text-red-600 font-bold mono text-xs md:text-sm animate-pulse tracking-[0.4em]">project_icarus // os_v0.92</div>
+        <div className="text-red-600 font-bold mono text-xs md:text-sm animate-pulse tracking-[0.4em]">incident_response_terminal // os_v0.92</div>
       </div>
       <p className="max-w-xl text-slate-400 mb-8 md:mb-10 text-base md:text-lg px-4 leading-relaxed">
-        The ultimate simulator for AI Risk, Governance, and Compliance.
+        <span className="font-bold">Tinder for AI Risk, Governance, and Compliance.</span>
         <br />
-        <span className="text-slate-500">Made for people who hate f*cking boring governance training.</span>
+        <span className="text-[#B8962E] mono text-sm md:text-base">[NOTICE: Made for people who hate f*cking boring governance training]</span>
       </p>
       <p className="max-w-xl text-slate-500 mb-12 md:mb-16 text-base md:text-lg px-4">
-        <span className="text-slate-400 font-bold block mb-2">The Premise</span>
-        The CEO integrated an unhinged AI into every department.<br className="hidden md:inline" /><span className="text-slate-400">Your Task:</span> Move fast, break laws, and try to survive the final audit.
+        <span className="text-slate-400 font-bold block mb-2">Project Icarus</span>
+        The CEO integrated an unhinged AI into every department.<br className="hidden md:inline" /><span className="text-slate-400"> Move fast, break laws, and try to survive the final audit. <span className="cursor-blink text-slate-400">_</span></span> 
       </p>
       <button 
         onClick={handleStart}
@@ -337,7 +382,7 @@ const App: React.FC = () => {
       >
         Boot system
       </button>
-      <div className="mt-8 md:mt-12 mono text-xs text-slate-600 px-4 text-center">WARNING: PREVIOUS COMPLIANCE OFFICER CURRENTLY PENDING LITIGATION</div>
+      <div className="mt-8 md:mt-12 mono text-xs text-red-500 px-4 text-center">WARNING: PREVIOUS COMPLIANCE OFFICER CURRENTLY PENDING LITIGATION</div>
     </div>
   );
 
@@ -362,7 +407,7 @@ const App: React.FC = () => {
             <button
               key={type}
               onClick={() => selectPersonality(type as PersonalityType)}
-              className="group p-6 md:p-10 bg-slate-900/60 border border-slate-800 hover:border-cyan-500 flex flex-col rounded-2xl hover-scale shadow-2xl transition-colors w-full text-left"
+              className="group p-6 md:p-10 bg-slate-900/60 border border-slate-800 hover:border-cyan-500 flex flex-col hover-scale shadow-2xl transition-colors w-full text-left"
               style={{ animationDelay: `${index * 0.1}s` }}
             >
               <div className="flex flex-col items-center text-center mb-4 md:mb-6">
@@ -394,13 +439,6 @@ const App: React.FC = () => {
     <div className="flex flex-col items-center justify-center min-h-screen p-4 md:p-6 bg-black safe-area-top safe-area-bottom">
       <div className="w-full max-w-4xl">
         <div className="text-center mb-6 md:mb-10">
-          {/* Original "Vera linked" status bar
-          <div className="text-cyan-400 mb-2 md:mb-3 mono text-[10px] md:text-xs flex items-center gap-2 justify-center tracking-[0.25em] uppercase fade-in px-4">
-            <i className="fa-solid fa-circle-nodes animate-pulse"></i>
-            <span className="hidden sm:inline">handshake_success //</span>
-            <span>{PERSONALITIES[state.personality!].name} linked</span>
-          </div>
-          */}
           <div className="text-red-600 mb-2 md:mb-3 mono text-[10px] md:text-xs tracking-[0.3em] fade-in px-4">
             step_02 // damage_control
           </div>
@@ -409,7 +447,7 @@ const App: React.FC = () => {
           </h2>
           <p className="max-w-2xl mx-auto text-slate-400 text-sm md:text-base leading-relaxed px-4">
             Choose which part of the company you want to endanger first. Each role changes the kinds of
-            incidents, heat you attract, and creative ways to lose that \$10M budget.
+            incidents, heat you attract, and creative ways to lose that $10M budget.
           </p>
         </div>
 
@@ -418,7 +456,7 @@ const App: React.FC = () => {
             <button
               key={role}
               onClick={() => selectRole(role)}
-              className="group p-6 md:p-8 bg-slate-900/60 border border-slate-800 hover:border-cyan-500 transition-all rounded-2xl text-center hover-scale shadow-2xl"
+              className="group p-6 md:p-8 bg-slate-900/60 border border-slate-800 hover:border-cyan-500 transition-all text-center hover-scale shadow-2xl"
               style={{ animationDelay: `${index * 0.08}s` }}
             >
               <div className="text-3xl md:text-4xl mb-3 md:mb-4 text-slate-500 group-hover:text-cyan-400 transition-colors">
@@ -486,7 +524,7 @@ const App: React.FC = () => {
     const personality = PERSONALITIES[state.personality!];
 
     return (
-      <div className="min-h-screen bg-[#0a0a0c] flex flex-col relative pt-16 md:pt-12 pb-20 md:pb-12 safe-area-top safe-area-bottom">
+      <div className="min-h-screen bg-[#0a0a0c] flex flex-col relative pt-16 md:pt-12 pb-12 md:pb-12 safe-area-top safe-area-bottom">
         {/* Top HUD - Budget Focused - Mobile Optimized */}
         <div className="absolute top-2 md:top-4 left-1/2 -translate-x-1/2 w-full max-w-4xl px-3 md:px-4 flex flex-col md:flex-row gap-2 md:gap-6 items-stretch md:items-center">
           <div className="flex-1 space-y-1 min-w-0">
@@ -524,10 +562,37 @@ const App: React.FC = () => {
         </div>
 
         {/* Main Content - Responsive Layout */}
-        <div className="flex-1 flex flex-col lg:flex-row items-center justify-center pt-8 p-3 md:p-8 gap-4 md:gap-8">
+        <div className="flex-1 flex flex-col items-center justify-center pt-8 p-3 pb-2 md:p-8 md:pb-4 gap-4 md:gap-8">
           
           {/* Main App Window */}
-          <div className="flex-1 w-full max-w-full lg:max-w-[43rem] min-h-[280px] md:min-h-[400px] bg-slate-900/90 border border-slate-700 rounded-xl overflow-hidden shadow-2xl flex flex-col ticket-transition" key={state.currentCardIndex}>
+          <div
+            ref={cardRef}
+            className={`flex-1 w-full max-w-full lg:max-w-[43rem] min-h-[360px] md:min-h-[320px] bg-slate-900/90 border border-slate-700 rounded-xl overflow-hidden shadow-2xl flex flex-col relative select-none ${cardExitDirection ? `swipe-exit-${cardExitDirection.toLowerCase()}` : 'ticket-transition'}`}
+            key={state.currentCardIndex}
+            onTouchStart={handleTouchStart}
+            onTouchMove={handleTouchMove}
+            onTouchEnd={handleTouchEnd}
+            onMouseDown={handleTouchStart}
+            onMouseMove={handleTouchMove}
+            onMouseUp={handleTouchEnd}
+            onMouseLeave={handleTouchEnd}
+            style={{
+              transform: cardExitDirection
+                ? undefined
+                : `translateX(${swipeOffset}px) rotate(${swipeOffset * 0.05}deg)`,
+              transition: isDragging ? 'none' : 'transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94)',
+              cursor: isDragging ? 'grabbing' : 'grab',
+            }}
+          >
+            {/* Swipe Preview Overlay */}
+            {swipeDirection && (
+              <div className={`absolute inset-0 pointer-events-none z-10 ${swipeDirection === 'RIGHT' ? 'swipe-gradient-right' : 'swipe-gradient-left'}`}>
+                <div className={`absolute top-1/2 -translate-y-1/2 ${swipeDirection === 'RIGHT' ? 'right-8' : 'left-8'} text-4xl md:text-6xl font-black tracking-tighter ${swipeDirection === 'RIGHT' ? 'text-green-500' : 'text-red-500'} opacity-50`}>
+                  {swipeDirection === 'RIGHT' ? currentCard.onRight.label.toUpperCase() : currentCard.onLeft.label.toUpperCase()}
+                </div>
+              </div>
+            )}
+
             <div className="bg-slate-800 px-3 md:px-4 py-2 flex items-center justify-between border-b border-white/5">
               <div className="flex items-center gap-2 text-[10px] mono font-bold text-slate-400 truncate">
                 <i className={`fa-solid ${currentCard.source === AppSource.IDE ? 'fa-terminal' : 'fa-hashtag'}`}></i>
@@ -539,8 +604,8 @@ const App: React.FC = () => {
                 <div className="w-2.5 h-2.5 rounded-full bg-red-500/50"></div>
               </div>
             </div>
-            <div className="p-4 md:p-10 flex flex-col justify-between flex-1">
-              <div className="space-y-3 md:space-y-6">
+            <div className="p-4 md:p-10 flex flex-col justify-between flex-1 overflow-hidden">
+              <div className="space-y-3 md:space-y-6 overflow-y-auto">
                 <div className="flex items-center gap-3">
                   <div className="w-8 h-8 md:w-10 md:h-10 rounded bg-slate-800 flex items-center justify-center border border-white/5 shrink-0">
                      <i className="fa-solid fa-user-robot text-slate-500 text-xs md:text-base"></i>
@@ -554,19 +619,35 @@ const App: React.FC = () => {
                   "{currentCard.text}"
                 </p>
               </div>
-              <div className="flex flex-row gap-3 md:gap-4 mt-6 md:mt-12">
-                 <button onClick={() => handleChoice('LEFT')} className="flex-1 py-2 px-3 md:py-4 md:px-4 text-sm md:text-base border border-white text-white bg-transparent font-bold tracking-wide hover:bg-cyan-500 hover:border-cyan-500 hover:text-black active:bg-cyan-500 active:border-cyan-500 active:text-black transition-all rounded-lg min-h-[40px] md:min-h-[48px]">
-                   {currentCard.onLeft.label}
-                 </button>
-                 <button onClick={() => handleChoice('RIGHT')} className="flex-1 py-2 px-3 md:py-4 md:px-4 text-sm md:text-base border border-white text-white bg-transparent font-black tracking-wide hover:bg-cyan-500 hover:border-cyan-500 hover:text-black active:bg-cyan-500 active:border-cyan-500 active:text-black transition-all rounded-lg min-h-[40px] md:min-h-[48px]">
-                   {currentCard.onRight.label}
-                 </button>
+              <div className="flex flex-col gap-3 mt-6 md:mt-8 shrink-0">
+                {/* Keyboard hint for desktop */}
+                <div className="flex items-center justify-center gap-2 text-[10px] text-slate-500 mono">
+                  <span className="hidden md:inline px-1.5 py-0.5 bg-slate-800 border border-slate-700 rounded">←</span>
+                  <span className="hidden md:inline">Use arrow keys or swipe</span>
+                  <span className="hidden md:inline px-1.5 py-0.5 bg-slate-800 border border-slate-700 rounded">→</span>
+                  
+                  {/* Mobile swipe hint */}
+                  <span className="flex md:hidden items-center justify-center gap-3">
+                    <span className="text-red-500 font-bold">← Swipe left</span>
+                    <span className="text-slate-600">or</span>
+                    <span className="text-green-500 font-bold">Swipe right →</span>
+                  </span>
+                </div>
+
+                <div className="flex flex-row gap-3 md:gap-4">
+                   <button onClick={() => handleSwipeChoice('LEFT')} className="flex-1 py-2 px-3 md:py-4 md:px-4 text-sm md:text-base border border-white text-white bg-transparent font-bold tracking-wide hover:bg-cyan-500 hover:border-cyan-500 hover:text-black active:bg-cyan-500 active:border-cyan-500 active:text-black transition-all min-h-[40px] md:min-h-[48px]">
+                     {currentCard.onLeft.label}
+                   </button>
+                   <button onClick={() => handleSwipeChoice('RIGHT')} className="flex-1 py-2 px-3 md:py-4 md:px-4 text-sm md:text-base border border-white text-white bg-transparent font-black tracking-wide hover:bg-cyan-500 hover:border-cyan-500 hover:text-black active:bg-cyan-500 active:border-cyan-500 active:text-black transition-all min-h-[40px] md:min-h-[48px]">
+                     {currentCard.onRight.label}
+                   </button>
+                </div>
               </div>
             </div>
           </div>
 
-          {/* Side Roaster Terminal - Responsive */}
-          <div className="w-full lg:w-64 h-auto lg:h-[350px] bg-black/80 border border-slate-800 rounded-xl overflow-hidden flex flex-col shadow-2xl mt-2 lg:mt-0">
+          {/* Side Roaster Terminal - Below incident */}
+          <div className="w-full max-w-[43rem] lg:w-[43rem] h-auto lg:h-[260px] bg-black/80 border border-slate-800 rounded-xl overflow-hidden flex flex-col shadow-2xl">
             <div className="bg-slate-900 px-4 py-2 border-b border-white/5 flex items-center justify-between">
               <span className="text-[10px] mono font-bold text-green-500">roast_con.exe</span>
               <i className="fa-solid fa-minus text-[10px] text-slate-500"></i>
@@ -577,7 +658,7 @@ const App: React.FC = () => {
                 value={roastInput}
                 onChange={(e) => setRoastInput(e.target.value)}
                 placeholder="e.g. I use ChatGPT for company secrets..."
-                className="w-full h-16 lg:h-32 bg-black border border-green-900/30 rounded p-3 text-xs mono text-green-500 focus:outline-none placeholder:text-green-900/50 resize-none mb-3"
+                className="w-full h-14 lg:h-24 bg-black border border-green-900/30 rounded p-3 text-xs mono text-green-500 focus:outline-none placeholder:text-green-900/50 resize-none mb-3"
               />
               <button 
                 onClick={handleRoast}
@@ -599,7 +680,7 @@ const App: React.FC = () => {
         {/* Taskbar - Mobile Optimized */}
         <div className="h-12 bg-slate-900/95 border-t border-white/5 flex items-center px-3 md:px-6 justify-between fixed bottom-0 w-full backdrop-blur-md safe-area-bottom">
           <div className="flex items-center gap-2 md:gap-6">
-             <button className="bg-slate-800 hover:bg-slate-700 px-2 md:px-4 py-1.5 rounded flex items-center gap-2 border border-white/5 transition-colors min-h-[36px]">
+             <button className="bg-slate-800 hover:bg-slate-700 px-2 md:px-4 py-1.5 flex items-center gap-2 border border-white/5 transition-colors min-h-[36px]">
                <i className="fa-solid fa-atom text-cyan-400"></i>
                <span className="text-xs font-black tracking-wide hidden sm:inline">Start</span>
              </button>
@@ -628,73 +709,39 @@ const App: React.FC = () => {
 
         {/* Answer Window - Overlay with fine display */}
         {feedbackOverlay &&
-          (isMobile
-            ? createPortal(
-                <div className="fixed inset-0 z-50 flex items-center justify-center p-4 md:p-6 bg-black/70 backdrop-blur-sm">
-                  <div className="w-full max-w-lg bg-slate-900 border border-slate-700 p-6 md:p-10 rounded-2xl text-center shadow-2xl max-h-[90vh] overflow-y-auto">
-                    <div className={`text-4xl md:text-6xl mb-4 md:mb-6 ${feedbackOverlay.fine > 0 ? 'text-red-500' : 'text-green-500'}`}>
-                      <i className={`fa-solid ${feedbackOverlay.fine > 0 ? 'fa-triangle-exclamation' : 'fa-circle-check'}`}></i>
-                    </div>
-                    
-                    {feedbackOverlay.fine > 0 && (
-                      <div className="mb-4 md:mb-6 p-3 md:p-4 bg-red-900/20 border border-red-500/30 rounded-lg">
-                        <div className="text-red-400 text-xs font-bold tracking-wide mb-1">Violation fine</div>
-                        <div className="text-2xl md:text-3xl font-black text-red-500">-{formatBudget(feedbackOverlay.fine)}</div>
-                        <div className="text-red-400/70 text-xs mt-1">{feedbackOverlay.violation}</div>
-                      </div>
-                    )}
-                    
-                    <div className="text-cyan-400 mono text-[10px] mb-3 md:mb-4 font-bold tracking-wide">{personality.name}'s review</div>
-                    <p className="text-lg md:text-2xl mb-4 md:mb-8 italic text-slate-100 font-light leading-relaxed">"{feedbackOverlay.text}"</p>
-                    
-                    <div className="bg-black/50 border border-white/5 p-4 md:p-6 rounded-xl text-left mb-4 md:mb-8">
-                      <div className="text-[10px] font-bold text-slate-500 tracking-wide mb-3 border-b border-white/5 pb-2">Governance alert</div>
-                      <p className="text-xs md:text-sm text-slate-400 leading-relaxed font-light">{feedbackOverlay.lesson}</p>
-                    </div>
-
-                    <button 
-                      onClick={nextIncident}
-                      className="w-auto px-8 py-2.5 text-sm md:text-base bg-white text-black font-black tracking-wide hover:bg-cyan-500 transition-all rounded-lg shadow-xl transform active:scale-95"
-                    >
-                      Next ticket
-                    </button>
-                  </div>
-                </div>,
-                document.body
-              )
-            : (
-                <div className="fixed inset-0 z-50 flex items-center justify-center p-4 md:p-6 bg-black/70 backdrop-blur-sm">
-                  <div className="w-full max-w-lg bg-slate-900 border border-slate-700 p-6 md:p-10 rounded-2xl text-center shadow-2xl max-h-[90vh] overflow-y-auto">
-                    <div className={`text-4xl md:text-6xl mb-4 md:mb-6 ${feedbackOverlay.fine > 0 ? 'text-red-500' : 'text-green-500'}`}>
-                      <i className={`fa-solid ${feedbackOverlay.fine > 0 ? 'fa-triangle-exclamation' : 'fa-circle-check'}`}></i>
-                    </div>
-                    
-                    {feedbackOverlay.fine > 0 && (
-                      <div className="mb-4 md:mb-6 p-3 md:p-4 bg-red-900/20 border border-red-500/30 rounded-lg">
-                        <div className="text-red-400 text-xs font-bold tracking-wide mb-1">Violation fine</div>
-                        <div className="text-2xl md:text-3xl font-black text-red-500">-{formatBudget(feedbackOverlay.fine)}</div>
-                        <div className="text-red-400/70 text-xs mt-1">{feedbackOverlay.violation}</div>
-                      </div>
-                    )}
-                    
-                    <div className="text-cyan-400 mono text-[10px] mb-3 md:mb-4 font-bold tracking-wide">{personality.name}'s review</div>
-                    <p className="text-lg md:text-2xl mb-4 md:mb-8 italic text-slate-100 font-light leading-relaxed">"{feedbackOverlay.text}"</p>
-                    
-                    <div className="bg-black/50 border border-white/5 p-4 md:p-6 rounded-xl text-left mb-4 md:mb-8">
-                      <div className="text-[10px] font-bold text-slate-500 tracking-wide mb-3 border-b border-white/5 pb-2">Governance alert</div>
-                      <p className="text-xs md:text-sm text-slate-400 leading-relaxed font-light">{feedbackOverlay.lesson}</p>
-                    </div>
-
-                    <button 
-                      onClick={nextIncident}
-                      className="w-auto px-8 py-2.5 text-sm md:text-base bg-white text-black font-black tracking-wide hover:bg-cyan-500 transition-all rounded-lg shadow-xl transform active:scale-95"
-                    >
-                      Next ticket
-                    </button>
-                  </div>
+          (
+            <div className="fixed inset-0 z-50 flex items-center justify-center p-4 md:p-6 bg-black/70 backdrop-blur-sm">
+              <div className="w-full max-w-lg bg-slate-900 border border-slate-700 p-6 md:p-10 rounded-2xl text-center shadow-2xl max-h-[90vh] overflow-y-auto">
+                <div className={`text-4xl md:text-6xl mb-4 md:mb-6 ${feedbackOverlay.fine > 0 ? 'text-red-500' : 'text-green-500'}`}>
+                  <i className={`fa-solid ${feedbackOverlay.fine > 0 ? 'fa-triangle-exclamation' : 'fa-circle-check'}`}></i>
                 </div>
-              )
-          )}
+                
+                {feedbackOverlay.fine > 0 && (
+                  <div className="mb-4 md:mb-6 p-3 md:p-4 bg-red-900/20 border border-red-500/30 rounded-lg">
+                    <div className="text-red-400 text-xs font-bold tracking-wide mb-1">Violation fine</div>
+                    <div className="text-2xl md:text-3xl font-black text-red-500">-{formatBudget(feedbackOverlay.fine)}</div>
+                    <div className="text-red-400/70 text-xs mt-1">{feedbackOverlay.violation}</div>
+                  </div>
+                )}
+                
+                <div className="text-cyan-400 mono text-[10px] mb-3 md:mb-4 font-bold tracking-wide">{personality.name}'s review</div>
+                <p className="text-lg md:text-2xl mb-4 md:mb-8 italic text-slate-100 font-light leading-relaxed">"{feedbackOverlay.text}"</p>
+                
+                <div className="bg-black/50 border border-white/5 p-4 md:p-6 rounded-xl text-left mb-4 md:mb-8">
+                  <div className="text-[10px] font-bold text-slate-500 tracking-wide mb-3 border-b border-white/5 pb-2">Governance alert</div>
+                  <p className="text-xs md:text-sm text-slate-400 leading-relaxed font-light">{feedbackOverlay.lesson}</p>
+                </div>
+
+                <button 
+                  onClick={nextIncident}
+                  className="w-auto px-8 py-2.5 text-sm md:text-base bg-white text-black font-black tracking-wide hover:bg-cyan-500 transition-all shadow-xl transform active:scale-95"
+                >
+                  Next ticket
+                </button>
+              </div>
+            </div>
+          )
+        }
       </div>
     );
   };
@@ -749,7 +796,7 @@ const App: React.FC = () => {
                       key={index}
                       onClick={() => handleBossAnswer(isCorrect)}
                       disabled={bossAnswered}
-                      className="w-full p-3 md:p-4 bg-slate-800 border border-slate-700 rounded-lg text-left hover:bg-slate-700 hover:border-cyan-500 transition-all flex items-center gap-4 min-h-[48px]"
+                      className="w-full p-3 md:p-4 bg-slate-800 border border-slate-700 text-left hover:bg-slate-700 hover:border-cyan-500 transition-all flex items-center gap-4 min-h-[48px]"
                     >
                       <div className="flex-1">
                         <span className="text-cyan-400 font-mono mr-2">{String.fromCharCode(65 + index)}.</span>
@@ -770,7 +817,7 @@ const App: React.FC = () => {
                 <div className="text-center pt-3">
                   <button
                     onClick={nextBossQuestion}
-                    className="w-auto px-8 py-2.5 text-sm md:text-base bg-white text-black font-black tracking-wide hover:bg-cyan-500 transition-all rounded-lg shadow-xl transform active:scale-95"
+                    className="w-auto px-8 py-2.5 text-sm md:text-base bg-white text-black font-black tracking-wide hover:bg-cyan-500 transition-all shadow-xl transform active:scale-95"
                   >
                     {currentBossQuestion + 1 >= BOSS_FIGHT_QUESTIONS.length ? 'Final result' : 'Next question'}
                   </button>
@@ -862,7 +909,7 @@ const App: React.FC = () => {
       </div>
 
       {/* Collection Progress */}
-<div className="mb-6 md:mb-8 p-4 md:p-6 bg-slate-900/50 border border-slate-800 rounded-xl">
+      <div className="mb-6 md:mb-8 p-4 md:p-6 bg-slate-900/50 border border-slate-800 rounded-xl">
         <div className="text-xs text-slate-500 tracking-wide mb-3 md:mb-4">Ending collection</div>
         <div className="flex gap-2 md:gap-3 justify-center flex-wrap">
             {Object.values(DeathType).map((type) => (
@@ -906,24 +953,8 @@ const App: React.FC = () => {
   };
 
   return (
-    <div 
-      className="min-h-screen overflow-y-auto stage-transition" 
-      key={state.stage}
-      style={{ userSelect: 'none', WebkitUserSelect: 'none' }}
-    >
+    <div className="min-h-screen overflow-y-auto stage-transition" key={state.stage}>
       {renderStage()}
-      {/* Full-screen overlay blocks ALL interaction during transitions - critical for preventing mobile ghost clicks */}
-      {Date.now() < blockClicksUntilRef.current && (
-        <div 
-          key={blockerKey}
-          className="fixed inset-0 z-[9999]"
-          style={{ 
-            touchAction: 'none',
-            background: 'transparent',
-            cursor: 'default'
-          }}
-        />
-      )}
     </div>
   );
 };

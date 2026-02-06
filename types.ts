@@ -6,12 +6,12 @@ export enum PersonalityType {
 }
 
 export enum RoleType {
-  DEVELOPER = 'DEVELOPER',
+  DEVELOPMENT = 'DEVELOPMENT',
   MARKETING = 'MARKETING',
-  MANAGER = 'MANAGER',
+  MANAGEMENT = 'MANAGEMENT',
   HR = 'HR',
   FINANCE = 'FINANCE',
-  CLEANER = 'CLEANER'
+  CLEANING = 'CLEANING'
 }
 
 export enum AppSource {

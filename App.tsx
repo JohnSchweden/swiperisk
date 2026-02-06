@@ -1,5 +1,6 @@
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
+import { createPortal } from 'react-dom';
 import { GameStage, PersonalityType, RoleType, GameState, Card, AppSource, DeathType } from './types';
 import { PERSONALITIES, ROLE_CARDS, DEATH_ENDINGS, BOSS_FIGHT_QUESTIONS } from './constants';
 import { speak, getRoast } from './services/geminiService';
@@ -42,15 +43,57 @@ const App: React.FC = () => {
   const [showBossExplanation, setShowBossExplanation] = useState(false);
   const [bossAnswered, setBossAnswered] = useState(false);
 
-  // Track if we're in a transition - blocks all pointer events during stage changes
-  const [isTransitioning, setIsTransitioning] = useState(false);
-  
+  // Basic mobile viewport detection (client-side only)
+  const [isMobile, setIsMobile] = useState(false);
+
   useEffect(() => {
-    // Block pointer events immediately when stage changes
-    setIsTransitioning(true);
-    const timer = setTimeout(() => setIsTransitioning(false), 350);
-    return () => clearTimeout(timer);
-  }, [state.stage]);
+    const updateIsMobile = () => {
+      if (typeof window !== 'undefined') {
+        setIsMobile(window.innerWidth < 768);
+      }
+    };
+
+    updateIsMobile();
+    window.addEventListener('resize', updateIsMobile);
+    return () => window.removeEventListener('resize', updateIsMobile);
+  }, []);
+
+  // Track if we're in a transition - uses ref for synchronous access
+  const blockClicksUntilRef = useRef(0);
+  const [blockerKey, setBlockerKey] = useState(0); // Force re-render when blocking starts
+  
+  const startTransition = () => {
+    // Block for 600ms from now - synchronous, immediate
+    blockClicksUntilRef.current = Date.now() + 600;
+    setBlockerKey(k => k + 1); // Trigger overlay render
+    // Clear block after delay
+    setTimeout(() => {
+      blockClicksUntilRef.current = 0;
+      setBlockerKey(k => k + 1); // Trigger overlay removal
+    }, 600);
+  };
+  
+  // Global click/touch interceptor - blocks events during transition window
+  useEffect(() => {
+    const handleGlobalClick = (e: MouseEvent | TouchEvent) => {
+      if (Date.now() < blockClicksUntilRef.current) {
+        e.preventDefault();
+        e.stopPropagation();
+        return false;
+      }
+    };
+    
+    // Capture phase to intercept before React handlers
+    document.addEventListener('click', handleGlobalClick, true);
+    document.addEventListener('touchstart', handleGlobalClick, true);
+    document.addEventListener('touchend', handleGlobalClick, true);
+    
+    return () => {
+      document.removeEventListener('click', handleGlobalClick, true);
+      document.removeEventListener('touchstart', handleGlobalClick, true);
+      document.removeEventListener('touchend', handleGlobalClick, true);
+    };
+  }, []);
 
   // Clock update
   useEffect(() => {
@@ -96,12 +139,15 @@ const App: React.FC = () => {
   }, [state.stage, state.personality]);
 
   const handleStart = () => {
+    startTransition();
     setState(prev => ({ ...prev, stage: GameStage.PERSONALITY_SELECT }));
   };
   const selectPersonality = (p: PersonalityType) => {
+    startTransition();
     setState(prev => ({ ...prev, personality: p, stage: GameStage.ROLE_SELECT }));
   };
   const selectRole = (r: RoleType) => {
+    startTransition();
     setCountdown(3);
     setState(prev => ({ ...prev, role: r, stage: GameStage.INITIALIZING, currentCardIndex: 0 }));
   };
@@ -142,7 +188,7 @@ const App: React.FC = () => {
       if (hype <= 10) return DeathType.REPLACED_BY_SCRIPT;
       if (state.role === RoleType.FINANCE) return DeathType.PRISON;
       if (state.role === RoleType.MARKETING) return DeathType.CONGRESS;
-      if (state.role === RoleType.MANAGER) return DeathType.AUDIT_FAILURE;
+      if (state.role === RoleType.MANAGEMENT) return DeathType.AUDIT_FAILURE;
       return DeathType.FLED_COUNTRY;
     }
     return DeathType.AUDIT_FAILURE;
@@ -296,54 +342,108 @@ const App: React.FC = () => {
   );
 
   const renderPersonalitySelect = () => (
-    <div className="flex flex-col items-center justify-center min-h-screen p-4 md:p-6 bg-[#050505] safe-area-top safe-area-bottom">
-      <h2 className="text-3xl md:text-5xl font-black mb-8 md:mb-16 tracking-tight text-center fade-in px-4">Select your emotional support</h2>
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-8 w-full max-w-5xl px-4">
-        {Object.entries(PERSONALITIES).map(([type, p], index) => (
-          <button 
-            key={type}
-            onClick={() => selectPersonality(type as PersonalityType)}
-            className="group p-6 md:p-10 bg-slate-900/50 border border-slate-800 hover:border-cyan-500 flex flex-col items-center text-center rounded-2xl hover-scale shadow-xl"
-            style={{ animationDelay: `${index * 0.1}s` }}
-          >
-            <div className="w-16 h-16 md:w-24 md:h-24 bg-slate-800 rounded-full mb-4 md:mb-8 flex items-center justify-center group-hover:bg-cyan-500 transition-colors shadow-inner">
-               <i className={`fa-solid ${type === PersonalityType.ROASTER ? 'fa-user-ninja' : type === PersonalityType.ZEN_MASTER ? 'fa-leaf' : 'fa-rocket'} text-2xl md:text-4xl group-hover:text-black`}></i>
-            </div>
-            <div className="text-xl md:text-2xl font-black mb-1">{p.name}</div>
-            <div className="text-cyan-400 text-xs mb-4 md:mb-6 font-black tracking-wide">{p.title}</div>
-            <p className="text-slate-400 text-xs md:text-sm leading-relaxed">{p.description}</p>
-          </button>
-        ))}
+    <div className="flex flex-col items-center justify-center min-h-screen p-4 md:p-6 bg-black safe-area-top safe-area-bottom">
+      <div className="w-full max-w-5xl">
+        <div className="text-center mb-6 md:mb-10">
+          <div className="text-red-600 mb-3 mono text-[10px] md:text-xs tracking-[0.3em]">
+            step_01 // chaos_handler
+          </div>
+          <h2 className="text-3xl md:text-5xl font-black tracking-tight fade-in px-4">
+            Select your emotional support
+          </h2>
+          <p className="mt-4 md:mt-6 max-w-xl mx-auto text-slate-400 text-sm md:text-base leading-relaxed px-4">
+            Pick the unhinged co-pilot that will narrate your compliance spiral, hype your bad ideas,
+            and occasionally try to keep you out of prison.
+          </p>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-8 w-full px-4">
+          {Object.entries(PERSONALITIES).map(([type, p], index) => (
+            <button
+              key={type}
+              onClick={() => selectPersonality(type as PersonalityType)}
+              className="group p-6 md:p-10 bg-slate-900/60 border border-slate-800 hover:border-cyan-500 flex flex-col rounded-2xl hover-scale shadow-2xl transition-colors w-full text-left"
+              style={{ animationDelay: `${index * 0.1}s` }}
+            >
+              <div className="flex flex-col items-center text-center mb-4 md:mb-6">
+                <div className="text-slate-500 group-hover:text-cyan-500 transition-colors mb-2 md:mb-3">
+                  <i
+                    className={`fa-solid ${
+                      type === PersonalityType.ROASTER
+                        ? 'fa-user-ninja'
+                        : type === PersonalityType.ZEN_MASTER
+                        ? 'fa-leaf'
+                        : 'fa-rocket'
+                    } text-2xl md:text-4xl`}
+                  ></i>
+                </div>
+                <div className="text-xl md:text-2xl font-black">{p.name}</div>
+                <div className="text-cyan-400 text-xs font-black tracking-wide">{p.title}</div>
+              </div>
+              <p className="text-slate-400 text-xs md:text-sm leading-relaxed w-full mt-auto text-center">
+                {p.description}
+              </p>
+            </button>
+          ))}
+        </div>
       </div>
     </div>
   );
 
   const renderRoleSelect = () => (
-    <div className="flex flex-col items-center justify-center min-h-screen p-4 md:p-6 bg-[#050505] safe-area-top safe-area-bottom">
-       <div className="text-cyan-400 mb-4 md:mb-6 mono text-xs flex items-center gap-2 tracking-wide fade-in px-4 text-center">
-        <i className="fa-solid fa-circle-nodes animate-pulse"></i> <span className="hidden sm:inline">handshake_success // </span>{PERSONALITIES[state.personality!].name} connected
-      </div>
-      <h2 className="text-3xl md:text-5xl font-black mb-8 md:mb-16 tracking-tight text-center fade-in px-4">Select clearance</h2>
-      <div className="grid grid-cols-2 md:grid-cols-3 gap-4 md:gap-6 w-full max-w-2xl px-4">
-        {Object.values(RoleType).map((role, index) => (
-          <button
-            key={role}
-            onClick={() => selectRole(role)}
-            className="group p-6 md:p-8 bg-slate-900/50 border border-slate-800 hover:border-cyan-500 transition-all rounded-xl text-center hover-scale"
-            style={{ animationDelay: `${index * 0.08}s` }}
-          >
-            <div className="text-3xl md:text-4xl mb-3 md:mb-4 text-slate-500 group-hover:text-cyan-400 transition-colors">
-              <i className={`fa-solid ${
-                role === RoleType.DEVELOPER ? 'fa-code' :
-                role === RoleType.MARKETING ? 'fa-bullhorn' :
-                role === RoleType.MANAGER ? 'fa-briefcase' :
-                role === RoleType.HR ? 'fa-users' :
-                role === RoleType.FINANCE ? 'fa-vault' : 'fa-broom'
-              }`}></i>
-            </div>
-            <div className="font-black text-xs tracking-wide text-slate-400 group-hover:text-white transition-colors">{formatLabel(role)}</div>
-          </button>
-        ))}
+    <div className="flex flex-col items-center justify-center min-h-screen p-4 md:p-6 bg-black safe-area-top safe-area-bottom">
+      <div className="w-full max-w-4xl">
+        <div className="text-center mb-6 md:mb-10">
+          {/* Original "Vera linked" status bar
+          <div className="text-cyan-400 mb-2 md:mb-3 mono text-[10px] md:text-xs flex items-center gap-2 justify-center tracking-[0.25em] uppercase fade-in px-4">
+            <i className="fa-solid fa-circle-nodes animate-pulse"></i>
+            <span className="hidden sm:inline">handshake_success //</span>
+            <span>{PERSONALITIES[state.personality!].name} linked</span>
+          </div>
+          */}
+          <div className="text-red-600 mb-2 md:mb-3 mono text-[10px] md:text-xs tracking-[0.3em] fade-in px-4">
+            step_02 // damage_control
+          </div>
+          <h2 className="text-3xl md:text-5xl font-black mb-3 md:mb-4 tracking-tight fade-in px-4">
+            Select your clearance level
+          </h2>
+          <p className="max-w-2xl mx-auto text-slate-400 text-sm md:text-base leading-relaxed px-4">
+            Choose which part of the company you want to endanger first. Each role changes the kinds of
+            incidents, heat you attract, and creative ways to lose that \$10M budget.
+          </p>
+        </div>
+
+        <div className="grid grid-cols-2 md:grid-cols-3 gap-4 md:gap-6 w-full px-4">
+          {Object.values(RoleType).map((role, index) => (
+            <button
+              key={role}
+              onClick={() => selectRole(role)}
+              className="group p-6 md:p-8 bg-slate-900/60 border border-slate-800 hover:border-cyan-500 transition-all rounded-2xl text-center hover-scale shadow-2xl"
+              style={{ animationDelay: `${index * 0.08}s` }}
+            >
+              <div className="text-3xl md:text-4xl mb-3 md:mb-4 text-slate-500 group-hover:text-cyan-400 transition-colors">
+                <i
+                  className={`fa-solid ${
+                    role === RoleType.DEVELOPMENT
+                      ? 'fa-code'
+                      : role === RoleType.MARKETING
+                      ? 'fa-bullhorn'
+                      : role === RoleType.MANAGEMENT
+                      ? 'fa-briefcase'
+                      : role === RoleType.HR
+                      ? 'fa-users'
+                      : role === RoleType.FINANCE
+                      ? 'fa-vault'
+                      : 'fa-broom'
+                  }`}
+                ></i>
+              </div>
+              <div className="font-black text-xs md:text-sm tracking-wide text-slate-300 group-hover:text-white transition-colors">
+                {formatLabel(role)}
+              </div>
+            </button>
+          ))}
+        </div>
       </div>
     </div>
   );
@@ -391,7 +491,7 @@ const App: React.FC = () => {
         <div className="absolute top-2 md:top-4 left-1/2 -translate-x-1/2 w-full max-w-4xl px-3 md:px-4 flex flex-col md:flex-row gap-2 md:gap-6 items-stretch md:items-center">
           <div className="flex-1 space-y-1 min-w-0">
             <div className="flex justify-between text-[10px] font-black tracking-wide mb-1">
-              <span className={state.budget < 2000000 ? 'text-red-500 animate-pulse' : 'text-green-400'}>💰 Budget</span>
+              <span className={`${state.budget < 2000000 ? 'text-red-500 animate-pulse' : 'text-green-400'} inline-flex items-center gap-1.5`}><i className="fa-solid fa-coins text-[10px]"></i>Budget</span>
               <span className={state.budget < 2000000 ? 'text-red-500' : 'text-green-400'}>{formatBudget(state.budget)}</span>
             </div>
             <div className="h-2 bg-slate-900 rounded border border-white/10 overflow-hidden bg-stripes p-[1px]">
@@ -404,7 +504,7 @@ const App: React.FC = () => {
           <div className="flex gap-3 md:gap-6 w-full md:w-auto">
             <div className="flex-1 md:w-28 space-y-1">
               <div className="flex justify-between text-[10px] font-black tracking-wide mb-1">
-                <span className={state.heat > 80 ? 'text-yellow-400 animate-pulse' : 'text-orange-500'}>🔥 Risk</span>
+                <span className={`${state.heat > 80 ? 'text-yellow-400 animate-pulse' : 'text-orange-500'} inline-flex items-center gap-1.5`}><i className="fa-solid fa-fire text-[10px]"></i>Risk</span>
                 <span className="text-orange-500">{state.heat}%</span>
               </div>
               <div className="h-2 bg-slate-900 rounded border border-white/10 overflow-hidden bg-stripes p-[1px]">
@@ -413,7 +513,7 @@ const App: React.FC = () => {
             </div>
             <div className="flex-1 md:w-28 space-y-1">
               <div className="flex justify-between text-[10px] font-black tracking-wide mb-1">
-                <span className={state.hype < 20 ? 'text-red-500 animate-pulse' : 'text-cyan-400'}>📈 Hype</span>
+                <span className={`${state.hype < 20 ? 'text-red-500 animate-pulse' : 'text-cyan-400'} inline-flex items-center gap-1.5`}><i className="fa-solid fa-chart-line text-[10px]"></i>Hype</span>
                 <span className="text-cyan-400">{state.hype}%</span>
               </div>
               <div className="h-2 bg-slate-900 rounded border border-white/10 overflow-hidden bg-stripes p-[1px]">
@@ -527,38 +627,74 @@ const App: React.FC = () => {
         </div>
 
         {/* Answer Window - Overlay with fine display */}
-        {feedbackOverlay && (
-          <div className="fixed inset-0 z-50 flex items-center justify-center p-4 md:p-6 bg-black/70 backdrop-blur-sm">
-            <div className="w-full max-w-lg bg-slate-900 border border-slate-700 p-6 md:p-10 rounded-2xl text-center shadow-2xl max-h-[90vh] overflow-y-auto">
-              <div className={`text-4xl md:text-6xl mb-4 md:mb-6 ${feedbackOverlay.fine > 0 ? 'text-red-500' : 'text-green-500'}`}>
-                <i className={`fa-solid ${feedbackOverlay.fine > 0 ? 'fa-triangle-exclamation' : 'fa-circle-check'}`}></i>
-              </div>
-              
-              {feedbackOverlay.fine > 0 && (
-                <div className="mb-4 md:mb-6 p-3 md:p-4 bg-red-900/20 border border-red-500/30 rounded-lg">
-                  <div className="text-red-400 text-xs font-bold tracking-wide mb-1">Violation fine</div>
-                  <div className="text-2xl md:text-3xl font-black text-red-500">-{formatBudget(feedbackOverlay.fine)}</div>
-                  <div className="text-red-400/70 text-xs mt-1">{feedbackOverlay.violation}</div>
-                </div>
-              )}
-              
-              <div className="text-cyan-400 mono text-[10px] mb-3 md:mb-4 font-bold tracking-wide">{personality.name}'s review</div>
-              <p className="text-lg md:text-2xl mb-4 md:mb-8 italic text-slate-100 font-light leading-relaxed">"{feedbackOverlay.text}"</p>
-              
-              <div className="bg-black/50 border border-white/5 p-4 md:p-6 rounded-xl text-left mb-4 md:mb-8">
-                 <div className="text-[10px] font-bold text-slate-500 tracking-wide mb-3 border-b border-white/5 pb-2">Governance alert</div>
-                 <p className="text-xs md:text-sm text-slate-400 leading-relaxed font-light">{feedbackOverlay.lesson}</p>
-              </div>
+        {feedbackOverlay &&
+          (isMobile
+            ? createPortal(
+                <div className="fixed inset-0 z-50 flex items-center justify-center p-4 md:p-6 bg-black/70 backdrop-blur-sm">
+                  <div className="w-full max-w-lg bg-slate-900 border border-slate-700 p-6 md:p-10 rounded-2xl text-center shadow-2xl max-h-[90vh] overflow-y-auto">
+                    <div className={`text-4xl md:text-6xl mb-4 md:mb-6 ${feedbackOverlay.fine > 0 ? 'text-red-500' : 'text-green-500'}`}>
+                      <i className={`fa-solid ${feedbackOverlay.fine > 0 ? 'fa-triangle-exclamation' : 'fa-circle-check'}`}></i>
+                    </div>
+                    
+                    {feedbackOverlay.fine > 0 && (
+                      <div className="mb-4 md:mb-6 p-3 md:p-4 bg-red-900/20 border border-red-500/30 rounded-lg">
+                        <div className="text-red-400 text-xs font-bold tracking-wide mb-1">Violation fine</div>
+                        <div className="text-2xl md:text-3xl font-black text-red-500">-{formatBudget(feedbackOverlay.fine)}</div>
+                        <div className="text-red-400/70 text-xs mt-1">{feedbackOverlay.violation}</div>
+                      </div>
+                    )}
+                    
+                    <div className="text-cyan-400 mono text-[10px] mb-3 md:mb-4 font-bold tracking-wide">{personality.name}'s review</div>
+                    <p className="text-lg md:text-2xl mb-4 md:mb-8 italic text-slate-100 font-light leading-relaxed">"{feedbackOverlay.text}"</p>
+                    
+                    <div className="bg-black/50 border border-white/5 p-4 md:p-6 rounded-xl text-left mb-4 md:mb-8">
+                      <div className="text-[10px] font-bold text-slate-500 tracking-wide mb-3 border-b border-white/5 pb-2">Governance alert</div>
+                      <p className="text-xs md:text-sm text-slate-400 leading-relaxed font-light">{feedbackOverlay.lesson}</p>
+                    </div>
 
-              <button 
-                onClick={nextIncident}
-                className="w-auto px-8 py-2.5 text-sm md:text-base bg-white text-black font-black tracking-wide hover:bg-cyan-500 transition-all rounded-lg shadow-xl transform active:scale-95"
-              >
-                Next ticket
-              </button>
-            </div>
-          </div>
-        )}
+                    <button 
+                      onClick={nextIncident}
+                      className="w-auto px-8 py-2.5 text-sm md:text-base bg-white text-black font-black tracking-wide hover:bg-cyan-500 transition-all rounded-lg shadow-xl transform active:scale-95"
+                    >
+                      Next ticket
+                    </button>
+                  </div>
+                </div>,
+                document.body
+              )
+            : (
+                <div className="fixed inset-0 z-50 flex items-center justify-center p-4 md:p-6 bg-black/70 backdrop-blur-sm">
+                  <div className="w-full max-w-lg bg-slate-900 border border-slate-700 p-6 md:p-10 rounded-2xl text-center shadow-2xl max-h-[90vh] overflow-y-auto">
+                    <div className={`text-4xl md:text-6xl mb-4 md:mb-6 ${feedbackOverlay.fine > 0 ? 'text-red-500' : 'text-green-500'}`}>
+                      <i className={`fa-solid ${feedbackOverlay.fine > 0 ? 'fa-triangle-exclamation' : 'fa-circle-check'}`}></i>
+                    </div>
+                    
+                    {feedbackOverlay.fine > 0 && (
+                      <div className="mb-4 md:mb-6 p-3 md:p-4 bg-red-900/20 border border-red-500/30 rounded-lg">
+                        <div className="text-red-400 text-xs font-bold tracking-wide mb-1">Violation fine</div>
+                        <div className="text-2xl md:text-3xl font-black text-red-500">-{formatBudget(feedbackOverlay.fine)}</div>
+                        <div className="text-red-400/70 text-xs mt-1">{feedbackOverlay.violation}</div>
+                      </div>
+                    )}
+                    
+                    <div className="text-cyan-400 mono text-[10px] mb-3 md:mb-4 font-bold tracking-wide">{personality.name}'s review</div>
+                    <p className="text-lg md:text-2xl mb-4 md:mb-8 italic text-slate-100 font-light leading-relaxed">"{feedbackOverlay.text}"</p>
+                    
+                    <div className="bg-black/50 border border-white/5 p-4 md:p-6 rounded-xl text-left mb-4 md:mb-8">
+                      <div className="text-[10px] font-bold text-slate-500 tracking-wide mb-3 border-b border-white/5 pb-2">Governance alert</div>
+                      <p className="text-xs md:text-sm text-slate-400 leading-relaxed font-light">{feedbackOverlay.lesson}</p>
+                    </div>
+
+                    <button 
+                      onClick={nextIncident}
+                      className="w-auto px-8 py-2.5 text-sm md:text-base bg-white text-black font-black tracking-wide hover:bg-cyan-500 transition-all rounded-lg shadow-xl transform active:scale-95"
+                    >
+                      Next ticket
+                    </button>
+                  </div>
+                </div>
+              )
+          )}
       </div>
     );
   };
@@ -675,13 +811,13 @@ const App: React.FC = () => {
           </>
         )}
 
-        <div className="mb-6 md:mb-8 p-3 md:p-4 bg-red-900/20 border border-red-500/30 rounded-lg">
+        <div className="mb-3 md:mb-4 p-3 md:p-4 rounded-lg">
           <div className="text-red-400 text-xs font-bold tracking-wide mb-1">Final budget</div>
           <div className="text-2xl md:text-3xl font-black text-red-500">{formatBudget(state.budget)}</div>
         </div>
 
         {/* Collection Progress */}
-        <div className="mb-6 md:mb-8 p-4 md:p-6 bg-slate-900/50 border border-slate-800 rounded-xl">
+        <div className="mb-6 md:mb-8 p-4 md:p-6 rounded-xl">
           <div className="text-xs text-slate-500 tracking-wide mb-3 md:mb-4">Ending collection</div>
           <div className="flex gap-2 md:gap-3 justify-center flex-wrap">
             {Object.values(DeathType).map((type) => (
@@ -771,10 +907,23 @@ const App: React.FC = () => {
 
   return (
     <div 
-      className={`min-h-screen overflow-y-auto stage-transition ${isTransitioning ? 'pointer-events-none' : ''}`} 
+      className="min-h-screen overflow-y-auto stage-transition" 
       key={state.stage}
+      style={{ userSelect: 'none', WebkitUserSelect: 'none' }}
     >
       {renderStage()}
+      {/* Full-screen overlay blocks ALL interaction during transitions - critical for preventing mobile ghost clicks */}
+      {Date.now() < blockClicksUntilRef.current && (
+        <div 
+          key={blockerKey}
+          className="fixed inset-0 z-[9999]"
+          style={{ 
+            touchAction: 'none',
+            background: 'transparent',
+            cursor: 'default'
+          }}
+        />
+      )}
     </div>
   );
 };

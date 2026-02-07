@@ -7,24 +7,24 @@
 
 ### Layout System (LAYOUT)
 
-- [ ] **LAYOUT-01**: Unified responsive layout system implemented
+- [x] **LAYOUT-01**: Unified responsive layout system implemented
   - Desktop (≥1024px): Centered layout with `items-center justify-center`
   - Mobile (<1024px): Top-anchored layout with `items-start pt-20`
   
-- [ ] **LAYOUT-02**: Visual jumps eliminated between all 8 screens
+- [x] **LAYOUT-02**: Visual jumps eliminated between all 8 screens
   - Intro, Personality Select, Role Select, Initializing use consistent layout
   - Game screen refactored to use same LayoutShell component
   - Boss Fight, Game Over, Summary screens aligned
   
-- [ ] **LAYOUT-03**: Desktop scrollbar layout shifts prevented
+- [x] **LAYOUT-03**: Desktop scrollbar layout shifts prevented
   - Implement `scrollbar-gutter: stable` on desktop (>1024px)
   - Centered content stays centered when scrollbar appears/disappears
   
-- [ ] **LAYOUT-04**: Mobile viewport instability fixed
+- [x] **LAYOUT-04**: Mobile viewport instability fixed
   - Replace all `min-h-screen` (100vh) with `min-h-[100dvh]`
   - Content no longer shifts when mobile browser toolbars collapse/expand
   
-- [ ] **LAYOUT-05**: Reusable LayoutShell component created
+- [x] **LAYOUT-05**: Reusable LayoutShell component created
   - Component accepts `children`, optional `header`, optional `footer`
   - Handles responsive breakpoints internally
   - Used by all 8 game stages consistently
@@ -114,11 +114,11 @@
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| LAYOUT-01 | Phase 1 | Pending |
-| LAYOUT-02 | Phase 1 | Pending |
-| LAYOUT-03 | Phase 1 | Pending |
-| LAYOUT-04 | Phase 1 | Pending |
-| LAYOUT-05 | Phase 1 | Pending |
+| LAYOUT-01 | Phase 1 | Complete |
+| LAYOUT-02 | Phase 1 | Complete |
+| LAYOUT-03 | Phase 1 | Complete |
+| LAYOUT-04 | Phase 1 | Complete |
+| LAYOUT-05 | Phase 1 | Complete |
 | SWIPE-01 | Phase 2 | Pending |
 | SWIPE-02 | Phase 2 | Pending |
 | SWIPE-03 | Phase 2 | Pending |

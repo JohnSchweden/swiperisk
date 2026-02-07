@@ -684,7 +684,7 @@ const App: React.FC = () => {
         {/* Taskbar - Mobile Optimized */}
         <div className="h-12 bg-slate-900/95 border-t border-white/5 flex items-center px-3 md:px-6 justify-between fixed bottom-0 w-full backdrop-blur-md safe-area-bottom z-20">
           <div className="flex items-center gap-2 md:gap-6">
-             <button className="bg-slate-800 hover:bg-slate-700 px-2 md:px-4 py-1.5 flex items-center gap-2 border border-white/5 transition-colors min-h-[36px]">
+             <button className="bg-slate-800 hover:bg-slate-700 px-3 md:px-4 py-2 flex items-center gap-2 border border-white/5 transition-colors min-h-[44px]">
                <i className="fa-solid fa-atom text-cyan-400" aria-hidden></i>
                <span className="text-xs font-black tracking-wide hidden sm:inline">Start</span>
              </button>

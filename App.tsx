@@ -652,7 +652,7 @@ const App: React.FC = () => {
           </div>
 
           {/* Side Roaster Terminal - Below incident */}
-          <div className="w-full max-w-[43rem] lg:w-[43rem] h-auto lg:h-[260px] bg-black/80 border border-slate-800 rounded-xl overflow-hidden flex flex-col shadow-2xl">
+          <div className="w-full max-w-[43rem] lg:w-[43rem] h-auto lg:h-[260px] bg-black/80 border border-slate-800 rounded-xl overflow-hidden flex flex-col shadow-2xl mb-12">
             <div className="bg-slate-900 px-4 py-2 border-b border-white/5 flex items-center justify-between">
               <span className="text-[10px] mono font-bold text-green-500">roast_con.exe</span>
               <i className="fa-solid fa-minus text-[10px] text-slate-400" aria-hidden></i>

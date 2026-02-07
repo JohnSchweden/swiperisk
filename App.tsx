@@ -957,7 +957,7 @@ const App: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen overflow-y-auto stage-transition" key={state.stage}>
+    <div className="min-h-[100dvh] overflow-y-auto stage-transition" key={state.stage}>
       {renderStage()}
     </div>
   );

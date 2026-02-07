@@ -1,0 +1,138 @@
+# Requirements: hyperscale UI/UX Improvements
+
+**Defined:** 2026-02-07
+**Core Value:** Players experience smooth, responsive gameplay with consistent visual design across all 8 game stages
+
+## v1 Requirements
+
+### Layout System (LAYOUT)
+
+- [ ] **LAYOUT-01**: Unified responsive layout system implemented
+  - Desktop (≥1024px): Centered layout with `items-center justify-center`
+  - Mobile (<1024px): Top-anchored layout with `items-start pt-20`
+  
+- [ ] **LAYOUT-02**: Visual jumps eliminated between all 8 screens
+  - Intro, Personality Select, Role Select, Initializing use consistent layout
+  - Game screen refactored to use same LayoutShell component
+  - Boss Fight, Game Over, Summary screens aligned
+  
+- [ ] **LAYOUT-03**: Desktop scrollbar layout shifts prevented
+  - Implement `scrollbar-gutter: stable` on desktop (>1024px)
+  - Centered content stays centered when scrollbar appears/disappears
+  
+- [ ] **LAYOUT-04**: Mobile viewport instability fixed
+  - Replace all `min-h-screen` (100vh) with `min-h-[100dvh]`
+  - Content no longer shifts when mobile browser toolbars collapse/expand
+  
+- [ ] **LAYOUT-05**: Reusable LayoutShell component created
+  - Component accepts `children`, optional `header`, optional `footer`
+  - Handles responsive breakpoints internally
+  - Used by all 8 game stages consistently
+
+### Swipe Interactions (SWIPE)
+
+- [ ] **SWIPE-01**: Spring physics snap-back animation implemented
+  - CSS `cubic-bezier(0.34, 1.56, 0.64, 1)` for soft bouncy return
+  - Triggered when swipe released under threshold (100px)
+  - Duration: 500-600ms for natural feel
+  
+- [ ] **SWIPE-02**: Card lift effect on drag start
+  - Scale from 1.0 to 1.05 when `isDragging` becomes true
+  - Box shadow increases for depth perception
+  - Smooth transition (200ms) on drag start
+  
+- [ ] **SWIPE-03**: Card stack showing next card underneath
+  - Next card rendered behind current card with `z-index: 0`
+  - Scale: 0.95, Opacity: 0.6 for depth effect
+  - Same size and dimensions as current card
+  
+- [ ] **SWIPE-04**: Enhanced gradient/text swipe preview
+  - Red gradient overlay when swiping left (scales with distance)
+  - Green gradient overlay when swiping right (scales with distance)
+  - Text label ("DEBUG", "PASTE", etc.) scales from 0.5 to 1.0 with distance
+  - Appears when swipe exceeds 50px (SWIPE_PREVIEW_THRESHOLD)
+  
+- [ ] **SWIPE-05**: Smooth card exit animations
+  - Left exit: `translateX(-120%) rotate(-25deg)` + fade out
+  - Right exit: `translateX(120%) rotate(25deg)` + fade out
+  - Duration: 350ms with `cubic-bezier(0.25, 0.46, 0.45, 0.94)`
+
+### Transitions (TRANS)
+
+- [ ] **TRANS-01**: Consistent stage transition animations
+  - All 8 stages use same `stage-transition` animation class
+  - Animation: fade + scale (0.98 → 1.0) + translateY (20px → 0)
+  - Duration: 400-500ms
+  - No directional transitions (fade only) to avoid confusion with swipe
+
+### Design Audit (DESIGN)
+
+- [ ] **DESIGN-01**: Visual design audited and aligned across screens
+  - Typography consistent (font sizes, weights, line heights)
+  - Color palette consistent (slate grays, cyan accents)
+  - Spacing consistent (padding, margins, gaps)
+  - Component styles consistent (buttons, cards, inputs)
+  - Border radius and shadows consistent
+
+### Performance (PERF)
+
+- [ ] **PERF-01**: Touch gesture performance optimized
+  - `will-change: transform` on swipeable card
+  - `backface-visibility: hidden` for GPU acceleration
+  - `-webkit-font-smoothing: antialiased` for crisp text
+  - Passive event listeners where possible
+
+## v2 Requirements (Future Milestones)
+
+### Sound & Haptics
+- **SOUND-01**: Audio feedback for swipe actions
+- **SOUND-02**: Background music or ambient sound
+- **HAPTIC-01**: Vibration feedback on mobile (10ms on threshold cross)
+
+### Advanced Animations
+- **ANIM-01**: Stats update animations (budget/heat/hype changes)
+- **ANIM-02**: HUD progress bar smooth transitions
+- **ANIM-03**: Roaster Terminal text reveal animation
+
+### Accessibility
+- **A11Y-01**: Full keyboard navigation (already partially implemented)
+- **A11Y-02**: Screen reader optimizations
+- **A11Y-03**: Reduced motion support (`prefers-reduced-motion`)
+
+## Out of Scope
+
+| Feature | Reason |
+|---------|--------|
+| Native mobile apps (iOS/Android) | Browser-first approach sufficient; native wrappers add complexity |
+| Icon-based swipe feedback (✕/✓) | Contextual text labels ("Debug"/"Paste") more meaningful for varied decisions |
+| Card opacity fade during swipe | Could make card text unreadable during decision-making |
+| Server-side features | Keep client-side only; no backend dependencies wanted |
+| Multiplayer/social features | Single player focus for this milestone |
+| View Transition API | Overkill for this project; CSS animations sufficient |
+
+## Traceability
+
+| Requirement | Phase | Status |
+|-------------|-------|--------|
+| LAYOUT-01 | Phase 1 | Pending |
+| LAYOUT-02 | Phase 1 | Pending |
+| LAYOUT-03 | Phase 1 | Pending |
+| LAYOUT-04 | Phase 1 | Pending |
+| LAYOUT-05 | Phase 1 | Pending |
+| SWIPE-01 | Phase 2 | Pending |
+| SWIPE-02 | Phase 2 | Pending |
+| SWIPE-03 | Phase 2 | Pending |
+| SWIPE-04 | Phase 2 | Pending |
+| SWIPE-05 | Phase 2 | Pending |
+| TRANS-01 | Phase 3 | Pending |
+| DESIGN-01 | Phase 3 | Pending |
+| PERF-01 | Phase 3 | Pending |
+
+**Coverage:**
+- v1 requirements: 13 total
+- Mapped to phases: 13
+- Unmapped: 0 ✓
+
+---
+*Requirements defined: 2026-02-07*
+*Last updated: 2026-02-07 after initial definition*

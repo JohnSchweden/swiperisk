@@ -39,11 +39,11 @@ This roadmap delivers a comprehensive UI/UX overhaul of the hyperscale game, foc
 - [x] 01-02-PLAN.md — Update Intro, Personality Select, Role Select screens
 - [x] 01-03-PLAN.md — Update Initializing, Boss Fight, Game Over, Summary screens
 - [x] 01-04-PLAN.md — Refactor Game screen and add scrollbar/viewport fixes
-- [ ] 01-05-PLAN.md — Human verification of all 8 stages
+- [x] 01-05-PLAN.md — Human verification of all 8 stages
 
 **Gap Closure Plans (from verification):**
-- [ ] 01-06-PLAN.md — Fix desktop centering for all 8 screens
-- [ ] 01-07-PLAN.md — Fix Game screen mobile layout issues
+- [x] 01-06-PLAN.md — Fix desktop centering for all 8 screens
+- [x] 01-07-PLAN.md — Fix Game screen mobile layout issues
 
 ### Implementation Notes
 

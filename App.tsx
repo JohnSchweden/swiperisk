@@ -527,9 +527,9 @@ const App: React.FC = () => {
     const personality = PERSONALITIES[state.personality!];
 
     return (
-      <div className="min-h-screen bg-[#0a0a0c] flex flex-col relative pt-16 md:pt-12 pb-12 md:pb-12 safe-area-top safe-area-bottom">
+      <LayoutShell className="bg-[#0a0a0c] overflow-hidden">
         {/* Top HUD - Budget Focused - Mobile Optimized */}
-        <div className="absolute top-2 md:top-4 left-1/2 -translate-x-1/2 w-full max-w-4xl px-3 md:px-4 flex flex-col md:flex-row gap-2 md:gap-6 items-stretch md:items-center">
+        <div className="absolute top-2 md:top-4 left-1/2 -translate-x-1/2 w-full max-w-4xl px-3 md:px-4 flex flex-col md:flex-row gap-2 md:gap-6 items-stretch md:items-center z-10">
           <div className="flex-1 space-y-1 min-w-0">
             <div className="flex justify-between text-[10px] font-black tracking-wide mb-1">
               <span className={`${state.budget < 2000000 ? 'text-red-500 animate-pulse' : 'text-green-400'} inline-flex items-center gap-1.5`}><i className="fa-solid fa-coins text-[10px]" aria-hidden></i>Budget</span>
@@ -565,7 +565,7 @@ const App: React.FC = () => {
         </div>
 
         {/* Main Content - Responsive Layout */}
-        <div className="flex-1 flex flex-col items-center justify-center pt-8 p-3 pb-2 md:p-8 md:pb-4 gap-4 md:gap-8">
+        <div className="flex-1 flex flex-col items-center justify-center pt-20 md:pt-24 p-3 pb-16 md:p-8 md:pb-20 gap-4 md:gap-8">
           
           {/* Main App Window */}
           <div
@@ -682,7 +682,7 @@ const App: React.FC = () => {
         </div>
 
         {/* Taskbar - Mobile Optimized */}
-        <div className="h-12 bg-slate-900/95 border-t border-white/5 flex items-center px-3 md:px-6 justify-between fixed bottom-0 w-full backdrop-blur-md safe-area-bottom">
+        <div className="h-12 bg-slate-900/95 border-t border-white/5 flex items-center px-3 md:px-6 justify-between fixed bottom-0 w-full backdrop-blur-md safe-area-bottom z-20">
           <div className="flex items-center gap-2 md:gap-6">
              <button className="bg-slate-800 hover:bg-slate-700 px-2 md:px-4 py-1.5 flex items-center gap-2 border border-white/5 transition-colors min-h-[36px]">
                <i className="fa-solid fa-atom text-cyan-400" aria-hidden></i>
@@ -747,7 +747,7 @@ const App: React.FC = () => {
             </div>
           )
         }
-      </div>
+      </LayoutShell>
     );
   };
 

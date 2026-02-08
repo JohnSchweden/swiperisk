@@ -662,7 +662,7 @@ const App: React.FC = () => {
     s === RoleType.HR ? 'HR' : s.replace(/_/g, ' ').toLowerCase().replace(/\b\w/g, (c) => c.toUpperCase());
 
   const renderIntro = () => (
-    <LayoutShell className="p-4 md:p-6 text-center">
+    <LayoutShell className="p-4 md:p-6 text-center bg-[#0a0a0c]">
       <div className="mb-8 md:mb-12 relative">
         <h1 className="text-6xl md:text-7xl font-bold glitch-text tracking-tighter mb-2">hyperscale</h1>
         <div className="text-red-600 font-bold mono text-xs md:text-sm animate-pulse tracking-[0.4em]">incident_response_terminal // os_v0.92</div>
@@ -690,7 +690,7 @@ const App: React.FC = () => {
   );
 
   const renderPersonalitySelect = () => (
-    <LayoutShell className="p-4 md:p-6">
+    <LayoutShell className="p-4 md:p-6 bg-[#0a0a0c]">
       <div className="w-full max-w-5xl mx-auto">
         <div className="text-center mb-6 md:mb-10">
           <div className="text-red-600 mb-3 mono text-[10px] md:text-xs tracking-[0.3em]">
@@ -741,7 +741,7 @@ const App: React.FC = () => {
   );
 
   const renderRoleSelect = () => (
-    <LayoutShell className="p-4 md:p-6">
+    <LayoutShell className="p-4 md:p-6 bg-[#0a0a0c]">
       <div className="w-full max-w-4xl mx-auto">
         <div className="text-center mb-6 md:mb-10">
           <div className="text-red-600 mb-2 md:mb-3 mono text-[10px] md:text-xs tracking-[0.3em] fade-in px-4">
@@ -794,7 +794,7 @@ const App: React.FC = () => {
   );
 
   const renderInitializing = () => (
-    <LayoutShell className="p-4 md:p-6 bg-black text-cyan-500 font-mono">
+    <LayoutShell className="p-4 md:p-6 bg-[#0a0a0c] text-cyan-500 font-mono">
       <div className="w-full max-w-xl p-4 md:p-8 border border-cyan-900/50 bg-slate-900/20 rounded-lg shadow-2xl relative overflow-hidden">
         <div className="absolute bottom-0 left-0 w-full h-1 bg-cyan-500/20 overflow-hidden">
           <div className="h-full bg-cyan-500 animate-[progress-shine_2s_infinite]" style={{ width: `${(3 - countdown) * 33.3}%` }}></div>

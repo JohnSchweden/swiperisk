@@ -31,35 +31,36 @@
 
 ### Swipe Interactions (SWIPE)
 
-- [ ] **SWIPE-01**: Spring physics snap-back animation implemented
+- [x] **SWIPE-01**: Spring physics snap-back animation implemented
   - CSS `cubic-bezier(0.34, 1.56, 0.64, 1)` for soft bouncy return
   - Triggered when swipe released under threshold (100px)
   - Duration: 500-600ms for natural feel
-  
-- [ ] **SWIPE-02**: Card lift effect on drag start
-  - Scale from 1.0 to 1.05 when `isDragging` becomes true
-  - Box shadow increases for depth perception
-  - Smooth transition (200ms) on drag start
-  
-- [ ] **SWIPE-03**: Card stack showing next card underneath
+
+- ~~**SWIPE-02**: Card lift effect on drag start~~
+  - ~~Scale from 1.0 to 1.05 when `isDragging` becomes true~~
+  - ~~Box shadow increases for depth perception~~
+  - ~~Smooth transition (200ms) on drag start~~
+  *Removed per user decision*
+
+- [x] **SWIPE-03**: Card stack showing next card underneath
   - Next card rendered behind current card with `z-index: 0`
   - Scale: 0.95, Opacity: 0.6 for depth effect
   - Same size and dimensions as current card
-  
-- [ ] **SWIPE-04**: Enhanced gradient/text swipe preview
+
+- [x] **SWIPE-04**: Enhanced gradient/text swipe preview
   - Red gradient overlay when swiping left (scales with distance)
   - Green gradient overlay when swiping right (scales with distance)
   - Text label ("DEBUG", "PASTE", etc.) scales from 0.5 to 1.0 with distance
   - Appears when swipe exceeds 50px (SWIPE_PREVIEW_THRESHOLD)
-  
-- [ ] **SWIPE-05**: Smooth card exit animations
+
+- [x] **SWIPE-05**: Smooth card exit animations
   - Left exit: `translateX(-120%) rotate(-25deg)` + fade out
   - Right exit: `translateX(120%) rotate(25deg)` + fade out
   - Duration: 350ms with `cubic-bezier(0.25, 0.46, 0.45, 0.94)`
 
 ### Transitions (TRANS)
 
-- [ ] **TRANS-01**: Consistent stage transition animations
+- [x] **TRANS-01**: Consistent stage transition animations
   - All 8 stages use same `stage-transition` animation class
   - Animation: fade + scale (0.98 → 1.0) + translateY (20px → 0)
   - Duration: 400-500ms
@@ -67,7 +68,7 @@
 
 ### Design Audit (DESIGN)
 
-- [ ] **DESIGN-01**: Visual design audited and aligned across screens
+- [x] **DESIGN-01**: Visual design audited and aligned across screens
   - Typography consistent (font sizes, weights, line heights)
   - Color palette consistent (slate grays, cyan accents)
   - Spacing consistent (padding, margins, gaps)
@@ -76,7 +77,7 @@
 
 ### Performance (PERF)
 
-- [ ] **PERF-01**: Touch gesture performance optimized
+- [x] **PERF-01**: Touch gesture performance optimized
   - `will-change: transform` on swipeable card
   - `backface-visibility: hidden` for GPU acceleration
   - `-webkit-font-smoothing: antialiased` for crisp text
@@ -119,20 +120,22 @@
 | LAYOUT-03 | Phase 1 | Complete |
 | LAYOUT-04 | Phase 1 | Complete |
 | LAYOUT-05 | Phase 1 | Complete |
-| SWIPE-01 | Phase 2 | Pending |
-| SWIPE-02 | Phase 2 | Pending |
-| SWIPE-03 | Phase 2 | Pending |
-| SWIPE-04 | Phase 2 | Pending |
-| SWIPE-05 | Phase 2 | Pending |
-| TRANS-01 | Phase 3 | Pending |
-| DESIGN-01 | Phase 3 | Pending |
-| PERF-01 | Phase 3 | Pending |
+| SWIPE-01 | Phase 2 | Complete |
+| SWIPE-03 | Phase 2 | Complete |
+| SWIPE-04 | Phase 2 | Complete |
+| SWIPE-05 | Phase 2 | Complete |
+| ~~SWIPE-02~~ | Phase 2 | Removed |
+| TRANS-01 | Phase 3 | Complete |
+| DESIGN-01 | Phase 3 | Complete |
+| PERF-01 | Phase 3 | Complete |
 
 **Coverage:**
-- v1 requirements: 13 total
-- Mapped to phases: 13
+- v1 requirements: 12 total (SWIPE-02 removed)
+- Complete: 12
+- Pending: 0
+- Mapped to phases: 12
 - Unmapped: 0 ✓
 
 ---
 *Requirements defined: 2026-02-07*
-*Last updated: 2026-02-07 after initial definition*
+*Last updated: 2026-02-08 after Phase 3 completion*

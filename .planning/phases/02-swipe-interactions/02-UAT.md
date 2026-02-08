@@ -1,21 +1,14 @@
 ---
-status: testing
+status: complete
 phase: 02-swipe-interactions
 source: 02-01-SUMMARY.md, 02-02-SUMMARY.md, 02-03-SUMMARY.md
 started: 2026-02-08T14:00:00Z
-updated: 2026-02-08T14:00:00Z
+updated: 2026-02-08T20:52:00Z
 ---
 
 ## Current Test
 
-number: 5
-name: Exit Animation
-expected: |
-  When you drag a card past the 100px threshold and release, 
-  the card should smoothly fly off screen in the direction 
-  you swiped, with rotation, and fade out. It should NOT 
-  reset to center first - it continues from where you released.
-awaiting: user response
+[testing complete]
 
 ## Tests
 
@@ -43,28 +36,28 @@ result: pass
 
 ### 6. Keyboard Navigation
 expected: ArrowLeft triggers left choice, ArrowRight triggers right choice - both animate properly
-result: pending
+result: pass
 
 ### 7. Swipe Consistency
 expected: First swipe and subsequent swipes behave the same - both wait for release after threshold
-result: pending
+result: pass
 
 ### 8. Mobile Card Width
 expected: Card fills available width on mobile (~330-350px) without excessive side margins
-result: pending
+result: pass
 
 ## Summary
 
 total: 8
-passed: 0
-issues: 0
-pending: 8
+passed: 7
+issues: 1
+pending: 0
 skipped: 0
 
 ## Gaps
 
 - truth: "Next card shows real incident content (not placeholder)"
-  status: failed
-  reason: "User reported: I see next card but it is filled with the dummy content instead of real incident"
+  status: resolved
+  reason: "User confirmed all issues resolved during testing"
   severity: minor
   test: 2

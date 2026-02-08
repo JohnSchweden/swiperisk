@@ -3,12 +3,12 @@ status: complete
 phase: 02-swipe-interactions
 source: 02-01-SUMMARY.md, 02-02-SUMMARY.md, 02-03-SUMMARY.md, 02-04-SUMMARY.md
 started: 2026-02-08T14:00:00Z
-updated: 2026-02-08T14:55:00Z
+updated: 2026-02-08T15:00:00Z
 ---
 
 ## Current Test
 
-[testing complete]
+[testing complete - all issues resolved]
 
 ## Tests
 
@@ -45,19 +45,24 @@ result: pass
 expected: Card fills available width on mobile (~330-350px) without excessive side margins
 result: pass
 
-### 9. Card Transition Animation (added)
+### 9. Card Transition Animation
 expected: When clicking "Next Ticket", the revealed card should NOT animate since it was already visible in the stack - only first card entering game should fade in
 result: pass
-note: Fixed in Plan 02-04 - added isFirstCard state to control when transition applies
+note: Fixed in Plan 02-04 - added isFirstCard state with proper drag checks (!isDragging && !hasDragged)
+
+### 10. First Card Draggable
+expected: First card entering game screen should be immediately draggable without animation blocking the drag
+result: pass
+note: Hotfix applied - added !isDragging && !hasDragged to ticket-transition condition
 
 ## Summary
 
-total: 9
-passed: 9
+total: 10
+passed: 10
 issues: 0
 pending: 0
 skipped: 0
 
 ## Gaps
 
-[resolved - all issues fixed in Plan 02-04]
+[resolved - all issues fixed in Plan 02-04 and subsequent hotfix]

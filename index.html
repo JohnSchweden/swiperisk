@@ -229,13 +229,29 @@
         }
 
         @keyframes overlayFadeIn {
-            from { 
+            from {
                 opacity: 0;
                 backdrop-filter: blur(0px);
             }
-            to { 
+            to {
                 opacity: 1;
                 backdrop-filter: blur(16px);
+            }
+        }
+
+        /* Modal content scale animation */
+        .modal-content {
+            animation: modalScaleIn 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+        }
+
+        @keyframes modalScaleIn {
+            from {
+                opacity: 0;
+                transform: scale(0.9) translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1) translateY(0);
             }
         }
 

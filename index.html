@@ -408,6 +408,13 @@
             
         }
 
+        /* Disable CRT effect on mobile for performance */
+        @media (max-width: 768px) {
+            body::after {
+                display: none;
+            }
+        }
+
         /* Native smooth scrollbar */
         html {
             scroll-behavior: smooth;

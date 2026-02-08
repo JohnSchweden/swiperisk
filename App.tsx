@@ -655,7 +655,7 @@ const App: React.FC = () => {
                 transition: isDragging
                   ? 'none'
                   : cardExitDirection
-                    ? 'transform 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94)'
+                    ? 'transform 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94), opacity 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94)'
                     : 'transform 0.55s cubic-bezier(0.34, 1.56, 0.64, 1)',
                 cursor: isDragging ? 'grabbing' : 'grab',
                 opacity: cardExitDirection ? 0 : 1,
@@ -1015,8 +1015,8 @@ const App: React.FC = () => {
         {renderStage()}
       </div>
       {state.stage === GameStage.PLAYING && feedbackOverlay && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 md:p-6 bg-black/70 backdrop-blur-sm" role="dialog" aria-modal="true" aria-labelledby="feedback-overlay-title" aria-describedby="feedback-overlay-desc">
-          <div className="w-full max-w-lg bg-slate-900 border border-slate-700 p-6 md:p-10 rounded-2xl text-center shadow-2xl max-h-[90vh] overflow-y-auto">
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 md:p-6 bg-black/70 backdrop-blur-sm modal-overlay" role="dialog" aria-modal="true" aria-labelledby="feedback-overlay-title" aria-describedby="feedback-overlay-desc">
+          <div className="w-full max-w-lg bg-slate-900 border border-slate-700 p-6 md:p-10 rounded-2xl text-center shadow-2xl max-h-[90vh] overflow-y-auto modal-content">
             <h2 id="feedback-overlay-title" className="sr-only">Governance feedback</h2>
             <div className={`text-4xl md:text-6xl mb-4 md:mb-6 ${feedbackOverlay.fine > 0 ? 'text-red-500' : 'text-green-500'}`}>
               <i className={`fa-solid ${feedbackOverlay.fine > 0 ? 'fa-triangle-exclamation' : 'fa-circle-check'}`} aria-hidden></i>

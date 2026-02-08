@@ -152,6 +152,15 @@
             will-change: transform;
         }
 
+        /* Performance Optimizations for Active Card */
+        .swipe-card {
+            will-change: transform, opacity;
+            backface-visibility: hidden;
+            -webkit-backface-visibility: hidden;
+            transform: translateZ(0); /* Force GPU layer creation */
+            touch-action: pan-y; /* Allow vertical scroll, handle horizontal in JS */
+        }
+
         @keyframes swipeExitLeft {
             from {
                 transform: translateX(0) rotate(0deg);

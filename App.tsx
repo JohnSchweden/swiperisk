@@ -1,28 +1,203 @@
-import React, { useState, useEffect, useRef, useCallback } from 'react';
+import React, { useState, useEffect, useRef, useCallback, useReducer } from 'react';
 import { GameStage, PersonalityType, RoleType, GameState, AppSource, DeathType } from './types';
 import { PERSONALITIES, ROLE_CARDS, DEATH_ENDINGS, BOSS_FIGHT_QUESTIONS } from './constants';
-import { speak, getRoast } from './services/geminiService';
+import { speak, getRoast, cleanupAudio } from './services/geminiService';
 import LayoutShell from './components/LayoutShell';
 
 const INITIAL_BUDGET = 10000000;
 const SWIPE_THRESHOLD = 100;
 const SWIPE_PREVIEW_THRESHOLD = 50;
 
+interface GameHUDProps {
+  budget: number;
+  heat: number;
+  hype: number;
+  formatBudget: (amount: number) => string;
+}
+
+const initialGameState: GameState = {
+  hype: 50,
+  heat: 0,
+  budget: INITIAL_BUDGET,
+  stage: GameStage.INTRO,
+  personality: null,
+  role: null,
+  currentCardIndex: 0,
+  history: [],
+  deathReason: null,
+  deathType: null,
+  unlockedEndings: [],
+  bossFightAnswers: []
+};
+
+type GameAction =
+  | { type: 'STAGE_CHANGE'; stage: GameStage; personality?: PersonalityType | null; role?: RoleType | null; currentCardIndex?: number }
+  | { type: 'CHOICE_MADE'; direction: 'LEFT' | 'RIGHT'; outcome: { hype: number; heat: number; fine: number; cardId: string } }
+  | { type: 'NEXT_INCIDENT' }
+  | { type: 'BOSS_ANSWER'; isCorrect: boolean }
+  | { type: 'BOSS_COMPLETE'; success: boolean }
+  | { type: 'RESET' };
+
+function determineDeathType(budget: number, heat: number, hype: number, role: RoleType | null): DeathType {
+  if (budget <= 0) return DeathType.BANKRUPT;
+  if (heat >= 100) {
+    if (hype <= 10) return DeathType.REPLACED_BY_SCRIPT;
+    if (role === RoleType.FINANCE) return DeathType.PRISON;
+    if (role === RoleType.MARKETING) return DeathType.CONGRESS;
+    if (role === RoleType.MANAGEMENT) return DeathType.AUDIT_FAILURE;
+    return DeathType.FLED_COUNTRY;
+  }
+  return DeathType.AUDIT_FAILURE;
+}
+
+const STAGE_TRANSITIONS: Record<GameStage, GameStage[]> = {
+  [GameStage.INTRO]: [GameStage.PERSONALITY_SELECT],
+  [GameStage.PERSONALITY_SELECT]: [GameStage.ROLE_SELECT],
+  [GameStage.ROLE_SELECT]: [GameStage.INITIALIZING],
+  [GameStage.INITIALIZING]: [GameStage.PLAYING],
+  [GameStage.PLAYING]: [GameStage.BOSS_FIGHT, GameStage.GAME_OVER],
+  [GameStage.BOSS_FIGHT]: [GameStage.SUMMARY, GameStage.GAME_OVER],
+  [GameStage.GAME_OVER]: [GameStage.INTRO],
+  [GameStage.SUMMARY]: [GameStage.INTRO]
+};
+
+function gameReducer(state: GameState, action: GameAction): GameState {
+  switch (action.type) {
+    case 'STAGE_CHANGE': {
+      const allowed = STAGE_TRANSITIONS[state.stage];
+      if (allowed != null && !allowed.includes(action.stage)) {
+        if (typeof process !== 'undefined' && process.env.NODE_ENV !== 'production') {
+          console.error(`Invalid stage transition: ${state.stage} → ${action.stage}`);
+        }
+        return state;
+      }
+      const update: Partial<GameState> = { stage: action.stage };
+      if (action.personality !== undefined) update.personality = action.personality;
+      if (action.role !== undefined) update.role = action.role;
+      if (action.currentCardIndex !== undefined) update.currentCardIndex = action.currentCardIndex;
+      return { ...state, ...update };
+    }
+    case 'CHOICE_MADE': {
+      const { direction, outcome } = action;
+      return {
+        ...state,
+        hype: Math.max(0, state.hype + outcome.hype),
+        heat: Math.min(100, state.heat + outcome.heat),
+        budget: state.budget - outcome.fine,
+        history: [...state.history, { cardId: outcome.cardId, choice: direction }]
+      };
+    }
+    case 'NEXT_INCIDENT': {
+      if (state.budget <= 0) {
+        return {
+          ...state,
+          stage: GameStage.GAME_OVER,
+          deathType: DeathType.BANKRUPT,
+          deathReason: DEATH_ENDINGS[DeathType.BANKRUPT].description,
+          unlockedEndings: state.unlockedEndings.includes(DeathType.BANKRUPT)
+            ? state.unlockedEndings
+            : [...state.unlockedEndings, DeathType.BANKRUPT]
+        };
+      }
+      if (state.heat >= 100) {
+        const deathType = determineDeathType(state.budget, state.heat, state.hype, state.role);
+        return {
+          ...state,
+          stage: GameStage.GAME_OVER,
+          deathType,
+          deathReason: DEATH_ENDINGS[deathType].description,
+          unlockedEndings: state.unlockedEndings.includes(deathType)
+            ? state.unlockedEndings
+            : [...state.unlockedEndings, deathType]
+        };
+      }
+      const cards = ROLE_CARDS[state.role!];
+      if (state.currentCardIndex + 1 >= cards.length) {
+        return { ...state, stage: GameStage.BOSS_FIGHT };
+      }
+      return { ...state, currentCardIndex: state.currentCardIndex + 1 };
+    }
+    case 'BOSS_ANSWER': {
+      const newBudget = action.isCorrect ? state.budget : state.budget - 1000000;
+      return {
+        ...state,
+        budget: newBudget,
+        bossFightAnswers: [...state.bossFightAnswers, action.isCorrect]
+      };
+    }
+    case 'BOSS_COMPLETE': {
+      if (action.success) {
+        return { ...state, stage: GameStage.SUMMARY };
+      }
+      const deathType = DeathType.AUDIT_FAILURE;
+      return {
+        ...state,
+        stage: GameStage.GAME_OVER,
+        deathType,
+        deathReason: DEATH_ENDINGS[deathType].description,
+        unlockedEndings: state.unlockedEndings.includes(deathType)
+          ? state.unlockedEndings
+          : [...state.unlockedEndings, deathType]
+      };
+    }
+    case 'RESET': {
+      return {
+        ...initialGameState,
+        unlockedEndings: state.unlockedEndings
+      };
+    }
+    default:
+      return state;
+  }
+}
+
+const GameHUD = React.memo(function GameHUD({ budget, heat, hype, formatBudget }: GameHUDProps) {
+  return (
+    <div className="absolute top-2 md:top-4 left-1/2 -translate-x-1/2 w-full max-w-4xl px-3 md:px-4 flex flex-col md:flex-row gap-2 md:gap-6 items-stretch md:items-center z-10">
+      <div className="flex-1 space-y-1 min-w-0">
+        <div className="flex justify-between text-[10px] font-black tracking-wide mb-1">
+          <span className={`${budget < 2000000 ? 'text-red-500 animate-pulse' : 'text-green-400'} inline-flex items-center gap-1.5`}>
+            <i className="fa-solid fa-coins text-[10px]" aria-hidden></i>Budget
+          </span>
+          <span className={budget < 2000000 ? 'text-red-500' : 'text-green-400'}>{formatBudget(budget)}</span>
+        </div>
+        <div className="h-2 bg-slate-900 rounded border border-white/10 overflow-hidden bg-stripes p-[1px]">
+          <div
+            className={`h-full progress-bar ${budget < 2000000 ? 'bg-red-500' : 'bg-green-500'}`}
+            style={{ width: `${Math.min(100, (budget / INITIAL_BUDGET) * 100)}%` }}
+          />
+        </div>
+      </div>
+      <div className="flex gap-3 md:gap-6 w-full md:w-auto">
+        <div className="flex-1 md:w-28 space-y-1">
+          <div className="flex justify-between text-[10px] font-black tracking-wide mb-1">
+            <span className={`${heat > 80 ? 'text-yellow-400 animate-pulse' : 'text-orange-500'} inline-flex items-center gap-1.5`}>
+              <i className="fa-solid fa-fire text-[10px]" aria-hidden></i>Risk
+            </span>
+            <span className="text-orange-500">{heat}%</span>
+          </div>
+          <div className="h-2 bg-slate-900 rounded border border-white/10 overflow-hidden bg-stripes p-[1px]">
+            <div className={`h-full progress-bar ${heat > 80 ? 'bg-yellow-400' : 'bg-orange-600'}`} style={{ width: `${heat}%` }} />
+          </div>
+        </div>
+        <div className="flex-1 md:w-28 space-y-1">
+          <div className="flex justify-between text-[10px] font-black tracking-wide mb-1">
+            <span className={`${hype < 20 ? 'text-red-500 animate-pulse' : 'text-cyan-400'} inline-flex items-center gap-1.5`}>
+              <i className="fa-solid fa-chart-line text-[10px]" aria-hidden></i>Hype
+            </span>
+            <span className="text-cyan-400">{hype}%</span>
+          </div>
+          <div className="h-2 bg-slate-900 rounded border border-white/10 overflow-hidden bg-stripes p-[1px]">
+            <div className={`h-full progress-bar ${hype < 20 ? 'bg-red-500' : 'bg-cyan-500'}`} style={{ width: `${hype}%` }} />
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+});
+
 const App: React.FC = () => {
-  const [state, setState] = useState<GameState>({
-    hype: 50,
-    heat: 0,
-    budget: INITIAL_BUDGET,
-    stage: GameStage.INTRO,
-    personality: null,
-    role: null,
-    currentCardIndex: 0,
-    history: [],
-    deathReason: null,
-    deathType: null,
-    unlockedEndings: [],
-    bossFightAnswers: []
-  });
+  const [state, dispatch] = useReducer(gameReducer, initialGameState);
 
   const [feedbackOverlay, setFeedbackOverlay] = useState<{
     text: string;
@@ -58,10 +233,28 @@ const App: React.FC = () => {
   const [hasDragged, setHasDragged] = useState(false);
   const [isSnappingBack, setIsSnappingBack] = useState(false);
   const [exitPosition, setExitPosition] = useState<{ x: number; rotate: number } | null>(null);
+  const [isFirstCard, setIsFirstCard] = useState(true);
   const cardRef = useRef<HTMLDivElement>(null);
   const touchStartX = useRef(0);
   const touchStartY = useRef(0);
   const isHorizontalSwipe = useRef(false);
+  const stageRef = useRef(state.stage);
+  const feedbackOverlayRef = useRef(feedbackOverlay);
+  const rafRef = useRef<number | null>(null);
+  const pendingSwipeRef = useRef<{ deltaX: number; deltaY: number } | null>(null);
+  const animationTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  useEffect(() => {
+    stageRef.current = state.stage;
+    feedbackOverlayRef.current = feedbackOverlay;
+  }, [state.stage, feedbackOverlay]);
+
+  // Audio cleanup on unmount
+  useEffect(() => {
+    return () => {
+      cleanupAudio();
+    };
+  }, []);
 
   // Clock update
   useEffect(() => {
@@ -88,7 +281,8 @@ const App: React.FC = () => {
         const timer = setTimeout(() => setCountdown(countdown - 1), 1000);
         return () => clearTimeout(timer);
       } else {
-        setState(prev => ({ ...prev, stage: GameStage.PLAYING }));
+        dispatch({ type: 'STAGE_CHANGE', stage: GameStage.PLAYING });
+        setIsFirstCard(true);
       }
     }
   }, [state.stage, countdown]);
@@ -214,7 +408,7 @@ const App: React.FC = () => {
 
   // Touch/Mouse gesture handlers
   const handleTouchStart = useCallback((e: React.TouchEvent | React.MouseEvent) => {
-    if (state.stage !== GameStage.PLAYING || feedbackOverlay) return;
+    if (stageRef.current !== GameStage.PLAYING || feedbackOverlayRef.current) return;
 
     const clientX = 'touches' in e ? e.touches[0].clientX : e.clientX;
     const clientY = 'touches' in e ? e.touches[0].clientY : e.clientY;
@@ -224,92 +418,140 @@ const App: React.FC = () => {
     isHorizontalSwipe.current = false;
     setIsDragging(true);
     setHasDragged(true);
-  }, [state.stage, feedbackOverlay]);
+  }, []);
 
   const handleTouchMove = useCallback((e: React.TouchEvent | React.MouseEvent) => {
-    if (!isDragging || state.stage !== GameStage.PLAYING || feedbackOverlay) return;
-    
+    if (!isDragging || stageRef.current !== GameStage.PLAYING || feedbackOverlayRef.current) return;
+
     const clientX = 'touches' in e ? e.touches[0].clientX : e.clientX;
     const clientY = 'touches' in e ? e.touches[0].clientY : e.clientY;
-    
+
     const deltaX = clientX - touchStartX.current;
     const deltaY = clientY - touchStartY.current;
-    
-    // Determine if this is a horizontal swipe
-    if (!isHorizontalSwipe.current && Math.abs(deltaX) > Math.abs(deltaY)) {
-      isHorizontalSwipe.current = true;
-    }
-    
-    if (isHorizontalSwipe.current) {
+
+    if (isHorizontalSwipe.current || Math.abs(deltaX) > Math.abs(deltaY)) {
       e.preventDefault?.();
-      setSwipeOffset(deltaX);
-      
-      // Update preview direction
-      if (Math.abs(deltaX) > SWIPE_PREVIEW_THRESHOLD) {
-        setSwipeDirection(deltaX > 0 ? 'RIGHT' : 'LEFT');
-      } else {
-        setSwipeDirection(null);
-      }
     }
-  }, [isDragging, state.stage, feedbackOverlay]);
+
+    pendingSwipeRef.current = { deltaX, deltaY };
+
+    if (rafRef.current !== null) {
+      cancelAnimationFrame(rafRef.current);
+    }
+
+    rafRef.current = requestAnimationFrame(() => {
+      const pending = pendingSwipeRef.current;
+      if (pending == null) {
+        rafRef.current = null;
+        return;
+      }
+
+      const { deltaX: dx, deltaY: dy } = pending;
+
+      if (!isHorizontalSwipe.current && Math.abs(dx) > Math.abs(dy)) {
+        isHorizontalSwipe.current = true;
+      }
+
+      if (isHorizontalSwipe.current) {
+        const newDirection =
+          Math.abs(dx) > SWIPE_PREVIEW_THRESHOLD ? (dx > 0 ? 'RIGHT' : 'LEFT') : null;
+        setSwipeOffset(dx);
+        setSwipeDirection(newDirection);
+      }
+
+      rafRef.current = null;
+      pendingSwipeRef.current = null;
+    });
+  }, [isDragging]);
 
   const handleTouchEnd = useCallback(() => {
     if (!isDragging) return;
 
+    let finalOffset = swipeOffset;
+    let finalDirection: 'LEFT' | 'RIGHT' | null = swipeDirection;
+
+    if (rafRef.current !== null) {
+      cancelAnimationFrame(rafRef.current);
+      rafRef.current = null;
+    }
+
+    if (pendingSwipeRef.current) {
+      const { deltaX } = pendingSwipeRef.current;
+      finalOffset = deltaX;
+      if (isHorizontalSwipe.current) {
+        finalDirection = Math.abs(deltaX) > SWIPE_PREVIEW_THRESHOLD ? (deltaX > 0 ? 'RIGHT' : 'LEFT') : null;
+        setSwipeOffset(deltaX);
+        setSwipeDirection(finalDirection);
+      }
+      pendingSwipeRef.current = null;
+    }
+
     setIsDragging(false);
 
-    if (Math.abs(swipeOffset) > SWIPE_THRESHOLD) {
-      // Commit the swipe - animate from current position to exit
-      const direction = swipeOffset > 0 ? 'RIGHT' : 'LEFT';
+    if (Math.abs(finalOffset) > SWIPE_THRESHOLD) {
+      const direction = finalOffset > 0 ? 'RIGHT' : 'LEFT';
       const targetX = direction === 'RIGHT' ? window.innerWidth * 1.2 : -window.innerWidth * 1.2;
       const targetRotate = direction === 'RIGHT' ? 25 : -25;
 
-      // Set exit direction and position for animation
       setCardExitDirection(direction);
       setExitPosition({ x: targetX, rotate: targetRotate });
 
-      // After animation completes, process the choice
-      setTimeout(() => {
+      if (animationTimeoutRef.current) {
+        clearTimeout(animationTimeoutRef.current);
+      }
+      animationTimeoutRef.current = setTimeout(() => {
         handleChoice(direction);
-        // Reset for next card
         setCardExitDirection(null);
         setExitPosition(null);
         setSwipeOffset(0);
         setSwipeDirection(null);
         setHasDragged(false);
+        animationTimeoutRef.current = null;
       }, 350);
     } else {
-      // Snap back
       setIsSnappingBack(true);
       setSwipeOffset(0);
       setSwipeDirection(null);
-      // Reset snap back flag after animation completes
-      setTimeout(() => setIsSnappingBack(false), 600);
+      if (animationTimeoutRef.current) {
+        clearTimeout(animationTimeoutRef.current);
+      }
+      animationTimeoutRef.current = setTimeout(() => {
+        setIsSnappingBack(false);
+        animationTimeoutRef.current = null;
+      }, 600);
     }
-  }, [isDragging, swipeOffset]);
+  }, [isDragging, swipeOffset, swipeDirection]);
+
+  // Cleanup RAF and animation timeouts on unmount
+  useEffect(() => {
+    return () => {
+      if (rafRef.current !== null) {
+        cancelAnimationFrame(rafRef.current);
+      }
+      if (animationTimeoutRef.current) {
+        clearTimeout(animationTimeoutRef.current);
+      }
+    };
+  }, []);
 
   const handleStart = () => {
     setPersonalitySelectReady(false);
-    setState(prev => ({ ...prev, stage: GameStage.PERSONALITY_SELECT }));
+    dispatch({ type: 'STAGE_CHANGE', stage: GameStage.PERSONALITY_SELECT });
   };
   const selectPersonality = (p: PersonalityType) => {
-    setState(prev => ({ ...prev, personality: p, stage: GameStage.ROLE_SELECT }));
+    dispatch({ type: 'STAGE_CHANGE', stage: GameStage.ROLE_SELECT, personality: p });
   };
   const selectRole = (r: RoleType) => {
     setCountdown(3);
-    setState(prev => ({ ...prev, role: r, stage: GameStage.INITIALIZING, currentCardIndex: 0 }));
+    dispatch({ type: 'STAGE_CHANGE', stage: GameStage.INITIALIZING, role: r, currentCardIndex: 0 });
   };
 
   const handleChoice = (direction: 'LEFT' | 'RIGHT') => {
     if (!state.role || !state.personality) return;
-    
+
     const cards = ROLE_CARDS[state.role];
     const currentCard = cards[state.currentCardIndex];
     const outcome = direction === 'RIGHT' ? currentCard.onRight : currentCard.onLeft;
-    
-    const newHype = Math.max(0, state.hype + outcome.hype);
-    const newHeat = Math.min(100, state.heat + outcome.heat);
-    const newBudget = state.budget - outcome.fine;
 
     setFeedbackOverlay({
       text: outcome.feedback[state.personality],
@@ -321,17 +563,19 @@ const App: React.FC = () => {
 
     speak(outcome.feedback[state.personality], PERSONALITIES[state.personality].voice);
 
-    setState(prev => ({
-      ...prev,
-      hype: newHype,
-      heat: newHeat,
-      budget: newBudget,
-      history: [...prev.history, { cardId: currentCard.id, choice: direction }]
-    }));
+    dispatch({
+      type: 'CHOICE_MADE',
+      direction,
+      outcome: {
+        hype: outcome.hype,
+        heat: outcome.heat,
+        fine: outcome.fine,
+        cardId: currentCard.id
+      }
+    });
   };
 
   const handleSwipeChoice = (direction: 'LEFT' | 'RIGHT') => {
-    // If already animating from drag, don't reset
     if (cardExitDirection) return;
 
     const targetX = direction === 'RIGHT' ? window.innerWidth * 1.2 : -window.innerWidth * 1.2;
@@ -340,102 +584,45 @@ const App: React.FC = () => {
     setCardExitDirection(direction);
     setExitPosition({ x: targetX, rotate: targetRotate });
 
-    // Wait for exit animation then trigger choice
-    setTimeout(() => {
+    if (animationTimeoutRef.current) {
+      clearTimeout(animationTimeoutRef.current);
+    }
+    animationTimeoutRef.current = setTimeout(() => {
       handleChoice(direction);
-      // Reset for next card
       setCardExitDirection(null);
       setExitPosition(null);
       setSwipeOffset(0);
       setSwipeDirection(null);
       setHasDragged(false);
+      animationTimeoutRef.current = null;
     }, 350);
-  };
-
-  const determineDeathType = (budget: number, heat: number, hype: number): DeathType => {
-    if (budget <= 0) return DeathType.BANKRUPT;
-    if (heat >= 100) {
-      if (hype <= 10) return DeathType.REPLACED_BY_SCRIPT;
-      if (state.role === RoleType.FINANCE) return DeathType.PRISON;
-      if (state.role === RoleType.MARKETING) return DeathType.CONGRESS;
-      if (state.role === RoleType.MANAGEMENT) return DeathType.AUDIT_FAILURE;
-      return DeathType.FLED_COUNTRY;
-    }
-    return DeathType.AUDIT_FAILURE;
   };
 
   const nextIncident = () => {
     setFeedbackOverlay(null);
-    
-    // Check for game over conditions
-    if (state.budget <= 0) {
-      const deathType = DeathType.BANKRUPT;
-      setState(prev => ({
-        ...prev,
-        stage: GameStage.GAME_OVER,
-        deathType,
-        deathReason: DEATH_ENDINGS[deathType].description,
-        unlockedEndings: prev.unlockedEndings.includes(deathType) ? prev.unlockedEndings : [...prev.unlockedEndings, deathType]
-      }));
-      return;
-    }
-    
-    if (state.heat >= 100) {
-      const deathType = determineDeathType(state.budget, state.heat, state.hype);
-      setState(prev => ({
-        ...prev,
-        stage: GameStage.GAME_OVER,
-        deathType,
-        deathReason: DEATH_ENDINGS[deathType].description,
-        unlockedEndings: prev.unlockedEndings.includes(deathType) ? prev.unlockedEndings : [...prev.unlockedEndings, deathType]
-      }));
-      return;
-    }
 
     const cards = ROLE_CARDS[state.role!];
     if (state.currentCardIndex + 1 >= cards.length) {
-      // Start boss fight instead of going directly to summary
       setCurrentBossQuestion(0);
       setBossTimeLeft(15);
       setBossAnswered(false);
       setShowBossExplanation(false);
-      setState(prev => ({ ...prev, stage: GameStage.BOSS_FIGHT }));
-    } else {
-      setState(prev => ({ ...prev, currentCardIndex: prev.currentCardIndex + 1 }));
     }
+
+    dispatch({ type: 'NEXT_INCIDENT' });
+    setIsFirstCard(false);
   };
 
   const handleBossAnswer = (isCorrect: boolean) => {
     setBossAnswered(true);
     setShowBossExplanation(true);
-    
-    setState(prev => ({
-      ...prev,
-      bossFightAnswers: [...prev.bossFightAnswers, isCorrect]
-    }));
-
-    if (!isCorrect) {
-      // Wrong answer costs budget
-      setState(prev => ({ ...prev, budget: prev.budget - 1000000 }));
-    }
+    dispatch({ type: 'BOSS_ANSWER', isCorrect });
   };
 
   const nextBossQuestion = () => {
     if (currentBossQuestion + 1 >= BOSS_FIGHT_QUESTIONS.length) {
-      // Boss fight complete
-      const correctAnswers = state.bossFightAnswers.filter(a => a).length;
-      if (correctAnswers >= 3) {
-        setState(prev => ({ ...prev, stage: GameStage.SUMMARY }));
-      } else {
-        const deathType = DeathType.AUDIT_FAILURE;
-        setState(prev => ({
-          ...prev,
-          stage: GameStage.GAME_OVER,
-          deathType,
-          deathReason: DEATH_ENDINGS[deathType].description,
-          unlockedEndings: prev.unlockedEndings.includes(deathType) ? prev.unlockedEndings : [...prev.unlockedEndings, deathType]
-        }));
-      }
+      const correctAnswers = state.bossFightAnswers.filter(Boolean).length;
+      dispatch({ type: 'BOSS_COMPLETE', success: correctAnswers >= 3 });
     } else {
       setCurrentBossQuestion(prev => prev + 1);
       setBossTimeLeft(15);
@@ -454,20 +641,7 @@ const App: React.FC = () => {
   };
 
   const restart = () => {
-    setState(prev => ({
-      hype: 50,
-      heat: 0,
-      budget: INITIAL_BUDGET,
-      stage: GameStage.INTRO,
-      personality: null,
-      role: null,
-      currentCardIndex: 0,
-      history: [],
-      deathReason: null,
-      deathType: null,
-      unlockedEndings: prev.unlockedEndings,
-      bossFightAnswers: []
-    }));
+    dispatch({ type: 'RESET' });
     setRoastOutput(null);
     setRoastInput('');
     setCurrentBossQuestion(0);
@@ -476,12 +650,12 @@ const App: React.FC = () => {
     setShowBossExplanation(false);
   };
 
-  const formatBudget = (amount: number) => {
+  const formatBudget = useCallback((amount: number) => {
     if (amount >= 1000000) {
       return `$${(amount / 1000000).toFixed(1)}M`;
     }
     return `$${amount.toLocaleString()}`;
-  };
+  }, []);
 
   const formatLabel = (s: string) =>
     s === RoleType.HR ? 'HR' : s.replace(/_/g, ' ').toLowerCase().replace(/\b\w/g, (c) => c.toUpperCase());
@@ -654,50 +828,13 @@ const App: React.FC = () => {
 
     return (
       <LayoutShell className="bg-[#0a0a0c] overflow-hidden">
-        {/* Top HUD - Budget Focused - Mobile Optimized */}
-        <div className="absolute top-2 md:top-4 left-1/2 -translate-x-1/2 w-full max-w-4xl px-3 md:px-4 flex flex-col md:flex-row gap-2 md:gap-6 items-stretch md:items-center z-10">
-          <div className="flex-1 space-y-1 min-w-0">
-            <div className="flex justify-between text-[10px] font-black tracking-wide mb-1">
-              <span className={`${state.budget < 2000000 ? 'text-red-500 animate-pulse' : 'text-green-400'} inline-flex items-center gap-1.5`}><i className="fa-solid fa-coins text-[10px]" aria-hidden></i>Budget</span>
-              <span className={state.budget < 2000000 ? 'text-red-500' : 'text-green-400'}>{formatBudget(state.budget)}</span>
-            </div>
-            <div className="h-2 bg-slate-900 rounded border border-white/10 overflow-hidden bg-stripes p-[1px]">
-              <div 
-                className={`h-full progress-bar ${state.budget < 2000000 ? 'bg-red-500' : 'bg-green-500'}`} 
-                style={{ width: `${Math.min(100, (state.budget / INITIAL_BUDGET) * 100)}%` }} 
-              />
-            </div>
-          </div>
-          <div className="flex gap-3 md:gap-6 w-full md:w-auto">
-            <div className="flex-1 md:w-28 space-y-1">
-              <div className="flex justify-between text-[10px] font-black tracking-wide mb-1">
-                <span className={`${state.heat > 80 ? 'text-yellow-400 animate-pulse' : 'text-orange-500'} inline-flex items-center gap-1.5`}><i className="fa-solid fa-fire text-[10px]" aria-hidden></i>Risk</span>
-                <span className="text-orange-500">{state.heat}%</span>
-              </div>
-              <div className="h-2 bg-slate-900 rounded border border-white/10 overflow-hidden bg-stripes p-[1px]">
-                <div className={`h-full progress-bar ${state.heat > 80 ? 'bg-yellow-400' : 'bg-orange-600'}`} style={{ width: `${state.heat}%` }} />
-              </div>
-            </div>
-            <div className="flex-1 md:w-28 space-y-1">
-              <div className="flex justify-between text-[10px] font-black tracking-wide mb-1">
-                <span className={`${state.hype < 20 ? 'text-red-500 animate-pulse' : 'text-cyan-400'} inline-flex items-center gap-1.5`}><i className="fa-solid fa-chart-line text-[10px]" aria-hidden></i>Hype</span>
-                <span className="text-cyan-400">{state.hype}%</span>
-              </div>
-              <div className="h-2 bg-slate-900 rounded border border-white/10 overflow-hidden bg-stripes p-[1px]">
-                <div className={`h-full progress-bar ${state.hype < 20 ? 'bg-red-500' : 'bg-cyan-500'}`} style={{ width: `${state.hype}%` }} />
-              </div>
-            </div>
-          </div>
-        </div>
+        <GameHUD budget={state.budget} heat={state.heat} hype={state.hype} formatBudget={formatBudget} />
 
         {/* Main Content - Responsive Layout */}
         <div className="flex-1 flex flex-col items-center justify-center pt-8 md:pt-12 p-3 pb-14 md:p-8 md:pb-4 gap-4 md:gap-8">
           
           {/* Card Stack Container */}
-          <div 
-            className="relative flex-1 w-full max-w-full lg:max-w-[43rem] min-h-[360px] md:min-h-[480px] self-stretch"
-            style={{ touchAction: 'pan-y' }}
-          >
+          <div className="relative flex-1 w-full max-w-full lg:max-w-[43rem] min-h-[360px] md:min-h-[480px] self-stretch">
             {/* Next card (behind) - render only if there's a next card */}
             {state.currentCardIndex + 1 < cards.length && (
               <div 
@@ -720,8 +857,21 @@ const App: React.FC = () => {
                     <div className="w-2.5 h-2.5 rounded-full bg-red-500/50"></div>
                   </div>
                 </div>
-                <div className="p-4 md:p-10 flex flex-col justify-center items-center flex-1">
-                  <div className="text-slate-600 text-sm mono">Next incident loading...</div>
+                <div className="p-4 md:p-6 flex flex-col justify-between flex-1 overflow-hidden">
+                  <div className="space-y-3 overflow-y-auto">
+                    <div className="flex items-center gap-3">
+                      <div className="w-7 h-7 md:w-8 md:h-8 rounded bg-slate-800 flex items-center justify-center border border-white/5 shrink-0">
+                        <i className="fa-solid fa-user-robot text-slate-500 text-xs" aria-hidden></i>
+                      </div>
+                      <div className="min-w-0">
+                        <div className="text-xs font-bold text-slate-400 truncate">{cards[state.currentCardIndex + 1].sender}</div>
+                        <div className="text-[9px] text-slate-600 mono truncate">Incident #{(state.currentCardIndex + 2) * 324}</div>
+                      </div>
+                    </div>
+                    <p className="text-sm md:text-base font-medium leading-relaxed text-slate-400 line-clamp-3">
+                      "{cards[state.currentCardIndex + 1].text}"
+                    </p>
+                  </div>
                 </div>
               </div>
             )}
@@ -729,7 +879,7 @@ const App: React.FC = () => {
             {/* Current card (front) */}
             <div
               ref={cardRef}
-              className={`absolute inset-0 bg-slate-900/90 border border-slate-700 rounded-xl overflow-hidden shadow-2xl flex flex-col select-none ${swipeOffset === 0 && !isDragging && !hasDragged ? 'ticket-transition' : ''} ${isSnappingBack ? 'spring-snap-back' : ''}`}
+              className={`absolute inset-0 bg-slate-900/90 border border-slate-700 rounded-xl overflow-hidden shadow-2xl flex flex-col select-none ${isFirstCard && !cardExitDirection && !isDragging && !hasDragged ? 'ticket-transition' : ''} ${isSnappingBack ? 'spring-snap-back' : ''}`}
               key={state.currentCardIndex}
               onTouchStart={handleTouchStart}
               onTouchMove={handleTouchMove}

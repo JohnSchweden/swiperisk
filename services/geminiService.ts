@@ -1,4 +1,5 @@
-
+import { PersonalityType } from "../types";
+import { PERSONALITIES } from "../constants";
 import { GoogleGenAI, Modality } from "@google/genai";
 
 // Audio context utilities
@@ -111,23 +112,32 @@ export const cleanupAudio = () => {
 // Generate satirical roast using Gemini text models
 const ROAST_MODELS = ["gemini-2.5-flash-lite", "gemini-2.5-flash"] as const;
 
-export const getRoast = async (workflow: string, personalityName: string): Promise<string> => {
+const TONE_INSTRUCTIONS: Record<PersonalityType, string> = {
+  [PersonalityType.ROASTER]: "Be sarcastic, witty, and cynical. Biting British humor.",
+  [PersonalityType.ZEN_MASTER]: "Be calm, meditative, and passive-aggressive. Zen koans and flowing-water metaphors. Softly devastating.",
+  [PersonalityType.LOVEBOMBER]: "Be high-energy, hype, and Silicon Valley influencer style. Exclamation points. 'Slay,' 'literally,' 'vibes.'",
+};
+
+export const getRoast = async (workflow: string, personality: PersonalityType): Promise<string> => {
   const apiKey = process.env.GEMINI_API_KEY;
   if (!apiKey) {
     console.error("Roast Error: GEMINI_API_KEY not set in .env.local");
     return "Roast disabled: Set GEMINI_API_KEY in .env.local to enable.";
   }
 
+  const personalityName = PERSONALITIES[personality].name;
+  const tone = TONE_INSTRUCTIONS[personality];
+
   const prompt = `
 You are ${personalityName} from the satirical tech company HyperScale Inc.
 A user has described their current AI workflow: "${workflow}".
 
 **Step 1:** Analyze the workflow. Is it using public tools (high privacy risk) or enterprise/in-house tools (low privacy risk)?
-**Step 2:** Roast them based on that analysis.
-*   If **Public**: Roast them for leaking IP and causing a data breach.
-*   If **Private/In-house**: Roast them for blindly trusting AI code, creating "secure" garbage, or believing that a firewall fixes bad engineering.
+**Step 2:** Respond based on that analysis, in your character's voice.
+*   If **Public**: Call out leaking IP and data breach risk.
+*   If **Private/In-house**: Call out blindly trusting AI code, "secure" garbage, or believing a firewall fixes bad engineering.
 
-Be sarcastic, witty, and cynical. Keep it under 50 words.
+${tone} Keep it under 50 words.
 `;
 
   const ai = new GoogleGenAI({ apiKey });

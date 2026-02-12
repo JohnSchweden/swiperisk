@@ -50,6 +50,12 @@ const INITIAL_BUDGET = 10000000;
 const SWIPE_THRESHOLD = 100;
 const SWIPE_PREVIEW_THRESHOLD = 50;
 
+const ROAST_CONSOLE_NAMES: Record<PersonalityType, string> = {
+  [PersonalityType.ROASTER]: 'roast_con.exe',
+  [PersonalityType.ZEN_MASTER]: 'zen_con.exe',
+  [PersonalityType.LOVEBOMBER]: 'hype_con.exe',
+};
+
 interface GameHUDProps {
   budget: number;
   heat: number;
@@ -701,7 +707,7 @@ const App: React.FC = () => {
   const handleRoast = async () => {
     if (!roastInput || !state.personality) return;
     setIsRoasting(true);
-    const roast = await getRoast(roastInput, PERSONALITIES[state.personality].name);
+    const roast = await getRoast(roastInput, state.personality);
     setRoastOutput(roast);
     speak(roast, PERSONALITIES[state.personality].voice);
     setIsRoasting(false);
@@ -1068,7 +1074,7 @@ const App: React.FC = () => {
           {/* Side Roaster Terminal - Compact when no output; grows when response arrives */}
           <div className={`w-full max-w-[43rem] lg:w-[43rem] flex-shrink-0 bg-black/80 border border-slate-800 rounded-xl overflow-hidden flex flex-col shadow-2xl ${roastOutput ? 'min-h-[320px] lg:min-h-[260px]' : 'min-h-0'}`} data-testid="roast-terminal">
             <div className="bg-slate-900 px-4 py-2 border-b border-white/5 flex-shrink-0 flex items-center justify-between">
-              <span className="text-xs mono font-bold text-green-500">roast_con.exe</span>
+              <span className="text-xs mono font-bold text-green-500">{ROAST_CONSOLE_NAMES[state.personality!]}</span>
               <i className="fa-solid fa-minus text-xs text-slate-400" aria-hidden></i>
             </div>
             <div className="p-3 md:p-4 flex-1 flex flex-col min-h-0">

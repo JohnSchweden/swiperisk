@@ -1,16 +1,23 @@
 # Roadmap: hyperscale v1.1
 
-**Milestone:** v1.1 — Voice Files for All Personalities
-**Goal:** Generate and integrate voice files for all 3 personalities (onboarding, victory, failure + Roaster feedback)
+**Milestone:** v1.1 — Voice Files + Live API
+**Goal:** Generate 13 voice files for all 3 personalities + explore Gemini Live API for real-time streaming in Roast.exe
 
 ---
 
 ## Overview
 
-v1.1 implements voice playback for all three personality types:
+v1.1 implements two voice-related features:
+
+**Phase 1: Pre-recorded Voice Files**
 - **Roaster**: onboarding, 4 feedback messages, victory, failure (7 files)
 - **Zen Master**: onboarding, victory, failure (3 files)  
 - **Lovebomber**: onboarding, victory, failure (3 files)
+
+**Phase 2: Live API for Roast.exe**
+- Research Gemini Live API for real-time streaming
+- Implement streaming audio for Roast.exe workflow
+- Faster time-to-first-audio by streaming chunks as generated
 
 **Scope:**
 - All 3 personalities for onboarding, victory, failure
@@ -76,17 +83,37 @@ v1.1 implements voice playback for all three personality types:
 
 ---
 
+## Phase 2: Live API for Roast.exe (Real-Time Streaming)
+
+**Goal:** Implement Gemini Live API for real-time streaming audio in Roast.exe workflow
+
+**Dependencies:** Phase 1 complete
+
+**Requirements:**
+- VOICE-08: Research Gemini Live API integration
+- VOICE-09: Implement streaming audio for Roast.exe
+- VOICE-10: Test real-time audio latency
+
+**Success Criteria:**
+1. Research completed on Gemini Live API vs current implementation
+2. Streaming audio implemented for Roast.exe workflow
+3. First token audio plays faster than current approach
+4. Fallback to current TTS if Live API unavailable
+
+---
+
 ## Progress
 
 | Phase | Goal | Requirements | Status |
 |-------|------|--------------|--------|
 | 1 - Voice Files | 13 voice files + playback system | VOICE-01 to VOICE-07 | Pending |
+| 2 - Live API | Real-time streaming for Roast.exe | VOICE-08 to VOICE-10 | Pending |
 
 ---
 
 ## Coverage
 
-**Requirements mapped:** 7/7 ✓
+**Requirements mapped:** 10/10 ✓
 
 | Requirement | Phase |
 |-------------|-------|
@@ -97,6 +124,9 @@ v1.1 implements voice playback for all three personality types:
 | VOICE-05 | Phase 1 |
 | VOICE-06 | Phase 1 |
 | VOICE-07 | Phase 1 |
+| VOICE-08 | Phase 2 |
+| VOICE-09 | Phase 2 |
+| VOICE-10 | Phase 2 |
 
 ---
 

@@ -5,17 +5,23 @@
 
 ## v1.1 Requirements
 
-Requirements for milestone v1.1 — Voice Files for All Personalities
+Requirements for milestone v1.1 — Voice Files + Live API
 
-### Voice Files
+### Phase 1: Pre-recorded Voice Files
 
 - [ ] **VOICE-01**: Generate Roaster (V.E.R.A.) voice files (7 total: onboarding, 4 feedback, victory, failure)
 - [ ] **VOICE-02**: Generate Zen Master (Bamboo) voice files (3 total: onboarding, victory, failure)
 - [ ] **VOICE-03**: Generate Lovebomber (Hype-Bro) voice files (3 total: onboarding, victory, failure)
-- [ ] **VOICE-04**: Create voice playback system for pre-recorded audio files
-- [ ] **VOICE-05**: Integrate voice playback with game triggers
+- [ ] **VOICE-04**: Create voice playback system for pre-recorded WAV files
+- [ ] **VOICE-05**: Integrate voice playback with game triggers (onboarding, feedback, victory, failure)
 - [ ] **VOICE-06**: Test Roaster voice playback (all 7 triggers)
 - [ ] **VOICE-07**: Test Zen Master and Lovebomber voice playback (onboarding, victory, failure)
+
+### Phase 2: Live API for Roast.exe
+
+- [ ] **VOICE-08**: Research Gemini Live API for real-time streaming audio
+- [ ] **VOICE-09**: Implement streaming audio for Roast.exe workflow
+- [ ] **VOICE-10**: Test real-time audio latency vs current implementation
 
 ## v1.2 Requirements (Deferred)
 
@@ -30,7 +36,7 @@ Requirements for milestone v1.1 — Voice Files for All Personalities
 - **VFX-01**: Particle effects on successful swipe
 - **VFX-02**: Screen shake on failed decision
 - **VFX-03**: Confetti on boss fight victory
-- ****: Smooth fade transitionsVFX-04
+- **VFX-04**: Smooth fade transitions
 - **VFX-05**: Card flip animation
 
 ### Background Audio
@@ -59,6 +65,8 @@ Requirements for milestone v1.1 — Voice Files for All Personalities
 
 ## Voice Message Inventory
 
+**Phase 1 - Pre-recorded:**
+
 **Roaster (V.E.R.A.):** 7 files
 - 1 onboarding
 - 4 feedback (Paste, Debug, Install, Ignore)
@@ -75,7 +83,10 @@ Requirements for milestone v1.1 — Voice Files for All Personalities
 - 1 victory
 - 1 failure
 
-**Total:** 13 files
+**Phase 2 - Live API:**
+- Real-time streaming for Roast.exe workflow (research + implementation)
+
+**Total:** 13 files + Live API implementation
 
 ## Traceability
 
@@ -88,11 +99,14 @@ Requirements for milestone v1.1 — Voice Files for All Personalities
 | VOICE-05 | Phase 1 | Pending |
 | VOICE-06 | Phase 1 | Pending |
 | VOICE-07 | Phase 1 | Pending |
+| VOICE-08 | Phase 2 | Pending |
+| VOICE-09 | Phase 2 | Pending |
+| VOICE-10 | Phase 2 | Pending |
 
 **Coverage:**
-- v1.1 requirements: 7 total
-- Mapped to phases: 7 ✓
+- v1.1 requirements: 10 total
+- Mapped to phases: 10 ✓
 
 ---
 *Requirements defined: 2026-02-28*
-*Last updated: 2026-02-28 after adding Zen Master and Lovebomber*
+*Last updated: 2026-02-28 after adding Phase 2 Live API*

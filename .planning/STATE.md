@@ -1,8 +1,8 @@
 # Project State: hyperscale
 
 **Initialized:** 2026-02-07
-**Status:** v1.1 — Voice & Effects (In Progress)
-**Milestone:** v1.1 — Voice & Effects
+**Status:** v1.1 — Voice Files + Live API (In Progress)
+**Milestone:** v1.1 — Voice Files + Live API
 
 ---
 
@@ -21,29 +21,26 @@ See: `.planning/PROJECT.md` (updated 2026-02-28)
 ### Overall Progress
 
 **Milestone:** v1.1 — In Progress
-**Status:** Roadmap created (4 phases defined)
+**Status:** Context gathered → Planning
 **Research:** Skipped (per config)
 
 ### Current Position
 
-**Phase:** Roadmap created → Planning
-**Progress:** ████████░░░░░░░░░░░░░ 35% (Roadmap → Planning → Implementation → Verification)
+**Phase:** 1 (Voice Files) — Planning
+**Progress:** ████░░░░░░░░░░░░░░ 20% (2 phases total)
 
 ---
 
 ## Milestone v1.1 Summary
 
-**Target features:**
-- Voice narration for AI assistant responses with personality-specific voices
-- Visual effects (particles, confetti, screen shake on events)
-- Background ambient audio and transition sounds
-- Sound toggle and volume controls
+**Phase 1 - Pre-recorded Voice Files:**
+- 13 voice files (WAV) for all 3 personalities
+- Triggers: onboarding, feedback (Roaster only), victory, failure
 
-**Requirements:** 17 total across 4 categories
-- Voice Narration: 4 requirements
-- Visual Effects: 5 requirements
-- Background Audio: 4 requirements
-- Settings Integration: 5 requirements
+**Phase 2 - Live API for Roast.exe:**
+- Research Gemini Live API for real-time streaming
+- Implement streaming audio for Roast.exe workflow
+- Faster time-to-first-audio
 
 ---
 
@@ -51,10 +48,8 @@ See: `.planning/PROJECT.md` (updated 2026-02-28)
 
 | Phase | Goal | Requirements | Status |
 |-------|------|--------------|--------|
-| 1 - Settings Foundation | User-accessible sound and voice controls | SETT-01, SETT-02, SETT-03, SETT-04, SETT-05 | Pending |
-| 2 - Voice Narration | Personality-specific AI assistant voice narration | VOICE-01, VOICE-02, VOICE-03, VOICE-04 | Pending |
-| 3 - Visual Effects | Particle effects, screen shake, confetti, animations | VFX-01, VFX-02, VFX-03, VFX-04, VFX-05 | Pending |
-| 4 - Background Audio | Ambient audio and stage-specific music | AUDIO-01, AUDIO-02, AUDIO-03, AUDIO-04 | Pending |
+| 1 - Voice Files | 13 voice files + playback system | VOICE-01 to VOICE-07 | Pending |
+| 2 - Live API | Real-time streaming for Roast.exe | VOICE-08 to VOICE-10 | Pending |
 
 ---
 
@@ -62,26 +57,25 @@ See: `.planning/PROJECT.md` (updated 2026-02-28)
 
 ### Design Decisions
 - Pre-recorded voice samples (not TTS) for quality
-- 2D visual effects only (no 3D for mobile performance)
+- WAV format (PCM 16-bit, 24kHz, mono) for browser compatibility
 - localStorage for settings persistence
 
 ### Technical Notes
-- Voice narration tied to personality system (Finance, Marketing, Management)
-- Visual effects triggered by game state events (swipe outcome, boss defeat)
-- Background audio needs stage-aware music system
-- Settings toggles control audio feature availability
+- Voice narration tied to personality system
+- Current Roast.exe uses simple TTS API (waits for full response)
+- Phase 2 explores Gemini Live API for streaming audio
 
 ### Blockers
-- None identified during roadmap creation
+- None identified
 
 ---
 
 ## Session Continuity
 
-**Last action:** Created v1.1 roadmap with 4 phases
+**Last action:** Added Phase 2 (Live API) to roadmap
 
-**Next action:** Await roadmap approval, then proceed to Phase 1 planning
+**Next action:** Plan Phase 1
 
 ---
 
-*Last updated: 2026-02-28 — v1.1 roadmap created*
+*Last updated: 2026-02-28 — v1.1 updated with Phase 2*

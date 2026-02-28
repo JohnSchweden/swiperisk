@@ -34,6 +34,14 @@ This phase explores implementing Gemini Live API for real-time streaming audio i
 | ws (WebSocket) | Backend WebSocket server | If implementing custom proxy |
 | Express.js | Backend HTTP server | For API key handling and proxy |
 
+### Partner Integrations (Alternative to Raw WebSocket)
+For faster implementation, consider these pre-built solutions:
+| Service | Purpose | When to Use |
+|---------|---------|-------------|
+| LiveKit | Real-time audio/video infrastructure | Building voice agents with less custom code |
+| Pipecat | Conversational AI framework | Quick prototyping of voice assistants |
+| Firebase AI Logic | Mobile/web SDK for Live API | Native mobile integration |
+
 ### Alternative Approaches Considered
 | Instead of | Could Use | Tradeoff |
 |------------|-----------|----------|
@@ -45,6 +53,21 @@ This phase explores implementing Gemini Live API for real-time streaming audio i
 ```bash
 npm install @google/genai
 ```
+
+---
+
+## Technical Specifications
+
+**Gemini Live API Audio Format (Verified):**
+| Parameter | Input (Client→API) | Output (API→Client) |
+|-----------|-------------------|---------------------|
+| Sample Rate | 16kHz | 24kHz |
+| Bit Depth | 16-bit PCM | 16-bit PCM |
+| Endianness | Little-endian | Little-endian |
+| Channels | Mono | Mono |
+| Protocol | WebSocket (WSS) | WebSocket (WSS) |
+
+**Important:** The 24kHz output requires sample rate conversion for browser playback (browser AudioContext defaults to 48kHz).
 
 ---
 
@@ -70,7 +93,7 @@ src/
 **When to use:** When implementing real-time voice interactions with Gemini
 **Example:**
 ```typescript
-// Source: Google GenAI SDK documentation
+// Source: Google GenAI SDK documentation + verified examples
 import { GoogleGenAI, Modality } from '@google/genai';
 
 const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY });
@@ -86,9 +109,13 @@ const session = await ai.live.connect({
     onopen: () => console.log('Connected to Gemini Live API'),
     onmessage: (message) => {
       // Handle incoming audio chunks (base64 encoded PCM)
-      const audioBase64 = message.serverContent?.inlineMedia?.data;
+      // Verified: Audio data is in modelTurn.parts[].inlineData.data
+      const audioPart = message.serverContent?.modelTurn?.parts?.find(
+        (p) => p.inlineData
+      );
+      const audioBase64 = audioPart?.inlineData?.data;
       if (audioBase64) {
-        // Convert and play audio
+        // Convert and play audio chunk
       }
     },
     onerror: (error) => console.error('Live API error:', error),
@@ -195,7 +222,10 @@ function resample24to48(input: Float32Array): Float32Array {
 ### Pitfall 1: 24kHz Audio Plays One Octave Higher (CRITICAL)
 **What goes wrong:** Audio from Gemini Live API plays at double speed, sounding like a chipmunk
 **Why it happens:** Gemini outputs 24kHz PCM, but browser AudioContext defaults to 48kHz. Without proper resampling, the browser plays 24kHz audio at 2x speed
-**How to avoid:** Always resample 24kHz → 48kHz before playback. Use linear interpolation or Web Audio API's built-in resampling
+**How to avoid:** Always resample 24kHz → 48kHz before playback. Use one of these approaches:
+- **Option A:** Create AudioContext at 24kHz: `new AudioContext({ sampleRate: 24000 })` - simple but may have compatibility issues
+- **Option B:** Use playbackRate: Create AudioContext at 48kHz, then set `source.playbackRate = 0.5` to play 24kHz audio at correct speed
+- **Option C:** Resample manually: Convert 24kHz PCM to 48kHz using linear interpolation before sending to AudioWorklet
 **Warning signs:** Audio sounds "sped up", test with a known 440Hz tone produces 880Hz
 
 ### Pitfall 2: API Key Exposure in Browser
@@ -340,6 +370,14 @@ function isConnectionError(error: unknown): boolean {
 | ScriptProcessorNode | AudioWorklet | 2019+ | Lower latency, runs off main thread |
 | Cascaded STT→LLM→TTS | Native Audio pipeline | Gemini 2.5 (May 2025) | Direct audio processing, lower latency |
 | Fixed sample rate handling | Explicit 24→48kHz resampling | Known issue 2025-2026 | Prevents audio distortion |
+| Blocking TTS (generateContent) | Streaming Live API | Gemini 2.5 Live API | First audio in ~300-800ms vs full response |
+
+**Key insight for this project:**
+- Current `services/geminiService.ts` uses `gemini-2.5-flash-preview-tts` with `generateContent()` 
+- This waits for the FULL response before playing audio (blocking)
+- It correctly handles 24kHz by creating AudioContext at 24kHz: `new AudioContext({ sampleRate: 24000 })`
+- **Live API difference:** Streams audio chunks in real-time via WebSocket, enabling faster time-to-first-audio
+- The challenge with Live API is handling streaming chunks (not single audio file) with proper sample rate conversion
 
 **Deprecated/outdated:**
 - ScriptProcessorNode: Replaced by AudioWorklet
@@ -370,14 +408,15 @@ function isConnectionError(error: unknown): boolean {
 ## Sources
 
 ### Primary (HIGH confidence)
-- Google GenAI SDK GitHub (github.com/googleapis/js-genai) - Official SDK documentation
-- Gemini Live API Examples (github.com/google-gemini/gemini-live-api-examples) - Working examples
-- Firebase AI Logic Live API docs - Official documentation for live API usage
+- Google GenAI SDK (@google/genai npm) - Official JavaScript/TypeScript SDK for Live API
+- Gemini Live API Examples (github.com/google-gemini/gemini-live-api-examples) - Working code examples with verified audio format
+- Gemini Live API Documentation (ai.google.dev/gemini-api/docs/live) - Official API documentation
+- Gemini Live API Capabilities Guide (ai.google.dev/gemini-api/docs/live-guide) - Detailed features and configuration
 
 ### Secondary (MEDIUM confidence)
-- Google Cloud Vertex AI Live API documentation - Official best practices
-- Stack Overflow community patterns for Web Audio API streaming
-- MDN Web Audio API best practices
+- Google Cloud Vertex AI Live API documentation (docs.cloud.google.com/vertex-ai/generative-ai/docs/live-api) - Official best practices
+- Project N.E.K.O. audio streaming (project-neko.online/api/websocket/audio-streaming) - Real-world 24kHz→48kHz implementation example
+- MDN Web Audio API documentation - Browser audio playback patterns
 
 ### Tertiary (LOW confidence)
 - Community discussions on Google Developers Forum (some reported issues require validation)

@@ -7,14 +7,15 @@
 
 Requirements for milestone v1.1 — Roaster Voice Files
 
-### Roaster Voice Files (Development Role Only)
+### Roaster Voice Files (Development Role)
 
 - [ ] **VOICE-01**: Generate Roaster onboarding voice file
-- [ ] **VOICE-02**: Generate Roaster victory voice file  
-- [ ] **VOICE-03**: Generate Roaster failure voice file
-- [ ] **VOICE-04**: Create voice playback system for pre-recorded audio
-- [ ] **VOICE-05**: Integrate voice playback with game triggers (onboarding, victory, failure)
-- [ ] **VOICE-06**: Test voice playback for Development role
+- [ ] **VOICE-02**: Generate 4 Roaster feedback voice files (Paste, Debug, Install, Ignore)
+- [ ] **VOICE-03**: Generate Roaster victory voice file
+- [ ] **VOICE-04**: Generate Roaster failure voice file
+- [ ] **VOICE-05**: Create voice playback system for pre-recorded audio files
+- [ ] **VOICE-06**: Integrate voice playback with game triggers
+- [ ] **VOICE-07**: Test voice playback for Development role
 
 ## v1.2 Requirements (Deferred)
 
@@ -23,10 +24,13 @@ Requirements for milestone v1.1 — Roaster Voice Files
 - ZEN_MASTER (Bamboo) onboarding, victory, failure
 - LOVEBOMBER (Hype-Bro) onboarding, victory, failure
 
-### Feedback Messages
+### Feedback Messages (Other Roles)
 
-- Feedback voice files after each card swipe (all personalities)
-- Full role card feedback (Development, Marketing, Management, HR, Finance, Legal)
+- Marketing role feedback voice files
+- Management role feedback voice files
+- HR role feedback voice files
+- Finance role feedback voice files
+- Legal role feedback voice files
 
 ### Visual Effects
 
@@ -56,10 +60,17 @@ Requirements for milestone v1.1 — Roaster Voice Files
 | Feature | Reason |
 |---------|--------|
 | Other personalities (Zen, Lovebomber) | Deferred to v1.2 |
-| Feedback messages after card swipes | Deferred to v1.2 |
-| Other clearance levels (Marketing, Management, etc.) | Deferred to v1.2 |
+| Feedback messages for other roles | Deferred to v1.2 |
 | Visual effects | Deferred to v1.2 |
 | Background audio | Deferred to v1.2 |
+
+## Voice Message Inventory
+
+**Roaster (Development):** 7 files
+- 1 onboarding
+- 4 feedback (Paste, Debug, Install, Ignore)
+- 1 victory
+- 1 failure
 
 ## Traceability
 
@@ -71,11 +82,12 @@ Requirements for milestone v1.1 — Roaster Voice Files
 | VOICE-04 | Phase 1 | Pending |
 | VOICE-05 | Phase 1 | Pending |
 | VOICE-06 | Phase 1 | Pending |
+| VOICE-07 | Phase 1 | Pending |
 
 **Coverage:**
-- v1.1 requirements: 6 total
-- Mapped to phases: 6 ✓
+- v1.1 requirements: 7 total
+- Mapped to phases: 7 ✓
 
 ---
 *Requirements defined: 2026-02-28*
-*Last updated: 2026-02-28 after v1.1 scope reduced to Roaster only*
+*Last updated: 2026-02-28 after adding feedback messages for Roaster*

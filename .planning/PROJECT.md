@@ -12,13 +12,12 @@ The game runs entirely in the browser, supporting both desktop (mouse/keyboard) 
 
 **Target features:**
 - Voice playback system using pre-recorded audio files
-- 3 voice files: onboarding, victory, failure for Roaster
+- 7 voice files: onboarding (1), feedback (4), victory (1), failure (1) for Roaster
 - Development role integration
 
 **Deferred to v1.2:**
 - ZEN_MASTER and LOVEBOMBER voice files
-- Feedback messages after card swipes
-- Other clearance levels
+- Feedback messages for other roles (Marketing, Management, HR, Finance, Legal)
 - Visual effects
 - Background audio
 

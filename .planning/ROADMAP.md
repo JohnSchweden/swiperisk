@@ -34,16 +34,15 @@ v1.1 implements two voice-related features:
 
 **Dependencies:** None
 
-**Plans:** 7 plans in 7 waves (incremental)
+**Plans:** 6 plans in 6 waves (incremental auto-testing)
 
 **Plan list:**
-- [ ] 01-voice-files-01-PLAN.md — Generate 1 voice file (test pipeline)
-- [ ] 01-voice-files-02-PLAN.md — Generate 3 Roaster files + verify
-- [ ] 01-voice-files-03-PLAN.md — Generate remaining 10 files
-- [ ] 01-voice-files-04-PLAN.md — Create voice playback system
-- [ ] 01-voice-files-05-PLAN.md — Integrate with game triggers
-- [ ] 01-voice-files-06-PLAN.md — Test Roaster voice playback
-- [ ] 01-voice-files-07-PLAN.md — Test Zen Master and Lovebomber voice playback
+- [ ] 01-01-PLAN.md — Generate 1 voice file (test pipeline) + AUTO-TEST
+- [ ] 01-02-PLAN.md — Generate 3 Roaster files + AUTO-TEST each
+- [ ] 01-03-PLAN.md — Generate remaining 10 files + AUTO-TEST
+- [ ] 01-04-PLAN.md — Create voice playback system (TDD)
+- [ ] 01-05-PLAN.md — Integrate with game triggers
+- [ ] 01-06-PLAN.md — Final human verification
 
 **Requirements:**
 - VOICE-01: Generate Roaster (V.E.R.A.) voice files (7 total)

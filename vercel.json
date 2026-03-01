@@ -1,10 +1,9 @@
 {
   "functions": {
-    "api/roast.ts": {
-      "includeFiles": "node_modules/@google/genai/**"
-    },
-    "api/speak.ts": {
-      "includeFiles": "node_modules/@google/genai/**"
+    "api/*.ts": {
+      "includeFiles": "node_modules/@google/genai/**",
+      "memory": 1024,
+      "maxDuration": 30
     }
   }
 }

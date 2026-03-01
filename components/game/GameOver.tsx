@@ -1,6 +1,6 @@
 import React from 'react';
 import { GameState, DeathType } from '../../types';
-import { DEATH_ENDINGS } from '../../constants';
+import { DEATH_ENDINGS } from '../../data';
 import LayoutShell from '../LayoutShell';
 
 interface GameOverProps {

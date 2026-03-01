@@ -1,7 +1,7 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node';
 import { GoogleGenAI } from "@google/genai";
 import { PersonalityType } from "../types";
-import { PERSONALITIES } from "../constants";
+import { PERSONALITIES } from "../data";
 
 const ROAST_MODELS = ["gemini-2.5-flash-lite", "gemini-2.5-flash"] as const;
 

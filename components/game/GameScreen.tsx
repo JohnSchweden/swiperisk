@@ -1,6 +1,6 @@
 import React from 'react';
 import { GameState } from '../../types';
-import { PERSONALITIES, ROLE_CARDS } from '../../constants';
+import { PERSONALITIES, ROLE_CARDS } from '../../data';
 import LayoutShell from '../LayoutShell';
 import { GameHUD } from './GameHUD';
 import { CardStack } from './CardStack';

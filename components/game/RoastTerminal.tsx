@@ -1,6 +1,6 @@
 import React, { useEffect, RefObject } from 'react';
 import { PersonalityType } from '../../types';
-import { PERSONALITIES } from '../../constants';
+import { PERSONALITIES } from '../../data';
 
 const ROAST_CONSOLE_NAMES: Record<PersonalityType, string> = {
   [PersonalityType.ROASTER]: 'roast_con.exe',

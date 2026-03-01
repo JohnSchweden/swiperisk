@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { GameStage, PersonalityType, RoleType } from './types';
-import { ROLE_CARDS, BOSS_FIGHT_QUESTIONS } from './constants';
+import { ROLE_CARDS, BOSS_FIGHT_QUESTIONS } from './data';
 import {
   useGameState,
   useSwipeGestures,
@@ -325,8 +325,10 @@ const App: React.FC = () => {
 
   return (
     <>
-      <div className="min-h-[100dvh] stage-transition" key={state.stage}>
-        {renderStage()}
+      <div className="min-h-[100dvh]" key={state.stage}>
+        <div className="stage-transition">
+          {renderStage()}
+        </div>
       </div>
       {state.stage === GameStage.PLAYING && feedbackOverlay && state.personality && (
         <FeedbackOverlay

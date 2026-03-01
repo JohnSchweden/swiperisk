@@ -525,7 +525,54 @@
     <div class="scanline-container" aria-hidden="true">
         <div class="scanline"></div>
     </div>
-    <main id="root"></main>
+    <main id="root">
+        <!-- Critical content for FCP - visible immediately without JavaScript -->
+        <div id="initial-loader" style="
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #0a0a0c;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 9998;
+        ">
+            <h1 style="
+                font-family: 'Space Grotesk', system-ui, -apple-system, sans-serif;
+                font-size: clamp(2rem, 8vw, 4rem);
+                font-weight: 700;
+                color: #f8fafc;
+                margin: 0 0 1rem 0;
+                letter-spacing: -0.02em;
+            ">SwipeRisk</h1>
+            <p style="
+                font-family: 'Space Grotesk', system-ui, -apple-system, sans-serif;
+                font-size: clamp(0.875rem, 3vw, 1.125rem);
+                color: #94a3b8;
+                margin: 0;
+                text-align: center;
+                padding: 0 2rem;
+            ">Loading AI Risk Assessment...</p>
+            <div style="
+                width: 48px;
+                height: 48px;
+                margin-top: 2rem;
+                border: 3px solid rgba(34, 211, 238, 0.2);
+                border-top-color: #22d3ee;
+                border-radius: 50%;
+                animation: loader-spin 0.8s linear infinite;
+            "></div>
+        </div>
+        <style>
+            @keyframes loader-spin {
+                from { transform: rotate(0deg); }
+                to { transform: rotate(360deg); }
+            }
+        </style>
+    </main>
     <script type="module" src="/index.tsx"></script>
 </body>
 </html>

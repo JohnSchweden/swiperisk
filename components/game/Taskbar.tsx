@@ -1,6 +1,6 @@
 import React from 'react';
 import { PersonalityType } from '../../types';
-import { PERSONALITIES } from '../../constants';
+import { PERSONALITIES } from '../../data';
 
 interface TaskbarProps {
   personality: PersonalityType | null;

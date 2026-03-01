@@ -1,6 +1,6 @@
 import React from 'react';
 import { RoleType, PersonalityType } from '../../types';
-import { PERSONALITIES } from '../../constants';
+import { PERSONALITIES } from '../../data';
 import LayoutShell from '../LayoutShell';
 
 interface InitializingScreenProps {

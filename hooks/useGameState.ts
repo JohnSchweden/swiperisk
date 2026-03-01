@@ -1,6 +1,6 @@
 import { useReducer, useCallback } from 'react';
 import { GameStage, PersonalityType, RoleType, GameState, DeathType } from '../types';
-import { DEATH_ENDINGS, ROLE_CARDS } from '../constants';
+import { DEATH_ENDINGS, ROLE_CARDS } from '../data';
 
 const INITIAL_BUDGET = 10000000;
 

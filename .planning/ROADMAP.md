@@ -105,9 +105,9 @@ v1.1 implements two voice-related features:
 
 **Plan list:**
 - [x] 02-01-PLAN.md — Direct browser service + AudioWorklet foundation
-- [ ] 02-02-PLAN.md — Live audio hook
-- [ ] 02-03-PLAN.md — Roast.exe integration + fallback
-- [ ] 02-04-PLAN.md — Latency testing
+- [x] 02-02-PLAN.md — Live audio hook
+- [x] 02-03-PLAN.md — Roast.exe integration + fallback
+- [x] 02-04-PLAN.md — Latency testing (checkpoint - awaiting verification)
 
 **Requirements:**
 - VOICE-08: Research Gemini Live API integration
@@ -120,7 +120,7 @@ v1.1 implements two voice-related features:
 3. First token audio plays faster than current approach
 4. Fallback to current TTS if Live API unavailable
 
-**Status:** In Progress (1/1 plan complete)
+**Status:** In Progress (Debugging - 4/4 plans executed, verification pending)
 
 ---
 

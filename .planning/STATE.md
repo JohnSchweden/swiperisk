@@ -21,13 +21,13 @@ See: `.planning/PROJECT.md` (updated 2026-02-28)
 ### Overall Progress
 
 **Milestone:** v1.1 — In Progress
-**Status:** Phase 1 Complete → Phase 2 Pending
+**Status:** Phase 1 Complete → Phase 2 In Progress (Debugging)
 **Research:** Skipped (per config)
 
 ### Current Position
 
-**Phase:** 2 (Live API) — Plan 3/4 Complete
-**Progress:** ██████████░░░░░░░░░░░ 60% (Phase 2: 3 of 4 plans complete)
+**Phase:** 2 (Live API) — Debugging in Progress
+**Progress:** ████████░░░░░░░░░░░░░ 75% (Phase 2: 4 plans executed, verification pending)
 
 ---
 
@@ -38,10 +38,11 @@ See: `.planning/PROJECT.md` (updated 2026-02-28)
 - Triggers: onboarding, feedback (Roaster only), victory, failure
 - Voice playback system integrated with game
 
-**Phase 2 - Live API for Roast.exe:** Complete
-- Plan 02-01: Direct browser Gemini Live API service created
-- Plan 02-02: useLiveAudio React hook created
-- Plan 02-03: Roast.exe integration with streaming and fallback
+**Phase 2 - Live API for Roast.exe:** In Progress (Debugging)
+- Plan 02-01: ✓ Direct browser Gemini Live API service created
+- Plan 02-02: ✓ useLiveAudio React hook created
+- Plan 02-03: ✓ Roast.exe integration with streaming and fallback
+- Plan 04: Awaiting verification (human checkpoint)
 
 ---
 
@@ -50,7 +51,7 @@ See: `.planning/PROJECT.md` (updated 2026-02-28)
 | Phase | Goal | Requirements | Status |
 |-------|------|--------------|--------|
 | 1 - Voice Files | 13 voice files + playback system | VOICE-01 to VOICE-07 | Complete ✓ |
-| 2 - Live API | Real-time streaming for Roast.exe | VOICE-08 to VOICE-10 | In Progress (3/4) |
+| 2 - Live API | Real-time streaming for Roast.exe | VOICE-08 to VOICE-10 | In Progress (Debugging) |
 
 ---
 
@@ -67,21 +68,23 @@ See: `.planning/PROJECT.md` (updated 2026-02-28)
 - Current Roast.exe uses simple TTS API (waits for full response)
 - Phase 2 explores Gemini Live API for streaming audio
 - Personality paths normalized (ZEN_MASTER → zenmaster)
-- **NEW:** Direct browser connection using ephemeral tokens (no backend proxy)
+- **NEW:** Direct browser connection using GoogleGenAI SDK (no backend proxy)
 - **NEW:** AudioWorklet for 24kHz→48kHz sample rate conversion
 - **NEW:** roastService.ts with getRoastWithFallback for automatic Live API → TTS fallback
+- **DEBUGGING:** Live API connection - code implemented but streaming not verified (API key has access, connection mechanism needs debugging)
 
 ### Blockers
-- None identified
+- Live API streaming not confirmed working - debugging in progress
 
 ---
 
 ## Session Continuity
 
-**Last action:** 2026-03-01 - Completed 02-03-PLAN.md (Live API integration with fallback)
+**Last action:** 2026-03-01 - Phase 2 plan execution complete, human verification checkpoint
+**Issue:** Live API connection appears to fail silently, falls back to TTS. User confirms API key HAS access. Debugging needed.
 
-**Next action:** Ready for next phase or milestone completion
+**Next action:** Debug Live API connection - verify WebSocket/SDK connection works
 
 ---
 
-*Last updated: 2026-03-01 — Plan 02-03 complete*
+*Last updated: 2026-03-01 — Phase 2 in verification/debugging*

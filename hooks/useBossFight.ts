@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback } from 'react';
-import { BOSS_FIGHT_QUESTIONS } from '../constants';
+import { BOSS_FIGHT_QUESTIONS } from '../data';
 
 interface UseBossFightOptions {
   isActive: boolean;

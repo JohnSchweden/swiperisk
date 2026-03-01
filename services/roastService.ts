@@ -144,11 +144,14 @@ export async function getRoastWithFallback(
   workflow: string,
   personality: PersonalityType
 ): Promise<string> {
+  console.log('[roastService] getRoastWithFallback called, personality:', personality);
+  
   // First get the roast text
   const roastText = await getRoast(workflow, personality);
   
   try {
     // Try streaming audio first
+    console.log('[roastService] Attempting streaming audio...');
     await playStreamingAudio(roastText, personality);
   } catch (error) {
     // Log warning and fallback to standard TTS

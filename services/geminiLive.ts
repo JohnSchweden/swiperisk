@@ -84,7 +84,7 @@ export async function connectToLiveSession(
 
   // Set up the live connection config
   const config: LiveSessionConfig = {
-    model: 'gemini-2.0-flash-exp',
+    model: 'gemini-2.5-flash-native-audio-latest',
     systemInstruction,
   };
 
@@ -121,6 +121,9 @@ export async function connectToLiveSession(
       callbacks: {
         onopen: () => {
           console.log('[Gemini Live] Connected to Gemini Live API');
+        },
+        onerror: (error) => {
+          console.error('[Gemini Live] Error:', error?.message || error);
         },
         onmessage: (message) => {
           if (!controller) return;

@@ -1,6 +1,6 @@
 import React, { RefObject } from 'react';
 import { Card, RoleType, AppSource } from '../../types';
-import { ROLE_CARDS } from '../../constants';
+import { ROLE_CARDS } from '../../data';
 
 interface CardStackProps {
   role: RoleType;

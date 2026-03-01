@@ -1,9 +1,9 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node';
-import { GoogleGenAI } from "@google/genai";
 import { PersonalityType } from "../types";
 import { PERSONALITIES } from "../data";
 
 const ROAST_MODELS = ["gemini-2.5-flash-lite", "gemini-2.5-flash"] as const;
+const API_BASE = "https://generativelanguage.googleapis.com/v1beta";
 
 const TONE_INSTRUCTIONS: Record<PersonalityType, string> = {
   [PersonalityType.ROASTER]: "Be sarcastic, witty, and cynical. Biting British humor.",
@@ -38,15 +38,33 @@ A user has described their current AI workflow: "${workflow}".
 ${tone} Keep it under 50 words.
 `;
 
-  const ai = new GoogleGenAI({ apiKey });
-
   for (const model of ROAST_MODELS) {
     try {
-      const response = await ai.models.generateContent({
-        model,
-        contents: prompt,
+      const resp = await fetch(`${API_BASE}/models/${model}:generateContent`, {
+        method: "POST",
+        headers: {
+          "x-goog-api-key": apiKey,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          contents: [{ parts: [{ text: prompt }] }],
+        }),
       });
-      const text = response.text || "Even for you, this is remarkably insecure.";
+
+      if (!resp.ok) {
+        const err = await resp.text();
+        console.warn(`Roast Error (${model}):`, resp.status, err);
+        continue;
+      }
+
+      const data = (await resp.json()) as {
+        candidates?: Array<{
+          content?: { parts?: Array<{ text?: string }> };
+        }>;
+      };
+      const text =
+        data.candidates?.[0]?.content?.parts?.[0]?.text ||
+        "Even for you, this is remarkably insecure.";
       return res.status(200).json({ text });
     } catch (error) {
       console.warn(`Roast Error (${model}):`, error);

@@ -1,5 +1,7 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node';
-import { GoogleGenAI, Modality } from "@google/genai";
+
+const API_BASE = "https://generativelanguage.googleapis.com/v1beta";
+const TTS_MODEL = "gemini-2.5-flash-preview-tts";
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
   const { text, voiceName } = req.body ?? {};
@@ -14,21 +16,39 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   }
 
   try {
-    const ai = new GoogleGenAI({ apiKey });
-    const response = await ai.models.generateContent({
-      model: "gemini-2.5-flash-preview-tts",
-      contents: [{ parts: [{ text }] }],
-      config: {
-        responseModalities: [Modality.AUDIO],
-        speechConfig: {
-          voiceConfig: {
-            prebuiltVoiceConfig: { voiceName: voiceName || 'Kore' },
+    const resp = await fetch(`${API_BASE}/models/${TTS_MODEL}:generateContent`, {
+      method: "POST",
+      headers: {
+        "x-goog-api-key": apiKey,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        contents: [{ parts: [{ text }] }],
+        generationConfig: {
+          responseModalities: ["AUDIO"],
+          speechConfig: {
+            voiceConfig: {
+              prebuiltVoiceConfig: { voiceName: voiceName || "Kore" },
+            },
           },
         },
-      },
+      }),
     });
 
-    const base64Audio = response.candidates?.[0]?.content?.parts?.[0]?.inlineData?.data;
+    if (!resp.ok) {
+      const err = await resp.text();
+      console.error("TTS Error:", resp.status, err);
+      return res.status(500).json({ error: "TTS generation failed" });
+    }
+
+    const data = (await resp.json()) as {
+      candidates?: Array<{
+        content?: {
+          parts?: Array<{ inlineData?: { mimeType?: string; data?: string } }>;
+        };
+      }>;
+    };
+    const base64Audio = data.candidates?.[0]?.content?.parts?.[0]?.inlineData?.data;
 
     if (!base64Audio) {
       return res.status(500).json({ error: "No audio generated" });

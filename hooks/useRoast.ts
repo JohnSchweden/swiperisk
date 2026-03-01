@@ -14,24 +14,23 @@ export function useRoast(personality: PersonalityType | null) {
   const handleRoast = useCallback(async () => {
     if (!input || !personality) return;
     setIsLoading(true);
+    setOutput(null);
     setStatus('loading');
     try {
       // Check if speech is enabled
       const speechEnabled = import.meta.env.VITE_ENABLE_SPEECH !== 'false';
       
-      let roast: string;
       if (speechEnabled) {
-        // Use streaming with fallback - shows 'streaming' or 'speaking' status
         setStatus('streaming');
-        roast = await getRoastWithFallback(input, personality);
-        setStatus('speaking');
+        await getRoastWithFallback(input, personality, (chunk) => {
+          setOutput((prev) => (prev || '') + chunk);
+        });
+        setStatus('complete');
       } else {
-        // Text-only mode
-        roast = await getRoastTextOnly(input, personality);
+        const roast = await getRoastTextOnly(input, personality);
+        setOutput(roast);
+        setStatus('complete');
       }
-      
-      setOutput(roast);
-      setStatus('complete');
     } catch (e) {
       setOutput("Roast service unavailable. The auditors are busy.");
       setStatus('idle');

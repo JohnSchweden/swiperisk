@@ -1,6 +1,9 @@
 import { PersonalityType } from '../types';
-import { getRoast, speak, cleanupAudio } from './geminiService';
+import { getRoast, speak } from './geminiService';
 import { connectToLiveSession } from './geminiLive';
+
+const TTS_FALLBACK_ENABLED =
+  import.meta.env.VITE_TTS_FALLBACK_ENABLED === 'true';
 
 /**
  * Voice mapping for TTS fallback
@@ -37,132 +40,115 @@ const FALLBACK_ERROR_CODES = [
 function shouldFallback(error: unknown): boolean {
   const errorMessage = error instanceof Error ? error.message : String(error);
   const lowerMessage = errorMessage.toLowerCase();
-  
-  return FALLBACK_ERROR_CODES.some(code => 
+
+  return FALLBACK_ERROR_CODES.some(code =>
     lowerMessage.includes(code.toLowerCase())
   );
 }
 
 /**
- * Play streaming audio from Live API
- * Handles audio context, AudioWorklet, and playback
+ * Stream text and audio simultaneously from Live API.
+ * User workflow is sent as prompt; Live API generates roast text + audio together.
  */
-async function playStreamingAudio(
-  prompt: string,
-  personality: PersonalityType
-): Promise<void> {
-  // Initialize AudioContext at 48kHz for browser playback
-  const audioContext = new AudioContext({ sampleRate: 48000 });
-  
-  // Load the AudioWorklet processor for 24kHz → 48kHz conversion
-  await audioContext.audioWorklet.addModule('/audio-processor.worklet.js');
-  
-  // Create AudioWorkletNode connected to speakers
-  const workletNode = new AudioWorkletNode(
-    audioContext,
-    'streaming-audio-processor'
-  );
-  workletNode.connect(audioContext.destination);
-  
-  // Connect to Gemini Live API
-  const stream = await connectToLiveSession(prompt, personality);
+async function streamFromLiveAPI(
+  workflow: string,
+  personality: PersonalityType,
+  onTextChunk: (text: string) => void
+): Promise<string> {
+  console.log(`[roastService] streamFromLiveAPI called with personality: ${personality}`);
+  const audioContext = new AudioContext({ sampleRate: 24000 });
+  let nextStartTime = 0;
+
+  const stream = await connectToLiveSession(workflow, personality);
   const reader = stream.getReader();
-  
-  // Convert Int16 PCM to Float32 and send to worklet
-  const convertToFloat32 = (buffer: ArrayBuffer): Float32Array => {
+
+  const playAudioChunk = async (buffer: ArrayBuffer) => {
+    if (buffer.byteLength === 0) return;
+
+    // Convert PCM16 to Float32
     const int16Array = new Int16Array(buffer);
     const float32Array = new Float32Array(int16Array.length);
     for (let i = 0; i < int16Array.length; i++) {
       float32Array[i] = int16Array[i] / 32768.0;
     }
-    return float32Array;
+
+    const audioBuffer = audioContext.createBuffer(1, float32Array.length, 24000);
+    audioBuffer.getChannelData(0).set(float32Array);
+
+    const source = audioContext.createBufferSource();
+    source.buffer = audioBuffer;
+    source.connect(audioContext.destination);
+
+    const currentTime = audioContext.currentTime;
+    if (nextStartTime < currentTime) {
+      nextStartTime = currentTime;
+    }
+
+    source.start(nextStartTime);
+    nextStartTime += audioBuffer.duration;
   };
-  
+
+  let fullText = '';
+
   try {
     while (true) {
       const { done, value } = await reader.read();
-      
       if (done) break;
-      
-      // Handle audio chunks
-      if (value && 'data' in value && value.data.byteLength > 0) {
-        const float32Data = convertToFloat32(value.data);
-        workletNode.port.postMessage({
-          type: 'chunk',
-          data: float32Data,
-        });
+
+      if (value && 'text' in value && value.text) {
+        fullText += value.text;
+        onTextChunk(value.text);
       }
-      
-      // Log text chunks for debugging
-      if (value && 'text' in value) {
-        console.log('[roastService] Text response:', value.text);
+
+      if (value && 'data' in value && value.data.byteLength > 0) {
+        await playAudioChunk(value.data);
       }
     }
   } finally {
-    // Cleanup
-    workletNode.port.postMessage({ type: 'flush' });
-    workletNode.disconnect();
     await audioContext.close();
   }
+
+  return fullText;
 }
 
 /**
- * Get roast with streaming audio via Live API
- * 
- * First generates the roast text, then plays it using streaming audio
- * from the Gemini Live API (direct browser connection).
- * 
- * @param workflow - The workflow/context for the roast
- * @param personality - The personality type
- * @returns The roast text that was generated
+ * Get roast with streaming text + audio via Live API.
  */
 export async function getRoastWithStreaming(
   workflow: string,
-  personality: PersonalityType
+  personality: PersonalityType,
+  onTextChunk: (text: string) => void
 ): Promise<string> {
-  // First get the roast text
-  const roastText = await getRoast(workflow, personality);
-  
-  // Then stream the audio
-  await playStreamingAudio(roastText, personality);
-  
-  return roastText;
+  return streamFromLiveAPI(workflow, personality, onTextChunk);
 }
 
 /**
  * Get roast with automatic fallback to standard TTS
- * 
- * Attempts to use Live API for streaming audio first.
- * If that fails (connection error, rate limit, timeout, etc.),
- * falls back to standard TTS playback.
- * 
- * @param workflow - The workflow/context for the roast
- * @param personality - The personality type
- * @returns The roast text that was generated
  */
 export async function getRoastWithFallback(
   workflow: string,
-  personality: PersonalityType
+  personality: PersonalityType,
+  onTextChunk: (text: string) => void
 ): Promise<string> {
-  console.log('[roastService] getRoastWithFallback called, personality:', personality);
-  
-  // First get the roast text
-  const roastText = await getRoast(workflow, personality);
-  
   try {
-    // Try streaming audio first
-    console.log('[roastService] Attempting streaming audio...');
-    await playStreamingAudio(roastText, personality);
+    return await streamFromLiveAPI(workflow, personality, onTextChunk);
   } catch (error) {
-    // Log warning and fallback to standard TTS
-    console.warn('[roastService] Live API unavailable, falling back to standard TTS:', error);
-    
-    // Fallback to standard TTS
-    const voiceName = VOICE_MAP[personality];
-    await speak(roastText, voiceName);
+    const errMsg = error instanceof Error ? error.message : String(error);
+    const errStack = error instanceof Error ? error.stack : '';
+    console.warn(
+      '[roastService] Live API unavailable, falling back to TTS. Error:',
+      errMsg,
+      errStack ? `\n${errStack}` : ''
+    );
+
+    if (TTS_FALLBACK_ENABLED && shouldFallback(error)) {
+      const roastText = await getRoast(workflow, personality);
+      const voiceName = VOICE_MAP[personality];
+      await speak(roastText, voiceName);
+      return roastText;
+    }
+    throw error;
   }
-  
-  return roastText;
 }
 
 /**

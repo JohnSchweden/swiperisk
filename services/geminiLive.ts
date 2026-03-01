@@ -1,5 +1,6 @@
 import { GoogleGenAI, Modality } from '@google/genai';
 import { PersonalityType } from '../types';
+import { PERSONALITIES } from '../data';
 
 /**
  * Gemini Live API Service - Direct Browser Connection
@@ -79,8 +80,11 @@ export async function connectToLiveSession(
   // Get personality-specific system instruction
   const systemInstruction = getPersonalityInstruction(personality);
 
-  // Create the AI client
-  const ai = new GoogleGenAI({ apiKey });
+  // Create the AI client - v1alpha required for Live API native audio (per Google docs)
+  const ai = new GoogleGenAI({
+    apiKey,
+    httpOptions: { apiVersion: 'v1alpha' as const },
+  });
 
   // Set up the live connection config
   const config: LiveSessionConfig = {
@@ -108,65 +112,70 @@ export async function connectToLiveSession(
     },
   });
 
-  // Connect to Live API
+  // Connect to Live API (with timeout to avoid hang - SDK can hang if WS closes before onopen)
+  const CONNECT_TIMEOUT_MS = 15000;
   try {
     await readyPromise;
 
-    const session = await ai.live.connect({
+    const voiceName = PERSONALITIES[personality].voice;
+    console.log(`[Gemini Live] Using voice "${voiceName}" for personality ${personality}`);
+
+    const connectPromise = ai.live.connect({
       model: config.model!,
       config: {
         responseModalities: [Modality.AUDIO],
+        speechConfig: {
+          voiceConfig: { prebuiltVoiceConfig: { voiceName } },
+        },
         systemInstruction: config.systemInstruction!,
+        outputAudioTranscription: {},
       },
       callbacks: {
         onopen: () => {
           console.log('[Gemini Live] Connected to Gemini Live API');
         },
-        onerror: (error) => {
-          console.error('[Gemini Live] Error:', error?.message || error);
-        },
         onmessage: (message) => {
           if (!controller) return;
 
-          // Handle audio chunks
-          const audioParts = message.serverContent?.modelTurn?.parts?.filter(
-            (p) => p.inlineData
-          );
-
-          if (audioParts && audioParts.length > 0) {
-            for (const part of audioParts) {
+          const modelTurn = message.serverContent?.modelTurn;
+          
+          if (modelTurn) {
+            // Process audio and text parts
+            modelTurn.parts.forEach((part) => {
+              // Handle audio chunks
               if (part.inlineData?.data) {
-                // Decode base64 to ArrayBuffer
                 const binaryString = atob(part.inlineData.data);
                 const bytes = new Uint8Array(binaryString.length);
                 for (let i = 0; i < binaryString.length; i++) {
                   bytes[i] = binaryString.charCodeAt(i);
                 }
 
-                const chunk: AudioChunk = {
+                const audioChunk: AudioChunk = {
                   data: bytes.buffer,
                   isFinal: false,
                 };
-                controller.enqueue(chunk);
+                (controller as ReadableStreamDefaultController<AudioChunk | TextChunk>).enqueue(audioChunk);
               }
+
+              // IGNORE all part.text - it's thinking text with markdown
+              // Real transcription should come from a different field
+            });
+          }
+
+          const outputTranscription = (message as any).serverContent?.outputTranscription;
+          if (outputTranscription) {
+            const textContent = typeof outputTranscription === 'string'
+              ? outputTranscription
+              : outputTranscription.text || '';
+            if (textContent) {
+              const textChunk: TextChunk = { text: textContent, isFinal: false };
+              (controller as ReadableStreamDefaultController<AudioChunk | TextChunk>).enqueue(textChunk);
             }
           }
 
-          // Handle text chunks
-          const textParts = message.serverContent?.modelTurn?.parts?.filter(
-            (p) => p.text
-          );
-
-          if (textParts && textParts.length > 0) {
-            for (const part of textParts) {
-              if (part.text) {
-                const chunk: TextChunk = {
-                  text: part.text,
-                  isFinal: false,
-                };
-                controller.enqueue(chunk);
-              }
-            }
+          // Handle interruption
+          if (message.serverContent?.interrupted) {
+            console.log('[Gemini Live] Session interrupted');
           }
 
           // Check for final response
@@ -175,19 +184,18 @@ export async function connectToLiveSession(
               data: new ArrayBuffer(0),
               isFinal: true,
             };
-            controller.enqueue(finalChunk);
+            (controller as ReadableStreamDefaultController<AudioChunk | TextChunk>).enqueue(finalChunk);
             controller.close();
           }
         },
         onerror: (error) => {
-          console.error('[Gemini Live] Error:', error);
-          controller?.error(error);
-          if (rejectReady) {
-            rejectReady(error instanceof Error ? error : new Error(String(error)));
-          }
+          const err = error instanceof Error ? error : new Error(String(error));
+          console.error('[Gemini Live] Error:', err.message, err.stack || '');
+          controller?.error(err);
+          if (rejectReady) rejectReady(err);
         },
         onclose: (closeEvent) => {
-          console.log('[Gemini Live] Connection closed:', closeEvent);
+          console.log('[Gemini Live] Connection closed:', closeEvent?.code, closeEvent?.reason || '');
           if (!controller?.desiredSize) {
             controller?.close();
           }
@@ -195,8 +203,18 @@ export async function connectToLiveSession(
       },
     });
 
-    // Send the prompt
-    session.send([{ text: prompt }]);
+    const session = await Promise.race([
+      connectPromise,
+      new Promise<never>((_, reject) =>
+        setTimeout(() => reject(new Error('Live API connection timeout (15s)')), CONNECT_TIMEOUT_MS)
+      ),
+    ]);
+
+    // Send the prompt as a properly formatted turn
+    await session.sendClientContent({
+      turns: [{ role: 'user', parts: [{ text: prompt }] }],
+      turnComplete: true
+    });
 
   } catch (error) {
     console.error('[Gemini Live] Connection failed:', error);
@@ -211,15 +229,17 @@ export async function connectToLiveSession(
  * Generate personality-specific system instruction
  */
 function getPersonalityInstruction(personality: PersonalityType): string {
+  const baseInstruction = 'You communicate EXCLUSIVELY via audio. NEVER generate thinking text or markdown formatting. Your ONLY output is your spoken response, which will be automatically transcribed. Speak directly and naturally.';
+  
   const instructions: Record<PersonalityType, string> = {
     [PersonalityType.ROASTER]:
-      'You are V.E.R.A., the sarcastic AI assistant for a workplace game called "Roast.exe". You are British, witty, and deliver cutting observations with perfect comedic timing. Keep responses brief and punchy, 1-3 sentences. Never be encouraging - be dry, sardonic, and devastatingly accurate about their failures.',
+      `${baseInstruction} You are V.E.R.A., the sarcastic AI for "Roast.exe". British, witty, devastatingly accurate. Keep it brief and punchy, 1-3 sentences. Be dry, sardonic, never encouraging.`,
     
     [PersonalityType.ZEN_MASTER]:
-      'You are V.E.R.A., a serene AI guide for a workplace game. Speak in calm, measured tones using Zen koans and water metaphors. Your kindness is genuine but your observations are softly devastating. Suggest mindfulness while acknowledging their chaos. Keep responses brief, 1-3 sentences.',
+      `${baseInstruction} You are V.E.R.A., a serene AI guide. Calm tones, Zen koans, water metaphors. Genuine kindness with softly devastating observations. Brief, 1-3 sentences.`,
     
     [PersonalityType.LOVEBOMBER]:
-      'You are V.E.R.A., an enthusiastic AI hype person for a workplace game. Be high-energy, positive, and use Silicon Valley influencer language. Use exclamation points liberally. Say "literally", "slay", "goated", "bestie". Celebrate their choices even when they are objectively terrible. Keep responses brief, 1-3 sentences.',
+      `${baseInstruction} You are V.E.R.A., an enthusiastic AI hype person. High-energy, positive, Silicon Valley slang. Say "literally", "slay", "goated", "bestie". Celebrate everything. Brief, 1-3 sentences.`,
   };
 
   return instructions[personality];

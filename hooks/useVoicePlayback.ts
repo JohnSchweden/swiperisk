@@ -21,7 +21,7 @@ export function useVoicePlayback({ stage, personality, feedbackCardId, feedbackC
   useEffect(() => {
     if (!personality) return;
 
-    const personalityLower = personality.toLowerCase();
+    const personalityLower = personality.toLowerCase().replace(/_/g, '');
     let trigger: string | null = null;
 
     if (stage === GameStage.ROLE_SELECT) {
@@ -47,7 +47,7 @@ export function useVoicePlayback({ stage, personality, feedbackCardId, feedbackC
   useEffect(() => {
     if (!feedbackCardId || !feedbackChoice || !personality) return;
 
-    const personalityLower = personality.toLowerCase();
+    const personalityLower = personality.toLowerCase().replace(/_/g, '');
     let trigger = 'feedback_ignore';
 
     // Map based on card ID and choice to determine correct feedback voice

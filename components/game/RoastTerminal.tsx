@@ -1,0 +1,87 @@
+import React, { useEffect, RefObject } from 'react';
+import { PersonalityType } from '../../types';
+import { PERSONALITIES } from '../../constants';
+
+const ROAST_CONSOLE_NAMES: Record<PersonalityType, string> = {
+  [PersonalityType.ROASTER]: 'roast_con.exe',
+  [PersonalityType.ZEN_MASTER]: 'zen_con.exe',
+  [PersonalityType.LOVEBOMBER]: 'hype_con.exe',
+};
+
+interface RoastTerminalProps {
+  personality: PersonalityType | null;
+  input: string;
+  output: string | null;
+  isLoading: boolean;
+  outputRef: RefObject<HTMLDivElement>;
+  onInputChange: (value: string) => void;
+  onSubmit: () => void;
+}
+
+export const RoastTerminal: React.FC<RoastTerminalProps> = ({
+  personality,
+  input,
+  output,
+  isLoading,
+  outputRef,
+  onInputChange,
+  onSubmit
+}) => {
+  // Auto-scroll to output when it appears
+  useEffect(() => {
+    if (!output) return;
+    const el = outputRef.current;
+    if (!el) return;
+    const id = requestAnimationFrame(() => {
+      el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    });
+    return () => cancelAnimationFrame(id);
+  }, [output, outputRef]);
+
+  if (!personality) return null;
+
+  const personalityName = PERSONALITIES[personality].name;
+
+  return (
+    <div
+      className={`w-full max-w-[43rem] lg:w-[43rem] flex-shrink-0 bg-black/80 border border-slate-800 rounded-xl overflow-hidden flex flex-col shadow-2xl ${output ? 'min-h-[320px] lg:min-h-[260px]' : 'min-h-0'}`}
+      data-testid="roast-terminal"
+    >
+      <div className="bg-slate-900 px-4 py-2 border-b border-white/5 flex-shrink-0 flex items-center justify-between">
+        <span className="text-xs mono font-bold text-green-500">{ROAST_CONSOLE_NAMES[personality]}</span>
+        <i className="fa-solid fa-minus text-xs text-slate-400" aria-hidden></i>
+      </div>
+      <div className="p-3 md:p-4 flex-1 flex flex-col min-h-0">
+        <p className="text-sm mono text-green-400 mb-4 flex-shrink-0">Describe your use case / workflow for governance review...</p>
+        <div className="flex gap-2 mb-3 items-end flex-shrink-0">
+          <textarea
+            value={input}
+            onChange={(e) => onInputChange(e.target.value)}
+            onKeyDown={(e) => { if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); onSubmit(); } }}
+            placeholder="e.g. I use ChatGPT for company secrets..."
+            aria-label="Describe your use case / workflow for governance review"
+            className="flex-1 min-h-[3rem] lg:min-h-[6rem] bg-black border border-green-900/30 rounded p-3 text-sm mono text-green-400 focus:outline-none placeholder:text-green-500/60 resize-none"
+          />
+          <button
+            type="button"
+            onClick={onSubmit}
+            disabled={isLoading}
+            title={isLoading ? 'Scanning...' : 'Send (Enter)'}
+            aria-label={isLoading ? 'Scanning...' : 'Send roast'}
+            className="shrink-0 w-11 h-11 lg:w-12 lg:h-12 flex items-center justify-center bg-green-900/20 border border-green-500/40 text-green-400 hover:bg-green-500 hover:text-black rounded focus:outline-none focus:ring-2 focus:ring-green-500/50 disabled:opacity-50 disabled:pointer-events-none [transition:background-color_150ms,border-color_150ms,color_150ms]"
+          >
+            <i className={`fa-solid text-lg ${isLoading ? 'fa-spinner roast-spinner' : 'fa-arrow-turn-down'}`} aria-hidden />
+          </button>
+        </div>
+        {output && (
+          <div ref={outputRef} data-testid="roast-output" className="flex-1 min-h-0 flex flex-col bg-green-900/10 border border-green-500/20 rounded overflow-hidden">
+            <div className="p-3 pb-1 text-sm mono text-green-400 font-bold tracking-wide flex-shrink-0">{'>>>'} {personalityName}:</div>
+            <div data-testid="roast-output-body" className="flex-1 min-h-0 p-3 pt-0 text-sm mono text-green-400 overflow-auto">
+              {output}
+            </div>
+          </div>
+        )}
+      </div>
+    </div>
+  );
+};

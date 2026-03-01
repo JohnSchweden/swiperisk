@@ -1,8 +1,5 @@
 import { PersonalityType } from "../types";
-import { PERSONALITIES } from "../constants";
-import { GoogleGenAI, Modality } from "@google/genai";
 
-// Audio context utilities
 function decode(base64: string) {
   const binaryString = atob(base64);
   const len = binaryString.length;
@@ -35,28 +32,23 @@ async function decodeAudioData(
 let audioContext: AudioContext | null = null;
 let activeSources: AudioBufferSourceNode[] = [];
 
-// Generate speech from text using gemini-2.5-flash-preview-tts
-// Set VITE_ENABLE_SPEECH=false in .env to disable TTS
 export const speak = async (text: string, voiceName: string = 'Kore') => {
   if (import.meta.env.VITE_ENABLE_SPEECH === 'false') return;
   try {
-    // Create a new GoogleGenAI instance right before making an API call
-    const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
-    const response = await ai.models.generateContent({
-      model: "gemini-2.5-flash-preview-tts",
-      contents: [{ parts: [{ text }] }],
-      config: {
-        responseModalities: [Modality.AUDIO],
-        speechConfig: {
-          voiceConfig: {
-            prebuiltVoiceConfig: { voiceName },
-          },
-        },
-      },
+    const response = await fetch('/api/speak', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ text, voiceName }),
     });
 
-    const base64Audio = response.candidates?.[0]?.content?.parts?.[0]?.inlineData?.data;
-    if (base64Audio) {
+    const data = await response.json();
+
+    if (data.error) {
+      console.error("TTS Error:", data.error);
+      return;
+    }
+
+    if (data.audio) {
       if (!audioContext) {
         audioContext = new (window.AudioContext || (window as any).webkitAudioContext)({ sampleRate: 24000 });
       }
@@ -66,7 +58,7 @@ export const speak = async (text: string, voiceName: string = 'Kore') => {
       }
 
       const audioBuffer = await decodeAudioData(
-        decode(base64Audio),
+        decode(data.audio),
         audioContext,
         24000,
         1,
@@ -94,11 +86,8 @@ export const speak = async (text: string, voiceName: string = 'Kore') => {
 export const cleanupAudio = () => {
   activeSources.forEach((source) => {
     try {
-      if (source.playbackState !== 'finished') {
-        source.stop();
-      }
+      source.stop();
     } catch {
-      // Source may already be stopped
     }
   });
   activeSources = [];
@@ -109,52 +98,24 @@ export const cleanupAudio = () => {
   }
 };
 
-// Generate satirical roast using Gemini text models
-const ROAST_MODELS = ["gemini-2.5-flash-lite", "gemini-2.5-flash"] as const;
-
-const TONE_INSTRUCTIONS: Record<PersonalityType, string> = {
-  [PersonalityType.ROASTER]: "Be sarcastic, witty, and cynical. Biting British humor.",
-  [PersonalityType.ZEN_MASTER]: "Be calm, meditative, and passive-aggressive. Zen koans and flowing-water metaphors. Softly devastating.",
-  [PersonalityType.LOVEBOMBER]: "Be high-energy, hype, and Silicon Valley influencer style. Exclamation points. 'Slay,' 'literally,' 'vibes.'",
-};
-
 export const getRoast = async (workflow: string, personality: PersonalityType): Promise<string> => {
-  const apiKey = process.env.GEMINI_API_KEY;
-  if (!apiKey) {
-    console.error("Roast Error: GEMINI_API_KEY not set in .env.local");
-    return "Roast disabled: Set GEMINI_API_KEY in .env.local to enable.";
-  }
+  try {
+    const response = await fetch('/api/roast', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ workflow, personality }),
+    });
 
-  const personalityName = PERSONALITIES[personality].name;
-  const tone = TONE_INSTRUCTIONS[personality];
+    const data = await response.json();
 
-  const prompt = `
-You are ${personalityName} from the satirical tech company HyperScale Inc.
-A user has described their current AI workflow: "${workflow}".
-
-**Step 1:** Analyze the workflow. Is it using public tools (high privacy risk) or enterprise/in-house tools (low privacy risk)?
-**Step 2:** Respond based on that analysis, in your character's voice.
-*   If **Public**: Call out leaking IP and data breach risk.
-*   If **Private/In-house**: Call out blindly trusting AI code, "secure" garbage, or believing a firewall fixes bad engineering.
-
-${tone} Keep it under 50 words.
-`;
-
-  const ai = new GoogleGenAI({ apiKey });
-
-  for (const model of ROAST_MODELS) {
-    try {
-      const response = await ai.models.generateContent({
-        model,
-        contents: prompt,
-      });
-      return response.text || "Even for you, this is remarkably insecure.";
-    } catch (error) {
-      console.warn(`Roast Error (${model}):`, error);
-      // Try next model
+    if (data.error) {
+      console.error("Roast Error:", data.error);
+      return "Roast disabled: Server configuration error.";
     }
-  }
 
-  console.error("Roast Error: All models failed");
-  return "The auditors found your workflow so bad they broke my AI.";
+    return data.text || "Even for you, this is remarkably insecure.";
+  } catch (error) {
+    console.error("Roast Error:", error);
+    return "Roast disabled: Could not connect to server.";
+  }
 };

@@ -11,7 +11,7 @@
     "test:live-api": "bun run scripts/test-live-api.ts"
   },
   "engines": {
-    "node": "20.x"
+    "node": "24.x"
   },
   "dependencies": {
     "@google/genai": "^1.40.0",

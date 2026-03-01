@@ -2,8 +2,8 @@ import { PersonalityType } from '../types';
 import { getRoast, speak } from './geminiService';
 import { connectToLiveSession } from './geminiLive';
 
-const TTS_FALLBACK_ENABLED =
-  import.meta.env.VITE_TTS_FALLBACK_ENABLED === 'true';
+// TTS fallback disabled: Live API only. No /api/speak when Live API fails.
+const TTS_FALLBACK_ENABLED = false;
 
 /**
  * Voice mapping for TTS fallback

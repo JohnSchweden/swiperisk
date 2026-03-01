@@ -106,7 +106,14 @@ export const getRoast = async (workflow: string, personality: PersonalityType): 
       body: JSON.stringify({ workflow, personality }),
     });
 
-    const data = await response.json();
+    const text = await response.text();
+    const contentType = response.headers.get('content-type') ?? '';
+    if (!contentType.includes('application/json')) {
+      console.error("Roast Error:", response.status, text.slice(0, 200));
+      return "Roast disabled: Server error.";
+    }
+
+    const data = JSON.parse(text) as { error?: string; text?: string };
 
     if (data.error) {
       console.error("Roast Error:", data.error);

@@ -2,7 +2,7 @@ import type { VercelRequest, VercelResponse } from '@vercel/node';
 import { GoogleGenAI, Modality } from "@google/genai";
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
-  const { text, voiceName } = req.body;
+  const { text, voiceName } = req.body ?? {};
 
   if (!text) {
     return res.status(400).json({ error: "Missing text" });

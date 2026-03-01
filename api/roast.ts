@@ -12,7 +12,7 @@ const TONE_INSTRUCTIONS: Record<PersonalityType, string> = {
 };
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
-  const { workflow, personality } = req.body;
+  const { workflow, personality } = req.body ?? {};
 
   if (!workflow || !personality) {
     return res.status(400).json({ error: "Missing workflow or personality" });

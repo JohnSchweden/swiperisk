@@ -1,7 +1,8 @@
 import http from 'http';
 import { GoogleGenAI, Modality } from "@google/genai";
 
-const API_KEY = process.env.GEMINI_API_KEY ;
+const apiKey = process.env.GEMINI_API_KEY;
+if (!apiKey) throw new Error('GEMINI_API_KEY not set. Add to .env.local for local dev.');
 
 const server = http.createServer(async (req, res) => {
   res.setHeader('Access-Control-Allow-Origin', '*');
@@ -20,7 +21,7 @@ const server = http.createServer(async (req, res) => {
     req.on('end', async () => {
       try {
         const { workflow, personality } = JSON.parse(body);
-        const ai = new GoogleGenAI({ apiKey: API_KEY });
+        const ai = new GoogleGenAI({ apiKey });
         const response = await ai.models.generateContent({
           model: 'gemini-2.5-flash',
           contents: `Roast this workflow: "${workflow}". Personality: ${personality}. Be sarcastic, under 30 words.`,
@@ -41,7 +42,7 @@ const server = http.createServer(async (req, res) => {
     req.on('end', async () => {
       try {
         const { text, voiceName } = JSON.parse(body);
-        const ai = new GoogleGenAI({ apiKey: API_KEY });
+        const ai = new GoogleGenAI({ apiKey });
         const response = await ai.models.generateContent({
           model: "gemini-2.5-flash-preview-tts",
           contents: [{ parts: [{ text }] }],

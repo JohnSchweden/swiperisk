@@ -6,23 +6,53 @@ hyperscale is a "Tinder for AI Risk, Governance & Compliance" - a gamified web a
 
 The game runs entirely in the browser, supporting both desktop (mouse/keyboard) and mobile (touch) gameplay.
 
-## Current Milestone: v1.1 — Voice Files + Live API
+## Core Value
 
-**Goal:** Generate 13 voice files for all 3 personalities + explore Gemini Live API for real-time streaming in Roast.exe
+Players experience smooth, responsive gameplay with consistent visual design across all 8 game stages.
 
-**Target features:**
-- **Phase 1:** Pre-recorded voice files (WAV) for all personalities
-  - Roaster: 7 files (onboarding, 4 feedback, victory, failure)
-  - Zen Master: 3 files (onboarding, victory, failure)
-  - Lovebomber: 3 files (onboarding, victory, failure)
-- **Phase 2:** Research and implement Gemini Live API for real-time streaming audio in Roast.exe
+## Requirements
 
-**Deferred to v1.2:**
-- Feedback messages for Zen Master and Lovebomber
-- Feedback messages for other roles (Marketing, Management, HR, Finance, Legal)
-- Visual effects
-- Background audio
+### Validated
+
+- ✓ Voice files for all 3 personalities — v1.1 (Roaster 7 files, Zen Master 3, Lovebomber 3)
+- ✓ Voice playback system — v1.1 (WAV playback, game triggers)
+- ✓ Gemini Live API for Roast.exe — v1.1 (streaming audio with TTS fallback)
+
+### Active
+
+- [ ] Visual effects (particles, screen shake, confetti, transitions)
+- [ ] Background audio (ambient, stage music, transitions)
+- [ ] Settings integration (sound/voice/music toggles, volume)
+- [ ] Feedback messages for Zen Master and Lovebomber
+
+### Out of Scope
+
+| Feature | Reason |
+|---------|--------|
+| Feedback messages for other roles | Deferred - focus on core gameplay first |
+| Mobile native app | Web-first approach sufficient |
+
+## Context
+
+**Shipped:** v1.1 with voice files and Live API (2026-03-03)
+**Tech stack:** React, TypeScript, Vite, Playwright
+**Tests:** 76 passing
+
+## Key Decisions
+
+| Decision | Rationale | Status |
+|----------|-----------|--------|
+| Pre-recorded voice samples (not TTS) | Quality - human voices more engaging | ✓ Good |
+| WAV format (PCM 16-bit, 24kHz) | Browser compatibility | ✓ Good |
+| Direct browser Live API connection | No backend proxy needed | ✓ Good |
+| TTS fallback for Live API failures | Reliability - always works | ⚠️ Revisit (orphaned hook) |
+
+## Current Milestone
+
+**Next:** v1.2 — Visual Effects + Background Audio + Settings
+
+**Goal:** Add polish with visual effects, background audio, and settings controls
 
 ---
 
-*Last updated: 2026-02-28 after v1.1 milestone started*
+*Last updated: 2026-03-03 after v1.1 milestone complete*

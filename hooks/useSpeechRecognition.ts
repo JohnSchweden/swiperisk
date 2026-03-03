@@ -57,6 +57,7 @@ export function useSpeechRecognition(): UseSpeechRecognitionReturn {
   const recognitionRef = useRef<SpeechRecognition | null>(null);
   const restartTimeoutRef = useRef<number | null>(null);
   const shouldRestartRef = useRef(false);
+  const lastErrorRef = useRef<string | null>(null);
 
   const startListening = useCallback(() => {
     // Check browser support
@@ -78,6 +79,7 @@ export function useSpeechRecognition(): UseSpeechRecognitionReturn {
     // Clear previous transcript
     setTranscript('');
     setError(null);
+    lastErrorRef.current = null;
     
     // Mark for auto-restart
     shouldRestartRef.current = true;
@@ -115,16 +117,21 @@ export function useSpeechRecognition(): UseSpeechRecognitionReturn {
     };
 
     recognition.onerror = (event: SpeechRecognitionErrorEvent) => {
-      console.log('[Speech] error:', event.error);
+      console.log('[Speech] FULL ERROR:', JSON.stringify(event));
+      console.log('[Speech] error type:', event.error);
+      console.log('[Speech] error message:', event.message);
+      lastErrorRef.current = event.error;
       setError(event.error);
       setIsListening(false);
     };
 
     recognition.onend = () => {
-      console.log('[Speech] ended, shouldRestart:', shouldRestartRef.current);
-      // Auto-restart unless explicitly stopped
-      if (shouldRestartRef.current && recognitionRef.current) {
-        console.log('[Speech] restarting...');
+      console.log('[Speech] ended');
+      console.log('[Speech] lastErrorRef:', lastErrorRef.current);
+      // Auto-restart only on "no-speech" error (which happens when API thinks user stopped talking)
+      // Don't restart on other errors - let user control manually
+      if (shouldRestartRef.current && lastErrorRef.current === 'no-speech') {
+        console.log('[Speech] no-speech detected, auto-restarting...');
         restartTimeoutRef.current = window.setTimeout(() => {
           try {
             recognitionRef.current?.start();
@@ -132,6 +139,8 @@ export function useSpeechRecognition(): UseSpeechRecognitionReturn {
             console.log('[Speech] restart failed', e);
           }
         }, 100);
+      } else if (shouldRestartRef.current) {
+        console.log('[Speech] ended but NOT auto-restarting. Error was:', lastErrorRef.current);
       }
       setIsListening(false);
     };

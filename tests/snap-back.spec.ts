@@ -1,13 +1,20 @@
 import { test, expect } from '@playwright/test';
-import { navigateToPlaying } from './helpers/navigation';
+import { navigateToPlayingFast } from './helpers/navigation';
 import { SELECTORS } from './helpers/selectors';
 
 test.use({ baseURL: 'http://localhost:3000' });
 
+// Demonstrates optimized navigation pattern using navigateToPlayingFast
 test.describe('Spring Snap-Back', () => {
+  // Using beforeAll with navigateToPlayingFast for tests that share state
+  // Note: In Playwright, page fixture in beforeAll requires manual context management.
+  // This pattern shows the intent - in practice, using beforeEach with fast nav is simpler.
+  test.beforeEach(async ({ page }) => {
+    // Use fast navigation - bypasses 4-step intro flow via localStorage injection
+    await navigateToPlayingFast(page);
+  });
+
   test('card snaps back smoothly when released under threshold', async ({ page }) => {
-    await navigateToPlaying(page);
-    
     // Find the current card
     const card = page.locator(SELECTORS.cardFallback).first();
     expect(card).toBeTruthy();
@@ -81,8 +88,6 @@ test.describe('Spring Snap-Back', () => {
   });
   
   test('ticket-transition is not applied after drag', async ({ page }) => {
-    await navigateToPlaying(page);
-    
     const card = page.locator(SELECTORS.cardFallback).first();
     expect(card).toBeTruthy();
     

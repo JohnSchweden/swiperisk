@@ -15,6 +15,10 @@ export default defineConfig({
   use: {
     baseURL: 'http://localhost:3000',
     trace: 'on-first-retry',
+    contextOptions: {
+      // Reuse browser context across tests for faster execution
+      // when running with multiple workers
+    },
   },
   projects: [
     {

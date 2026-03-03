@@ -1,12 +1,13 @@
 import { test, expect } from '@playwright/test';
-import { navigateToPlaying, getCard } from './helpers/navigation';
+import { navigateToPlayingFast, getCard } from './helpers/navigation';
 import { SELECTORS } from './helpers/selectors';
 
 test.use({ baseURL: 'http://localhost:3000' });
 
-test.describe('Phase 2 Swipe Interactions', () => {
+// CSS/static property tests - use beforeEach with fast navigation
+test.describe('Phase 2 Swipe Interactions - CSS/Static', () => {
   test.beforeEach(async ({ page }) => {
-    await navigateToPlaying(page);
+    await navigateToPlayingFast(page);
   });
 
   test('spring physics CSS class exists', async ({ page }) => {
@@ -61,6 +62,36 @@ test.describe('Phase 2 Swipe Interactions', () => {
     
     expect(hasExitAnimations.left).toBe(true);
     expect(hasExitAnimations.right).toBe(true);
+  });
+
+  test('will-change property is set on animated elements', async ({ page }) => {
+    const hasWillChange = await page.evaluate(() => {
+      const styles = document.styleSheets;
+      for (let sheet of styles) {
+        try {
+          const rules = sheet.cssRules;
+          for (let rule of rules) {
+            if (rule.cssText && rule.cssText.includes('will-change')) {
+              if (rule.cssText.includes('transform') && rule.cssText.includes('opacity')) {
+                return true;
+              }
+            }
+          }
+        } catch (e) {
+          // Cross-origin stylesheets might throw
+        }
+      }
+      return false;
+    });
+    
+    expect(hasWillChange).toBe(true);
+  });
+});
+
+// Interaction tests - also use beforeEach with fast navigation
+test.describe('Phase 2 Swipe Interactions - Interaction', () => {
+  test.beforeEach(async ({ page }) => {
+    await navigateToPlayingFast(page);
   });
 
   test('card stack renders next card', async ({ page }) => {
@@ -143,28 +174,5 @@ test.describe('Phase 2 Swipe Interactions', () => {
 
     const feedbackDialog = page.locator(SELECTORS.feedbackDialog).or(page.locator(SELECTORS.feedbackDialogFallback));
     await expect(feedbackDialog).toBeVisible({ timeout: 2000 });
-  });
-
-  test('will-change property is set on animated elements', async ({ page }) => {
-    const hasWillChange = await page.evaluate(() => {
-      const styles = document.styleSheets;
-      for (let sheet of styles) {
-        try {
-          const rules = sheet.cssRules;
-          for (let rule of rules) {
-            if (rule.cssText && rule.cssText.includes('will-change')) {
-              if (rule.cssText.includes('transform') && rule.cssText.includes('opacity')) {
-                return true;
-              }
-            }
-          }
-        } catch (e) {
-          // Cross-origin stylesheets might throw
-        }
-      }
-      return false;
-    });
-    
-    expect(hasWillChange).toBe(true);
   });
 });

@@ -1,4 +1,4 @@
-import React, { useEffect, RefObject } from 'react';
+import React, { useEffect, useRef, RefObject, memo } from 'react';
 import { PersonalityType } from '../../types';
 import { PERSONALITIES } from '../../data';
 import { useSpeechRecognition } from '../../hooks/useSpeechRecognition';
@@ -9,8 +9,8 @@ const ROAST_CONSOLE_NAMES: Record<PersonalityType, string> = {
   [PersonalityType.LOVEBOMBER]: 'hype_con.exe',
 };
 
-interface RoastTerminalProps {
-  personality: PersonalityType | null;
+interface RoastTerminalInnerProps {
+  personality: PersonalityType;
   input: string;
   output: string | null;
   isLoading: boolean;
@@ -19,7 +19,8 @@ interface RoastTerminalProps {
   onSubmit: () => void;
 }
 
-export const RoastTerminal: React.FC<RoastTerminalProps> = ({
+// Inner component that uses speech recognition - memoized to prevent re-render issues
+const RoastTerminalInner = memo(function RoastTerminalInner({
   personality,
   input,
   output,
@@ -27,39 +28,25 @@ export const RoastTerminal: React.FC<RoastTerminalProps> = ({
   outputRef,
   onInputChange,
   onSubmit
-}) => {
-  // Speech recognition
+}: RoastTerminalInnerProps) {
   const { isListening, transcript, startListening, stopListening, error } = useSpeechRecognition();
+  const lastTranscriptRef = useRef('');
 
-  // Update input when transcript changes
+  // Update input only when transcript actually changes (debounced)
   useEffect(() => {
-    if (transcript) {
-      console.log('[RoastTerminal] transcript updated:', transcript);
+    if (transcript && transcript !== lastTranscriptRef.current) {
+      lastTranscriptRef.current = transcript;
       onInputChange(transcript);
     }
   }, [transcript, onInputChange]);
 
   const handleMicrophoneClick = () => {
-    console.log('[RoastTerminal] mic clicked, isListening:', isListening);
     if (isListening) {
       stopListening();
     } else {
       startListening();
     }
   };
-
-  // Auto-scroll to output when it appears
-  useEffect(() => {
-    if (!output) return;
-    const el = outputRef.current;
-    if (!el) return;
-    const id = requestAnimationFrame(() => {
-      el.scrollIntoView({ behavior: 'smooth', block: 'center' });
-    });
-    return () => cancelAnimationFrame(id);
-  }, [output, outputRef]);
-
-  if (!personality) return null;
 
   const personalityName = PERSONALITIES[personality].name;
 
@@ -104,10 +91,10 @@ export const RoastTerminal: React.FC<RoastTerminalProps> = ({
             <i className={`fa-solid text-lg ${isLoading ? 'fa-spinner roast-spinner' : 'fa-arrow-turn-down'}`} aria-hidden />
           </button>
         </div>
-          {error && (
-            <div className="text-xs text-red-400 mt-1">Error: {error}</div>
-          )}
-          {output && (
+        {error && (
+          <div className="text-xs text-red-400 mt-1">Error: {error}</div>
+        )}
+        {output && (
           <div ref={outputRef} data-testid="roast-output" className="flex-1 min-h-0 flex flex-col bg-green-900/10 border border-green-500/20 rounded overflow-hidden">
             <div className="p-3 pb-1 text-sm mono text-green-400 font-bold tracking-wide flex-shrink-0">{'>>>'} {personalityName}:</div>
             <div data-testid="roast-output-body" className="flex-1 min-h-0 p-3 pt-0 text-sm mono text-green-400 overflow-auto">
@@ -118,4 +105,30 @@ export const RoastTerminal: React.FC<RoastTerminalProps> = ({
       </div>
     </div>
   );
+});
+
+// Wrapper with auto-scroll
+export const RoastTerminal = (props: {
+  personality: PersonalityType | null;
+  input: string;
+  output: string | null;
+  isLoading: boolean;
+  outputRef: RefObject<HTMLDivElement>;
+  onInputChange: (value: string) => void;
+  onSubmit: () => void;
+}) => {
+  // Auto-scroll to output when it appears
+  useEffect(() => {
+    if (!props.output) return;
+    const el = props.outputRef.current;
+    if (!el) return;
+    const id = requestAnimationFrame(() => {
+      el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    });
+    return () => cancelAnimationFrame(id);
+  }, [props.output, props.outputRef]);
+
+  if (!props.personality) return null;
+
+  return <RoastTerminalInner {...props} />;
 };

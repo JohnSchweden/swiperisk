@@ -75,9 +75,17 @@ See: `.planning/PROJECT.md` (updated 2026-03-03)
 
 ---
 
+### Quick Tasks Completed
+
+| # | Description | Date | Commit | Directory |
+|---|-------------|------|--------|-----------|
+| 001 | Delete orphaned hook | 2026-03-03 | 1e2bf0b | [001-delete-orphaned-hook](./quick/001-delete-orphaned-hook/) |
+
+---
+
 ## Session Continuity
 
-**Last action:** 2026-03-03 - Milestone v1.1 complete, archived
+**Last action:** 2026-03-03 - Completed quick task 001: Delete orphaned hook
 
 **Next action:** Start v1.2 - visual effects, background audio, settings
 

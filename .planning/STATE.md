@@ -80,13 +80,14 @@ See: `.planning/PROJECT.md` (updated 2026-03-03)
 | # | Description | Date | Commit | Directory |
 |---|-------------|------|--------|-----------|
 | 001 | Delete orphaned hook | 2026-03-03 | 1e2bf0b | [001-delete-orphaned-hook](./quick/001-delete-orphaned-hook/) |
+| 002 | Add microphone button for voice input | 2026-03-03 | c226ac1 | [002-add-microphone-button](./quick/002-add-microphone-button/) |
 | 003 | Randomize boss answer positions | 2026-03-03 | 9964a3b | [003-in-the-boss-fight-currently-the-right-an](./quick/003-in-the-boss-fight-currently-the-right-an/) |
 
 ---
 
 ## Session Continuity
 
-**Last action:** 2026-03-03 - Completed quick task 003: Randomize boss answer positions
+**Last action:** 2026-03-03 - Completed quick task 002: Add microphone button for voice input
 
 **Next action:** Start v1.2 - visual effects, background audio, settings
 

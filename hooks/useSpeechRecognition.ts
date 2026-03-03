@@ -55,6 +55,8 @@ export function useSpeechRecognition(): UseSpeechRecognitionReturn {
   const [transcript, setTranscript] = useState('');
   const [error, setError] = useState<string | null>(null);
   const recognitionRef = useRef<SpeechRecognition | null>(null);
+  const restartTimeoutRef = useRef<number | null>(null);
+  const shouldRestartRef = useRef(false);
 
   const startListening = useCallback(() => {
     // Check browser support
@@ -69,10 +71,16 @@ export function useSpeechRecognition(): UseSpeechRecognitionReturn {
     if (recognitionRef.current) {
       recognitionRef.current.abort();
     }
+    if (restartTimeoutRef.current) {
+      clearTimeout(restartTimeoutRef.current);
+    }
 
     // Clear previous transcript
     setTranscript('');
     setError(null);
+    
+    // Mark for auto-restart
+    shouldRestartRef.current = true;
 
     const recognition = new SpeechRecognition();
     recognition.continuous = true;
@@ -80,10 +88,12 @@ export function useSpeechRecognition(): UseSpeechRecognitionReturn {
     recognition.lang = 'en-US';
 
     recognition.onstart = () => {
+      console.log('[Speech] started');
       setIsListening(true);
     };
 
     recognition.onresult = (event: SpeechRecognitionEvent) => {
+      console.log('[Speech] result received', event.results.length);
       let finalTranscript = '';
       let interimTranscript = '';
 
@@ -97,19 +107,32 @@ export function useSpeechRecognition(): UseSpeechRecognitionReturn {
       }
 
       if (finalTranscript) {
+        console.log('[Speech] final:', finalTranscript);
         setTranscript(prev => prev + finalTranscript);
       } else if (interimTranscript) {
-        // For interim results, we don't update the main transcript
-        // but we could show it in UI if needed
+        console.log('[Speech] interim:', interimTranscript);
       }
     };
 
     recognition.onerror = (event: SpeechRecognitionErrorEvent) => {
+      console.log('[Speech] error:', event.error);
       setError(event.error);
       setIsListening(false);
     };
 
     recognition.onend = () => {
+      console.log('[Speech] ended, shouldRestart:', shouldRestartRef.current);
+      // Auto-restart unless explicitly stopped
+      if (shouldRestartRef.current && recognitionRef.current) {
+        console.log('[Speech] restarting...');
+        restartTimeoutRef.current = window.setTimeout(() => {
+          try {
+            recognitionRef.current?.start();
+          } catch (e) {
+            console.log('[Speech] restart failed', e);
+          }
+        }, 100);
+      }
       setIsListening(false);
     };
 
@@ -118,6 +141,12 @@ export function useSpeechRecognition(): UseSpeechRecognitionReturn {
   }, []);
 
   const stopListening = useCallback(() => {
+    console.log('[Speech] stopListening called');
+    shouldRestartRef.current = false;
+    if (restartTimeoutRef.current) {
+      clearTimeout(restartTimeoutRef.current);
+      restartTimeoutRef.current = null;
+    }
     if (recognitionRef.current) {
       recognitionRef.current.stop();
     }
@@ -127,6 +156,10 @@ export function useSpeechRecognition(): UseSpeechRecognitionReturn {
   // Cleanup on unmount
   useEffect(() => {
     return () => {
+      shouldRestartRef.current = false;
+      if (restartTimeoutRef.current) {
+        clearTimeout(restartTimeoutRef.current);
+      }
       if (recognitionRef.current) {
         recognitionRef.current.abort();
       }

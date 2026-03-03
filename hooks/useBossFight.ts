@@ -13,6 +13,17 @@ export function useBossFight({ isActive, onAnswer, onComplete, currentAnswers }:
   const [timeLeft, setTimeLeft] = useState(30);
   const [showExplanation, setShowExplanation] = useState(false);
   const [hasAnswered, setHasAnswered] = useState(false);
+  const [shuffledAnswers, setShuffledAnswers] = useState<string[]>([]);
+
+  const question = BOSS_FIGHT_QUESTIONS[currentQuestion];
+
+  // Shuffle answers once when question changes
+  useEffect(() => {
+    if (question) {
+      const answers = [question.correctAnswer, ...question.wrongAnswers];
+      setShuffledAnswers(answers.sort(() => Math.random() - 0.5));
+    }
+  }, [currentQuestion, question]);
 
   // Reset when boss fight becomes active
   useEffect(() => {
@@ -21,6 +32,7 @@ export function useBossFight({ isActive, onAnswer, onComplete, currentAnswers }:
       setTimeLeft(30);
       setShowExplanation(false);
       setHasAnswered(false);
+      setShuffledAnswers([]);
     }
   }, [isActive]);
 
@@ -58,10 +70,6 @@ export function useBossFight({ isActive, onAnswer, onComplete, currentAnswers }:
     }
   }, [currentQuestion, currentAnswers, onComplete]);
 
-  const question = BOSS_FIGHT_QUESTIONS[currentQuestion];
-  const fixedAnswers = question 
-    ? [question.correctAnswer, ...question.wrongAnswers].sort(() => Math.random() - 0.5)
-    : [];
   const correctCount = currentAnswers.filter(Boolean).length;
 
   return {
@@ -70,7 +78,7 @@ export function useBossFight({ isActive, onAnswer, onComplete, currentAnswers }:
     showExplanation,
     hasAnswered,
     question,
-    fixedAnswers,
+    fixedAnswers: shuffledAnswers,
     correctCount,
     totalAnswered: currentAnswers.length,
     handleAnswer,

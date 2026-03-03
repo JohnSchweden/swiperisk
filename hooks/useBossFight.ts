@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, useMemo } from 'react';
 import { BOSS_FIGHT_QUESTIONS } from '../data';
 
 interface UseBossFightOptions {
@@ -8,22 +8,30 @@ interface UseBossFightOptions {
   currentAnswers: boolean[];
 }
 
+function shuffleArray<T>(array: T[]): T[] {
+  const shuffled = [...array];
+  for (let i = shuffled.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+  }
+  return shuffled;
+}
+
 export function useBossFight({ isActive, onAnswer, onComplete, currentAnswers }: UseBossFightOptions) {
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [timeLeft, setTimeLeft] = useState(30);
   const [showExplanation, setShowExplanation] = useState(false);
   const [hasAnswered, setHasAnswered] = useState(false);
-  const [shuffledAnswers, setShuffledAnswers] = useState<string[]>([]);
+  const [seed, setSeed] = useState(() => Math.random());
 
   const question = BOSS_FIGHT_QUESTIONS[currentQuestion];
 
-  // Shuffle answers once when question changes
-  useEffect(() => {
-    if (question) {
-      const answers = [question.correctAnswer, ...question.wrongAnswers];
-      setShuffledAnswers(answers.sort(() => Math.random() - 0.5));
-    }
-  }, [currentQuestion, question]);
+  const fixedAnswers = useMemo(() => {
+    if (!question) return [];
+    const answers = [question.correctAnswer, ...question.wrongAnswers];
+    const seeded = answers.map((a, i) => ({ val: a, rand: Math.random() + seed * 0.1 * (i + 1) }));
+    return seeded.sort((a, b) => a.rand - b.rand).map(s => s.val);
+  }, [currentQuestion, question, seed]);
 
   // Reset when boss fight becomes active
   useEffect(() => {
@@ -32,7 +40,7 @@ export function useBossFight({ isActive, onAnswer, onComplete, currentAnswers }:
       setTimeLeft(30);
       setShowExplanation(false);
       setHasAnswered(false);
-      setShuffledAnswers([]);
+      setSeed(Math.random());
     }
   }, [isActive]);
 
@@ -78,7 +86,7 @@ export function useBossFight({ isActive, onAnswer, onComplete, currentAnswers }:
     showExplanation,
     hasAnswered,
     question,
-    fixedAnswers: shuffledAnswers,
+    fixedAnswers,
     correctCount,
     totalAnswered: currentAnswers.length,
     handleAnswer,

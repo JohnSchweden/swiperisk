@@ -107,12 +107,14 @@ const RoastTerminalInner = memo(function RoastTerminalInner({
         {error && (
           <div className="text-xs text-red-400 mt-1">Error: {error}</div>
         )}
+        {/* TODO: Re-enable if needed - duplicate of transcript in input field
         {streamingTranscript && (
           <div className="text-xs text-yellow-400/80 mt-1 animate-pulse flex items-center gap-1">
             <i className="fa-solid fa-wave-square" aria-hidden />
             {streamingTranscript}
           </div>
         )}
+        */}
         {output && (
           <div ref={outputRef} data-testid="roast-output" className="flex-1 min-h-0 flex flex-col bg-green-900/10 border border-green-500/20 rounded overflow-hidden">
             <div className="p-3 pb-1 text-sm mono text-green-400 font-bold tracking-wide flex-shrink-0">{'>>>'} {personalityName}:</div>

@@ -28,9 +28,9 @@ See: `.planning/PROJECT.md` (updated 2026-03-03)
 ### Current Position
 
 **Phase:** 01 - Live API STT Research
-**Plan:** 1 of 1 in current phase
-**Status:** Complete
-**Progress:** ████████████████░░░░ 100%
+**Plan:** 2 of 2 in current phase
+**Status:** Phase complete
+**Progress:** ████████████████████ 100%
 
 ---
 
@@ -41,6 +41,8 @@ See: `.planning/PROJECT.md` (updated 2026-03-03)
 - useLiveAPISpeechRecognition hook created
 - AudioWorklet for PCM conversion
 - Integrated into RoastTerminal
+- **Gap closure (01-02):** Added debug logging and fixed sample rate handling
+- Debug logs now show audio capture pipeline
 
 ---
 
@@ -65,7 +67,7 @@ See: `.planning/PROJECT.md` (updated 2026-03-03)
 |-------|------|--------------|--------|
 | 1 - Voice Files | 13 voice files + playback system | VOICE-01 to VOICE-07 | Complete ✓ |
 | 2 - Live API | Real-time streaming for Roast.exe | VOICE-08 to VOICE-10 | Complete ✓ |
-| 01 - Live API STT Research | Speech-to-text for microphone input | STT-01 | Complete ✓ |
+| 01 - Live API STT Research | Speech-to-text for microphone input | STT-01, STT-02 | Complete ✓ |
 
 ---
 
@@ -105,10 +107,10 @@ See: `.planning/PROJECT.md` (updated 2026-03-03)
 
 ## Session Continuity
 
-**Last action:** 2026-03-04 - Completed 01-01-PLAN.md: Speech-to-Text via Gemini Live API
+**Last action:** 2026-03-04 - Completed 01-02-PLAN.md: Fix speech-to-text gap closure
 
 **Next action:** v1.2 complete - ready for v1.3
 
 ---
 
-*Last updated: 2026-03-04 — Plan 01-01 complete*
+*Last updated: 2026-03-04 — Plan 01-02 complete*

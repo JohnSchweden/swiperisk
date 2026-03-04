@@ -22,14 +22,15 @@
 
 **Goal:** Research and implement speech-to-text for microphone input
 **Depends on:** None (new feature research)
-**Plans:** 2 plans (✓ Complete)
+**Plans:** 3 plans (✓ Complete)
 
 Plans:
 - [x] 01-01-PLAN.md — Implement STT via Gemini Live API ✓
 - [x] 01-02-PLAN.md — Fix STT (debug + verify audio transmission) ✓
+- [x] 01-03-PLAN.md — Fix WebSocket closing (config fix) ✓
 
 **Details:**
-Research microphone function for Live API based on existing research file
+Speech-to-text now working with real-time transcription. Includes low-latency mode flag.
 
 ---
 

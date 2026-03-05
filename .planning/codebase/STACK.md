@@ -1,8 +1,8 @@
-# SwipeRisk Technology Stack
+# K-Maru Technology Stack
 
 ## Overview
 
-SwipeRisk is a React-based web application built with modern tooling and a lightweight architecture. The stack prioritizes developer experience, fast builds, and minimal runtime dependencies.
+K-Maru is a React-based web application built with modern tooling and a lightweight architecture. The stack prioritizes developer experience, fast builds, and minimal runtime dependencies.
 
 ---
 

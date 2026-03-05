@@ -1,6 +1,6 @@
-# SwipeRisk Code Conventions
+# K-Maru Code Conventions
 
-This document defines the coding standards, patterns, and conventions used throughout the SwipeRisk codebase.
+This document defines the coding standards, patterns, and conventions used throughout the K-Maru codebase.
 
 ---
 

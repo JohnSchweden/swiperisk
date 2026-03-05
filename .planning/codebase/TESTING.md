@@ -1,6 +1,6 @@
-# SwipeRisk Testing Strategy
+# K-Maru Testing Strategy
 
-This document outlines the testing frameworks, organization, patterns, and workflows used in the SwipeRisk codebase.
+This document outlines the testing frameworks, organization, patterns, and workflows used in the K-Maru codebase.
 
 ---
 

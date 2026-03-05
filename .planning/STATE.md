@@ -12,7 +12,7 @@ See: `.planning/PROJECT.md` (updated 2026-03-03)
 
 **Core value delivered:** Players experience smooth, responsive gameplay with consistent visual design across all 8 game stages + voice files and Live API
 
-**v1.2 goal:** Transform SwipeRisk into the Kobayashi Maru for AI governance — a safe sandbox to experience real AI incidents without real consequences
+**v1.2 goal:** Transform K-Maru into the Kobayashi Maru for AI governance — a safe sandbox to experience real AI incidents without real consequences
 
 **v1.1 completed:** 10/10 requirements delivered
 **v1.0 completed:** All 12 requirements delivered

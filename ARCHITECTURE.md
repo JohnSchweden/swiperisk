@@ -2,7 +2,7 @@
 
 ## Overview
 
-Swipe Risk: The Hyperscale Chronicles is a single-page React application built with TypeScript and Vite. The game uses a state machine pattern for game flow management and implements custom gesture handling for the swipe-based gameplay.
+K-Maru: The Hyperscale Chronicles is a single-page React application built with TypeScript and Vite. The game uses a state machine pattern for game flow management and implements custom gesture handling for the swipe-based gameplay.
 
 ## Tech Stack
 

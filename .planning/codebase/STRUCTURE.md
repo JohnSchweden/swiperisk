@@ -1,4 +1,4 @@
-# SwipeRisk Project Structure
+# K-Maru Project Structure
 
 > Complete directory and file organization reference
 
@@ -602,4 +602,4 @@ import { useGameState, useSwipeGestures } from './hooks';
 
 ---
 
-*Document generated for SwipeRisk codebase analysis*
+*Document generated for K-Maru codebase analysis*

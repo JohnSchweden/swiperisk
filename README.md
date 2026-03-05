@@ -1,14 +1,14 @@
 <div align="center">
-<img width="1200" height="475" alt="Swipe Risk: The Hyperscale Chronicles" src="https://github.com/user-attachments/assets/0aa67016-6eaf-458a-adb2-6e31a0763ed6" />
+<img width="1200" height="475" alt="K-Maru: The Hyperscale Chronicles" src="https://github.com/user-attachments/assets/0aa67016-6eaf-458a-adb2-6e31a0763ed6" />
 </div>
 
-# Swipe Risk: The Hyperscale Chronicles
+# K-Maru: The Hyperscale Chronicles
 
 An AI-powered compliance and cybersecurity education game built with React, TypeScript, and Google's Gemini AI. Swipe through ethical dilemmas, manage your corporate reputation, and try to survive the startup chaos without ending up in prison, Congress, or worse.
 
 ## 🎮 What is This?
 
-**Swipe Risk** is a swipe-based decision game (inspired by Reigns/Tinder mechanics) where you play as an executive at a hyperscale tech company. You'll face realistic AI ethics and cybersecurity scenarios drawn from real-world tech controversies.
+**K-Maru** is a swipe-based decision game (inspired by Reigns/Tinder mechanics) where you play as an executive at a hyperscale tech company. You'll face realistic AI ethics and cybersecurity scenarios drawn from real-world tech controversies.
 
 ### Key Features
 

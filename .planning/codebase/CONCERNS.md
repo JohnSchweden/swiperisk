@@ -7,7 +7,7 @@
 
 ## Executive Summary
 
-This document catalogs current concerns across the SwipeRisk codebase, prioritized by severity. The most critical issues involve CSS architecture problems affecting mobile positioning, large bundle-size contributors, and testing infrastructure gaps.
+This document catalogs current concerns across the K-Maru codebase, prioritized by severity. The most critical issues involve CSS architecture problems affecting mobile positioning, large bundle-size contributors, and testing infrastructure gaps.
 
 ---
 

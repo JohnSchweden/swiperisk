@@ -1,8 +1,8 @@
-# SwipeRisk External Integrations
+# K-Maru External Integrations
 
 ## Overview
 
-SwipeRisk integrates with several external services to provide AI-powered gameplay features, voice synthesis, and deployment. This document details all external dependencies, their configurations, and usage patterns.
+K-Maru integrates with several external services to provide AI-powered gameplay features, voice synthesis, and deployment. This document details all external dependencies, their configurations, and usage patterns.
 
 ---
 

@@ -1,4 +1,4 @@
-# Swipe Risk: Expansion & Addictiveness Q&A
+# K-Maru: Expansion & Addictiveness Q&A
 
 This document captures the full Q&A on expanding the Tinder-style AI risk/compliance/governance simulator and making it more addictive while preserving learning.
 
@@ -10,7 +10,7 @@ This document captures the full Q&A on expanding the Tinder-style AI risk/compli
 
 **Assistant:** (After reviewing the codebase: types, constants, ACTION_ITEMS, card counts, flow.)
 
-Here’s a focused way to **expand** your Tinder-style AI risk/compliance simulator (“Swipe Risk: The HyperScale Chronicles”):
+Here’s a focused way to **expand** your Tinder-style AI risk/compliance simulator (“K-Maru: The HyperScale Chronicles”):
 
 ### 1. **More cards (fastest impact)**
 

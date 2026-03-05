@@ -60,7 +60,7 @@ A classic gamification mechanic (Myers-Briggs, Spotify Wrapped) that generates s
 
 - `[Input: Email Address]` → `[Join V2 Waitlist]`
 - "V2 is coming. You will fail. Again."
-- send email to yevgen.schweden@hotmail.com with subject "SwipeRisk V2 waitlist"
+- send email to yevgen.schweden@hotmail.com with subject "K-Maru V2 waitlist"
 content (email + role + archetype + score)
 
 ---

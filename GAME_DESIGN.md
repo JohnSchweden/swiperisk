@@ -2,7 +2,7 @@
 
 ## Concept
 
-**Swipe Risk: The Hyperscale Chronicles** is an edutainment game about AI ethics, cybersecurity, and compliance. Players navigate real-world-inspired scenarios drawn from tech industry controversies, learning about data privacy, algorithmic bias, and security best practices through consequence-based gameplay.
+**K-Maru: The Hyperscale Chronicles** is an edutainment game about AI ethics, cybersecurity, and compliance. Players navigate real-world-inspired scenarios drawn from tech industry controversies, learning about data privacy, algorithmic bias, and security best practices through consequence-based gameplay.
 
 ## Core Loop
 

@@ -10,7 +10,7 @@
 
 ## v1.2: Kobayashi Maru — AI Governance Simulator
 
-**Goal:** Transform SwipeRisk into the Kobayashi Maru for AI risk, governance, and compliance — a safe sandbox where people experience real AI incidents without real consequences.
+**Goal:** Transform K-Maru into the Kobayashi Maru for AI risk, governance, and compliance — a safe sandbox where people experience real AI incidents without real consequences.
 
 **Core Design Principle:** "You will fail. That's the point." — Learn by breaking things in a safe environment.
 
@@ -195,7 +195,7 @@ Kobayashi Maru had one solution: cheat the test. Add a hidden path:
 
 ### Phase 08: Kobayashi Maru Framing (deferred)
 
-**Goal:** Reframe SwipeRisk as an explicit no-win experimentation sandbox
+**Goal:** Reframe K-Maru as an explicit no-win experimentation sandbox
 **Depends on:** Phase 07
 **Plans:** 0 plans
 

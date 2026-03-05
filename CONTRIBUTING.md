@@ -1,6 +1,6 @@
 # Contributing Guide
 
-Thank you for your interest in contributing to Swipe Risk: The Hyperscale Chronicles! This document outlines the workflow, standards, and best practices for contributing.
+Thank you for your interest in contributing to K-Maru: The Hyperscale Chronicles! This document outlines the workflow, standards, and best practices for contributing.
 
 ## Table of Contents
 

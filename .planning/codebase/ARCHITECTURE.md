@@ -1,6 +1,6 @@
-# SwipeRisk Architecture
+# K-Maru Architecture
 
-> High-level system design and architectural overview of the SwipeRisk AI Governance Simulator
+> High-level system design and architectural overview of the K-Maru AI Governance Simulator
 
 ## Table of Contents
 
@@ -16,7 +16,7 @@
 
 ## Overview
 
-SwipeRisk is a React-based single-page application (SPA) that simulates AI governance decisions through a card-swiping interface. Players assume corporate roles and make choices that affect hype, heat, and budget metrics, learning about AI compliance through satirical gameplay.
+K-Maru is a React-based single-page application (SPA) that simulates AI governance decisions through a card-swiping interface. Players assume corporate roles and make choices that affect hype, heat, and budget metrics, learning about AI compliance through satirical gameplay.
 
 **Key Architectural Decisions:**
 - **State Management**: Centralized reducer pattern with `useGameState` hook
@@ -32,7 +32,7 @@ SwipeRisk is a React-based single-page application (SPA) that simulates AI gover
 
 ```
 ┌─────────────────────────────────────────────────────────────────────────────┐
-│                              SWIPERISK ARCHITECTURE                          │
+│                              K-MARU ARCHITECTURE                          │
 ├─────────────────────────────────────────────────────────────────────────────┤
 │                                                                              │
 │  ┌─────────────┐    ┌─────────────────────────────────────────────────────┐ │
@@ -499,4 +499,4 @@ App.tsx
 
 ---
 
-*Document generated for SwipeRisk codebase analysis*
+*Document generated for K-Maru codebase analysis*

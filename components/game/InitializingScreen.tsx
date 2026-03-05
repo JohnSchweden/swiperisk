@@ -53,7 +53,7 @@ export const InitializingScreen: React.FC<InitializingScreenProps> = ({
         </div>
       </div>
       <div className="mt-6 md:mt-8 text-[11px] md:text-xs tracking-wide opacity-60 text-center max-w-xs px-4 leading-relaxed mx-auto">
-        SwipeRisk Inc. is not liable for data breaches, federal lawsuits, or spontaneous AI consciousness.
+        K-Maru Inc. is not liable for data breaches, federal lawsuits, or spontaneous AI consciousness.
       </div>
     </LayoutShell>
   );

@@ -47,6 +47,10 @@ See: `.planning/PROJECT.md` (updated 2026-03-03)
 - **Gap closure (01-03):** Fixed WebSocket closing - changed config to use Modality.AUDIO
 - Debug logs now show audio capture pipeline
 
+**Phase 02 - New Role Set:** Not started
+- 10 impact-zone roles (Chief Something Officer, Vibe Coder, etc.)
+- Comment out legacy roles
+
 **Phase 03 - No-Win Scenario Cards:** Not started (next)
 - Both options bad (tradeoffs, not puzzles)
 - 6+ new cards across roles
@@ -96,12 +100,15 @@ See: `.planning/PROJECT.md` (updated 2026-03-03)
 | Phase | Goal | Requirements | Status |
 |-------|------|--------------|--------|
 | 01 - Live API STT Research | Speech-to-text for microphone input | STT-01, STT-02 | Complete ✓ |
+| 02 - New Role Set | Impact zones (10 roles) | ROLE-01 to ROLE-04 | Not started |
 | 03 - No-Win Scenario Cards | Both options bad | NOWIN-01 to NOWIN-04 | Not started |
 | 04 - Immersive Pressure Effects | Psychological pressure + immersion | IMMERSE-01 to IMMERSE-05 | Not started |
 | 05 - Expanded AI Risk Scenarios | Day-to-day AI risks | RISK-01 to RISK-06 | Not started |
 | 06 - Debrief & Replay System | 3-page debrief + archetype + V2 waitlist | DEBRIEF-01 to DEBRIEF-12 | Not started |
 | 07 - Kirk Easter Egg | Hidden "cheat" path | KIRK-01 to KIRK-02 | Not started |
 | 08 - Kobayashi Maru Framing | Reframe as no-win sandbox | FRAME-01 to FRAME-03 | Deferred |
+| 13 - Image Asset Pipeline | Prompts + pipeline + local storage + mapping | PIPELINE-01 to PIPELINE-04 | Not started |
+| 14 - Situational & Outcome Imagery | Display + mobile/web sizing | IMAGE-01 to IMAGE-06 | Not started |
 
 ---
 
@@ -116,6 +123,8 @@ See: `.planning/PROJECT.md` (updated 2026-03-03)
 - Phase 06 added: Debrief & Replay System
 - Phase 06 extended: 3-page Reveal Build-Up, archetype, LinkedIn share, V2 waitlist (06-ARCHITECTURE.md)
 - Phase 07 added: Kirk Easter Egg
+- Phase 13 added: Image Asset Pipeline (prompts, generate, save locally, mapping)
+- Phase 14 added: Situational & Outcome Imagery Display (placement, mobile/web sizing)
 
 ### Design Decisions
 - Pre-recorded voice samples (not TTS) for quality
@@ -126,6 +135,8 @@ See: `.planning/PROJECT.md` (updated 2026-03-03)
 - AudioWorklet for 24kHz→48kHz sample rate conversion
 - roastService.ts with getRoastWithFallback for automatic Live API → TTS fallback
 - **Kobayashi Maru framing:** "You will fail. That's the point." — Safe experimentation sandbox
+- **Glitched Corporate Surrealism:** AI-generated images with visible artifacts (uncanny valley) — supports Project Icarus narrative
+- **Archetype images:** Tactical patch / futuristic tarot style — LinkedIn shareable badges
 
 ### Technical Debt
 - hooks/useLiveAudio.ts not imported anywhere (functionality in roastService.ts)

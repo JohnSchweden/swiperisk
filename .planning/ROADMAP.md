@@ -4,7 +4,7 @@
 
 - ✅ **v1.0 MVP** — Phases 1-4 (shipped 2026-02-20)
 - ✅ **v1.1 Voice Files + Live API** — Phases 1-2 (shipped 2026-03-03)
-- 📋 **v1.2 Kobayashi Maru: AI Governance Simulator** — Phases 01, 03–08
+- 📋 **v1.2 Kobayashi Maru: AI Governance Simulator** — Phases 01–14
 
 ---
 
@@ -37,10 +37,44 @@ Plans:
 **Details:**
 Speech-to-text now working with real-time transcription. Includes low-latency mode flag.
 
+### Phase 02: New Role Set (Impact Zones)
+
+**Goal:** Replace current roles with new "impact zone" set; comment out legacy roles for later
+**Depends on:** Phase 01
+**Plans:** 0 plans
+
+Plans:
+- [ ] TBD (run /gsd-plan-phase 02 to break down)
+
+**Details:**
+Replace role select (step_02 // damage_control) with new copy and roles:
+- **Heading:** "Select your impact zone"
+- **Copy:** "Choose the specific silo you want to set on fire first. Each role changes the cascading failures, the legal heat you attract, and the creative ways to lose that $10M budget."
+
+**New roles (comment out DEVELOPMENT, MARKETING, MANAGEMENT, HR, FINANCE, CLEANING):**
+- Chief Something Officer (The Blame-Shifter)
+- Head of Something (The Middle-Management Shield)
+- Something Manager (The Spreadsheet Warrior)
+- Tech/AI Consultant (The Powerpoint Mercenary)
+- Data Scientist (The Hallucination Wrangler)
+- Software Architect (The Technical Debt Collector)
+- Software Engineer (The Bug Manufacturer)
+- Vibe Coder (The Prompt Magician)
+- Vibe Engineer (The Latency Alchemist)
+- Agentic Engineer (The Puppet Master of Rogue Bots)
+
+Map new roles to existing card decks until role-specific cards added in Phase 05.
+
+**Requirements:**
+- ROLE-01: Comment out legacy RoleType enum values (preserve for later)
+- ROLE-02: Add new RoleType values and ROLE_DESCRIPTIONS
+- ROLE-03: Update RoleSelect UI (impact zone copy, icons)
+- ROLE-04: Map ROLE_CARDS to existing decks (development, management, etc.)
+
 ### Phase 03: No-Win Scenario Cards
 
 **Goal:** Add incidents where both options are bad (tradeoffs, not puzzles)
-**Depends on:** Phase 01
+**Depends on:** Phase 02
 **Plans:** 0 plans
 
 Plans:
@@ -180,6 +214,150 @@ Update intro, onboarding, and messaging to explicitly frame the experience as:
 - FRAME-02: Add "This is a simulation" messaging throughout
 - FRAME-03: Personality onboarding acknowledges experimentation is safe
 
+### Phase 09: Visual Effects
+
+**Goal:** Add polish with general visual effects (distinct from Phase 04 stress indicators)
+**Depends on:** Phase 01
+**Plans:** 0 plans
+
+Plans:
+- [ ] TBD (run /gsd-plan-phase 09 to break down)
+
+**Details:**
+General polish and atmosphere:
+- Card swipe flourishes (particles, trails)
+- Stage transition enhancements
+- Subtle ambient animations
+- Feedback micro-interactions (success/fail bursts)
+
+**Requirements:**
+- VFX-01: Card swipe visual feedback (particles, motion trails)
+- VFX-02: Enhanced stage transition animations
+- VFX-03: Ambient/menu screen animations
+- VFX-04: Outcome feedback micro-effects (success/fail visual cues)
+- VFX-05: Performance-constrained (60fps, no jank)
+
+### Phase 10: Background Audio
+
+**Goal:** Add ambient music and non-voice audio (distinct from Phase 04 stress cues)
+**Depends on:** Phase 01
+**Plans:** 0 plans
+
+Plans:
+- [ ] TBD (run /gsd-plan-phase 10 to break down)
+
+**Details:**
+General audio layer:
+- Ambient background music (loops, mood-appropriate)
+- Menu/interaction sound design
+- Card flip/swipe audio cues
+- Volume mix with existing voice playback
+
+**Requirements:**
+- AUDIO-01: Background music for game flow (optional, looped)
+- AUDIO-02: Menu and navigation sound design
+- AUDIO-03: Card interaction sounds (swipe, flip)
+- AUDIO-04: Audio mix hierarchy (voice > cues > music)
+
+### Phase 11: Settings Integration
+
+**Goal:** User controls for volume, effects, and accessibility
+**Depends on:** Phase 01
+**Plans:** 0 plans
+
+Plans:
+- [ ] TBD (run /gsd-plan-phase 11 to break down)
+
+**Details:**
+Settings UI and persistence:
+- Volume controls (voice, music, SFX)
+- Visual/audio effect toggles (motion, sound)
+- Persistence (localStorage or similar)
+- Accessible from menu or intro
+
+**Requirements:**
+- SETT-01: Volume sliders (voice, music, SFX)
+- SETT-02: Effect toggles (motion reduction, mute)
+- SETT-03: Persist settings across sessions
+- SETT-04: Settings accessible from main flow (menu, gear icon)
+- SETT-05: Settings integrate with Phases 09 and 10 controls
+
+### Phase 12: Gameplay Tweaks & Card Variety
+
+**Goal:** Shuffle deck, branching logic, and expanded AppSource for scenario variety
+**Depends on:** Phase 01
+**Plans:** 0 plans
+
+Plans:
+- [ ] TBD (run /gsd-plan-phase 12 to break down)
+
+**Details:**
+
+**Gameplay tweaks:**
+- **Shuffle deck:** When entering `PLAYING`, use a shuffled copy of `ROLE_CARDS[state.role]` so card order isn't fixed. ✓
+- **Branching:** Optional "if they swiped right on card X, show card Y" so some cards only appear after bad choices. ✓
+
+**New sources:**
+- Add values to `AppSource` (e.g. `JIRA`, `NOTION`, `MEETING`) and use them for new cards. Purely cosmetic but makes scenarios feel more varied.
+
+**Requirements:**
+- TWEAK-01: Shuffle deck on game start (✓)
+- TWEAK-02: Branching card logic — conditional card injection based on prior swipes (✓)
+- TWEAK-03: Extend `AppSource` enum (JIRA, NOTION, MEETING, etc.)
+- TWEAK-04: Add new cards using extended sources across roles
+
+### Phase 13: Image Asset Pipeline
+
+**Goal:** Create pipeline + image prompts to generate assets, save locally, and map to correct locations
+**Depends on:** Phase 06 (archetype system for mapping)
+**Plans:** 0 plans
+
+Plans:
+- [ ] TBD (run /gsd-plan-phase 13 to break down)
+
+**Details:**
+Generate AI images (Midjourney v6 / DALL-E 3 / Stable Diffusion) for:
+- **Incident images** — Glitched Corporate Surrealism (uncanny valley, visible AI artifacts)
+- **Outcome images** — Sarcastic Stock Photos (polished corporate + disaster subject)
+- **Collapse image** — Dramatic failure (e.g. yacht sinking, drone with audit report)
+- **Archetype images** — Tactical patch / futuristic tarot card style (LinkedIn shareable)
+
+**Pipeline:** Write prompts → generate → save to `public/images/` or asset folder → define mapping (cardId/outcomeId/archetypeId → image path).
+
+**Requirements:**
+- PIPELINE-01: Image prompt library (incidents, outcomes, collapse, archetypes)
+- PIPELINE-02: Script or process to generate + save images locally
+- PIPELINE-03: File naming convention + directory structure
+- PIPELINE-04: Mapping config (card → image, outcome → image, archetype → image, deathType → collapse image)
+
+### Phase 14: Situational & Outcome Imagery Display
+
+**Goal:** Display images at correct locations with mobile/web responsive sizing
+**Depends on:** Phase 13
+**Plans:** 0 plans
+
+Plans:
+- [ ] TBD (run /gsd-plan-phase 14 to break down)
+
+**Details:**
+Integrate images into UI:
+- **Incident cards** — Image above/below text, appropriate aspect ratio (e.g. 16:9 or 4:3)
+- **Outcome feedback overlay** — Image alongside sarcastic reveal
+- **Page 1 (Collapse)** — Full-width or hero-style collapse image
+- **Page 3 (Archetype)** — Archetype avatar/badge for LinkedIn share
+
+**Responsive sizing:**
+- **Mobile:** Constrained width, adequate touch targets, avoid excessive scroll
+- **Web:** Max dimensions, preserve aspect ratio, lazy load where appropriate
+
+**Requirements:**
+- IMAGE-01: Incident card image placement + sizing (mobile + web)
+- IMAGE-02: Outcome overlay image placement + sizing
+- IMAGE-03: Collapse page (Game Over) image placement + sizing
+- IMAGE-04: Archetype verdict image (tactical patch style) + share card sizing
+- IMAGE-05: Fallback when image missing (placeholder or hide)
+- IMAGE-06: Lazy load / performance (avoid blocking render)
+
 ---
 
 ## Progress
@@ -195,7 +373,13 @@ Update intro, onboarding, and messaging to explicitly frame the experience as:
 | 06 | Debrief & Replay System | v1.2 | Not started |
 | 07 | Kirk Easter Egg | v1.2 | Not started |
 | 08 | Kobayashi Maru Framing (deferred) | v1.2 | Deferred |
+| 09 | Visual Effects | v1.2 | Not started |
+| 10 | Background Audio | v1.2 | Not started |
+| 11 | Settings Integration | v1.2 | Not started |
+| 12 | Gameplay Tweaks & Card Variety | v1.2 | Partial (tweaks done, sources pending) |
+| 13 | Image Asset Pipeline | v1.2 | Not started |
+| 14 | Situational & Outcome Imagery Display | v1.2 | Not started |
 
 ---
 
-*Roadmap updated: 2026-03-04 — Phase 02 deferred to Phase 08*
+*Roadmap updated: 2026-03-05 — Added Phases 13–14 (Image Asset Pipeline, Imagery Display)*

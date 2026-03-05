@@ -56,9 +56,9 @@ Add to `DeathType` and `DEATH_ENDINGS`, then in `determineDeathType` (in `App.ts
 
 ### 6. **Gameplay tweaks**
 
-- **Shuffle deck:** When entering `PLAYING`, use a shuffled copy of `ROLE_CARDS[state.role]` so card order isn’t fixed.
+- **Shuffle deck:** When entering `PLAYING`, use a shuffled copy of `ROLE_CARDS[state.role]` so card order isn’t fixed. (done)
 - **Difficulty:** Optional “hard” mode: multiply `heat`/`fine` (or both) for the chosen role.
-- **Branching:** Optional “if they swiped right on card X, show card Y” so some cards only appear after bad choices.
+- **Branching:** Optional “if they swiped right on card X, show card Y” so some cards only appear after bad choices. (done)
 
 ### 7. **New sources**
 

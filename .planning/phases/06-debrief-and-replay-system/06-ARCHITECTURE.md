@@ -59,6 +59,9 @@ A classic gamification mechanic (Myers-Briggs, Spotify Wrapped) that generates s
 > "This was the static test. The real Kobayashi Maru adapts to your weaknesses. Enter your email to get early access to V2: A self-learning adversary that ingests your provided context, crawls the web for relevant incidents, remembers your mistakes, and actively hunts your blind spots."
 
 - `[Input: Email Address]` → `[Join V2 Waitlist]`
+- "V2 is coming. You will fail. Again."
+- send email to yevgen.schweden@hotmail.com with subject "SwipeRisk V2 waitlist"
+content (email + role + archetype + score)
 
 ---
 

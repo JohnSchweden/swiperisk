@@ -25,8 +25,8 @@ export const PersonalitySelect: React.FC<PersonalitySelectProps> = ({
             Select your emotional support
           </h2>
           <p className="mt-4 md:mt-6 max-w-xl mx-auto text-slate-400 text-sm md:text-base leading-relaxed px-4">
-            Pick the unhinged co-pilot that will narrate your compliance spiral, hype your bad ideas,
-            and occasionally try to keep you out of prison.
+            Pick the unhinged co-pilot that will narrate your simulation spiral, hype your bad ideas,
+            and occasionally try to keep you out of prison. Or not.
           </p>
         </div>
 

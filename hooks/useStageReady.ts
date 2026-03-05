@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import type { GameStage } from "../types";
 
 interface UseStageReadyOptions {
@@ -7,24 +7,35 @@ interface UseStageReadyOptions {
 	delay?: number;
 }
 
+interface UseStageReadyResult {
+	isReady: boolean;
+	hoverEnabled: boolean;
+}
+
 export function useStageReady({
 	stage,
 	targetStage,
 	delay = 100,
-}: UseStageReadyOptions) {
+}: UseStageReadyOptions): UseStageReadyResult {
 	const [isReady, setIsReady] = useState(false);
 	const [hoverEnabled, setHoverEnabled] = useState(false);
 	const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+	const clearPendingTimeout = useCallback((): void => {
+		if (!timeoutRef.current) {
+			return;
+		}
+
+		clearTimeout(timeoutRef.current);
+		timeoutRef.current = null;
+	}, []);
 
 	// Block ghost clicks; enable clicks after short delay
 	useEffect(() => {
 		if (stage !== targetStage) {
 			setIsReady(false);
 			setHoverEnabled(false);
-			if (timeoutRef.current) {
-				clearTimeout(timeoutRef.current);
-				timeoutRef.current = null;
-			}
+			clearPendingTimeout();
 			return;
 		}
 
@@ -34,12 +45,9 @@ export function useStageReady({
 		}, delay);
 
 		return () => {
-			if (timeoutRef.current) {
-				clearTimeout(timeoutRef.current);
-				timeoutRef.current = null;
-			}
+			clearPendingTimeout();
 		};
-	}, [stage, targetStage, delay]);
+	}, [stage, targetStage, delay, clearPendingTimeout]);
 
 	// Enable hover only after first pointer move
 	useEffect(() => {
@@ -48,7 +56,7 @@ export function useStageReady({
 		const onMove = () => {
 			setHoverEnabled(true);
 			window.removeEventListener("mousemove", onMove);
-			window.removeEventListener("touchstart", onMove, { capture: true });
+			window.removeEventListener("touchstart", onMove, true);
 		};
 
 		window.addEventListener("mousemove", onMove, { once: true });
@@ -59,7 +67,7 @@ export function useStageReady({
 
 		return () => {
 			window.removeEventListener("mousemove", onMove);
-			window.removeEventListener("touchstart", onMove, { capture: true });
+			window.removeEventListener("touchstart", onMove, true);
 		};
 	}, [stage, targetStage]);
 

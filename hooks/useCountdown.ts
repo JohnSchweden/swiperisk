@@ -6,11 +6,16 @@ interface UseCountdownOptions {
 	isActive: boolean;
 }
 
+interface UseCountdownResult {
+	count: number;
+	reset: () => void;
+}
+
 export function useCountdown({
 	startFrom,
 	onComplete,
 	isActive,
-}: UseCountdownOptions) {
+}: UseCountdownOptions): UseCountdownResult {
 	const [count, setCount] = useState(startFrom);
 
 	useEffect(() => {
@@ -22,9 +27,9 @@ export function useCountdown({
 		if (count > 0) {
 			const timer = setTimeout(() => setCount((c) => c - 1), 1000);
 			return () => clearTimeout(timer);
-		} else {
-			onComplete();
 		}
+
+		onComplete();
 	}, [isActive, count, startFrom, onComplete]);
 
 	const reset = useCallback(() => {

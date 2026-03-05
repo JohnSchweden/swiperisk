@@ -1,5 +1,6 @@
 import React from 'react';
 import { RoleType } from '../../types';
+import { ROLE_DESCRIPTIONS } from '../../data';
 import LayoutShell from '../LayoutShell';
 
 interface RoleSelectProps {
@@ -63,6 +64,9 @@ export const RoleSelect: React.FC<RoleSelectProps> = ({
               <div className={`font-black text-xs md:text-sm tracking-wide text-slate-300 transition-colors ${hoverEnabled ? 'group-hover:text-white' : ''}`}>
                 {formatLabel(role)}
               </div>
+              <p className="text-slate-400 text-xs md:text-sm leading-relaxed mt-2 md:mt-3">
+                {ROLE_DESCRIPTIONS[role]}
+              </p>
             </button>
           ))}
         </div>

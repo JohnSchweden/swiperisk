@@ -1,4 +1,5 @@
 export { PERSONALITIES } from './personalities';
+export { ROLE_DESCRIPTIONS } from './roles';
 export { DEATH_ENDINGS } from './deathEndings';
 export { BOSS_FIGHT_QUESTIONS } from './bossQuestions';
 export {

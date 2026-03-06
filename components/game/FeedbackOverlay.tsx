@@ -10,6 +10,8 @@ interface FeedbackOverlayProps {
 	choice: "LEFT" | "RIGHT";
 	fine: number;
 	violation: string;
+	/** Optional team-impact copy (morale, resignations, etc.) from pressure metadata. */
+	teamImpact?: string | null;
 	onNext: () => void;
 }
 
@@ -26,6 +28,7 @@ export const FeedbackOverlay: React.FC<FeedbackOverlayProps> = ({
 	lesson,
 	fine,
 	violation,
+	teamImpact,
 	onNext,
 }) => {
 	// Keyboard navigation for overlay
@@ -95,6 +98,16 @@ export const FeedbackOverlay: React.FC<FeedbackOverlayProps> = ({
 					<p className="text-sm md:text-base text-slate-300 leading-relaxed font-light">
 						{lesson}
 					</p>
+					{teamImpact && (
+						<div className="mt-3 pt-3 border-t border-white/5">
+							<div className="text-xs font-bold text-amber-400/90 tracking-wide mb-1">
+								Team impact
+							</div>
+							<p className="text-sm text-slate-400 leading-relaxed font-light">
+								{teamImpact}
+							</p>
+						</div>
+					)}
 				</div>
 
 				<button

@@ -8,6 +8,7 @@ import {
 	InitializingScreen,
 	IntroScreen,
 	PersonalitySelect,
+	PressureCueController,
 	RoleSelect,
 	SummaryScreen,
 } from "./components/game";
@@ -15,7 +16,9 @@ import { BOSS_FIGHT_QUESTIONS, ROLE_CARDS } from "./data";
 import {
 	useBossFight,
 	useClock,
+	useCountdown,
 	useGameState,
+	useIncidentPressure,
 	useRoast,
 	useStageReady,
 	useSwipeGestures,
@@ -80,7 +83,7 @@ const App: React.FC = () => {
 		resetGame,
 	} = useGameState();
 
-	// Feedback overlay state
+	// Feedback overlay state (includes optional team-impact from pressure metadata)
 	const [feedbackOverlay, setFeedbackOverlay] = useState<{
 		text: string;
 		lesson: string;
@@ -88,11 +91,83 @@ const App: React.FC = () => {
 		fine: number;
 		violation: string;
 		cardId: string;
+		teamImpact?: string | null;
 	} | null>(null);
 
 	// Card animation state
 	const [isFirstCard, setIsFirstCard] = useState(true);
 	const cardRef = useRef<HTMLDivElement>(null);
+
+	// Prevent duplicate choice handling (user click + timer race)
+	const isChoiceLockedRef = useRef(false);
+
+	// Current card for pressure metadata lookup (only when playing)
+	const currentCard =
+		state.stage === GameStage.PLAYING && state.role && state.personality
+			? ROLE_CARDS[state.role][state.currentCardIndex]
+			: null;
+
+	// Derived pressure state (countdown, escalation, team-impact)
+	const pressure = useIncidentPressure(
+		state,
+		currentCard ?? null,
+		!!feedbackOverlay,
+	);
+
+	// Urgent incident countdown — expiry resolves to timeout outcome, no undo
+	const handleTimerExpiry = useCallback(() => {
+		if (
+			!state.role ||
+			!state.personality ||
+			!currentCard ||
+			!pressure.timeoutResolvesTo
+		)
+			return;
+		if (isChoiceLockedRef.current) return;
+		isChoiceLockedRef.current = true;
+
+		const direction = pressure.timeoutResolvesTo;
+		const outcome =
+			direction === "RIGHT" ? currentCard.onRight : currentCard.onLeft;
+		const teamImpact = pressure.getTeamImpact(direction);
+
+		setFeedbackOverlay({
+			text: outcome.feedback[state.personality],
+			lesson: outcome.lesson,
+			choice: direction,
+			fine: outcome.fine,
+			violation: outcome.violation,
+			cardId: currentCard.id,
+			teamImpact: teamImpact ?? null,
+		});
+
+		makeChoice(direction, {
+			hype: outcome.hype,
+			heat: outcome.heat,
+			fine: outcome.fine,
+			cardId: currentCard.id,
+		});
+	}, [
+		state.role,
+		state.personality,
+		currentCard,
+		pressure.timeoutResolvesTo,
+		pressure.getTeamImpact,
+		makeChoice,
+	]);
+
+	const incidentCountdown = useCountdown({
+		startFrom: pressure.countdownSec,
+		onComplete: handleTimerExpiry,
+		isActive: pressure.isUrgent,
+	});
+
+	// Reset countdown when transitioning to a new card
+	useEffect(() => {
+		if (currentCard && !feedbackOverlay) {
+			incidentCountdown.reset();
+		}
+	}, [currentCard?.id, feedbackOverlay, incidentCountdown.reset]);
 
 	// Roast feature
 	const {
@@ -160,15 +235,17 @@ const App: React.FC = () => {
 	});
 
 	// Swipe gestures
-	// Handle choice (called by swipe or button click)
+	// Handle choice (called by swipe or button click) — final, no undo
 	const handleChoice = useCallback(
 		(direction: "LEFT" | "RIGHT") => {
 			if (!state.role || !state.personality) return;
+			if (isChoiceLockedRef.current) return;
+			isChoiceLockedRef.current = true;
 
 			const cards = ROLE_CARDS[state.role];
-			const currentCard = cards[state.currentCardIndex];
-			const outcome =
-				direction === "RIGHT" ? currentCard.onRight : currentCard.onLeft;
+			const card = cards[state.currentCardIndex];
+			const outcome = direction === "RIGHT" ? card.onRight : card.onLeft;
+			const teamImpact = pressure.getTeamImpact(direction);
 
 			setFeedbackOverlay({
 				text: outcome.feedback[state.personality],
@@ -176,17 +253,24 @@ const App: React.FC = () => {
 				choice: direction,
 				fine: outcome.fine,
 				violation: outcome.violation,
-				cardId: currentCard.id,
+				cardId: card.id,
+				teamImpact: teamImpact ?? null,
 			});
 
 			makeChoice(direction, {
 				hype: outcome.hype,
 				heat: outcome.heat,
 				fine: outcome.fine,
-				cardId: currentCard.id,
+				cardId: card.id,
 			});
 		},
-		[state.currentCardIndex, state.role, state.personality, makeChoice],
+		[
+			state.currentCardIndex,
+			state.role,
+			state.personality,
+			pressure.getTeamImpact,
+			makeChoice,
+		],
 	);
 
 	const swipe = useSwipeGestures({
@@ -201,6 +285,7 @@ const App: React.FC = () => {
 
 	// Handle next incident (dismiss feedback and move to next card)
 	const handleNextIncident = useCallback(() => {
+		isChoiceLockedRef.current = false;
 		setFeedbackOverlay(null);
 		swipe.reset();
 		setIsFirstCard(false);
@@ -279,32 +364,41 @@ const App: React.FC = () => {
 			case GameStage.PLAYING:
 				if (!state.role || !state.personality) return null;
 				return (
-					<GameScreen
-						state={state}
-						isFirstCard={isFirstCard}
-						cardRef={cardRef}
-						swipeOffset={swipe.offset}
-						swipeDirection={swipe.direction}
-						isDragging={swipe.isDragging}
-						cardExitDirection={swipe.exitDirection}
-						exitPosition={swipe.exitPosition}
-						isSnappingBack={swipe.isSnappingBack}
-						hasDragged={swipe.hasDragged}
-						onTouchStart={swipe.onTouchStart}
-						onTouchMove={swipe.onTouchMove}
-						onTouchEnd={swipe.onTouchEnd}
-						onSwipeLeft={() => swipe.swipeProgrammatically("LEFT")}
-						onSwipeRight={() => swipe.swipeProgrammatically("RIGHT")}
-						roastInput={roastInput}
-						roastOutput={roastOutput}
-						isRoasting={isRoasting}
-						roastOutputRef={roastOutputRef}
-						onRoastInputChange={setRoastInput}
-						onRoastSubmit={handleRoast}
-						currentTime={currentTime}
-						swipeThreshold={swipe.SWIPE_THRESHOLD}
-						swipePreviewThreshold={swipe.SWIPE_PREVIEW_THRESHOLD}
-					/>
+					<>
+						<GameScreen
+							state={state}
+							isFirstCard={isFirstCard}
+							cardRef={cardRef}
+							swipeOffset={swipe.offset}
+							swipeDirection={swipe.direction}
+							isDragging={swipe.isDragging}
+							cardExitDirection={swipe.exitDirection}
+							exitPosition={swipe.exitPosition}
+							isSnappingBack={swipe.isSnappingBack}
+							hasDragged={swipe.hasDragged}
+							onTouchStart={swipe.onTouchStart}
+							onTouchMove={swipe.onTouchMove}
+							onTouchEnd={swipe.onTouchEnd}
+							onSwipeLeft={() => swipe.swipeProgrammatically("LEFT")}
+							onSwipeRight={() => swipe.swipeProgrammatically("RIGHT")}
+							roastInput={roastInput}
+							roastOutput={roastOutput}
+							isRoasting={isRoasting}
+							roastOutputRef={roastOutputRef}
+							onRoastInputChange={setRoastInput}
+							onRoastSubmit={handleRoast}
+							currentTime={currentTime}
+							swipeThreshold={swipe.SWIPE_THRESHOLD}
+							swipePreviewThreshold={swipe.SWIPE_PREVIEW_THRESHOLD}
+							countdownValue={incidentCountdown.count}
+							isCountdownActive={pressure.isUrgent}
+						/>
+						<PressureCueController
+							{...pressure}
+							countdownValue={incidentCountdown.count}
+							isCountdownActive={pressure.isUrgent}
+						/>
+					</>
 				);
 
 			case GameStage.BOSS_FIGHT:
@@ -354,6 +448,7 @@ const App: React.FC = () => {
 						choice={feedbackOverlay.choice}
 						fine={feedbackOverlay.fine}
 						violation={feedbackOverlay.violation}
+						teamImpact={feedbackOverlay.teamImpact}
 						onNext={handleNextIncident}
 					/>
 				)}

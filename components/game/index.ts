@@ -1,6 +1,7 @@
 export { BossFight } from "./BossFight";
 export { CardStack } from "./CardStack";
 export { FeedbackOverlay } from "./FeedbackOverlay";
+export { PressureCueController } from "./PressureCueController";
 export { GameHUD } from "./GameHUD";
 export { GameOver } from "./GameOver";
 export { GameScreen } from "./GameScreen";

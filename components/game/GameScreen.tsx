@@ -37,6 +37,9 @@ interface GameScreenProps {
 	// Config
 	swipeThreshold: number;
 	swipePreviewThreshold: number;
+	// Pressure / countdown (Phase 04 — 04-02 will render timer UI)
+	countdownValue?: number;
+	isCountdownActive?: boolean;
 }
 
 export const GameScreen: React.FC<GameScreenProps> = ({
@@ -64,6 +67,8 @@ export const GameScreen: React.FC<GameScreenProps> = ({
 	currentTime,
 	swipeThreshold,
 	swipePreviewThreshold,
+	countdownValue = 0,
+	isCountdownActive = false,
 }) => {
 	if (!state.role || !state.personality) return null;
 

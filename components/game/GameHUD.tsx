@@ -1,11 +1,17 @@
 import React from "react";
 
 const INITIAL_BUDGET = 10000000;
+const BUDGET_WARNING = 3_000_000;
+const BUDGET_CRITICAL = 2_000_000;
+const HEAT_HIGH = 70;
+const HEAT_CRITICAL = 85;
 
 interface GameHUDProps {
 	budget: number;
 	heat: number;
 	hype: number;
+	/** When set, HUD shows countdown is active (escalation context). */
+	countdownValue?: number;
 }
 
 function formatBudget(amount: number): string {
@@ -19,25 +25,51 @@ export const GameHUD = React.memo(function GameHUD({
 	budget,
 	heat,
 	hype,
+	countdownValue,
 }: GameHUDProps) {
+	const budgetCritical = budget < BUDGET_CRITICAL;
+	const budgetWarning = budget < BUDGET_WARNING && !budgetCritical;
+	const heatCritical = heat >= HEAT_CRITICAL;
+	const heatHigh = heat >= HEAT_HIGH && !heatCritical;
+	const underPressure =
+		budgetCritical ||
+		heatCritical ||
+		(countdownValue != null && countdownValue > 0);
+
 	return (
-		<div className="absolute top-2 md:top-4 left-1/2 -translate-x-1/2 w-full max-w-4xl px-3 md:px-4 pb-2 md:pb-0 flex flex-col md:flex-row gap-2 md:gap-6 items-stretch md:items-center z-10">
+		<div
+			className={`absolute top-2 md:top-4 left-1/2 -translate-x-1/2 w-full max-w-4xl px-3 md:px-4 pb-2 md:pb-0 flex flex-col md:flex-row gap-2 md:gap-6 items-stretch md:items-center z-10 transition-colors duration-300 ${underPressure ? "pressure-hud-intense" : ""}`}
+			data-pressure={underPressure ? "true" : undefined}
+		>
 			<div className="flex-1 space-y-1 min-w-0">
 				<div className="flex justify-between text-[10px] font-black tracking-wide mb-1">
 					<span
-						className={`${budget < 2000000 ? "text-red-500 animate-pulse" : "text-green-400"} inline-flex items-center gap-1.5`}
+						className={`${budgetCritical ? "text-red-500 animate-pulse" : budgetWarning ? "text-amber-400" : "text-green-400"} inline-flex items-center gap-1.5`}
 					>
 						<i className="fa-solid fa-coins text-[10px]" aria-hidden></i>Budget
+						{budgetCritical && (
+							<span className="text-red-400 text-[9px] uppercase tracking-wider ml-0.5">
+								Critical
+							</span>
+						)}
 					</span>
 					<span
-						className={budget < 2000000 ? "text-red-500" : "text-green-400"}
+						className={
+							budgetCritical
+								? "text-red-500"
+								: budgetWarning
+									? "text-amber-400"
+									: "text-green-400"
+						}
 					>
 						{formatBudget(budget)}
 					</span>
 				</div>
-				<div className="h-2 bg-slate-900 rounded border border-white/10 overflow-hidden bg-stripes p-[1px]">
+				<div
+					className={`h-2 bg-slate-900 rounded border overflow-hidden bg-stripes p-[1px] transition-colors ${budgetCritical ? "border-red-500/50" : budgetWarning ? "border-amber-500/30" : "border-white/10"}`}
+				>
 					<div
-						className={`h-full progress-bar ${budget < 2000000 ? "bg-red-500" : "bg-green-500"}`}
+						className={`h-full progress-bar ${budgetCritical ? "bg-red-500" : budgetWarning ? "bg-amber-500" : "bg-green-500"}`}
 						style={{
 							width: `${Math.min(100, (budget / INITIAL_BUDGET) * 100)}%`,
 						}}
@@ -48,15 +80,32 @@ export const GameHUD = React.memo(function GameHUD({
 				<div className="flex-1 md:w-28 space-y-1">
 					<div className="flex justify-between text-[10px] font-black tracking-wide mb-1">
 						<span
-							className={`${heat > 80 ? "text-yellow-400 animate-pulse" : "text-orange-500"} inline-flex items-center gap-1.5`}
+							className={`${heatCritical ? "text-red-400 animate-pulse" : heatHigh ? "text-yellow-400" : "text-orange-500"} inline-flex items-center gap-1.5`}
 						>
 							<i className="fa-solid fa-fire text-[10px]" aria-hidden></i>Risk
+							{heatCritical && (
+								<span className="text-red-400 text-[9px] uppercase tracking-wider ml-0.5">
+									Critical
+								</span>
+							)}
 						</span>
-						<span className="text-orange-500">{heat}%</span>
+						<span
+							className={
+								heatCritical
+									? "text-red-400"
+									: heatHigh
+										? "text-yellow-400"
+										: "text-orange-500"
+							}
+						>
+							{heat}%
+						</span>
 					</div>
-					<div className="h-2 bg-slate-900 rounded border border-white/10 overflow-hidden bg-stripes p-[1px]">
+					<div
+						className={`h-2 bg-slate-900 rounded border overflow-hidden bg-stripes p-[1px] transition-colors ${heatCritical ? "border-red-500/50" : heatHigh ? "border-yellow-500/30" : "border-white/10"}`}
+					>
 						<div
-							className={`h-full progress-bar ${heat > 80 ? "bg-yellow-400" : "bg-orange-600"}`}
+							className={`h-full progress-bar ${heatCritical ? "bg-red-500" : heatHigh ? "bg-yellow-400" : "bg-orange-600"}`}
 							style={{ width: `${heat}%` }}
 						/>
 					</div>

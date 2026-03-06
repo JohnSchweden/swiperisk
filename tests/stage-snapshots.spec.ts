@@ -120,6 +120,22 @@ async function navigateToFeedbackOverlay(page: Page) {
 async function navigateToPlayingWithRoastAnswer(page: Page) {
 	mockRoastApi(page);
 	await navigateToPlaying(page);
+	// First card (dev_1) is urgent — dismiss overlay if countdown expired, else swipe to reach card 2
+	const feedbackDialog = page
+		.locator(SELECTORS.feedbackDialog)
+		.or(page.locator(SELECTORS.feedbackDialogFallback));
+	const nextBtn = page.locator(SELECTORS.nextTicketButton);
+	// Give overlay a moment to appear if countdown just expired
+	await page.waitForTimeout(800);
+	if (await feedbackDialog.isVisible()) {
+		await nextBtn.click();
+		await page.waitForTimeout(500);
+	} else {
+		await page.click(SELECTORS.debugButton);
+		await page.waitForTimeout(500);
+		await nextBtn.click();
+		await page.waitForTimeout(300);
+	}
 	const textarea = page.getByLabel(
 		"Describe your use case / workflow for governance review",
 	);
@@ -172,7 +188,10 @@ test.describe("Stage visual snapshots", () => {
 	test("playing", async ({ page }) => {
 		await navigateToPlaying(page);
 		await expect(page).toHaveScreenshot("playing.png", {
-			mask: [page.locator("text=/\\d{1,2}:\\d{2}/")],
+			mask: [
+				page.locator("text=/\\d{1,2}:\\d{2}/"),
+				page.locator("[data-testid=urgent-countdown]"),
+			],
 		});
 	});
 
@@ -191,6 +210,21 @@ test.describe("Stage visual snapshots", () => {
 	test("playing roast con before and after", async ({ page }) => {
 		mockRoastApi(page);
 		await navigateToPlaying(page);
+		// First card (dev_1) is urgent — dismiss overlay if countdown expired, else swipe to reach card 2
+		const feedbackDialog = page
+			.locator(SELECTORS.feedbackDialog)
+			.or(page.locator(SELECTORS.feedbackDialogFallback));
+		const nextBtn = page.locator(SELECTORS.nextTicketButton);
+		await page.waitForTimeout(800); // Give overlay a moment to appear if countdown just expired
+		if (await feedbackDialog.isVisible()) {
+			await nextBtn.click();
+			await page.waitForTimeout(500);
+		} else {
+			await page.click(SELECTORS.debugButton);
+			await page.waitForTimeout(500);
+			await nextBtn.click();
+			await page.waitForTimeout(300);
+		}
 		await page.getByTestId("roast-terminal").scrollIntoViewIfNeeded();
 		await expect(page).toHaveScreenshot("playing-roast-before.png", {
 			mask: [page.locator("text=/\\d{1,2}:\\d{2}/")],

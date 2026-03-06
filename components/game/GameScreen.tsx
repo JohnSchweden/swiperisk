@@ -79,9 +79,31 @@ export const GameScreen: React.FC<GameScreenProps> = ({
 			? { "data-pressure-countdown": String(countdownValue) }
 			: {};
 
+	const showCountdown = isCountdownActive && countdownValue > 0;
+
 	return (
 		<LayoutShell className="bg-[#0a0a0c]">
-			<GameHUD budget={state.budget} heat={state.heat} hype={state.hype} />
+			<GameHUD
+				budget={state.budget}
+				heat={state.heat}
+				hype={state.hype}
+				countdownValue={showCountdown ? countdownValue : undefined}
+			/>
+			{showCountdown && (
+				<div
+					className="absolute top-14 md:top-[4.25rem] left-1/2 -translate-x-1/2 z-20 flex items-center gap-2 px-3 py-1.5 rounded-lg bg-red-950/80 border border-red-500/60 text-red-200 text-sm font-bold mono animate-pulse"
+					data-testid="urgent-countdown"
+					role="timer"
+					aria-live="polite"
+					aria-label={`Urgent decision: ${countdownValue} seconds remaining`}
+				>
+					<i className="fa-solid fa-clock text-red-400" aria-hidden />
+					<span>{countdownValue}s</span>
+					<span className="text-red-300/90 text-xs font-medium hidden sm:inline">
+						— Decide now or the choice is made for you
+					</span>
+				</div>
+			)}
 
 			{/* Main Content */}
 			<div

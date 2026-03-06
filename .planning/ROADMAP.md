@@ -41,10 +41,11 @@ Speech-to-text now working with real-time transcription. Includes low-latency mo
 
 **Goal:** Replace current roles with new "impact zone" set; comment out legacy roles for later
 **Depends on:** Phase 01
-**Plans:** 0 plans
+**Plans:** 2 plans
 
 Plans:
-- [ ] TBD (run /gsd-plan-phase 02 to break down)
+- [ ] 02-01-PLAN.md — Foundation: RoleType, roles metadata, deck aliases, runtime wiring
+- [ ] 02-02-PLAN.md — RoleSelect UI copy + test updates (navigation, snapshots)
 
 **Details:**
 Replace role select (step_02 // damage_control) with new copy and roles:
@@ -96,10 +97,12 @@ Create new card types where:
 
 **Goal:** Add psychological pressure and immersion to make it feel real
 **Depends on:** Phase 01
-**Plans:** 0 plans
+**Plans:** 3 plans
 
 Plans:
-- [ ] TBD (run /gsd-plan-phase 04 to break down)
+- [ ] 04-01-PLAN.md — Pressure metadata, useIncidentPressure, timer/undo orchestration
+- [ ] 04-02-PLAN.md — Countdown UI, HUD escalation, shake/flicker/pulse visuals
+- [ ] 04-03-PLAN.md — Audio cues, haptics, team-impact in FeedbackOverlay
 
 **Details:**
 Make the simulation feel real through:
@@ -218,10 +221,13 @@ Update intro, onboarding, and messaging to explicitly frame the experience as:
 
 **Goal:** Add polish with general visual effects (distinct from Phase 04 stress indicators)
 **Depends on:** Phase 01
-**Plans:** 0 plans
+**Plans:** 4 plans
 
 Plans:
-- [ ] TBD (run /gsd-plan-phase 09 to break down)
+- [ ] 09-01-PLAN.md — SwipeFxLayer, bounded trails/bursts, usePrefersReducedMotion
+- [ ] 09-02-PLAN.md — Stage transitions, optional View Transition API (Safari &lt;18 fallback)
+- [ ] 09-03-PLAN.md — Ambient menu/end-state motion (depends 01)
+- [ ] 09-04-PLAN.md — Outcome micro-effects, performance guardrails (depends 01, 02, 03)
 
 **Details:**
 General polish and atmosphere:
@@ -259,7 +265,7 @@ General audio layer:
 - AUDIO-03: Card interaction sounds (swipe, flip)
 - AUDIO-04: Audio mix hierarchy (voice > cues > music)
 
-### Phase 11: Settings Integration
+### Phase 11: Settings Integration (deferred)
 
 **Goal:** User controls for volume, effects, and accessibility
 **Depends on:** Phase 01
@@ -286,23 +292,26 @@ Settings UI and persistence:
 
 **Goal:** Shuffle deck, branching logic, and expanded AppSource for scenario variety
 **Depends on:** Phase 01
-**Plans:** 0 plans
+**Plans:** 4 plans
 
 Plans:
-- [ ] TBD (run /gsd-plan-phase 12 to break down)
+- [ ] 12-00-PLAN.md — Shuffle deck on game start + branching card logic (wave 1)
+- [ ] 12-01-PLAN.md — AppSource enum expansion + SOURCE_ICONS + CardStack source rendering (wave 1)
+- [ ] 12-02-PLAN.md — New cards in development, management, finance (wave 2, depends 01)
+- [ ] 12-03-PLAN.md — New cards in marketing, hr, cleaning (wave 2, depends 01)
 
 **Details:**
 
 **Gameplay tweaks:**
-- **Shuffle deck:** When entering `PLAYING`, use a shuffled copy of `ROLE_CARDS[state.role]` so card order isn't fixed. ✓
-- **Branching:** Optional "if they swiped right on card X, show card Y" so some cards only appear after bad choices. ✓
+- **Shuffle deck:** When entering `PLAYING`, use a shuffled copy of `ROLE_CARDS[state.role]` so card order isn't fixed.
+- **Branching:** Optional "if they swiped right on card X, show card Y" so some cards only appear after bad choices.
 
 **New sources:**
 - Add values to `AppSource` (e.g. `JIRA`, `NOTION`, `MEETING`) and use them for new cards. Purely cosmetic but makes scenarios feel more varied.
 
 **Requirements:**
-- TWEAK-01: Shuffle deck on game start (✓)
-- TWEAK-02: Branching card logic — conditional card injection based on prior swipes (✓)
+- TWEAK-01: Shuffle deck on game start
+- TWEAK-02: Branching card logic — conditional card injection based on prior swipes
 - TWEAK-03: Extend `AppSource` enum (JIRA, NOTION, MEETING, etc.)
 - TWEAK-04: Add new cards using extended sources across roles
 
@@ -367,6 +376,7 @@ Integrate images into UI:
 | 1-4 | Core game | v1.0 | Complete |
 | 1-2 | Voice Files + Live API | v1.1 | Complete |
 | 01 | Live API STT Research | v1.2 | Complete |
+| 02 | New Role Set (Impact Zones) | v1.2 | Planned |
 | 03 | No-Win Scenario Cards | v1.2 | Not started |
 | 04 | Immersive Pressure Effects | v1.2 | Not started |
 | 05 | Expanded AI Risk Scenarios | v1.2 | Not started |
@@ -375,8 +385,8 @@ Integrate images into UI:
 | 08 | Kobayashi Maru Framing (deferred) | v1.2 | Deferred |
 | 09 | Visual Effects | v1.2 | Not started |
 | 10 | Background Audio | v1.2 | Not started |
-| 11 | Settings Integration | v1.2 | Not started |
-| 12 | Gameplay Tweaks & Card Variety | v1.2 | Partial (tweaks done, sources pending) |
+| 11 | Settings Integration (deferred) | v1.2 | Deferred |
+| 12 | Gameplay Tweaks & Card Variety | v1.2 | Planned |
 | 13 | Image Asset Pipeline | v1.2 | Not started |
 | 14 | Situational & Outcome Imagery Display | v1.2 | Not started |
 

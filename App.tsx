@@ -388,8 +388,28 @@ const App: React.FC = () => {
 							onTouchStart={swipe.onTouchStart}
 							onTouchMove={swipe.onTouchMove}
 							onTouchEnd={swipe.onTouchEnd}
-							onSwipeLeft={() => swipe.swipeProgrammatically("LEFT")}
-							onSwipeRight={() => swipe.swipeProgrammatically("RIGHT")}
+							onSwipeLeft={() => {
+								if (
+									(pressure.isCritical || pressure.isUrgent) &&
+									typeof navigator !== "undefined" &&
+									"vibrate" in navigator &&
+									typeof navigator.vibrate === "function"
+								) {
+									navigator.vibrate([50, 30, 50]);
+								}
+								swipe.swipeProgrammatically("LEFT");
+							}}
+							onSwipeRight={() => {
+								if (
+									(pressure.isCritical || pressure.isUrgent) &&
+									typeof navigator !== "undefined" &&
+									"vibrate" in navigator &&
+									typeof navigator.vibrate === "function"
+								) {
+									navigator.vibrate([50, 30, 50]);
+								}
+								swipe.swipeProgrammatically("RIGHT");
+							}}
 							roastInput={roastInput}
 							roastOutput={roastOutput}
 							isRoasting={isRoasting}

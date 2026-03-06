@@ -58,7 +58,9 @@ export function usePressureAudio({
 		};
 	}, [hasHighPressure, isActive]);
 
-	// Haptic: single pulse when entering critical state
+	// Haptic: removed from useEffect — Chrome blocks vibrate when not in user gesture.
+	// Primary path: App.tsx onSwipeLeft/onSwipeRight call vibrate sync before swipeProgrammatically.
+	// This fallback may not work on mobile; kept for non-button paths (e.g. keyboard) on desktop.
 	useEffect(() => {
 		if (isCritical && !wasCriticalRef.current) {
 			triggerHaptic();

@@ -9,7 +9,7 @@ export const PRESSURE_SCENARIOS: Record<string, PressureScenarioMetadata> = {
 	// Development: 3 a.m. payment pipeline down — urgent
 	dev_1: {
 		urgent: true,
-		countdownSec: 15,
+		countdownSec: 10,
 		timeoutResolvesTo: "RIGHT",
 		criticalForHaptics: true,
 		outcomes: {

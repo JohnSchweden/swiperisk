@@ -1,5 +1,5 @@
 ---
-status: complete
+status: diagnosed
 phase: 04-immersive-pressure-effects
 source: [04-01-SUMMARY.md, 04-02-SUMMARY.md, 04-03-SUMMARY.md]
 started: "2026-03-06T00:00:00Z"
@@ -148,33 +148,54 @@ skipped: 0
   reason: "User reported: not happening, timer just restarts"
   severity: major
   test: 2
-  root_cause: ""
-  artifacts: []
-  missing: []
+  root_cause: "useCountdown treats natural expiry (count 1→0) same as fresh activation. Both hit count===0 && startFrom>0 and restart; onComplete never called."
+  artifacts:
+    - path: "hooks/useCountdown.ts"
+      issue: "Ambiguous count===0 && startFrom>0 branch; needs hasTickedWhileActive ref to distinguish"
+  missing:
+    - "Distinguish fresh activation from natural expiry; call onComplete when count reached 0 after ticking"
+  debug_session: .planning/debug/timer-restarts-instead-of-resolve.md
 
 - truth: "Stress effects (shake, flicker, pulse) activate when heat is critical, not only when countdown is active"
   status: failed
   reason: "User reported: Works for countdown active, but when heat is critical the incident card doesn't show any stress effects or shake"
   severity: major
   test: 4
-  root_cause: ""
-  artifacts: []
-  missing: []
+  root_cause: "useIncidentPressure: isCritical = criticalFromScenario || (scenario != null && heatHigh) — heat only counts when card has pressure metadata"
+  artifacts:
+    - path: "hooks/useIncidentPressure.ts"
+      issue: "isCritical wrongly gates heat behind scenario != null"
+  missing:
+    - "Change to isCritical = criticalFromScenario || heatHigh"
+  debug_session: .planning/debug/card-stress-heat-critical-missing.md
 
 - truth: "High-pressure states (heat high) trigger audible heartbeat; heartbeat volume 10% louder"
   status: failed
   reason: "User reported: Heartbeat only plays for card when pressure/countdown is on. When heat is high, no heartbeat. Also make heartbeat 10% louder when it's there."
   severity: major
   test: 5
-  root_cause: ""
-  artifacts: []
-  missing: []
+  root_cause: "Same as gap 4: isCritical tied to scenario; also GAIN_HEARTBEAT at 0.12"
+  artifacts:
+    - path: "hooks/useIncidentPressure.ts"
+      issue: "isCritical gates heat behind scenario"
+    - path: "services/pressureAudio.ts"
+      issue: "Volume 0.12, needs ~10% increase to 0.132"
+  missing:
+    - "isCritical = criticalFromScenario || heatHigh"
+    - "GAIN_HEARTBEAT 0.12 → 0.132"
+  debug_session: .planning/debug/heartbeat-heat-high-missing.md
 
 - truth: "Critical moments trigger haptic feedback (vibration) on supported mobile devices"
   status: failed
   reason: "User reported: no vibrations"
   severity: major
   test: 7
-  root_cause: ""
-  artifacts: []
-  missing: []
+  root_cause: "Vibrate only in swipe buttons; mobile uses touch-swipe (useSwipeGestures) which never calls vibrate"
+  artifacts:
+    - path: "hooks/useSwipeGestures.ts"
+      issue: "Touch path has no vibrate; setTimeout breaks user gesture"
+    - path: "App.tsx"
+      issue: "Vibrate only in onSwipeLeft/onSwipeRight (button taps)"
+  missing:
+    - "Call vibrate synchronously in useSwipeGestures.handleTouchEnd when direction known, before setTimeout"
+  debug_session: .planning/debug/haptic-mobile-round2.md

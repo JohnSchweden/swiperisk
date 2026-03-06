@@ -1,45 +1,42 @@
 ---
-status: diagnosed
+status: complete
 phase: 04-immersive-pressure-effects
 source: [04-01-SUMMARY.md, 04-02-SUMMARY.md, 04-03-SUMMARY.md]
 started: "2026-03-06T00:00:00Z"
-updated: "2026-03-06T12:00:00Z"
+updated: "2026-03-07T00:00:00Z"
+recheck: true
 ---
 
 ## Current Test
 
 [testing complete]
 
-## Tests
+## Tests (Re-verification post gap closure)
 
 ### 1. Urgent countdown visibility
-expected: Start a game with Dev role. First card (dev_1) is urgent. A visible countdown appears with stakes messaging like "Decide now or the choice is made for you." The timer counts down from 15.
-result: issue
-reported: "not visible, also not visible on screenshots"
-severity: major
+expected: Start a game with Dev role. First card (dev_1) is urgent. A visible countdown appears with stakes messaging like "Decide now or the choice is made for you." The timer counts down from 10.
+result: pass
 
 ### 2. Timer expiry auto-resolves
 expected: On an urgent card, let the countdown reach zero without swiping. The incident resolves automatically to a configured left/right outcome. No undo or revert control is offered — you proceed to next incident.
 result: issue
-reported: "As the countdown is not visible, it's also not applied to the card to expire and auto resolve. Or it's actually working, and instantly after the game started or the simulation has started, I instantly see an answer to a question, which should happen after either swiping or the countdown runs down."
+reported: "not happening, timer just restarts"
 severity: major
 
 ### 3. HUD escalation
 expected: Make choices that raise heat or drain budget. As heat gets high or budget gets low, the HUD shows intensified visuals: Critical labels, amber/red color shifts, and a pressure-hud-intense state. The screen should feel increasingly stressed.
-result: issue
-reported: "nothing visible"
-severity: major
+result: pass
 
 ### 4. Card stress visuals
 expected: When the countdown is active or heat is critical, the incident card shows visible stress effects: shake on the container, flicker and/or pulse on the card. Effects stop when pressure drops (e.g. after you swipe or resolve).
 result: issue
-reported: "not happening, not visible"
+reported: "Works for countdown active, but when heat is critical the incident card doesn't show any stress effects or shake"
 severity: major
 
 ### 5. Stress audio
 expected: With high heat (bad choices), heartbeat/alert audio plays. When you leave the playing screen or pressure drops, the audio stops. No overlapping duplicate loops.
 result: issue
-reported: "nothing to hear"
+reported: "Heartbeat only plays for card when pressure/countdown is on. When heat is high, no heartbeat. Also make heartbeat 10% louder when it's there."
 severity: major
 
 ### 6. Feedback overlay — team-impact and finality
@@ -49,18 +46,18 @@ result: pass
 ### 7. Haptic on critical (mobile)
 expected: On a real mobile device with vibration enabled, when entering critical state or when the timer expires, the device vibrates briefly. (Skip if testing on desktop.)
 result: issue
-reported: "no haptic on mobile"
+reported: "no vibrations"
 severity: major
 
 ## Summary
 
 total: 7
-passed: 1
-issues: 6
+passed: 3
+issues: 4
 pending: 0
 skipped: 0
 
-## Gaps
+## Gaps (Round 1 — resolved via 04-04, 04-05)
 
 - truth: "Urgent incidents show a visible countdown with stakes messaging (e.g. 'Decide now or the choice is made for you') while the player is deciding"
   status: failed
@@ -143,3 +140,41 @@ skipped: 0
   missing:
     - "Call vibrate only from sync handlers attached to user events (swipe, tap); accept timer-expiry haptics may not work on mobile"
   debug_session: .planning/debug/haptic-not-on-mobile.md
+
+## Gaps (Round 2 — recheck)
+
+- truth: "Timer expiry resolves incident after countdown reaches zero; feedback overlay appears, no restart"
+  status: failed
+  reason: "User reported: not happening, timer just restarts"
+  severity: major
+  test: 2
+  root_cause: ""
+  artifacts: []
+  missing: []
+
+- truth: "Stress effects (shake, flicker, pulse) activate when heat is critical, not only when countdown is active"
+  status: failed
+  reason: "User reported: Works for countdown active, but when heat is critical the incident card doesn't show any stress effects or shake"
+  severity: major
+  test: 4
+  root_cause: ""
+  artifacts: []
+  missing: []
+
+- truth: "High-pressure states (heat high) trigger audible heartbeat; heartbeat volume 10% louder"
+  status: failed
+  reason: "User reported: Heartbeat only plays for card when pressure/countdown is on. When heat is high, no heartbeat. Also make heartbeat 10% louder when it's there."
+  severity: major
+  test: 5
+  root_cause: ""
+  artifacts: []
+  missing: []
+
+- truth: "Critical moments trigger haptic feedback (vibration) on supported mobile devices"
+  status: failed
+  reason: "User reported: no vibrations"
+  severity: major
+  test: 7
+  root_cause: ""
+  artifacts: []
+  missing: []

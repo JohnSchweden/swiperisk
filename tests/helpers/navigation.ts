@@ -17,7 +17,7 @@ export async function navigateToPlayingFast(page: Page): Promise<void> {
 			JSON.stringify({
 				state: "playing",
 				personality: "vera",
-				role: "development",
+				role: "SOFTWARE_ENGINEER",
 			}),
 		);
 	});
@@ -84,8 +84,8 @@ export async function navigateToPlaying(page: Page): Promise<void> {
 	await personalityButton.click();
 	await page.waitForTimeout(300);
 
-	// Click role (Development)
-	const roleButton = page.locator('button:has-text("Development")');
+	// Click role (Software Engineer - development-backed path)
+	const roleButton = page.locator('button:has-text("Software Engineer")');
 	await roleButton.waitFor({ state: "visible" });
 	await roleButton.click();
 

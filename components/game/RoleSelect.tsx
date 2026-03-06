@@ -24,12 +24,12 @@ export const RoleSelect: React.FC<RoleSelectProps> = ({
 						damage_control
 					</div>
 					<h2 className="text-3xl md:text-5xl font-black mb-3 md:mb-4 tracking-tight fade-in px-4">
-						Select your clearance level
+						Select your impact zone
 					</h2>
 					<p className="max-w-2xl mx-auto text-slate-400 text-sm md:text-base leading-relaxed px-4">
-						Choose which part of the company you want to endanger first. Each
-						role changes the kinds of incidents, heat you attract, and creative
-						ways to lose that $10M budget.
+						Choose the specific silo you want to set on fire first. Each role
+						changes the cascading failures, the legal heat you attract, and the
+						creative ways to lose that $10M budget.
 					</p>
 				</div>
 

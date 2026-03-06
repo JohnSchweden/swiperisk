@@ -61,6 +61,15 @@ const RoastTerminalInner = memo(function RoastTerminalInner({
 		}
 	};
 
+	const handleSubmit = async () => {
+		if (isRecording) {
+			await stopRecording();
+			// Yield to React so onTranscript → onInputChange flushes before submit
+			await new Promise((r) => setTimeout(r, 0));
+		}
+		onSubmit();
+	};
+
 	const personalityName = PERSONALITIES[personality].name;
 	const isListening = isRecording;
 
@@ -86,7 +95,7 @@ const RoastTerminalInner = memo(function RoastTerminalInner({
 						onKeyDown={(e) => {
 							if (e.key === "Enter" && !e.shiftKey) {
 								e.preventDefault();
-								onSubmit();
+								handleSubmit();
 							}
 						}}
 						placeholder="e.g. I use ChatGPT for company secrets..."
@@ -108,7 +117,7 @@ const RoastTerminalInner = memo(function RoastTerminalInner({
 					</button>
 					<button
 						type="button"
-						onClick={onSubmit}
+						onClick={handleSubmit}
 						disabled={isLoading}
 						title={isLoading ? "Scanning..." : "Send (Enter)"}
 						aria-label={isLoading ? "Scanning..." : "Send roast"}

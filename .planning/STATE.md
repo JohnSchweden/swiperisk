@@ -2,13 +2,13 @@
 gsd_state_version: 1.0
 milestone: v1.2
 milestone_name: Kobayashi Maru — AI Governance Simulator
-current_phase: "02-new-role-set-impact-zones"
-current_plan: 2
-status: Complete
-last_updated: "2026-03-06T21:16:08.000Z"
+current_phase: 02-new-role-set-impact-zones
+current_plan: 2 (Complete)
+status: planning
+last_updated: "2026-03-06T21:21:13.824Z"
 progress:
   total_phases: 14
-  completed_phases: 1
+  completed_phases: 2
   total_plans: 19
   completed_plans: 5
 ---
@@ -24,7 +24,7 @@ See: .planning/PROJECT.md
 **Milestone:** v1.2 Kobayashi Maru — AI Governance Simulator
 **Current phase:** 02-new-role-set-impact-zones
 **Current plan:** 2 (Complete)
-**Status:** Complete
+**Status:** Ready to plan
 
 ## Session Log
 

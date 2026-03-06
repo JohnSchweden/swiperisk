@@ -107,3 +107,25 @@ export interface BossQuestion {
 	wrongAnswers: string[];
 	explanation: string;
 }
+
+/** Phase 04: Pressure metadata for immersive effects. Keyed by card ID, referenced at runtime. */
+export interface PressureOutcomeMetadata {
+	/** Optional team-impact copy shown in feedback overlay (e.g. morale, resignations). */
+	teamImpact?: string;
+}
+
+export interface PressureScenarioMetadata {
+	/** If true, incident starts a countdown; expiry resolves to timeoutResolvesTo. */
+	urgent: boolean;
+	/** Countdown length in seconds when urgent. */
+	countdownSec: number;
+	/** When countdown expires, resolve as this choice (LEFT | RIGHT). */
+	timeoutResolvesTo: "LEFT" | "RIGHT";
+	/** If true, moment warrants haptics/audio escalation (e.g. high heat, critical). */
+	criticalForHaptics?: boolean;
+	/** Per-outcome metadata (team-impact text for feedback overlay). */
+	outcomes?: {
+		LEFT?: PressureOutcomeMetadata;
+		RIGHT?: PressureOutcomeMetadata;
+	};
+}

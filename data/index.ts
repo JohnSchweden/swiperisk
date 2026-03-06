@@ -11,6 +11,7 @@ export {
 } from "./cards";
 export { DEATH_ENDINGS } from "./deathEndings";
 export { PERSONALITIES } from "./personalities";
+export { PRESSURE_SCENARIOS } from "./pressureScenarios";
 export {
 	getRoleDeck,
 	ROLE_DECK_ALIASES,

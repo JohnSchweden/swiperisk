@@ -45,7 +45,7 @@ Speech-to-text now working with real-time transcription. Includes low-latency mo
 
 Plans:
 - [x] 02-01-PLAN.md — Foundation: RoleType, roles metadata, deck aliases, runtime wiring ✓
-- [ ] 02-02-PLAN.md — RoleSelect UI copy + test updates (navigation, snapshots)
+- [x] 02-02-PLAN.md — RoleSelect UI copy + test updates (navigation, snapshots) ✓
 
 **Details:**
 Replace role select (step_02 // damage_control) with new copy and roles:
@@ -376,7 +376,7 @@ Integrate images into UI:
 | 1-4 | Core game | v1.0 | Complete |
 | 1-2 | Voice Files + Live API | v1.1 | Complete |
 | 01 | Live API STT Research | v1.2 | Complete |
-| 02 | New Role Set (Impact Zones) | v1.2 | Planned |
+| 02 | New Role Set (Impact Zones) | v1.2 | Complete |
 | 03 | No-Win Scenario Cards | v1.2 | Not started |
 | 04 | Immersive Pressure Effects | v1.2 | Not started |
 | 05 | Expanded AI Risk Scenarios | v1.2 | Not started |

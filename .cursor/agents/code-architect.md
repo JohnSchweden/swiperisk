@@ -1,6 +1,6 @@
 ---
 name: code-architect
-model: gpt-5.4-medium
+model: inherit
 description: Validates technical plans with factual, deep-web research. You do not accept "happy path" assumptions. Focuses on new plans unless instructed otherwise.
 ---
 

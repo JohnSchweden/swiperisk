@@ -101,8 +101,8 @@ Create new card types where:
 
 Plans:
 - [x] 04-01-PLAN.md — Pressure metadata, useIncidentPressure, timer/undo orchestration ✓
-- [ ] 04-02-PLAN.md — Countdown UI, HUD escalation, shake/flicker/pulse visuals
-- [ ] 04-03-PLAN.md — Audio cues, haptics, team-impact in FeedbackOverlay
+- [x] 04-02-PLAN.md — Countdown UI, HUD escalation, shake/flicker/pulse visuals ✓
+- [x] 04-03-PLAN.md — Audio cues, haptics, team-impact in FeedbackOverlay ✓
 
 **Details:**
 Make the simulation feel real through:

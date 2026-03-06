@@ -32,4 +32,5 @@ See: .planning/PROJECT.md
 - 2026-03-06: Completed 02-01-PLAN.md (Impact Zone Role System Foundation)
 - 2026-03-06: Completed 02-02-PLAN.md (Impact Zone Role Selection UI)
 - 2026-03-06: Completed 04-01-PLAN.md (Pressure metadata, useIncidentPressure, timer/undo orchestration)
+- 2026-03-06: Completed 04-02-PLAN.md (Countdown UI, HUD escalation, shake/flicker/pulse visuals)
 - 2026-03-06: Completed 04-03-PLAN.md (Immersive pressure cues: audio, haptics, feedback finality)

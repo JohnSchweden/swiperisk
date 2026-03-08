@@ -1,5 +1,5 @@
 import { expect, test } from "@playwright/test";
-import { navigateToPlaying } from "./helpers/navigation";
+import { navigateToPlayingFast } from "./helpers/navigation";
 
 /**
  * Phase 04-03: Immersive pressure cues and feedback overlay coverage.
@@ -11,7 +11,7 @@ test.describe("Pressure Cue Controller", () => {
 	test("urgent countdown or feedback from timeout on dev_1", async ({
 		page,
 	}) => {
-		await navigateToPlaying(page);
+		await navigateToPlayingFast(page);
 
 		// Wait for either countdown or feedback (15s timeout may fire during nav)
 		const first = await Promise.race([
@@ -40,7 +40,7 @@ test.describe("Pressure Cue Controller", () => {
 	test("pressure countdown stops when feedback overlay shows", async ({
 		page,
 	}) => {
-		await navigateToPlaying(page);
+		await navigateToPlayingFast(page);
 
 		await page
 			.getByTestId("swipe-left-button")
@@ -57,7 +57,7 @@ test.describe("Feedback Overlay", () => {
 	test("shows team-impact text when configured for outcome", async ({
 		page,
 	}) => {
-		await navigateToPlaying(page);
+		await navigateToPlayingFast(page);
 
 		// Click Debug if button is clickable; otherwise timeout will have fired
 		await page
@@ -78,7 +78,7 @@ test.describe("Feedback Overlay", () => {
 	});
 
 	test("feedback overlay has no undo control", async ({ page }) => {
-		await navigateToPlaying(page);
+		await navigateToPlayingFast(page);
 		await page
 			.getByTestId("swipe-left-button")
 			.click({ timeout: 8000 })
@@ -105,7 +105,7 @@ test.describe("Feedback Overlay", () => {
 	test("feedback overlay reinforces finality with governance copy", async ({
 		page,
 	}) => {
-		await navigateToPlaying(page);
+		await navigateToPlayingFast(page);
 		await page
 			.getByTestId("swipe-left-button")
 			.click({ timeout: 8000 })

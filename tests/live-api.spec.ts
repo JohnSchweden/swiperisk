@@ -4,7 +4,7 @@
  * For TTS fallback: Start local-api.ts first: npx tsx scripts/local-api.ts
  */
 import { expect, test } from "@playwright/test";
-import { navigateToPlaying } from "./helpers/navigation";
+import { navigateToPlayingFast } from "./helpers/navigation";
 
 test.use({ baseURL: "http://localhost:3000" });
 
@@ -13,7 +13,7 @@ test.describe("Live API with TTS fallback", () => {
 		page,
 	}) => {
 		test.setTimeout(60000);
-		await navigateToPlaying(page);
+		await navigateToPlayingFast(page);
 
 		const textarea = page.getByLabel(
 			"Describe your use case / workflow for governance review",
@@ -37,7 +37,7 @@ test.describe("Live API with TTS fallback", () => {
 
 	test("@live-api TTS fallback works when Live API fails", async ({ page }) => {
 		test.setTimeout(60000);
-		await navigateToPlaying(page);
+		await navigateToPlayingFast(page);
 
 		const textarea = page.getByLabel(
 			"Describe your use case / workflow for governance review",

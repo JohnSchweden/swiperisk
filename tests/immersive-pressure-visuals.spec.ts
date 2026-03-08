@@ -1,5 +1,5 @@
 import { expect, test } from "@playwright/test";
-import { navigateToPlaying } from "./helpers/navigation";
+import { navigateToPlayingFast } from "./helpers/navigation";
 
 test.use({ baseURL: "http://localhost:3000" });
 
@@ -7,7 +7,7 @@ test.describe("Immersive pressure visuals", () => {
 	test("urgent card shows stress visuals (shake/flicker/pulse classes)", async ({
 		page,
 	}) => {
-		await navigateToPlaying(page);
+		await navigateToPlayingFast(page);
 		// dev_1 is urgent — card container gets pressure-shake, card gets pressure-flicker/pulse
 		const stressContainer = page.locator("[data-pressure-stress=true]");
 		await expect(stressContainer.first()).toBeVisible({ timeout: 12000 });
@@ -19,7 +19,7 @@ test.describe("Immersive pressure visuals", () => {
 	});
 
 	test("pressure UI present when on urgent card", async ({ page }) => {
-		await navigateToPlaying(page);
+		await navigateToPlayingFast(page);
 		const countdown = page.locator("[data-testid=urgent-countdown]");
 		const pressureArea = page.locator("[data-pressure-countdown]");
 		const feedbackOverlay = page.locator("[data-testid=feedback-dialog]");

@@ -65,9 +65,10 @@ test.describe("Boss fight timer", () => {
 		expect(laterNum).toBeGreaterThanOrEqual(0);
 	});
 
-	test("c) when time reaches 0 without answering, answer is treated wrong", async ({
+	test("c) when time reaches 0 without answering, answer is treated wrong @slow", async ({
 		page,
 	}) => {
+		test.slow();
 		test.setTimeout(45000); // 30s timer + buffer
 		await navigateToBossFight(page);
 		// Don't click any answer; wait for timer to hit 0 (auto-fail)

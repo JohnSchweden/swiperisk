@@ -51,7 +51,10 @@ test.describe("Live API with TTS fallback", () => {
 
 		await page.locator('[aria-label="Send roast"]').click();
 
-		await page.waitForTimeout(5000);
+		await page
+			.locator('[data-testid="roast-output"]')
+			.waitFor({ state: "visible", timeout: 5000 })
+			.catch(() => {});
 
 		const outputElement = page.locator('[data-testid="roast-output"]');
 		const hasOutput = await outputElement.isVisible().catch(() => false);

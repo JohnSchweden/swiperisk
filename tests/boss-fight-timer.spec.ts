@@ -1,42 +1,9 @@
-import type { Page } from "@playwright/test";
 import { expect, test } from "@playwright/test";
 import { BOSS_FIGHT_QUESTIONS } from "../data/bossQuestions";
+import { navigateToBossFight } from "./helpers/navigation";
 import { SELECTORS } from "./helpers/selectors";
 
 test.use({ baseURL: "http://localhost:3000" });
-
-async function navigateToBossFight(page: Page): Promise<void> {
-	await page.goto("/");
-	await page.waitForLoadState("networkidle");
-	const bootButton = page
-		.locator(SELECTORS.bootButton)
-		.or(page.locator(SELECTORS.bootButtonFallback));
-	await bootButton.click();
-	await page.waitForTimeout(300);
-	const personalityButton = page.locator('button:has-text("V.E.R.A")');
-	await personalityButton.waitFor({ state: "visible" });
-	await personalityButton.click();
-	await page.waitForTimeout(300);
-	const roleButton = page
-		.locator('button:has-text("Software Engineer")')
-		.or(page.locator('[data-testid="role-software_engineer"]'));
-	await roleButton.waitFor({ state: "visible" });
-	await roleButton.click();
-	await page
-		.locator('button:has-text("Debug")')
-		.waitFor({ state: "visible", timeout: 10000 });
-	await page.waitForLoadState("networkidle");
-	// Development deck has 2 cards; left swipes to avoid game over
-	await page.click(SELECTORS.debugButton);
-	await page.waitForTimeout(500);
-	await page.click(SELECTORS.nextTicketButton);
-	await page.waitForTimeout(500);
-	await page.click('button:has-text("Ignore")');
-	await page.waitForTimeout(500);
-	await page.click(SELECTORS.nextTicketButton);
-	await page.waitForTimeout(500);
-	await page.waitForSelector("text=Boss fight", { timeout: 8000 });
-}
 
 test.describe("Boss fight timer", () => {
 	test("a) reaches BOSS_FIGHT stage", async ({ page }) => {

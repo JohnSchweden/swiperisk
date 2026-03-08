@@ -1,29 +1,13 @@
 import { expect, test } from "@playwright/test";
-import { navigateToPlayingFast } from "./helpers/navigation";
-import { SELECTORS } from "./helpers/selectors";
+import { navigateToBossFightFast } from "./helpers/navigation";
 
 test.use({ baseURL: "http://localhost:3000" });
-
-async function navigateToBossFight(page: import("@playwright/test").Page) {
-	await navigateToPlayingFast(page);
-
-	await page.click(SELECTORS.debugButton);
-	await page.waitForTimeout(500);
-	await page.click(SELECTORS.nextTicketButton);
-	await page.waitForTimeout(500);
-	await page.click('button:has-text("Ignore")');
-	await page.waitForTimeout(500);
-	await page.click(SELECTORS.nextTicketButton);
-	await page.waitForTimeout(500);
-	await page.waitForSelector("text=Boss fight", { timeout: 8000 });
-	await page.waitForTimeout(500);
-}
 
 test.describe("Boss Fight Answer Randomization", () => {
 	test("answers are randomized in different positions across reloads", async ({
 		page,
 	}) => {
-		await navigateToBossFight(page);
+		await navigateToBossFightFast(page);
 
 		await page.screenshot({ path: "/tmp/boss1.png" });
 
@@ -45,7 +29,7 @@ test.describe("Boss Fight Answer Randomization", () => {
 		expect(positions1.length).toBe(4);
 
 		await page.reload();
-		await navigateToBossFight(page);
+		await navigateToBossFightFast(page);
 		const positions2 = await getAnswerPositions();
 
 		const isDifferent = positions1.some((p, i) => p !== positions2[i]);
@@ -55,7 +39,7 @@ test.describe("Boss Fight Answer Randomization", () => {
 	test("same question within same session keeps same answer positions", async ({
 		page,
 	}) => {
-		await navigateToBossFight(page);
+		await navigateToBossFightFast(page);
 
 		const getAnswerTexts = async () => {
 			const allButtons = page.locator(

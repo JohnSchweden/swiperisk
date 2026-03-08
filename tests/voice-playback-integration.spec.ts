@@ -20,9 +20,13 @@ test.describe("Voice Playback Integration", () => {
 			await page.goto("/");
 			await page.waitForLoadState("networkidle");
 			await page.click('button:has-text("Boot System")');
-			await page.waitForTimeout(300);
+			await page
+				.locator('button:has-text("V.E.R.A")')
+				.waitFor({ state: "visible" });
 			await page.click('button:has-text("V.E.R.A")');
-			await page.waitForTimeout(500);
+			await page
+				.locator('button:has-text("Software Engineer")')
+				.waitFor({ state: "visible", timeout: 5000 });
 
 			// Verify onboarding audio loaded for roaster
 			const voiceLoad = consoleMessages.find(
@@ -42,9 +46,13 @@ test.describe("Voice Playback Integration", () => {
 			await page.goto("/");
 			await page.waitForLoadState("networkidle");
 			await page.click('button:has-text("Boot System")');
-			await page.waitForTimeout(300);
+			await page
+				.locator('button:has-text("BAMBOO")')
+				.waitFor({ state: "visible" });
 			await page.click('button:has-text("BAMBOO")');
-			await page.waitForTimeout(500);
+			await page
+				.locator('button:has-text("Software Engineer")')
+				.waitFor({ state: "visible", timeout: 5000 });
 
 			// Verify onboarding audio loaded for zenmaster
 			const voiceLoad = consoleMessages.find(
@@ -64,9 +72,13 @@ test.describe("Voice Playback Integration", () => {
 			await page.goto("/");
 			await page.waitForLoadState("networkidle");
 			await page.click('button:has-text("Boot System")');
-			await page.waitForTimeout(300);
+			await page
+				.locator('button:has-text("HYPE-BRO")')
+				.waitFor({ state: "visible" });
 			await page.click('button:has-text("HYPE-BRO")');
-			await page.waitForTimeout(500);
+			await page
+				.locator('button:has-text("Software Engineer")')
+				.waitFor({ state: "visible", timeout: 5000 });
 
 			// Verify onboarding audio loaded for lovebomber
 			const voiceLoad = consoleMessages.find(
@@ -90,7 +102,9 @@ test.describe("Voice Playback Integration", () => {
 
 			// Click Debug (left choice for dev_1 card)
 			await page.click('button:has-text("Debug")');
-			await page.waitForTimeout(1000);
+			await expect(page.locator('button:has-text("Next ticket")')).toBeVisible({
+				timeout: 2000,
+			});
 
 			// Verify feedback audio loaded
 			const feedbackLog = consoleMessages.find((msg) =>
@@ -116,7 +130,9 @@ test.describe("Voice Playback Integration", () => {
 
 			// Click Paste (right choice for dev_1 card)
 			await page.click('button:has-text("Paste")');
-			await page.waitForTimeout(1000);
+			await expect(page.locator('button:has-text("Next ticket")')).toBeVisible({
+				timeout: 2000,
+			});
 
 			// Verify feedback audio loaded
 			const feedbackLog = consoleMessages.find((msg) =>
@@ -143,9 +159,13 @@ test.describe("Voice Playback Integration", () => {
 			await page.goto("/");
 			await page.waitForLoadState("networkidle");
 			await page.click('button:has-text("Boot System")');
-			await page.waitForTimeout(300);
+			await page
+				.locator('button:has-text("V.E.R.A")')
+				.waitFor({ state: "visible" });
 			await page.click('button:has-text("V.E.R.A")');
-			await page.waitForTimeout(1000);
+			await page
+				.locator('button:has-text("Software Engineer")')
+				.waitFor({ state: "visible", timeout: 5000 });
 
 			// Verify audio file was found (HTTP 200)
 			const responseLog = consoleMessages.find((msg) =>

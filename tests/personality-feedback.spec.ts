@@ -15,9 +15,10 @@ async function navigateToPlayingRoaster(page: import("@playwright/test").Page) {
 		.locator(SELECTORS.bootButton)
 		.or(page.locator(SELECTORS.bootButtonFallback));
 	await bootButton.click();
-	await page.waitForTimeout(300);
+	await page
+		.locator('button:has-text("V.E.R.A")')
+		.waitFor({ state: "visible" });
 	await page.locator('button:has-text("V.E.R.A")').click();
-	await page.waitForTimeout(300);
 	const roleButton = page
 		.locator('button:has-text("Software Engineer")')
 		.or(page.locator('[data-testid="role-software_engineer"]'));
@@ -54,9 +55,13 @@ test.describe("Personality feedback overlay", () => {
 			.locator(SELECTORS.bootButton)
 			.or(page.locator(SELECTORS.bootButtonFallback));
 		await bootButton.click();
-		await page.waitForTimeout(300);
+		await page
+			.locator('[data-testid="personality-zen_master"]')
+			.waitFor({ state: "visible" });
 		await page.locator('[data-testid="personality-zen_master"]').click();
-		await page.waitForTimeout(300);
+		await page
+			.locator('button:has-text("Software Engineer")')
+			.waitFor({ state: "visible" });
 		await page.locator('button:has-text("Software Engineer")').click();
 		await page
 			.locator('button:has-text("Debug")')

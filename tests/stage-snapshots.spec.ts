@@ -1,6 +1,12 @@
 import { expect, type Page, test } from "@playwright/test";
 import { mockRoastApi } from "./helpers/mockApi";
-import { navigateToPlaying } from "./helpers/navigation";
+import {
+	navigateToBossFight,
+	navigateToGameOver,
+	navigateToPersonalitySelect,
+	navigateToPlaying,
+	navigateToRoleSelect,
+} from "./helpers/navigation";
 import { SELECTORS } from "./helpers/selectors";
 
 test.use({ baseURL: "http://localhost:3000" });
@@ -9,80 +15,21 @@ async function navigateToIntro(page: Page) {
 	await page.goto("/");
 }
 
-async function navigateToPersonalitySelect(page: Page) {
-	await page.goto("/");
-	const bootButton = page
-		.locator(SELECTORS.bootButton)
-		.or(page.locator(SELECTORS.bootButtonFallback));
-	await bootButton.click();
-	await page.waitForTimeout(300);
-}
-
-async function navigateToRoleSelect(page: Page) {
-	await page.goto("/");
-	const bootButton = page
-		.locator(SELECTORS.bootButton)
-		.or(page.locator(SELECTORS.bootButtonFallback));
-	await bootButton.click();
-	await page.waitForTimeout(300);
-	const personalityButton = page.locator('button:has-text("V.E.R.A")');
-	await personalityButton.waitFor({ state: "visible" });
-	await personalityButton.click();
-	await page.waitForTimeout(300);
-}
-
 async function navigateToInitializing(page: Page) {
 	await page.goto("/");
 	const bootButton = page
 		.locator(SELECTORS.bootButton)
 		.or(page.locator(SELECTORS.bootButtonFallback));
 	await bootButton.click();
-	await page.waitForTimeout(300);
 	const personalityButton = page.locator('button:has-text("V.E.R.A")');
 	await personalityButton.waitFor({ state: "visible" });
 	await personalityButton.click();
-	await page.waitForTimeout(300);
 	const roleButton = page.locator('button:has-text("Software Engineer")');
 	await roleButton.waitFor({ state: "visible" });
 	await roleButton.click();
-	await page.waitForTimeout(100); // Catch during countdown
-}
-
-async function navigateToBossFight(page: Page) {
-	await navigateToPlaying(page);
-	// Development has 2 cards; use left swipes (Debug, Ignore) to avoid heat/budget game over
-	await page.click(SELECTORS.debugButton);
-	await page.waitForTimeout(500);
-	await page.click(SELECTORS.nextTicketButton);
-	await page.waitForTimeout(500);
-	await page.click('button:has-text("Ignore")');
-	await page.waitForTimeout(500);
-	await page.click(SELECTORS.nextTicketButton);
-	await page.waitForTimeout(500);
-	await page.waitForSelector("text=Boss fight", { timeout: 8000 });
-}
-
-async function navigateToGameOver(page: Page) {
-	// Tech/AI Consultant = Marketing-backed path = -15M, bankrupt immediately
-	await page.goto("/");
-	const bootButton = page
-		.locator(SELECTORS.bootButton)
-		.or(page.locator(SELECTORS.bootButtonFallback));
-	await bootButton.click();
-	await page.waitForTimeout(300);
-	const personalityButton = page.locator('button:has-text("V.E.R.A")');
-	await personalityButton.waitFor({ state: "visible" });
-	await personalityButton.click();
-	await page.waitForTimeout(300);
-	const roleButton = page.locator('button:has-text("Tech/AI Consultant")');
-	await roleButton.waitFor({ state: "visible" });
-	await roleButton.click();
-	await page.waitForTimeout(4000);
-	await page.click('button:has-text("Launch")');
-	await page.waitForTimeout(500);
-	await page.click(SELECTORS.nextTicketButton);
-	await page.waitForTimeout(500);
-	await page.waitForSelector("text=Liquidated", { timeout: 5000 });
+	await page
+		.getByText(/^[123]$|^Start$/)
+		.waitFor({ state: "visible", timeout: 5000 });
 }
 
 async function navigateToSummary(page: Page) {
@@ -97,13 +44,12 @@ async function navigateToSummary(page: Page) {
 	];
 	for (let i = 0; i < answers.length; i++) {
 		await page.click(`button:has-text("${answers[i]}")`);
-		await page.waitForTimeout(300);
 		const nextLabel =
 			i < answers.length - 1
 				? SELECTORS.nextQuestionButton
 				: SELECTORS.finalResultButton;
+		await page.locator(nextLabel).waitFor({ state: "visible", timeout: 3000 });
 		await page.click(nextLabel);
-		await page.waitForTimeout(300);
 	}
 	await page.waitForSelector("text=Quarter survived", { timeout: 8000 });
 }
@@ -114,27 +60,29 @@ async function navigateToFeedbackOverlay(page: Page) {
 	const feedbackDialog = page
 		.locator(SELECTORS.feedbackDialog)
 		.or(page.locator(SELECTORS.feedbackDialogFallback));
-	await feedbackDialog.waitFor({ timeout: 3000 });
+	await feedbackDialog.waitFor({ state: "visible", timeout: 3000 });
 }
 
 async function navigateToPlayingWithRoastAnswer(page: Page) {
 	mockRoastApi(page);
 	await navigateToPlaying(page);
-	// First card (dev_1) is urgent — dismiss overlay if countdown expired, else swipe to reach card 2
 	const feedbackDialog = page
 		.locator(SELECTORS.feedbackDialog)
 		.or(page.locator(SELECTORS.feedbackDialogFallback));
 	const nextBtn = page.locator(SELECTORS.nextTicketButton);
-	// Give overlay a moment to appear if countdown just expired
-	await page.waitForTimeout(800);
+	await page
+		.locator(`${SELECTORS.feedbackDialog}, ${SELECTORS.debugButton}`)
+		.first()
+		.waitFor({ state: "visible", timeout: 2000 });
 	if (await feedbackDialog.isVisible()) {
 		await nextBtn.click();
-		await page.waitForTimeout(500);
+		await page
+			.locator(SELECTORS.nextTicketButton)
+			.waitFor({ state: "visible", timeout: 3000 });
 	} else {
 		await page.click(SELECTORS.debugButton);
-		await page.waitForTimeout(500);
+		await nextBtn.waitFor({ state: "visible", timeout: 3000 });
 		await nextBtn.click();
-		await page.waitForTimeout(300);
 	}
 	const textarea = page.getByLabel(
 		"Describe your use case / workflow for governance review",
@@ -166,8 +114,7 @@ test.describe("Stage visual snapshots", () => {
 
 	test("role-select", async ({ page }) => {
 		await navigateToRoleSelect(page);
-		// Wait for animations to settle
-		await page.waitForTimeout(500);
+		await page.waitForLoadState("networkidle");
 		await expect(page).toHaveScreenshot("role-select.png", {
 			maxDiffPixelRatio: 0.03, // Allow some variance for animations
 		});
@@ -210,20 +157,23 @@ test.describe("Stage visual snapshots", () => {
 	test("playing roast con before and after", async ({ page }) => {
 		mockRoastApi(page);
 		await navigateToPlaying(page);
-		// First card (dev_1) is urgent — dismiss overlay if countdown expired, else swipe to reach card 2
 		const feedbackDialog = page
 			.locator(SELECTORS.feedbackDialog)
 			.or(page.locator(SELECTORS.feedbackDialogFallback));
 		const nextBtn = page.locator(SELECTORS.nextTicketButton);
-		await page.waitForTimeout(800); // Give overlay a moment to appear if countdown just expired
+		await page
+			.locator(`${SELECTORS.feedbackDialog}, ${SELECTORS.debugButton}`)
+			.first()
+			.waitFor({ state: "visible", timeout: 2000 });
 		if (await feedbackDialog.isVisible()) {
 			await nextBtn.click();
-			await page.waitForTimeout(500);
+			await page
+				.locator(SELECTORS.nextTicketButton)
+				.waitFor({ state: "visible", timeout: 3000 });
 		} else {
 			await page.click(SELECTORS.debugButton);
-			await page.waitForTimeout(500);
+			await nextBtn.waitFor({ state: "visible", timeout: 3000 });
 			await nextBtn.click();
-			await page.waitForTimeout(300);
 		}
 		await page.getByTestId("roast-terminal").scrollIntoViewIfNeeded();
 		await expect(page).toHaveScreenshot("playing-roast-before.png", {
@@ -254,8 +204,7 @@ test.describe("Stage visual snapshots", () => {
 
 	test("feedback-overlay", async ({ page }) => {
 		await navigateToFeedbackOverlay(page);
-		// Wait for overlay animation to settle
-		await page.waitForTimeout(500);
+		await page.waitForLoadState("networkidle");
 		await expect(page).toHaveScreenshot("feedback-overlay.png", {
 			mask: [page.locator("text=/\\d{1,2}:\\d{2}/")],
 			maxDiffPixelRatio: 0.02, // Allow some variance for animations
@@ -264,9 +213,6 @@ test.describe("Stage visual snapshots", () => {
 
 	test("boss-fight", async ({ page }) => {
 		await navigateToBossFight(page);
-		// Wait for boss fight screen to fully load and animations to settle
-		await page.waitForTimeout(1000);
-		// Wait for any countdown timers or animations to stabilize
 		await page.waitForLoadState("networkidle");
 		await expect(page).toHaveScreenshot("boss-fight.png", {
 			mask: [page.locator("text=/\\d{1,2}:\\d{2}/"), page.getByText(/\d+s/)],

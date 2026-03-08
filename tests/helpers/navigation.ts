@@ -76,13 +76,11 @@ export async function navigateToPlaying(page: Page): Promise<void> {
 		.locator(SELECTORS.bootButton)
 		.or(page.locator(SELECTORS.bootButtonFallback));
 	await bootButton.click();
-	await page.waitForTimeout(300);
 
 	// Click personality (V.E.R.A)
 	const personalityButton = page.locator('button:has-text("V.E.R.A")');
 	await personalityButton.waitFor({ state: "visible" });
 	await personalityButton.click();
-	await page.waitForTimeout(300);
 
 	// Click role (Software Engineer - development-backed path)
 	const roleButton = page.locator('button:has-text("Software Engineer")');
@@ -94,6 +92,95 @@ export async function navigateToPlaying(page: Page): Promise<void> {
 		.locator('button:has-text("Debug")')
 		.waitFor({ state: "visible", timeout: 10000 });
 	await page.waitForLoadState("networkidle");
+}
+
+/**
+ * Navigate to personality select stage (Boot clicked, personality buttons visible)
+ */
+export async function navigateToPersonalitySelect(page: Page): Promise<void> {
+	await page.goto("/");
+	const bootButton = page
+		.locator(SELECTORS.bootButton)
+		.or(page.locator(SELECTORS.bootButtonFallback));
+	await bootButton.click();
+	await page
+		.locator('button:has-text("V.E.R.A")')
+		.waitFor({ state: "visible" });
+}
+
+/**
+ * Navigate to role select stage (Boot + personality clicked, role buttons visible)
+ */
+export async function navigateToRoleSelect(page: Page): Promise<void> {
+	await page.goto("/");
+	const bootButton = page
+		.locator(SELECTORS.bootButton)
+		.or(page.locator(SELECTORS.bootButtonFallback));
+	await bootButton.click();
+	const personalityButton = page.locator('button:has-text("V.E.R.A")');
+	await personalityButton.waitFor({ state: "visible" });
+	await personalityButton.click();
+	const roleButton = page.locator('button:has-text("Software Engineer")');
+	await roleButton.waitFor({ state: "visible" });
+}
+
+/**
+ * From playing stage, swipe through DEVELOPMENT deck (2 cards) to reach boss fight.
+ */
+async function navigateToBossFightFromPlaying(page: Page): Promise<void> {
+	await page.click(SELECTORS.debugButton);
+	await page
+		.locator(SELECTORS.nextTicketButton)
+		.waitFor({ state: "visible", timeout: 5000 });
+	await page.click(SELECTORS.nextTicketButton);
+	await page.click('button:has-text("Ignore")');
+	await page
+		.locator(SELECTORS.nextTicketButton)
+		.waitFor({ state: "visible", timeout: 5000 });
+	await page.click(SELECTORS.nextTicketButton);
+	await page.waitForSelector("text=Boss fight", { timeout: 8000 });
+}
+
+/**
+ * Navigate to boss fight stage. Uses full navigation flow.
+ */
+export async function navigateToBossFight(page: Page): Promise<void> {
+	await navigateToPlaying(page);
+	await navigateToBossFightFromPlaying(page);
+}
+
+/**
+ * Navigate to boss fight from already-loaded playing stage (uses fast path).
+ */
+export async function navigateToBossFightFast(page: Page): Promise<void> {
+	await navigateToPlayingFast(page);
+	await navigateToBossFightFromPlaying(page);
+}
+
+/**
+ * Navigate to GAME_OVER via Tech/AI Consultant → Launch → bankrupt.
+ */
+export async function navigateToGameOver(page: Page): Promise<void> {
+	await page.goto("/");
+	const bootButton = page
+		.locator(SELECTORS.bootButton)
+		.or(page.locator(SELECTORS.bootButtonFallback));
+	await bootButton.click();
+	const personalityButton = page.locator('button:has-text("V.E.R.A")');
+	await personalityButton.waitFor({ state: "visible" });
+	await personalityButton.click();
+	const roleButton = page.locator('button:has-text("Tech/AI Consultant")');
+	await roleButton.waitFor({ state: "visible" });
+	await roleButton.click();
+	await page
+		.locator('button:has-text("Launch")')
+		.waitFor({ state: "visible", timeout: 6000 });
+	await page.click('button:has-text("Launch")');
+	await page
+		.locator(SELECTORS.nextTicketButton)
+		.waitFor({ state: "visible", timeout: 5000 });
+	await page.click(SELECTORS.nextTicketButton);
+	await page.waitForSelector("text=Liquidated", { timeout: 5000 });
 }
 
 /**

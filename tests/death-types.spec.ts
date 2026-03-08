@@ -1,38 +1,27 @@
 import { expect, test } from "@playwright/test";
 import { DEATH_ENDINGS } from "../data/deathEndings";
 import { DeathType } from "../types";
+import { navigateToRoleSelect } from "./helpers/navigation";
 import { SELECTORS } from "./helpers/selectors";
 
 test.use({ baseURL: "http://localhost:3000" });
-
-async function bootToRoleSelect(page: import("@playwright/test").Page) {
-	await page.goto("/");
-	const bootButton = page
-		.locator(SELECTORS.bootButton)
-		.or(page.locator(SELECTORS.bootButtonFallback));
-	await bootButton.click();
-	await page.waitForTimeout(300);
-	const personalityButton = page.locator('button:has-text("V.E.R.A")');
-	await personalityButton.waitFor({ state: "visible" });
-	await personalityButton.click();
-	await page.waitForTimeout(300);
-}
 
 test.describe("Death types", () => {
 	test.describe("BANKRUPT (budget ≤ 0)", () => {
 		test("reaches GAME_OVER with Liquidated when budget exhausted", async ({
 			page,
 		}) => {
-			await bootToRoleSelect(page);
+			await navigateToRoleSelect(page);
 			// Tech/AI Consultant uses MARKETING deck; first card has Launch (-15M) → bankrupt
 			await page.locator('button:has-text("Tech/AI Consultant")').click();
 			await page
 				.locator('button:has-text("Launch")')
 				.waitFor({ state: "visible", timeout: 10000 });
 			await page.locator('button:has-text("Launch")').click();
-			await page.waitForTimeout(500);
+			await page
+				.locator(SELECTORS.nextTicketButton)
+				.waitFor({ state: "visible", timeout: 5000 });
 			await page.locator(SELECTORS.nextTicketButton).click();
-			await page.waitForTimeout(500);
 
 			await expect(
 				page.getByText(DEATH_ENDINGS[DeathType.BANKRUPT].title),
@@ -54,20 +43,22 @@ test.describe("Death types", () => {
 		}) => {
 			test.setTimeout(60000);
 			// Full flow: Boot → personality → Software Engineer (DEVELOPMENT deck, 2 cards) → playing → boss
-			await bootToRoleSelect(page);
+			await navigateToRoleSelect(page);
 			await page.locator('button:has-text("Software Engineer")').click();
 			await page
 				.locator(SELECTORS.debugButton)
 				.waitFor({ state: "visible", timeout: 10000 });
 			// Exhaust DEVELOPMENT deck (2 cards): Debug → Next, Ignore → Next → Boss
 			await page.locator(SELECTORS.debugButton).click();
-			await page.waitForTimeout(500);
+			await page
+				.locator(SELECTORS.nextTicketButton)
+				.waitFor({ state: "visible", timeout: 5000 });
 			await page.locator(SELECTORS.nextTicketButton).click();
-			await page.waitForTimeout(500);
 			await page.locator('button:has-text("Ignore")').click();
-			await page.waitForTimeout(500);
+			await page
+				.locator(SELECTORS.nextTicketButton)
+				.waitFor({ state: "visible", timeout: 5000 });
 			await page.locator(SELECTORS.nextTicketButton).click();
-			await page.waitForTimeout(500);
 			await page.waitForSelector("text=Boss fight", { timeout: 8000 });
 
 			// Fail by choosing wrong answers (< 3 correct). Pick wrong-answer text for each question.
@@ -80,13 +71,14 @@ test.describe("Death types", () => {
 			];
 			for (let i = 0; i < wrongAnswers.length; i++) {
 				await page.locator(`button:has-text("${wrongAnswers[i]}")`).click();
-				await page.waitForTimeout(400);
 				const nextLabel =
 					i < wrongAnswers.length - 1
 						? SELECTORS.nextQuestionButton
 						: SELECTORS.finalResultButton;
+				await page
+					.locator(nextLabel)
+					.waitFor({ state: "visible", timeout: 2000 });
 				await page.locator(nextLabel).click();
-				await page.waitForTimeout(400);
 			}
 
 			await expect(
@@ -107,15 +99,16 @@ test.describe("Death types", () => {
 		test("shows death title and Reboot system after BANKRUPT", async ({
 			page,
 		}) => {
-			await bootToRoleSelect(page);
+			await navigateToRoleSelect(page);
 			await page.locator('button:has-text("Tech/AI Consultant")').click();
 			await page
 				.locator('button:has-text("Launch")')
 				.waitFor({ state: "visible", timeout: 10000 });
 			await page.locator('button:has-text("Launch")').click();
-			await page.waitForTimeout(500);
+			await page
+				.locator(SELECTORS.nextTicketButton)
+				.waitFor({ state: "visible", timeout: 5000 });
 			await page.locator(SELECTORS.nextTicketButton).click();
-			await page.waitForTimeout(500);
 
 			await expect(page.getByText("Liquidated")).toBeVisible({ timeout: 5000 });
 			await expect(page.getByText("Reboot system")).toBeVisible();

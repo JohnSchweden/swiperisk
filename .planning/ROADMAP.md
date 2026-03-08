@@ -97,7 +97,7 @@ Create new card types where:
 
 **Goal:** Add psychological pressure and immersion to make it feel real
 **Depends on:** Phase 01
-**Plans:** 8/8 plans complete
+**Plans:** 9/9 plans complete
 
 Plans:
 - [x] 04-01-PLAN.md — Pressure metadata, useIncidentPressure, timer/undo orchestration ✓
@@ -108,6 +108,7 @@ Plans:
 - [x] 04-06-PLAN.md — Gap: Timer natural expiry (hasTickedWhileActive), no restart ✓
 - [x] 04-07-PLAN.md — Gap: isCritical=heatHigh, heartbeat +10% volume ✓
 - [x] 04-08-PLAN.md — Gap: Haptic in touch-swipe path (onBeforeSwipe) ✓
+- [x] 04-09-PLAN.md — Automatic haptic triggers: critical state + timer expiry ✓
 
 **Details:**
 Make the simulation feel real through:
@@ -252,10 +253,13 @@ General polish and atmosphere:
 
 **Goal:** Add ambient music and non-voice audio (distinct from Phase 04 stress cues)
 **Depends on:** Phase 01
-**Plans:** 0 plans
+**Plans:** 4 plans
 
 Plans:
-- [ ] TBD (run /gsd-plan-phase 10 to break down)
+- [ ] 10-01-PLAN.md — Shared procedural audio engine with mix buses and voice ducking
+- [ ] 10-02-PLAN.md — Stage music orchestration and menu/navigation cues
+- [ ] 10-03-PLAN.md — Card interaction sounds for gameplay
+- [ ] 10-04-PLAN.md — Volume controls (voice, music, SFX mixer)
 
 **Details:**
 General audio layer:
@@ -389,7 +393,7 @@ Integrate images into UI:
 | 07 | Kirk Easter Egg | v1.2 | Not started |
 | 08 | Kobayashi Maru Framing (deferred) | v1.2 | Deferred |
 | 09 | Visual Effects | v1.2 | Not started |
-| 10 | Background Audio | v1.2 | Not started |
+| 10 | Background Audio | v1.2 | Planned (4 plans) |
 | 11 | Settings Integration (deferred) | v1.2 | Deferred |
 | 12 | Gameplay Tweaks & Card Variety | v1.2 | Planned |
 | 13 | Image Asset Pipeline | v1.2 | Not started |

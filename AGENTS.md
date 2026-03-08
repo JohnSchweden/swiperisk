@@ -1,5 +1,27 @@
 # Agent instructions
 
+# Development Workflow
+
+**Always use `bun` , not `npm`.**
+
+```sh
+# 1. Make changes
+
+# 2. Typecheck (fast)
+bun run typecheck
+
+# 3. Run tests
+bun run test -- -g "test name"      # Single suite
+bun run test:file -- "glob"          # Specific files
+
+# 4. Lint before committing
+bun run lint:file -- "filel.ts"     # Specific files
+bun run lint                        # All files
+
+# 5. Before creating PR
+bun run check && bun run typecheck && bun run test
+´´´
+
 ## Workflow Orchestration
 
 ### 1. Plan Node Default

@@ -15,7 +15,9 @@
 		"check": "biome check .",
 		"fix": "biome check --write .",
 		"test": "bunx playwright test",
+		"test:file": "bunx playwright test",
 		"test:live-api": "bun run scripts/test-live-api.ts",
+		"lint:file": "biome lint",
 		"prepare": "husky"
 	},
 	"lint-staged": {

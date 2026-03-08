@@ -13,7 +13,7 @@ export default defineConfig({
 	retries: process.env.CI ? 2 : 0,
 	workers: process.env.CI ? 1 : undefined,
 	reporter: "list",
-	grepInvert: /@live-api/,
+	grepInvert: process.env.CI ? /@live-api|@slow/ : /@live-api/,
 	use: {
 		baseURL: "http://localhost:3000",
 		trace: "on-first-retry",

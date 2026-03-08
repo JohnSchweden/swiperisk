@@ -1,5 +1,5 @@
 import { expect, type Page, test } from "@playwright/test";
-import { navigateToPlaying } from "./helpers/navigation";
+import { navigateToPlayingFast } from "./helpers/navigation";
 import { SELECTORS } from "./helpers/selectors";
 
 test.use({ baseURL: "http://localhost:3000" });
@@ -62,7 +62,7 @@ test.describe("Swipe Consistency", () => {
 	test("first and second swipe both wait for release after threshold", async ({
 		page,
 	}) => {
-		await navigateToPlaying(page);
+		await navigateToPlayingFast(page);
 
 		// === FIRST SWIPE ===
 		console.log("=== Testing First Swipe ===");
@@ -139,7 +139,7 @@ test.describe("Swipe Consistency", () => {
 	});
 
 	test("both swipes have consistent behavior", async ({ page }) => {
-		await navigateToPlaying(page);
+		await navigateToPlayingFast(page);
 
 		const results = [];
 

@@ -1,5 +1,5 @@
 import { expect, test } from "@playwright/test";
-import { navigateToPlaying } from "./helpers/navigation";
+import { navigateToPlayingFast } from "./helpers/navigation";
 import { SELECTORS } from "./helpers/selectors";
 
 test.use({ baseURL: "http://localhost:3000" });
@@ -59,7 +59,7 @@ test.describe("LayoutShell behavior", () => {
 test.describe("Feedback overlay", () => {
 	test("modal is visible and centered on desktop", async ({ page }) => {
 		await page.setViewportSize({ width: 1280, height: 720 });
-		await navigateToPlaying(page);
+		await navigateToPlayingFast(page);
 		await page.click('button:has-text("Paste")');
 		await page.waitForSelector("role=dialog", { timeout: 3000 });
 
@@ -87,7 +87,7 @@ test.describe("Feedback overlay", () => {
 
 	test("modal is visible and centered on mobile", async ({ page }) => {
 		await page.setViewportSize({ width: 393, height: 851 });
-		await navigateToPlaying(page);
+		await navigateToPlayingFast(page);
 		await page.click('button:has-text("Paste")');
 		await page.waitForSelector("role=dialog", { timeout: 3000 });
 
@@ -112,7 +112,7 @@ test.describe("Feedback overlay", () => {
 
 test.describe("Touch swipe", () => {
 	test("swipe (pointer) triggers card feedback", async ({ page }) => {
-		await navigateToPlaying(page);
+		await navigateToPlayingFast(page);
 
 		const card = page
 			.locator(SELECTORS.card)

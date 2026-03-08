@@ -1,6 +1,6 @@
 import { expect, test } from "@playwright/test";
 import { mockRoastApi } from "./helpers/mockApi";
-import { navigateToPlaying } from "./helpers/navigation";
+import { navigateToPlayingFast } from "./helpers/navigation";
 
 test.use({ baseURL: "http://localhost:3000" });
 
@@ -36,7 +36,7 @@ test.describe("Roast console visibility", () => {
 		page,
 	}) => {
 		await page.setViewportSize({ width: 1280, height: 720 });
-		await navigateToPlaying(page);
+		await navigateToPlayingFast(page);
 
 		const textarea = page.getByLabel(
 			"Describe your use case / workflow for governance review",
@@ -53,7 +53,7 @@ test.describe("Roast console visibility", () => {
 		page,
 	}) => {
 		await page.setViewportSize({ width: 393, height: 851 });
-		await navigateToPlaying(page);
+		await navigateToPlayingFast(page);
 
 		const textarea = page.getByLabel(
 			"Describe your use case / workflow for governance review",

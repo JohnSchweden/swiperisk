@@ -281,7 +281,8 @@ test.describe("Stage visual snapshots", () => {
 		});
 	});
 
-	test("summary", async ({ page }) => {
+	test("summary @slow", async ({ page }) => {
+		test.slow();
 		test.setTimeout(180000); // Boss fight timer (30s × 5 questions + buffer)
 		await navigateToSummary(page);
 		await expect(page).toHaveScreenshot("summary.png");

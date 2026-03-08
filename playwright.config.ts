@@ -36,6 +36,8 @@ export default defineConfig({
 				...devices["Pixel 5"],
 				viewport: { width: 393, height: 851 },
 			},
+			// Only run layout-specific specs on mobile; rest run desktop-only
+			testMatch: /mobile-width|layout-overlay-touch/,
 		},
 	],
 });

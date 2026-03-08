@@ -1,11 +1,11 @@
 import { expect, test } from "@playwright/test";
-import { navigateToPlaying } from "./helpers/navigation";
+import { navigateToPlayingFast } from "./helpers/navigation";
 import { SELECTORS } from "./helpers/selectors";
 
 test.use({ baseURL: "http://localhost:3000" });
 
 async function navigateToBossFight(page: import("@playwright/test").Page) {
-	await navigateToPlaying(page);
+	await navigateToPlayingFast(page);
 
 	await page.click(SELECTORS.debugButton);
 	await page.waitForTimeout(500);

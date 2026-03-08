@@ -1,5 +1,5 @@
 import { expect, test } from "@playwright/test";
-import { navigateToPlaying } from "./helpers/navigation";
+import { navigateToPlayingFast } from "./helpers/navigation";
 import { SELECTORS } from "./helpers/selectors";
 
 test.use({ baseURL: "http://localhost:3000" });
@@ -7,7 +7,7 @@ test.use({ baseURL: "http://localhost:3000" });
 test.describe("Card Drag Tracking", () => {
 	test("card follows drag gesture", async ({ page }) => {
 		// Navigate to playing stage using shared helper
-		await navigateToPlaying(page);
+		await navigateToPlayingFast(page);
 
 		// Find the current card (front card with z-index: 10)
 		const card = await page.locator(SELECTORS.cardFallback).first();
@@ -64,7 +64,7 @@ test.describe("Card Drag Tracking", () => {
 
 	test("card tracks drag position smoothly", async ({ page }) => {
 		// Navigate to playing stage using shared helper
-		await navigateToPlaying(page);
+		await navigateToPlayingFast(page);
 
 		const card = await page.locator(SELECTORS.cardFallback).first();
 		const box = await card.boundingBox();

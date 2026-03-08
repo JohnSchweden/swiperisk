@@ -89,6 +89,11 @@ completed: "2026-03-07"
 - Gaps 3 and 6 addressed
 - Escalation visible in overlay; haptic from gesture handlers
 
+## Self-Check: PASSED
+
+- 04-05-SUMMARY.md exists
+- d609d9a, 6e67045 commits present
+
 ---
 *Phase: 04-immersive-pressure-effects*
 *Completed: 2026-03-07*

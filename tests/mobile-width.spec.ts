@@ -1,5 +1,5 @@
 import { expect, test } from "@playwright/test";
-import { getCard, navigateToPlaying } from "./helpers/navigation";
+import { getCard, navigateToPlayingFast } from "./helpers/navigation";
 
 test.use({ baseURL: "http://localhost:3000" });
 
@@ -14,7 +14,7 @@ test.describe("Mobile Card Width", () => {
 		await page.setViewportSize({ width: 375, height: 812 });
 
 		// Navigate to playing stage using shared helper
-		await navigateToPlaying(page);
+		await navigateToPlayingFast(page);
 
 		// Find card container
 		const cardContainer = page.getByTestId("incident-card-container");
@@ -47,7 +47,7 @@ test.describe("Mobile Card Width", () => {
 		await page.setViewportSize({ width: 768, height: 1024 });
 
 		// Navigate to playing stage using shared helper
-		await navigateToPlaying(page);
+		await navigateToPlayingFast(page);
 
 		// Find card using shared selector
 		const card = await getCard(page);

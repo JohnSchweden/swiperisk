@@ -13,15 +13,19 @@ interface PressureCueControllerProps extends IncidentPressureState {
  * Phase 04: Live pressure cue orchestration for gameplay audio and haptics.
  * Drives heartbeat/alert audio and mobile vibration from pressure state.
  */
-export const PressureCueController: React.FC<PressureCueControllerProps> = (
-	props,
-) => {
-	const hasHighPressure = props.isUrgent || props.isCritical;
-
+export const PressureCueController: React.FC<PressureCueControllerProps> = ({
+	isUrgent,
+	isCritical,
+	countdownValue,
+	countdownSec,
+	isCountdownActive,
+}) => {
 	usePressureAudio({
-		hasHighPressure,
-		isCritical: props.isCritical,
-		isActive: hasHighPressure,
+		hasHighPressure: isUrgent || isCritical,
+		isCritical,
+		countdownValue,
+		countdownSec,
+		isCountdownActive,
 	});
 
 	return null;

@@ -1,5 +1,5 @@
 import { expect, test } from "@playwright/test";
-import { navigateToPlaying } from "./helpers/navigation";
+import { navigateToPlayingFast } from "./helpers/navigation";
 import { SELECTORS } from "./helpers/selectors";
 
 test.use({ baseURL: "http://localhost:3000" });
@@ -7,7 +7,7 @@ test.use({ baseURL: "http://localhost:3000" });
 test.describe("Exit Animation Continuity", () => {
 	test("card exits smoothly from current drag position", async ({ page }) => {
 		// Use shared navigation helper instead of inline setup
-		await navigateToPlaying(page);
+		await navigateToPlayingFast(page);
 
 		// Use shared selector - use fallback since data-testid may not be added yet
 		const card = page.locator(SELECTORS.cardFallback).first();
@@ -80,7 +80,7 @@ test.describe("Exit Animation Continuity", () => {
 
 	test("exit animation does not reset to center", async ({ page }) => {
 		// Use shared navigation helper
-		await navigateToPlaying(page);
+		await navigateToPlayingFast(page);
 
 		const card = page.locator(SELECTORS.cardFallback).first();
 		const box = await card.boundingBox();

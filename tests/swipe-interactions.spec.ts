@@ -4,13 +4,26 @@ import { SELECTORS } from "./helpers/selectors";
 
 test.use({ baseURL: "http://localhost:3000" });
 
-// CSS/static property tests - use beforeEach with fast navigation
+// CSS/static property tests - navigate once, run 3 checks against same page
 test.describe("Phase 2 Swipe Interactions - CSS/Static", () => {
-	test.beforeEach(async ({ page }) => {
-		await navigateToPlayingFast(page);
+	test.describe.configure({ mode: "serial" });
+	let sharedPage: import("@playwright/test").Page;
+	let sharedContext: import("@playwright/test").BrowserContext;
+
+	test.beforeAll(async ({ browser }) => {
+		sharedContext = await browser.newContext({
+			baseURL: "http://localhost:3000",
+		});
+		sharedPage = await sharedContext.newPage();
+		await navigateToPlayingFast(sharedPage);
 	});
 
-	test("spring physics CSS class exists", async ({ page }) => {
+	test.afterAll(async () => {
+		if (sharedContext) await sharedContext.close();
+	});
+
+	test("spring physics CSS class exists", async () => {
+		const page = sharedPage;
 		// Check if spring-snap-back class is defined
 		const hasSpringClass = await page.evaluate(() => {
 			const styles = document.styleSheets;
@@ -32,7 +45,8 @@ test.describe("Phase 2 Swipe Interactions - CSS/Static", () => {
 		expect(hasSpringClass).toBe(true);
 	});
 
-	test("exit animation keyframes exist", async ({ page }) => {
+	test("exit animation keyframes exist", async () => {
+		const page = sharedPage;
 		// Check if exit animations are properly defined
 		const hasExitAnimations = await page.evaluate(() => {
 			const styles = document.styleSheets;
@@ -68,7 +82,8 @@ test.describe("Phase 2 Swipe Interactions - CSS/Static", () => {
 		expect(hasExitAnimations.right).toBe(true);
 	});
 
-	test("will-change property is set on animated elements", async ({ page }) => {
+	test("will-change property is set on animated elements", async () => {
+		const page = sharedPage;
 		const hasWillChange = await page.evaluate(() => {
 			const styles = document.styleSheets;
 			for (const sheet of styles) {

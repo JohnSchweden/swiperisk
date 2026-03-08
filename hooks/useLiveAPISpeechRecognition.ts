@@ -68,6 +68,12 @@ const audioWorkletCode = `
 async function startMicCapture(
 	onAudioChunk: (base64: string, sampleRate: number) => void,
 ): Promise<{ stop: () => void }> {
+	if (typeof navigator?.mediaDevices?.getUserMedia !== "function") {
+		throw new Error(
+			"Microphone access is not available. Use HTTPS and a modern browser.",
+		);
+	}
+
 	// Check if low latency mode is enabled (disables echo cancellation for faster transcription)
 	const lowLatencyMode = import.meta.env.VITE_STT_LOW_LATENCY === "true";
 
@@ -81,71 +87,30 @@ async function startMicCapture(
 		},
 	});
 
-	console.log("[STT DEBUG] getUserMedia success");
-	console.log(
-		"[STT DEBUG] Low latency mode:",
-		lowLatencyMode,
-		"(VITE_STT_LOW_LATENCY)",
-	);
-
-	// Get actual sample rate from the stream
 	const actualSampleRate =
-		stream.getAudioTracks()[0].getSettings().sampleRate || 48000;
-	console.log(
-		"[STT DEBUG] Requested sampleRate: 16000, Actual sampleRate:",
-		actualSampleRate,
-	);
-
-	// Create AudioContext at the actual sample rate from the stream
+		stream.getAudioTracks()[0].getSettings().sampleRate ?? 48000;
 	const audioCtx = new AudioContext({ sampleRate: actualSampleRate });
-	console.log(
-		"[STT DEBUG] AudioContext created at:",
-		audioCtx.sampleRate,
-		"Hz",
-	);
 
-	// Inline AudioWorklet - converts Float32 to Int16 PCM
 	const blob = new Blob([audioWorkletCode], { type: "application/javascript" });
 	const workletUrl = URL.createObjectURL(blob);
 	await audioCtx.audioWorklet.addModule(workletUrl);
 
-	console.log("[STT DEBUG] AudioWorklet module loaded");
-
 	const source = audioCtx.createMediaStreamSource(stream);
 	const worklet = new AudioWorkletNode(audioCtx, "pcm-processor");
 
-	let chunkCount = 0;
 	worklet.port.onmessage = (event) => {
-		chunkCount++;
 		const bytes = new Uint8Array(event.data.buffer);
-		console.log(
-			"[STT DEBUG] AudioWorklet received chunk:",
-			chunkCount,
-			"size:",
-			bytes.length,
-			"bytes",
-		);
-
 		let binary = "";
 		for (let i = 0; i < bytes.length; i++) {
 			binary += String.fromCharCode(bytes[i]);
 		}
-		const base64 = btoa(binary);
-		console.log(
-			"[STT DEBUG] Sending base64 audio chunk:",
-			`${base64.substring(0, 50)}...`,
-		);
-		onAudioChunk(base64, actualSampleRate);
+		onAudioChunk(btoa(binary), actualSampleRate);
 	};
 
 	source.connect(worklet);
-	// Don't connect to destination (avoids feedback)
-
-	console.log("[STT DEBUG] Audio pipeline connected");
 
 	return {
 		stop: () => {
-			console.log("[STT DEBUG] Stopping microphone capture");
 			stream.getTracks().forEach((t) => {
 				t.stop();
 			});
@@ -164,7 +129,7 @@ async function startMicCapture(
 export function useLiveAPISpeechRecognition(
 	options: UseLiveAPISpeechRecognitionOptions = {},
 ): UseLiveAPISpeechRecognitionReturn {
-	const { onTranscript, systemInstruction: _systemInstruction } = options;
+	const { onTranscript } = options;
 
 	const [transcript, setTranscript] = useState("");
 	const [isRecording, setIsRecording] = useState(false);
@@ -242,27 +207,16 @@ export function useLiveAPISpeechRecognition(
 						}
 					},
 					onerror: (err) => {
-						console.error("[Live API STT] Error:", err);
 						setError(err instanceof Error ? err.message : String(err));
 					},
-					onclose: () => {
-						console.log("[Live API STT] Connection closed");
-					},
+					onclose: () => {},
 				},
 			});
 
 			sessionRef.current = session;
-			console.log("[STT DEBUG] Session connected successfully");
 
-			// Start microphone capture
 			const mic = await startMicCapture((base64, sampleRate) => {
 				if (sessionRef.current) {
-					console.log(
-						"[STT DEBUG] Calling sendRealtimeInput with audio chunk, size:",
-						base64.length,
-						"chars, sampleRate:",
-						sampleRate,
-					);
 					try {
 						sessionRef.current.sendRealtimeInput({
 							audio: {
@@ -270,9 +224,8 @@ export function useLiveAPISpeechRecognition(
 								mimeType: `audio/pcm;rate=${sampleRate}`,
 							},
 						});
-						console.log("[STT DEBUG] sendRealtimeInput completed successfully");
 					} catch (err) {
-						console.error("[STT DEBUG] sendRealtimeInput error:", err);
+						console.error("[Live API STT] sendRealtimeInput:", err);
 					}
 				}
 			});

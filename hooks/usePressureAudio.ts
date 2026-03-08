@@ -1,5 +1,9 @@
 import { useEffect, useRef } from "react";
-import { createPressureAudioSession } from "../services/pressureAudio";
+import {
+	createPressureAudioSession,
+	type HeartbeatConfig,
+} from "../services/pressureAudio";
+import { triggerHaptic } from "../utils/haptic";
 
 /** Phase 04: React lifecycle wrapper around pressure audio session */
 
@@ -8,26 +12,20 @@ export interface UsePressureAudioOptions {
 	hasHighPressure: boolean;
 	/** Whether we're in a critical moment (haptic pulse) */
 	isCritical: boolean;
-	/** Whether we're actively playing (not feedback overlay) */
-	isActive: boolean;
-}
-
-const VIBRATE_PATTERN = [50, 30, 50];
-
-function triggerHaptic(): void {
-	if (
-		typeof navigator !== "undefined" &&
-		"vibrate" in navigator &&
-		typeof navigator.vibrate === "function"
-	) {
-		navigator.vibrate(VIBRATE_PATTERN);
-	}
+	/** Current countdown value when countdown is active */
+	countdownValue?: number;
+	/** Total countdown length in seconds */
+	countdownSec?: number;
+	/** Whether countdown is ticking */
+	isCountdownActive?: boolean;
 }
 
 export function usePressureAudio({
 	hasHighPressure,
 	isCritical,
-	isActive,
+	countdownValue,
+	countdownSec,
+	isCountdownActive,
 }: UsePressureAudioOptions): void {
 	const sessionRef = useRef<ReturnType<
 		typeof createPressureAudioSession
@@ -42,25 +40,23 @@ export function usePressureAudio({
 		}
 	}
 
-	// Audio: start heartbeat when high pressure + active, stop otherwise
 	useEffect(() => {
 		const session = sessionRef.current;
 		if (!session) return;
 
-		if (hasHighPressure && isActive) {
-			session.startHeartbeat();
-		} else {
+		if (!hasHighPressure) {
 			session.stop();
+			return;
 		}
 
-		return () => {
-			session.stop();
-		};
-	}, [hasHighPressure, isActive]);
+		const config: HeartbeatConfig =
+			isCountdownActive && countdownValue != null && countdownSec != null
+				? { countdownValue, countdownSec }
+				: {};
+		session.updateHeartbeat(config);
+	}, [hasHighPressure, isCountdownActive, countdownValue, countdownSec]);
 
-	// Haptic: removed from useEffect — Chrome blocks vibrate when not in user gesture.
-	// Primary path: App.tsx onSwipeLeft/onSwipeRight call vibrate sync before swipeProgrammatically.
-	// This fallback may not work on mobile; kept for non-button paths (e.g. keyboard) on desktop.
+	// Fallback haptic; primary path is App.tsx onSwipe (vibrate blocked outside user gesture).
 	useEffect(() => {
 		if (isCritical && !wasCriticalRef.current) {
 			triggerHaptic();
@@ -71,7 +67,6 @@ export function usePressureAudio({
 		}
 	}, [isCritical]);
 
-	// Cleanup on unmount
 	useEffect(() => {
 		return () => {
 			sessionRef.current?.stop();

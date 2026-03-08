@@ -5,7 +5,7 @@ milestone_name: Kobayashi Maru — AI Governance Simulator
 current_phase: 04-immersive-pressure-effects
 current_plan: 9
 status: planning
-last_updated: "2026-03-08T20:00:00.000Z"
+last_updated: "2026-03-08T20:01:53.203Z"
 progress:
   total_phases: 14
   completed_phases: 3

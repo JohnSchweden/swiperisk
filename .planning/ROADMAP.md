@@ -105,9 +105,9 @@ Plans:
 - [x] 04-03-PLAN.md — Audio cues, haptics, team-impact in FeedbackOverlay ✓
 - [x] 04-04-PLAN.md — Gap: useCountdown reset, pressureAudio ctx.resume ✓
 - [x] 04-05-PLAN.md — Gap: HUD escalation in overlay, haptic from gesture handlers ✓
-- [ ] 04-06-PLAN.md — Gap: Timer natural expiry (hasTickedWhileActive), no restart
-- [ ] 04-07-PLAN.md — Gap: isCritical=heatHigh, heartbeat +10% volume
-- [ ] 04-08-PLAN.md — Gap: Haptic in touch-swipe path (onBeforeSwipe)
+- [x] 04-06-PLAN.md — Gap: Timer natural expiry (hasTickedWhileActive), no restart ✓
+- [x] 04-07-PLAN.md — Gap: isCritical=heatHigh, heartbeat +10% volume ✓
+- [x] 04-08-PLAN.md — Gap: Haptic in touch-swipe path (onBeforeSwipe) ✓
 
 **Details:**
 Make the simulation feel real through:

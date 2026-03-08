@@ -45,6 +45,19 @@ function tryStopOscillator(osc: OscillatorNode | null, when: number): void {
 	}
 }
 
+/** Short unlock pulse for Android Chrome: first oscillator.start() must run in user gesture. */
+export function playUnlockPulse(ctx: AudioContext): void {
+	const osc = ctx.createOscillator();
+	const gain = ctx.createGain();
+	osc.type = "sine";
+	osc.frequency.value = HEARTBEAT_BASE_FREQ;
+	gain.gain.setValueAtTime(GAIN_HEARTBEAT_STRESS * 0.5, ctx.currentTime);
+	osc.connect(gain);
+	gain.connect(ctx.destination);
+	osc.start(0);
+	osc.stop(0.05);
+}
+
 function computeVolumeMultiplier(config: HeartbeatConfig): number {
 	const { countdownValue, countdownSec } = config;
 	if (
@@ -84,9 +97,9 @@ export function createPressureAudioSession(): PressureAudioSession {
 	}
 
 	async function playPulse(): Promise<void> {
-		if (ctx.state === "suspended") {
-			await ctx.resume();
-		}
+		// Don't await ctx.resume() here — Chrome blocks it when not in user gesture.
+		// usePressureAudio resumes context on first touch/click; skip pulse until then.
+		if (ctx.state === "suspended") return;
 		const mult = computeVolumeMultiplier(currentConfig);
 		const peakGain = GAIN_HEARTBEAT_STRESS * mult;
 
@@ -105,9 +118,9 @@ export function createPressureAudioSession(): PressureAudioSession {
 
 	async function startHeartbeatAsync(config: HeartbeatConfig): Promise<void> {
 		stop();
-		if (ctx.state === "suspended") {
-			await ctx.resume();
-		}
+		// Don't await ctx.resume() — Chrome blocks when not in user gesture.
+		// Context is resumed by usePressureAudio on first touch/click.
+		// Interval runs; playPulse no-ops when suspended until first gesture.
 		currentConfig = config;
 		const intervalMs = 60000 / STRESS_BPM;
 		heartbeatIntervalId = setInterval(() => void playPulse(), intervalMs);
@@ -128,9 +141,7 @@ export function createPressureAudioSession(): PressureAudioSession {
 
 	async function startAlertAsync(): Promise<void> {
 		stop();
-		if (ctx.state === "suspended") {
-			await ctx.resume();
-		}
+		if (ctx.state === "suspended") return;
 		alertOsc = ctx.createOscillator();
 		alertGain = ctx.createGain();
 		alertOsc.type = "sine";

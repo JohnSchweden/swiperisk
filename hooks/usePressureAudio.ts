@@ -2,6 +2,7 @@ import { useEffect, useRef } from "react";
 import {
 	createPressureAudioSession,
 	type HeartbeatConfig,
+	playUnlockPulse,
 } from "../services/pressureAudio";
 import { triggerHaptic } from "../utils/haptic";
 
@@ -20,6 +21,23 @@ export interface UsePressureAudioOptions {
 	isCountdownActive?: boolean;
 }
 
+/**
+ * Resume AudioContext on first user gesture. Chrome Android blocks resume()
+ * when not triggered by user interaction; heartbeat starts from useEffect
+ * (hasHighPressure change) which is not a gesture.
+ */
+function resumeOnFirstGesture(ctx: AudioContext): void {
+	const resume = () => {
+		if (ctx.state === "suspended") {
+			ctx.resume().then(() => playUnlockPulse(ctx));
+		}
+	};
+	// touchend for mobile, click for desktop
+	const opts = { once: true, capture: true };
+	document.addEventListener("touchend", resume, opts);
+	document.addEventListener("click", resume, opts);
+}
+
 export function usePressureAudio({
 	hasHighPressure,
 	isCritical,
@@ -34,7 +52,9 @@ export function usePressureAudio({
 
 	if (typeof window !== "undefined" && !sessionRef.current) {
 		try {
-			sessionRef.current = createPressureAudioSession();
+			const session = createPressureAudioSession();
+			sessionRef.current = session;
+			resumeOnFirstGesture(session.context);
 		} catch {
 			sessionRef.current = null;
 		}

@@ -97,7 +97,7 @@ Create new card types where:
 
 **Goal:** Add psychological pressure and immersion to make it feel real
 **Depends on:** Phase 01
-**Plans:** 9/9 plans complete
+**Plans:** 9/10 plans (04-10 gap closure in progress)
 
 Plans:
 - [x] 04-01-PLAN.md — Pressure metadata, useIncidentPressure, timer/undo orchestration ✓
@@ -109,6 +109,7 @@ Plans:
 - [x] 04-07-PLAN.md — Gap: isCritical=heatHigh, heartbeat +10% volume ✓
 - [x] 04-08-PLAN.md — Gap: Haptic in touch-swipe path (onBeforeSwipe) ✓
 - [x] 04-09-PLAN.md — Automatic haptic triggers: critical state + timer expiry ✓
+- [ ] 04-10-PLAN.md — Gap: Heartbeat on Android Chrome (first-sound-in-gesture)
 
 **Details:**
 Make the simulation feel real through:

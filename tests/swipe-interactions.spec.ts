@@ -2,7 +2,7 @@ import { expect, test } from "@playwright/test";
 import { getCard, navigateToPlayingFast } from "./helpers/navigation";
 import { SELECTORS } from "./helpers/selectors";
 
-test.use({ baseURL: "http://localhost:3000" });
+test.use({ baseURL: "https://localhost:3000" });
 
 // CSS/static property tests - navigate once, run 3 checks against same page
 test.describe("Phase 2 Swipe Interactions - CSS/Static", () => {
@@ -12,7 +12,7 @@ test.describe("Phase 2 Swipe Interactions - CSS/Static", () => {
 
 	test.beforeAll(async ({ browser }) => {
 		sharedContext = await browser.newContext({
-			baseURL: "http://localhost:3000",
+			baseURL: "https://localhost:3000",
 		});
 		sharedPage = await sharedContext.newPage();
 		await navigateToPlayingFast(sharedPage);

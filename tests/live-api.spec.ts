@@ -6,7 +6,7 @@
 import { expect, test } from "@playwright/test";
 import { navigateToPlayingFast } from "./helpers/navigation";
 
-test.use({ baseURL: "http://localhost:3000" });
+test.use({ baseURL: "https://localhost:3000" });
 
 test.describe("Live API with TTS fallback", () => {
 	test("@live-api text and audio appear when using Live API", async ({

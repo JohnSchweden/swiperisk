@@ -2,7 +2,7 @@ import { expect, type Page, test } from "@playwright/test";
 import { navigateToPlayingFast } from "./helpers/navigation";
 import { SELECTORS } from "./helpers/selectors";
 
-test.use({ baseURL: "http://localhost:3000" });
+test.use({ baseURL: "https://localhost:3000" });
 
 /**
  * Helper to perform a drag gesture on the current card without releasing

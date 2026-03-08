@@ -1,7 +1,7 @@
 import { expect, test } from "@playwright/test";
 import { getCard, navigateToPlayingFast } from "./helpers/navigation";
 
-test.use({ baseURL: "http://localhost:3000" });
+test.use({ baseURL: "https://localhost:3000" });
 
 test.describe("Mobile Card Width", () => {
 	// Reset viewport size after each test to avoid affecting other tests

@@ -2,7 +2,7 @@ import { expect, test } from "@playwright/test";
 import { mockRoastApi } from "./helpers/mockApi";
 import { navigateToPlayingFast } from "./helpers/navigation";
 
-test.use({ baseURL: "http://localhost:3000" });
+test.use({ baseURL: "https://localhost:3000" });
 
 async function assertRoastOutputVisibleAndInViewport(
 	page: import("@playwright/test").Page,

@@ -2,7 +2,7 @@ import { expect, test } from "@playwright/test";
 import { navigateToPlayingFast } from "./helpers/navigation";
 import { SELECTORS } from "./helpers/selectors";
 
-test.use({ baseURL: "http://localhost:3000" });
+test.use({ baseURL: "https://localhost:3000" });
 
 // Demonstrates optimized navigation pattern using navigateToPlayingFast
 test.describe("Spring Snap-Back", () => {

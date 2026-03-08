@@ -39,7 +39,7 @@ export async function loadVoice(
 
 	try {
 		const response = await fetch(filePath);
-		console.log("[Voice] Response status:", response.status);
+		console.log(`[Voice] Response status: ${response.status}`);
 
 		if (!response.ok) {
 			const personalityKey = personality.toLowerCase().replace(/_/g, "");

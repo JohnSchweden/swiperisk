@@ -1,5 +1,6 @@
 import { expect, test } from "@playwright/test";
 import { navigateToPlaying } from "./helpers/navigation";
+import { SELECTORS } from "./helpers/selectors";
 
 /**
  * Voice Playback Integration Tests
@@ -100,62 +101,78 @@ test.describe("Voice Playback Integration @integration @area:audio", () => {
 	});
 
 	test.describe("Feedback Audio (Roaster Only)", () => {
-		test("plays feedback_debug audio when choosing Debug (LEFT)", async ({
-			page,
-		}) => {
-			const consoleMessages: string[] = [];
-			page.on("console", (msg) => consoleMessages.push(msg.text()));
+		test.describe
+			.serial("feedback voice triggers", () => {
+				test("plays feedback_debug audio when choosing Debug (LEFT)", async ({
+					page,
+				}) => {
+					const consoleMessages: string[] = [];
+					page.on("console", (msg) => consoleMessages.push(msg.text()));
 
-			// Navigate to playing stage (Roaster + Development)
-			await navigateToPlaying(page);
+					await navigateToPlaying(page);
 
-			// Click Debug (left choice for dev_1 card)
-			await page.locator('button:has-text("Debug")').click({ force: true });
-			await expect(page.locator('button:has-text("Next ticket")')).toBeVisible({
-				timeout: 2000,
+					await page
+						.locator(SELECTORS.leftButton)
+						.first()
+						.click({ force: true });
+					await expect(page.locator(SELECTORS.nextTicketButton)).toBeVisible({
+						timeout: 5000,
+					});
+
+					await expect
+						.poll(
+							() =>
+								consoleMessages.some((msg) =>
+									msg.includes("[Feedback] Playing voice: feedback_debug"),
+								),
+							{ timeout: 3000 },
+						)
+						.toBe(true);
+
+					expect(
+						consoleMessages.some(
+							(msg) =>
+								msg.includes("[Voice] Loading:") &&
+								msg.includes("roaster/feedback_debug"),
+						),
+					).toBe(true);
+				});
+
+				test("plays feedback_paste audio when choosing Paste (RIGHT)", async ({
+					page,
+				}) => {
+					const consoleMessages: string[] = [];
+					page.on("console", (msg) => consoleMessages.push(msg.text()));
+
+					await navigateToPlaying(page);
+
+					await page
+						.locator(SELECTORS.rightButton)
+						.first()
+						.click({ force: true });
+					await expect(page.locator(SELECTORS.nextTicketButton)).toBeVisible({
+						timeout: 5000,
+					});
+
+					await expect
+						.poll(
+							() =>
+								consoleMessages.some((msg) =>
+									msg.includes("[Feedback] Playing voice: feedback_paste"),
+								),
+							{ timeout: 3000 },
+						)
+						.toBe(true);
+
+					expect(
+						consoleMessages.some(
+							(msg) =>
+								msg.includes("[Voice] Loading:") &&
+								msg.includes("roaster/feedback_paste"),
+						),
+					).toBe(true);
+				});
 			});
-
-			// Verify feedback audio loaded
-			const feedbackLog = consoleMessages.find((msg) =>
-				msg.includes("[Feedback] Playing voice: feedback_debug"),
-			);
-			expect(feedbackLog).toBeDefined();
-
-			const voiceLoad = consoleMessages.find(
-				(msg) =>
-					msg.includes("[Voice] Loading:") &&
-					msg.includes("roaster/feedback_debug"),
-			);
-			expect(voiceLoad).toBeDefined();
-		});
-
-		test("plays feedback_paste audio when choosing Paste (RIGHT)", async ({
-			page,
-		}) => {
-			const consoleMessages: string[] = [];
-			page.on("console", (msg) => consoleMessages.push(msg.text()));
-
-			await navigateToPlaying(page);
-
-			// Click Paste (right choice for dev_1 card)
-			await page.locator('button:has-text("Paste")').click({ force: true });
-			await expect(page.locator('button:has-text("Next ticket")')).toBeVisible({
-				timeout: 2000,
-			});
-
-			// Verify feedback audio loaded
-			const feedbackLog = consoleMessages.find((msg) =>
-				msg.includes("[Feedback] Playing voice: feedback_paste"),
-			);
-			expect(feedbackLog).toBeDefined();
-
-			const voiceLoad = consoleMessages.find(
-				(msg) =>
-					msg.includes("[Voice] Loading:") &&
-					msg.includes("roaster/feedback_paste"),
-			);
-			expect(voiceLoad).toBeDefined();
-		});
 	});
 
 	test.describe("Audio File Existence", () => {
@@ -179,11 +196,16 @@ test.describe("Voice Playback Integration @integration @area:audio", () => {
 				.locator('button:has-text("Software Engineer")')
 				.waitFor({ state: "visible", timeout: 5000 });
 
-			// Verify audio file was found (HTTP 200)
-			const responseLog = consoleMessages.find((msg) =>
-				msg.includes("[Voice] Response status: 200"),
-			);
-			expect(responseLog).toBeDefined();
+			// Onboarding loads when ROLE_SELECT is reached; allow time for fetch + log
+			await expect
+				.poll(
+					() =>
+						consoleMessages.some((msg) =>
+							msg.includes("[Voice] Response status: 200"),
+						),
+					{ timeout: 5000 },
+				)
+				.toBe(true);
 		});
 	});
 });

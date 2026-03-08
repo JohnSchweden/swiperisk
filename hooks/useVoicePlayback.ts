@@ -105,12 +105,7 @@ export function useVoicePlayback({
 		}
 
 		console.log(
-			"[Feedback] Playing voice:",
-			trigger,
-			"for card:",
-			feedbackCardId,
-			"choice:",
-			feedbackChoice,
+			`[Feedback] Playing voice: ${trigger} for card: ${feedbackCardId} choice: ${feedbackChoice}`,
 		);
 
 		loadVoice(personalityLower, trigger)

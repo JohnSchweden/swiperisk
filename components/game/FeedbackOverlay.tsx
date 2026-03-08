@@ -33,6 +33,7 @@ export const FeedbackOverlay: React.FC<FeedbackOverlayProps> = ({
 	personality,
 	text,
 	lesson,
+	choice,
 	fine,
 	violation,
 	teamImpact,
@@ -47,7 +48,10 @@ export const FeedbackOverlay: React.FC<FeedbackOverlayProps> = ({
 	// Keyboard navigation for overlay
 	useEffect(() => {
 		const handleOverlayKey = (e: KeyboardEvent) => {
-			if (e.key === " " || e.key === "Enter") {
+			if (e.key === "Escape") {
+				e.preventDefault();
+				onNext();
+			} else if (e.key === " " || e.key === "Enter") {
 				e.preventDefault();
 				onNext();
 			}
@@ -62,6 +66,7 @@ export const FeedbackOverlay: React.FC<FeedbackOverlayProps> = ({
 		<div
 			className="fixed inset-0 z-50 flex items-center justify-center p-4 md:p-6 bg-black/70 backdrop-blur-sm modal-overlay"
 			data-testid="feedback-dialog"
+			data-choice={choice}
 			role="dialog"
 			aria-modal="true"
 			aria-labelledby="feedback-overlay-title"

@@ -16,7 +16,7 @@ export async function navigateToPlayingFast(page: Page): Promise<void> {
 			"gameState",
 			JSON.stringify({
 				state: "playing",
-				personality: "vera",
+				personality: "ROASTER",
 				role: "SOFTWARE_ENGINEER",
 			}),
 		);
@@ -29,7 +29,7 @@ export async function navigateToPlayingFast(page: Page): Promise<void> {
 	try {
 		await page
 			.locator('button:has-text("Debug")')
-			.waitFor({ state: "visible", timeout: 3000 });
+			.waitFor({ state: "visible", timeout: 5000 });
 	} catch {
 		// Fast approach failed, fall back to full navigation
 		console.warn("Fast navigation failed, falling back to full navigation");

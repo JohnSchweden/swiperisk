@@ -20,7 +20,7 @@ export const SummaryScreen: React.FC<SummaryScreenProps> = ({
 	onRestart,
 }) => {
 	return (
-		<LayoutShell className="p-4 md:p-6 text-center bg-[#051a0d]">
+		<LayoutShell className="p-4 pb-12 md:p-6 md:pb-16 text-center bg-[#051a0d]">
 			<div className="w-full max-w-2xl">
 				<div className="text-6xl md:text-9xl text-green-500 mb-6 md:mb-8 animate-bounce drop-shadow-[0_0_30px_rgba(34,197,94,0.4)]">
 					<i className="fa-solid fa-trophy" aria-hidden></i>

@@ -19,7 +19,7 @@ export const GameOver: React.FC<GameOverProps> = ({ state, onRestart }) => {
 	const deathEnding = state.deathType ? DEATH_ENDINGS[state.deathType] : null;
 
 	return (
-		<LayoutShell className="p-4 md:p-6 text-center bg-[#1a0505]">
+		<LayoutShell className="p-4 pb-12 md:p-6 md:pb-16 text-center bg-[#1a0505]">
 			<div className="w-full max-w-2xl">
 				{deathEnding && (
 					<>

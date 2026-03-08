@@ -15,7 +15,7 @@ export const RoleSelect: React.FC<RoleSelectProps> = ({
 	onSelect,
 }) => {
 	return (
-		<LayoutShell className="p-4 md:p-6 bg-[#0a0a0c]">
+		<LayoutShell className="p-4 pb-12 md:p-6 md:pb-16 bg-[#0a0a0c]">
 			<div className="w-full max-w-4xl mx-auto">
 				<div className="text-center mb-6 md:mb-10">
 					<div className="text-red-600 mb-2 md:mb-3 mono text-[10px] md:text-xs tracking-[0.3em] fade-in px-4">

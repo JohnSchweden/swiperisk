@@ -7,7 +7,7 @@ interface IntroScreenProps {
 
 export const IntroScreen: React.FC<IntroScreenProps> = ({ onStart }) => {
 	return (
-		<LayoutShell className="p-4 md:p-6 text-center bg-[#0a0a0c]">
+		<LayoutShell className="p-4 pb-12 md:p-6 md:pb-16 text-center bg-[#0a0a0c]">
 			<div className="mb-8 md:mb-12 relative">
 				<h1 className="text-6xl md:text-7xl font-bold glitch-text tracking-tighter mb-2">
 					K-Maru

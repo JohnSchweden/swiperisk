@@ -3,9 +3,9 @@ gsd_state_version: 1.0
 milestone: v1.2
 milestone_name: Kobayashi Maru — AI Governance Simulator
 current_phase: 04-immersive-pressure-effects
-current_plan: 6
+current_plan: 9
 status: planning
-last_updated: "2026-03-08T19:59:54.088Z"
+last_updated: "2026-03-08T20:00:00.000Z"
 progress:
   total_phases: 14
   completed_phases: 3
@@ -23,7 +23,7 @@ See: .planning/PROJECT.md
 
 **Milestone:** v1.2 Kobayashi Maru — AI Governance Simulator
 **Current phase:** 04-immersive-pressure-effects
-**Current plan:** 6
+**Current plan:** 9
 **Status:** Ready to plan
 
 ## Session Log
@@ -37,3 +37,5 @@ See: .planning/PROJECT.md
 - 2026-03-07: Completed 04-04-PLAN.md (Gap closure: useCountdown reset, pressureAudio ctx.resume)
 - 2026-03-07: Completed 04-05-PLAN.md (Gap closure: HUD escalation in overlay, haptic from gesture handlers)
 - 2026-03-08: Completed 04-06-PLAN.md (Gap closure: timer expiry calls onComplete on natural expiry)
+- 2026-03-08: Completed 04-07-PLAN.md (Increase heartbeat volume)
+- 2026-03-08: Completed 04-08-PLAN.md (Touch-swipe haptic feedback)

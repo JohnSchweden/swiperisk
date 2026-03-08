@@ -1,4 +1,4 @@
-import { useMemo } from "react";
+import { useEffect, useMemo, useRef } from "react";
 import { PRESSURE_SCENARIOS } from "../data";
 import type { Card, GameState, PressureScenarioMetadata } from "../types";
 
@@ -17,11 +17,38 @@ export interface IncidentPressureState {
 	getTeamImpact: (direction: "LEFT" | "RIGHT") => string | null;
 }
 
+export interface UseIncidentPressureOptions {
+	/** Callback fired when transitioning into critical state (heat >= 70). */
+	onCriticalChange?: (isCritical: boolean) => void;
+}
+
 export function useIncidentPressure(
 	state: GameState,
 	currentCard: Card | null,
 	isChoiceResolving: boolean,
+	options?: UseIncidentPressureOptions,
 ): IncidentPressureState {
+	const previousIsCritical = useRef(false);
+
+	// Calculate the current isCritical value
+	const isCritical = useMemo(() => {
+		if (!currentCard) return false;
+
+		const scenario = PRESSURE_SCENARIOS[currentCard.id] ?? null;
+		const criticalFromScenario = scenario?.criticalForHaptics ?? false;
+		const heatHigh = state.heat >= 70;
+		return criticalFromScenario || heatHigh;
+	}, [currentCard, state.heat]);
+
+	// Detect transition into critical and call onCriticalChange
+	useEffect(() => {
+		if (!options?.onCriticalChange) return;
+
+		if (isCritical && !previousIsCritical.current) {
+			options.onCriticalChange(true);
+		}
+		previousIsCritical.current = isCritical;
+	}, [isCritical, options]);
 	return useMemo(() => {
 		if (!currentCard) {
 			return {

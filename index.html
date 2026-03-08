@@ -327,10 +327,25 @@
         .pressure-shake {
             animation: pressure-shake-keyframes 0.15s ease-in-out infinite;
         }
+        /* Counter-shake: negates parent shake so inner content (text) stays readable */
+        @keyframes pressure-shake-counter-keyframes {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(1px); }
+            75% { transform: translateX(-1px); }
+        }
+        .pressure-shake-counter {
+            animation: pressure-shake-counter-keyframes 0.15s ease-in-out infinite;
+        }
         .pressure-flicker {
             animation: pressure-flicker-keyframes 0.2s ease-in-out infinite;
         }
         .pressure-pulse {
+            animation: pressure-pulse-keyframes 1s ease-in-out infinite;
+            /* Include box-shadow so compositor repaints glow; swipe-card's will-change: transform alone skips box-shadow updates until touch */
+            will-change: transform, opacity, box-shadow;
+        }
+        /* Overlay variant: no will-change, sits outside card's transform layer — glow visible from first frame */
+        .pressure-pulse-overlay {
             animation: pressure-pulse-keyframes 1s ease-in-out infinite;
         }
 

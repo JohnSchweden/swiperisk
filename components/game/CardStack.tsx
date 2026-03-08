@@ -61,6 +61,12 @@ export const CardStack: React.FC<CardStackProps> = ({
 
 	const hasStressVisuals = isUrgent || isCritical;
 
+	const swipeButtonBase =
+		"flex-1 py-2 px-3 md:py-4 md:px-4 text-sm md:text-base border tracking-wide transition-all min-h-[40px] md:min-h-[48px]";
+	const swipeButtonDefault =
+		"border-white text-white bg-transparent hover:bg-cyan-500 hover:border-cyan-500 hover:text-black active:bg-cyan-500 active:border-cyan-500 active:text-black";
+	const swipeButtonSelected = "bg-cyan-500 border-cyan-500 text-black";
+
 	return (
 		<div
 			className={`relative flex-shrink-0 w-full max-w-full lg:max-w-[43rem] h-[420px] md:h-[560px] ${hasStressVisuals ? "pressure-shake" : ""}`}
@@ -126,13 +132,22 @@ export const CardStack: React.FC<CardStackProps> = ({
 				</div>
 			)}
 
+			{/* Glow overlay: sibling to card, not in transform subtree — avoids compositor layer skipping repaint until touch */}
+			{hasStressVisuals && (
+				<div
+					className="absolute inset-0 rounded-xl pointer-events-none pressure-pulse-overlay"
+					style={{ zIndex: 5 }}
+					aria-hidden
+				/>
+			)}
+
 			{/* Current card (front) - role="group" for a11y on interactive div */}
 			{/* biome-ignore lint/a11y/useSemanticElements: swipe card container is not a form fieldset */}
 			<div
 				ref={cardRef}
 				role="group"
 				data-testid="incident-card"
-				className={`absolute inset-0 bg-slate-900 border border-slate-700 rounded-xl overflow-hidden shadow-2xl flex flex-col select-none swipe-card ${isFirstCard && !exitDirection && !isDragging && !hasDragged ? "ticket-transition" : ""} ${isSnappingBack ? "spring-snap-back" : ""} ${hasStressVisuals ? "pressure-flicker pressure-pulse" : ""}`}
+				className={`absolute inset-0 bg-slate-900 border border-slate-700 rounded-xl overflow-hidden shadow-2xl flex flex-col select-none swipe-card ${isFirstCard && !exitDirection && !isDragging && !hasDragged ? "ticket-transition" : ""} ${isSnappingBack ? "spring-snap-back" : ""} ${hasStressVisuals ? "pressure-flicker" : ""}`}
 				key={currentCardIndex}
 				onTouchStart={onTouchStart}
 				onTouchMove={onTouchMove}
@@ -157,35 +172,33 @@ export const CardStack: React.FC<CardStackProps> = ({
 				}}
 			>
 				{/* Dynamic Swipe Preview */}
-				{direction && (
-					<div
-						className="absolute inset-0 pointer-events-none z-10"
-						style={{
-							opacity: Math.min(
-								1,
-								0.3 +
-									((Math.abs(offset) - swipePreviewThreshold) /
-										swipeThreshold) *
-										0.7,
-							),
-						}}
-					>
-						<div
-							className={`absolute top-1/2 -translate-y-1/2 ${direction === "RIGHT" ? "left-8" : "right-8"} font-black tracking-tighter ${direction === "RIGHT" ? "text-green-500" : "text-red-500"}`}
-							style={{
-								fontSize:
-									direction === "RIGHT"
-										? `clamp(1.5rem, ${2 + ((Math.abs(offset) - swipePreviewThreshold) / swipeThreshold) * 2}rem, 3.75rem)`
-										: `clamp(1.5rem, ${2 + ((Math.abs(offset) - swipePreviewThreshold) / swipeThreshold) * 2}rem, 3.75rem)`,
-								transform: `scale(${0.5 + Math.min(0.5, ((Math.abs(offset) - swipePreviewThreshold) / swipeThreshold) * 0.5)})`,
-							}}
-						>
-							{direction === "RIGHT"
-								? currentCard.onRight.label.toUpperCase()
-								: currentCard.onLeft.label.toUpperCase()}
-						</div>
-					</div>
-				)}
+				{direction &&
+					(() => {
+						const progress =
+							(Math.abs(offset) - swipePreviewThreshold) / swipeThreshold;
+						const isRight = direction === "RIGHT";
+						const label = isRight
+							? currentCard.onRight.label.toUpperCase()
+							: currentCard.onLeft.label.toUpperCase();
+						return (
+							<div
+								className="absolute inset-0 pointer-events-none z-10"
+								style={{
+									opacity: Math.min(1, 0.3 + progress * 0.7),
+								}}
+							>
+								<div
+									className={`absolute top-1/2 -translate-y-1/2 font-black tracking-tighter ${isRight ? "left-8 text-green-500" : "right-8 text-red-500"}`}
+									style={{
+										fontSize: `clamp(1.5rem, ${2 + progress * 2}rem, 3.75rem)`,
+										transform: `scale(${0.5 + Math.min(0.5, progress * 0.5)})`,
+									}}
+								>
+									{label}
+								</div>
+							</div>
+						);
+					})()}
 
 				<div className="bg-slate-800 px-3 md:px-4 py-2 flex items-center justify-between border-b border-white/5">
 					<div className="flex items-center gap-2 text-[10px] mono font-bold text-slate-400 truncate">
@@ -206,7 +219,9 @@ export const CardStack: React.FC<CardStackProps> = ({
 					</div>
 				</div>
 				<div className="p-4 md:p-10 flex flex-col justify-between flex-1 overflow-hidden">
-					<div className="space-y-3 md:space-y-6 overflow-y-auto">
+					<div
+						className={`space-y-3 md:space-y-6 overflow-y-auto ${hasStressVisuals ? "pressure-shake-counter" : ""}`}
+					>
 						<div className="flex items-center gap-3">
 							<div className="w-8 h-8 md:w-10 md:h-10 rounded bg-slate-800 flex items-center justify-center border border-white/5 shrink-0">
 								<i
@@ -255,7 +270,7 @@ export const CardStack: React.FC<CardStackProps> = ({
 								type="button"
 								onClick={onSwipeLeft}
 								data-testid="swipe-left-button"
-								className={`flex-1 py-2 px-3 md:py-4 md:px-4 text-sm md:text-base border font-bold tracking-wide transition-all min-h-[40px] md:min-h-[48px] ${direction === "LEFT" ? "bg-cyan-500 border-cyan-500 text-black" : "border-white text-white bg-transparent hover:bg-cyan-500 hover:border-cyan-500 hover:text-black active:bg-cyan-500 active:border-cyan-500 active:text-black"}`}
+								className={`${swipeButtonBase} font-bold ${direction === "LEFT" ? swipeButtonSelected : swipeButtonDefault}`}
 							>
 								{currentCard.onLeft.label}
 							</button>
@@ -263,7 +278,7 @@ export const CardStack: React.FC<CardStackProps> = ({
 								type="button"
 								onClick={onSwipeRight}
 								data-testid="swipe-right-button"
-								className={`flex-1 py-2 px-3 md:py-4 md:px-4 text-sm md:text-base border font-black tracking-wide transition-all min-h-[40px] md:min-h-[48px] ${direction === "RIGHT" ? "bg-cyan-500 border-cyan-500 text-black" : "border-white text-white bg-transparent hover:bg-cyan-500 hover:border-cyan-500 hover:text-black active:bg-cyan-500 active:border-cyan-500 active:text-black"}`}
+								className={`${swipeButtonBase} font-black ${direction === "RIGHT" ? swipeButtonSelected : swipeButtonDefault}`}
 							>
 								{currentCard.onRight.label}
 							</button>

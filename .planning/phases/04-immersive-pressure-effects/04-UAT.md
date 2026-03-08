@@ -1,15 +1,21 @@
 ---
-status: diagnosed
+status: complete
 phase: 04-immersive-pressure-effects
-source: [04-01-SUMMARY.md, 04-02-SUMMARY.md, 04-03-SUMMARY.md]
+source: [04-01-SUMMARY.md, 04-02-SUMMARY.md, 04-03-SUMMARY.md, 04-06-SUMMARY.md, 04-07-SUMMARY.md, 04-08-SUMMARY.md]
 started: "2026-03-06T00:00:00Z"
-updated: "2026-03-07T00:00:00Z"
+updated: "2026-03-08T21:00:00Z"
 recheck: true
 ---
 
 ## Current Test
 
 [testing complete]
+
+number: 7
+name: Haptic on critical mobile (recheck)
+expected: |
+  On a real mobile device with vibration enabled, when entering critical state or when the timer expires, the device vibrates briefly. (Skip if testing on desktop.)
+awaiting: user response
 
 ## Tests (Re-verification post gap closure)
 
@@ -19,41 +25,35 @@ result: pass
 
 ### 2. Timer expiry auto-resolves
 expected: On an urgent card, let the countdown reach zero without swiping. The incident resolves automatically to a configured left/right outcome. No undo or revert control is offered — you proceed to next incident.
-result: issue
-reported: "not happening, timer just restarts"
-severity: major
+result: pass
 
 ### 3. HUD escalation
 expected: Make choices that raise heat or drain budget. As heat gets high or budget gets low, the HUD shows intensified visuals: Critical labels, amber/red color shifts, and a pressure-hud-intense state. The screen should feel increasingly stressed.
 result: pass
 
-### 4. Card stress visuals
+### 4. Card stress visuals (recheck)
 expected: When the countdown is active or heat is critical, the incident card shows visible stress effects: shake on the container, flicker and/or pulse on the card. Effects stop when pressure drops (e.g. after you swipe or resolve).
-result: issue
-reported: "Works for countdown active, but when heat is critical the incident card doesn't show any stress effects or shake"
-severity: major
+result: pass
 
-### 5. Stress audio
+### 5. Stress audio (recheck)
 expected: With high heat (bad choices), heartbeat/alert audio plays. When you leave the playing screen or pressure drops, the audio stops. No overlapping duplicate loops.
-result: issue
-reported: "Heartbeat only plays for card when pressure/countdown is on. When heat is high, no heartbeat. Also make heartbeat 10% louder when it's there."
-severity: major
+result: pass
 
 ### 6. Feedback overlay — team-impact and finality
 expected: After choosing an outcome that has team-impact metadata (e.g. certain fin_insider_bot outcomes), the feedback overlay shows the team consequence text. Every outcome shows "Decision logged — no undo. Proceed when ready." There is no Undo or Revert button.
 result: pass
 
-### 7. Haptic on critical (mobile)
+### 7. Haptic on critical (mobile) (recheck)
 expected: On a real mobile device with vibration enabled, when entering critical state or when the timer expires, the device vibrates briefly. (Skip if testing on desktop.)
 result: issue
-reported: "no vibrations"
+reported: "not happening on mobile. no vibration."
 severity: major
 
 ## Summary
 
 total: 7
-passed: 3
-issues: 4
+passed: 6
+issues: 1
 pending: 0
 skipped: 0
 
@@ -199,3 +199,14 @@ skipped: 0
   missing:
     - "Call vibrate synchronously in useSwipeGestures.handleTouchEnd when direction known, before setTimeout"
   debug_session: .planning/debug/haptic-mobile-round2.md
+
+## Gaps (Round 3 — post 04-08 fix)
+
+- truth: "Critical moments trigger haptic feedback (vibration) on supported mobile devices"
+  status: failed
+  reason: "User reported: not happening on mobile. no vibration."
+  severity: major
+  test: 7
+  root_cause: "TBD - needs diagnosis"
+  artifacts: []
+  missing: []

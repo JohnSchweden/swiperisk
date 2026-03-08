@@ -5,7 +5,7 @@ const HEARTBEAT_BASE_FREQ = 60;
 const HEARTBEAT_DURATION = 0.08;
 const ALERT_FREQ = 800;
 const ALERT_DURATION = 0.15;
-const GAIN_HEARTBEAT_STRESS = 0.12;
+const GAIN_HEARTBEAT_STRESS = 0.132;
 const GAIN_ALERT = 0.08;
 
 /** Volume ramp over last N seconds of countdown */

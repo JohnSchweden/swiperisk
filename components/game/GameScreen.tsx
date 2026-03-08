@@ -1,5 +1,4 @@
 import type React from "react";
-import { PERSONALITIES } from "../../data";
 import type { GameState } from "../../types";
 import LayoutShell from "../LayoutShell";
 import { CardStack } from "./CardStack";
@@ -74,7 +73,6 @@ export const GameScreen: React.FC<GameScreenProps> = ({
 }) => {
 	if (!state.role || !state.personality) return null;
 
-	const _personality = PERSONALITIES[state.personality];
 	// Expose countdown for Phase 04-02 (timer UI)
 	const pressureAttrs =
 		isCountdownActive && countdownValue > 0

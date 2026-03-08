@@ -21,6 +21,21 @@ function formatBudget(amount: number): string {
 	return `$${amount.toLocaleString()}`;
 }
 
+function getBudgetColorClass(
+	budgetCritical: boolean,
+	budgetWarning: boolean,
+): string {
+	if (budgetCritical) return "text-red-500";
+	if (budgetWarning) return "text-amber-400";
+	return "text-green-400";
+}
+
+function getHeatColorClass(heatCritical: boolean, heatHigh: boolean): string {
+	if (heatCritical) return "text-red-400";
+	if (heatHigh) return "text-yellow-400";
+	return "text-orange-500";
+}
+
 export const GameHUD = React.memo(function GameHUD({
 	budget,
 	heat,
@@ -44,7 +59,7 @@ export const GameHUD = React.memo(function GameHUD({
 			<div className="flex-1 space-y-1 min-w-0">
 				<div className="flex justify-between text-[10px] font-black tracking-wide mb-1">
 					<span
-						className={`${budgetCritical ? "text-red-500 animate-pulse" : budgetWarning ? "text-amber-400" : "text-green-400"} inline-flex items-center gap-1.5`}
+						className={`${getBudgetColorClass(budgetCritical, budgetWarning)} ${budgetCritical ? "animate-pulse" : ""} inline-flex items-center gap-1.5`}
 					>
 						<i className="fa-solid fa-coins text-[10px]" aria-hidden></i>Budget
 						{budgetCritical && (
@@ -53,15 +68,7 @@ export const GameHUD = React.memo(function GameHUD({
 							</span>
 						)}
 					</span>
-					<span
-						className={
-							budgetCritical
-								? "text-red-500"
-								: budgetWarning
-									? "text-amber-400"
-									: "text-green-400"
-						}
-					>
+					<span className={getBudgetColorClass(budgetCritical, budgetWarning)}>
 						{formatBudget(budget)}
 					</span>
 				</div>
@@ -80,7 +87,7 @@ export const GameHUD = React.memo(function GameHUD({
 				<div className="flex-1 md:w-28 space-y-1">
 					<div className="flex justify-between text-[10px] font-black tracking-wide mb-1">
 						<span
-							className={`${heatCritical ? "text-red-400 animate-pulse" : heatHigh ? "text-yellow-400" : "text-orange-500"} inline-flex items-center gap-1.5`}
+							className={`${getHeatColorClass(heatCritical, heatHigh)} ${heatCritical ? "animate-pulse" : ""} inline-flex items-center gap-1.5`}
 						>
 							<i className="fa-solid fa-fire text-[10px]" aria-hidden></i>Risk
 							{heatCritical && (
@@ -89,15 +96,7 @@ export const GameHUD = React.memo(function GameHUD({
 								</span>
 							)}
 						</span>
-						<span
-							className={
-								heatCritical
-									? "text-red-400"
-									: heatHigh
-										? "text-yellow-400"
-										: "text-orange-500"
-							}
-						>
+						<span className={getHeatColorClass(heatCritical, heatHigh)}>
 							{heat}%
 						</span>
 					</div>

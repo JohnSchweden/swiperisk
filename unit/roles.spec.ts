@@ -5,7 +5,7 @@ import {
 	ROLE_DESCRIPTIONS,
 	ROLE_ICONS,
 	ROLE_LABELS,
-} from "../data/roles";
+} from "../data";
 import { RoleType } from "../types";
 
 describe("roles data", () => {

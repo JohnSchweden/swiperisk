@@ -1,3 +1,4 @@
+import type { Dispatch } from "react";
 import { useCallback, useReducer } from "react";
 import { DEATH_ENDINGS, getRoleDeck, ROLE_CARDS } from "../data";
 import {
@@ -244,7 +245,23 @@ export function gameReducer(state: GameState, action: GameAction): GameState {
 	}
 }
 
-export function useGameState() {
+export interface UseGameStateResult {
+	state: GameState;
+	dispatch: Dispatch<GameAction>;
+	startGame: () => void;
+	selectPersonality: (personality: PersonalityType) => void;
+	selectRole: (role: RoleType) => void;
+	makeChoice: (
+		direction: "LEFT" | "RIGHT",
+		outcome: { hype: number; heat: number; fine: number; cardId: string },
+	) => void;
+	nextIncident: () => void;
+	answerBossQuestion: (isCorrect: boolean) => void;
+	completeBossFight: (success: boolean) => void;
+	resetGame: () => void;
+}
+
+export function useGameState(): UseGameStateResult {
 	const [state, dispatch] = useReducer(gameReducer, null, () =>
 		getHydratedState(),
 	);

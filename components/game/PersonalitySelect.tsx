@@ -9,6 +9,19 @@ interface PersonalitySelectProps {
 	onSelect: (personality: PersonalityType) => void;
 }
 
+function getPersonalityIcon(type: PersonalityType): string {
+	switch (type) {
+		case PersonalityType.ROASTER:
+			return "fa-user-ninja";
+		case PersonalityType.ZEN_MASTER:
+			return "fa-leaf";
+		case PersonalityType.LOVEBOMBER:
+			return "fa-rocket";
+		default:
+			return "fa-user";
+	}
+}
+
 export const PersonalitySelect: React.FC<PersonalitySelectProps> = ({
 	isReady,
 	hoverEnabled,
@@ -51,13 +64,7 @@ export const PersonalitySelect: React.FC<PersonalitySelectProps> = ({
 									className={`text-slate-400 transition-colors mb-2 md:mb-3 ${hoverEnabled ? "group-hover:text-cyan-500" : ""}`}
 								>
 									<i
-										className={`fa-solid ${
-											type === PersonalityType.ROASTER
-												? "fa-user-ninja"
-												: type === PersonalityType.ZEN_MASTER
-													? "fa-leaf"
-													: "fa-rocket"
-										} text-2xl md:text-4xl`}
+										className={`fa-solid ${getPersonalityIcon(type as PersonalityType)} text-2xl md:text-4xl`}
 										aria-hidden
 									></i>
 								</div>

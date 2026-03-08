@@ -1,7 +1,7 @@
 import type React from "react";
 import type { RefObject } from "react";
 import { ROLE_CARDS } from "../../data";
-import { AppSource, type RoleType } from "../../types";
+import { AppSource, type Card, type RoleType } from "../../types";
 
 function getCardTransition(
 	isDragging: boolean,
@@ -39,6 +39,44 @@ interface CardStackProps {
 	// Phase 04: pressure-driven stress visuals
 	isUrgent?: boolean;
 	isCritical?: boolean;
+}
+
+interface SwipePreviewProps {
+	direction: "LEFT" | "RIGHT";
+	offset: number;
+	swipePreviewThreshold: number;
+	swipeThreshold: number;
+	card: Card;
+}
+
+function SwipePreview({
+	direction,
+	offset,
+	swipePreviewThreshold,
+	swipeThreshold,
+	card,
+}: SwipePreviewProps): React.ReactElement {
+	const progress = (Math.abs(offset) - swipePreviewThreshold) / swipeThreshold;
+	const label =
+		direction === "RIGHT"
+			? card.onRight.label.toUpperCase()
+			: card.onLeft.label.toUpperCase();
+	return (
+		<div
+			className="absolute inset-0 pointer-events-none z-10"
+			style={{ opacity: Math.min(1, 0.3 + progress * 0.7) }}
+		>
+			<div
+				className={`absolute top-1/2 -translate-y-1/2 font-black tracking-tighter ${direction === "RIGHT" ? "left-8 text-green-500" : "right-8 text-red-500"}`}
+				style={{
+					fontSize: `clamp(1.5rem, ${2 + progress * 2}rem, 3.75rem)`,
+					transform: `scale(${0.5 + Math.min(0.5, progress * 0.5)})`,
+				}}
+			>
+				{label}
+			</div>
+		</div>
+	);
 }
 
 export const CardStack: React.FC<CardStackProps> = ({
@@ -178,31 +216,15 @@ export const CardStack: React.FC<CardStackProps> = ({
 				}}
 			>
 				{/* Dynamic Swipe Preview */}
-				{direction &&
-					(function SwipePreview() {
-						const progress =
-							(Math.abs(offset) - swipePreviewThreshold) / swipeThreshold;
-						const label =
-							direction === "RIGHT"
-								? currentCard.onRight.label.toUpperCase()
-								: currentCard.onLeft.label.toUpperCase();
-						return (
-							<div
-								className="absolute inset-0 pointer-events-none z-10"
-								style={{ opacity: Math.min(1, 0.3 + progress * 0.7) }}
-							>
-								<div
-									className={`absolute top-1/2 -translate-y-1/2 font-black tracking-tighter ${direction === "RIGHT" ? "left-8 text-green-500" : "right-8 text-red-500"}`}
-									style={{
-										fontSize: `clamp(1.5rem, ${2 + progress * 2}rem, 3.75rem)`,
-										transform: `scale(${0.5 + Math.min(0.5, progress * 0.5)})`,
-									}}
-								>
-									{label}
-								</div>
-							</div>
-						);
-					})()}
+				{direction && (
+					<SwipePreview
+						direction={direction}
+						offset={offset}
+						swipePreviewThreshold={swipePreviewThreshold}
+						swipeThreshold={swipeThreshold}
+						card={currentCard}
+					/>
+				)}
 
 				<div className="bg-slate-800 px-3 md:px-4 py-2 flex items-center justify-between border-b border-white/5">
 					<div className="flex items-center gap-2 text-[10px] mono font-bold text-slate-400 truncate">

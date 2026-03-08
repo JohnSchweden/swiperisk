@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { BOSS_FIGHT_QUESTIONS } from "../data";
+import type { BossQuestion } from "../types";
 
 interface UseBossFightOptions {
 	isActive: boolean;
@@ -8,13 +9,17 @@ interface UseBossFightOptions {
 	currentAnswers: boolean[];
 }
 
-function _shuffleArray<T>(array: T[]): T[] {
-	const shuffled = [...array];
-	for (let i = shuffled.length - 1; i > 0; i--) {
-		const j = Math.floor(Math.random() * (i + 1));
-		[shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
-	}
-	return shuffled;
+interface UseBossFightResult {
+	currentQuestion: number;
+	timeLeft: number;
+	showExplanation: boolean;
+	hasAnswered: boolean;
+	question: BossQuestion | undefined;
+	fixedAnswers: string[];
+	correctCount: number;
+	totalAnswered: number;
+	handleAnswer: (isCorrect: boolean) => void;
+	nextQuestion: () => void;
 }
 
 export function useBossFight({
@@ -22,7 +27,7 @@ export function useBossFight({
 	onAnswer,
 	onComplete,
 	currentAnswers,
-}: UseBossFightOptions) {
+}: UseBossFightOptions): UseBossFightResult {
 	const [currentQuestion, setCurrentQuestion] = useState(0);
 	const [timeLeft, setTimeLeft] = useState(30);
 	const [showExplanation, setShowExplanation] = useState(false);

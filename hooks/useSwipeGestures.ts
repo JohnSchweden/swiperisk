@@ -4,6 +4,14 @@ import { useCallback, useEffect, useRef, useState } from "react";
 const SWIPE_THRESHOLD = 100;
 const SWIPE_PREVIEW_THRESHOLD = 50;
 
+function getSwipeDirectionFromDelta(
+	deltaX: number,
+	threshold: number,
+): "LEFT" | "RIGHT" | null {
+	if (Math.abs(deltaX) <= threshold) return null;
+	return deltaX > 0 ? "RIGHT" : "LEFT";
+}
+
 interface SwipeState {
 	offset: number;
 	direction: "LEFT" | "RIGHT" | null;
@@ -97,12 +105,10 @@ export function useSwipeGestures({
 				}
 
 				if (isHorizontalSwipe.current) {
-					const newDirection =
-						Math.abs(dx) > SWIPE_PREVIEW_THRESHOLD
-							? dx > 0
-								? "RIGHT"
-								: "LEFT"
-							: null;
+					const newDirection = getSwipeDirectionFromDelta(
+						dx,
+						SWIPE_PREVIEW_THRESHOLD,
+					);
 					setState((prev) => ({
 						...prev,
 						offset: dx,
@@ -132,12 +138,10 @@ export function useSwipeGestures({
 			const { deltaX } = pendingSwipeRef.current;
 			finalOffset = deltaX;
 			if (isHorizontalSwipe.current) {
-				finalDirection =
-					Math.abs(deltaX) > SWIPE_PREVIEW_THRESHOLD
-						? deltaX > 0
-							? "RIGHT"
-							: "LEFT"
-						: null;
+				finalDirection = getSwipeDirectionFromDelta(
+					deltaX,
+					SWIPE_PREVIEW_THRESHOLD,
+				);
 				setState((prev) => ({
 					...prev,
 					offset: deltaX,
@@ -258,7 +262,6 @@ export function useSwipeGestures({
 		onTouchMove,
 		onTouchEnd,
 		swipeProgrammatically,
-		isHorizontalSwipe: () => isHorizontalSwipe.current,
 		SWIPE_THRESHOLD,
 		SWIPE_PREVIEW_THRESHOLD,
 	};

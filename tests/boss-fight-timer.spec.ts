@@ -1,13 +1,13 @@
 import { expect, test } from "@playwright/test";
 import { BOSS_FIGHT_QUESTIONS } from "../data/bossQuestions";
-import { navigateToBossFight } from "./helpers/navigation";
+import { navigateToBossFightFast } from "./helpers/navigation";
 import { SELECTORS } from "./helpers/selectors";
 
-test.use({ baseURL: "http://localhost:3000" });
+test.use({ baseURL: "https://localhost:3000" });
 
 test.describe("Boss fight timer", () => {
 	test("a) reaches BOSS_FIGHT stage", async ({ page }) => {
-		await navigateToBossFight(page);
+		await navigateToBossFightFast(page);
 		await expect(page.getByText("Boss fight")).toBeVisible();
 		await expect(
 			page.getByText(/Negotiate with the External Auditor/),
@@ -15,7 +15,7 @@ test.describe("Boss fight timer", () => {
 	});
 
 	test("b) timer is visible and counts down", async ({ page }) => {
-		await navigateToBossFight(page);
+		await navigateToBossFightFast(page);
 		const timerLabel = page.getByText("Time remaining");
 		await expect(timerLabel).toBeVisible();
 		// Timer shows e.g. "30s" or "29s"
@@ -37,7 +37,7 @@ test.describe("Boss fight timer", () => {
 	}) => {
 		test.slow();
 		test.setTimeout(45000); // 30s timer + buffer
-		await navigateToBossFight(page);
+		await navigateToBossFightFast(page);
 		// Don't click any answer; wait for timer to hit 0 (auto-fail)
 		await page.waitForSelector("text=Incorrect", { timeout: 35000 });
 		await expect(page.getByText("Incorrect")).toBeVisible();
@@ -51,7 +51,7 @@ test.describe("Boss fight timer", () => {
 	test("d) answer shuffling: options present and correct answer is among them", async ({
 		page,
 	}) => {
-		await navigateToBossFight(page);
+		await navigateToBossFightFast(page);
 		const firstQuestion = BOSS_FIGHT_QUESTIONS[0];
 		const correctAnswer = firstQuestion.correctAnswer;
 		// Answer buttons contain "A." "B." etc. and the answer text

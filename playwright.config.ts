@@ -5,8 +5,9 @@ export default defineConfig({
 	fullyParallel: true,
 	webServer: {
 		command: "bun run dev",
-		url: "http://localhost:3000",
+		url: "https://localhost:3000",
 		reuseExistingServer: !process.env.CI,
+		ignoreHTTPSErrors: true,
 	},
 	forbidOnly: !!process.env.CI,
 	retries: process.env.CI ? 2 : 0,
@@ -14,7 +15,8 @@ export default defineConfig({
 	reporter: "list",
 	grepInvert: process.env.CI ? /@live-api|@slow/ : /@live-api/,
 	use: {
-		baseURL: "http://localhost:3000",
+		baseURL: "https://localhost:3000",
+		ignoreHTTPSErrors: true,
 		trace: "on-first-retry",
 		contextOptions: {
 			// Reuse browser context across tests for faster execution

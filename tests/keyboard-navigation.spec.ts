@@ -2,7 +2,7 @@ import { expect, test } from "@playwright/test";
 import { getCard, navigateToPlayingFast } from "./helpers/navigation";
 import { SELECTORS } from "./helpers/selectors";
 
-test.use({ baseURL: "http://localhost:3000" });
+test.use({ baseURL: "https://localhost:3000" });
 
 function getFeedbackDialog(page: import("@playwright/test").Page) {
 	return page
@@ -20,12 +20,12 @@ test.describe("Keyboard navigation", () => {
 	}) => {
 		const card = await getCard(page);
 		await expect(card).toBeVisible();
-		await card.click({ position: { x: 10, y: 10 } }); // focus page
+		await card.click({ position: { x: 10, y: 10 }, force: true }); // focus page for keyboard
 
 		await page.keyboard.press("ArrowRight");
 
 		const feedbackDialog = getFeedbackDialog(page);
-		await expect(feedbackDialog).toBeVisible({ timeout: 5000 });
+		await expect(feedbackDialog).toBeVisible({ timeout: 3000 });
 		// RIGHT = Paste on first dev card; assert dialog shows Paste-related content
 		await expect(
 			feedbackDialog.getByText(/trade secret|open-sourced/i).first(),
@@ -37,12 +37,12 @@ test.describe("Keyboard navigation", () => {
 	}) => {
 		const card = await getCard(page);
 		await expect(card).toBeVisible();
-		await card.click({ position: { x: 10, y: 10 } }); // focus page
+		await card.click({ position: { x: 10, y: 10 }, force: true }); // focus page for keyboard
 
 		await page.keyboard.press("ArrowLeft");
 
 		const feedbackDialog = getFeedbackDialog(page);
-		await expect(feedbackDialog).toBeVisible({ timeout: 5000 });
+		await expect(feedbackDialog).toBeVisible({ timeout: 3000 });
 		// LEFT = Debug on first dev card; assert dialog shows Debug-related content
 		await expect(
 			feedbackDialog.getByText(/Slow\. Boring|Secure coding/i).first(),
@@ -54,10 +54,11 @@ test.describe("Keyboard navigation", () => {
 	}) => {
 		const card = await getCard(page);
 		await expect(card).toBeVisible();
+		await card.click({ position: { x: 10, y: 10 }, force: true });
 		await page.keyboard.press("ArrowRight");
 
 		const feedbackDialog = getFeedbackDialog(page);
-		await expect(feedbackDialog).toBeVisible({ timeout: 5000 });
+		await expect(feedbackDialog).toBeVisible({ timeout: 3000 });
 
 		await page.keyboard.press("Enter");
 

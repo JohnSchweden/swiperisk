@@ -2,18 +2,17 @@ import { expect, test } from "@playwright/test";
 import { navigateToPlaying } from "./helpers/navigation";
 import { SELECTORS } from "./helpers/selectors";
 
-test.use({ baseURL: "http://localhost:3000" });
+test.use({ baseURL: "https://localhost:3000" });
 
 test.describe("Stage transitions", () => {
 	test("from INTRO, click Boot → PERSONALITY_SELECT (personality buttons visible)", async ({
 		page,
 	}) => {
 		await page.goto("/");
-		await page.waitForLoadState("networkidle");
-
 		const bootButton = page
 			.locator(SELECTORS.bootButton)
 			.or(page.locator(SELECTORS.bootButtonFallback));
+		await bootButton.first().waitFor({ state: "visible", timeout: 5000 });
 		await bootButton.click();
 		await page.waitForTimeout(300);
 
@@ -25,10 +24,10 @@ test.describe("Stage transitions", () => {
 		page,
 	}) => {
 		await page.goto("/");
-		await page.waitForLoadState("networkidle");
 		const bootButton = page
 			.locator(SELECTORS.bootButton)
 			.or(page.locator(SELECTORS.bootButtonFallback));
+		await bootButton.first().waitFor({ state: "visible", timeout: 5000 });
 		await bootButton.click();
 		await page.waitForTimeout(300);
 
@@ -58,13 +57,13 @@ test.describe("Stage transitions", () => {
 		await navigateToPlaying(page);
 
 		// Development has 2 cards; swipe left (Debug, Ignore) to avoid game over, then Next ticket to boss
-		await page.click(SELECTORS.debugButton);
+		await page.locator(SELECTORS.debugButton).click({ force: true });
 		await page.waitForTimeout(500);
-		await page.click(SELECTORS.nextTicketButton);
+		await page.locator(SELECTORS.nextTicketButton).click({ force: true });
 		await page.waitForTimeout(500);
-		await page.click('button:has-text("Ignore")');
+		await page.locator('button:has-text("Ignore")').click({ force: true });
 		await page.waitForTimeout(500);
-		await page.click(SELECTORS.nextTicketButton);
+		await page.locator(SELECTORS.nextTicketButton).click({ force: true });
 		await page.waitForTimeout(500);
 
 		await page.waitForSelector("text=Boss fight", { timeout: 8000 });

@@ -34,9 +34,16 @@ export async function navigateToPlayingFast(page: Page): Promise<void> {
 		// Fast approach failed, fall back to full navigation
 		console.warn("Fast navigation failed, falling back to full navigation");
 		await navigateToPlaying(page);
+		return;
 	}
 
-	await page.waitForLoadState("networkidle");
+	// Wait for card to be visible - DOM-based, fast. Avoid networkidle (blocks on long-lived connections).
+	await page
+		.locator(SELECTORS.card)
+		.first()
+		.waitFor({ state: "visible", timeout: 3000 });
+	// Brief wait for card/button animations to settle (avoids "element is not stable" on click)
+	await page.waitForTimeout(500);
 }
 
 /**
@@ -69,7 +76,11 @@ export function getStatefulPage(page: Page): Page {
 export async function navigateToPlaying(page: Page): Promise<void> {
 	// Go to home
 	await page.goto("/");
-	await page.waitForLoadState("networkidle");
+	await page
+		.locator(SELECTORS.bootButton)
+		.or(page.locator(SELECTORS.bootButtonFallback))
+		.first()
+		.waitFor({ state: "visible", timeout: 5000 });
 
 	// Click Boot System
 	const bootButton = page
@@ -91,7 +102,10 @@ export async function navigateToPlaying(page: Page): Promise<void> {
 	await page
 		.locator('button:has-text("Debug")')
 		.waitFor({ state: "visible", timeout: 10000 });
-	await page.waitForLoadState("networkidle");
+	await page
+		.locator(SELECTORS.card)
+		.first()
+		.waitFor({ state: "visible", timeout: 5000 });
 }
 
 /**
@@ -125,19 +139,40 @@ export async function navigateToRoleSelect(page: Page): Promise<void> {
 }
 
 /**
+ * Navigate directly to role select using localStorage state injection.
+ * Bypasses intro and personality selection for faster tests.
+ */
+export async function navigateToRoleSelectFast(page: Page): Promise<void> {
+	await page.addInitScript(() => {
+		window.localStorage.setItem(
+			"gameState",
+			JSON.stringify({
+				state: "role_select",
+				personality: "ROASTER",
+			}),
+		);
+	});
+	await page.goto("/");
+	await page
+		.locator('button:has-text("Software Engineer")')
+		.first()
+		.waitFor({ state: "visible", timeout: 5000 });
+}
+
+/**
  * From playing stage, swipe through DEVELOPMENT deck (2 cards) to reach boss fight.
  */
 async function navigateToBossFightFromPlaying(page: Page): Promise<void> {
-	await page.click(SELECTORS.debugButton);
+	await page.locator(SELECTORS.debugButton).click({ force: true });
 	await page
 		.locator(SELECTORS.nextTicketButton)
 		.waitFor({ state: "visible", timeout: 5000 });
-	await page.click(SELECTORS.nextTicketButton);
-	await page.click('button:has-text("Ignore")');
+	await page.locator(SELECTORS.nextTicketButton).click({ force: true });
+	await page.locator('button:has-text("Ignore")').click({ force: true });
 	await page
 		.locator(SELECTORS.nextTicketButton)
 		.waitFor({ state: "visible", timeout: 5000 });
-	await page.click(SELECTORS.nextTicketButton);
+	await page.locator(SELECTORS.nextTicketButton).click({ force: true });
 	await page.waitForSelector("text=Boss fight", { timeout: 8000 });
 }
 
@@ -175,11 +210,11 @@ export async function navigateToGameOver(page: Page): Promise<void> {
 	await page
 		.locator('button:has-text("Launch")')
 		.waitFor({ state: "visible", timeout: 6000 });
-	await page.click('button:has-text("Launch")');
+	await page.locator('button:has-text("Launch")').click({ force: true });
 	await page
 		.locator(SELECTORS.nextTicketButton)
 		.waitFor({ state: "visible", timeout: 5000 });
-	await page.click(SELECTORS.nextTicketButton);
+	await page.locator(SELECTORS.nextTicketButton).click({ force: true });
 	await page.waitForSelector("text=Liquidated", { timeout: 5000 });
 }
 

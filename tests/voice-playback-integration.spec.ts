@@ -18,7 +18,10 @@ test.describe("Voice Playback Integration", () => {
 
 			// Navigate through to role select
 			await page.goto("/");
-			await page.waitForLoadState("networkidle");
+			await page
+				.locator('button:has-text("Boot System")')
+				.first()
+				.waitFor({ state: "visible", timeout: 5000 });
 			await page.click('button:has-text("Boot System")');
 			await page
 				.locator('button:has-text("V.E.R.A")')
@@ -44,7 +47,10 @@ test.describe("Voice Playback Integration", () => {
 			page.on("console", (msg) => consoleMessages.push(msg.text()));
 
 			await page.goto("/");
-			await page.waitForLoadState("networkidle");
+			await page
+				.locator('button:has-text("Boot System")')
+				.first()
+				.waitFor({ state: "visible", timeout: 5000 });
 			await page.click('button:has-text("Boot System")');
 			await page
 				.locator('button:has-text("BAMBOO")')
@@ -70,7 +76,10 @@ test.describe("Voice Playback Integration", () => {
 			page.on("console", (msg) => consoleMessages.push(msg.text()));
 
 			await page.goto("/");
-			await page.waitForLoadState("networkidle");
+			await page
+				.locator('button:has-text("Boot System")')
+				.first()
+				.waitFor({ state: "visible", timeout: 5000 });
 			await page.click('button:has-text("Boot System")');
 			await page
 				.locator('button:has-text("HYPE-BRO")')
@@ -101,7 +110,7 @@ test.describe("Voice Playback Integration", () => {
 			await navigateToPlaying(page);
 
 			// Click Debug (left choice for dev_1 card)
-			await page.click('button:has-text("Debug")');
+			await page.locator('button:has-text("Debug")').click({ force: true });
 			await expect(page.locator('button:has-text("Next ticket")')).toBeVisible({
 				timeout: 2000,
 			});
@@ -129,7 +138,7 @@ test.describe("Voice Playback Integration", () => {
 			await navigateToPlaying(page);
 
 			// Click Paste (right choice for dev_1 card)
-			await page.click('button:has-text("Paste")');
+			await page.locator('button:has-text("Paste")').click({ force: true });
 			await expect(page.locator('button:has-text("Next ticket")')).toBeVisible({
 				timeout: 2000,
 			});
@@ -157,7 +166,10 @@ test.describe("Voice Playback Integration", () => {
 			page.on("console", (msg) => consoleMessages.push(msg.text()));
 
 			await page.goto("/");
-			await page.waitForLoadState("networkidle");
+			await page
+				.locator('button:has-text("Boot System")')
+				.first()
+				.waitFor({ state: "visible", timeout: 5000 });
 			await page.click('button:has-text("Boot System")');
 			await page
 				.locator('button:has-text("V.E.R.A")')

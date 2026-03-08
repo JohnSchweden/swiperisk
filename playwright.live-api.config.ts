@@ -6,12 +6,14 @@ export default defineConfig({
 	fullyParallel: true,
 	webServer: {
 		command: "bun run dev",
-		url: "http://localhost:3000",
+		url: "https://localhost:3000",
+		ignoreHTTPSErrors: true,
 		reuseExistingServer: !process.env.CI,
 	},
 	reporter: "list",
 	use: {
-		baseURL: "http://localhost:3000",
+		baseURL: "https://localhost:3000",
+		ignoreHTTPSErrors: true,
 		trace: "on-first-retry",
 	},
 	projects: [

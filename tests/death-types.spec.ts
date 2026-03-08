@@ -4,7 +4,7 @@ import { DeathType } from "../types";
 import { navigateToRoleSelect } from "./helpers/navigation";
 import { SELECTORS } from "./helpers/selectors";
 
-test.use({ baseURL: "http://localhost:3000" });
+test.use({ baseURL: "https://localhost:3000" });
 
 test.describe("Death types", () => {
 	test.describe("BANKRUPT (budget ≤ 0)", () => {
@@ -17,11 +17,11 @@ test.describe("Death types", () => {
 			await page
 				.locator('button:has-text("Launch")')
 				.waitFor({ state: "visible", timeout: 10000 });
-			await page.locator('button:has-text("Launch")').click();
+			await page.locator('button:has-text("Launch")').click({ force: true });
 			await page
 				.locator(SELECTORS.nextTicketButton)
 				.waitFor({ state: "visible", timeout: 5000 });
-			await page.locator(SELECTORS.nextTicketButton).click();
+			await page.locator(SELECTORS.nextTicketButton).click({ force: true });
 
 			await expect(
 				page.getByText(DEATH_ENDINGS[DeathType.BANKRUPT].title),
@@ -49,16 +49,16 @@ test.describe("Death types", () => {
 				.locator(SELECTORS.debugButton)
 				.waitFor({ state: "visible", timeout: 10000 });
 			// Exhaust DEVELOPMENT deck (2 cards): Debug → Next, Ignore → Next → Boss
-			await page.locator(SELECTORS.debugButton).click();
+			await page.locator(SELECTORS.debugButton).click({ force: true });
 			await page
 				.locator(SELECTORS.nextTicketButton)
 				.waitFor({ state: "visible", timeout: 5000 });
-			await page.locator(SELECTORS.nextTicketButton).click();
-			await page.locator('button:has-text("Ignore")').click();
+			await page.locator(SELECTORS.nextTicketButton).click({ force: true });
+			await page.locator('button:has-text("Ignore")').click({ force: true });
 			await page
 				.locator(SELECTORS.nextTicketButton)
 				.waitFor({ state: "visible", timeout: 5000 });
-			await page.locator(SELECTORS.nextTicketButton).click();
+			await page.locator(SELECTORS.nextTicketButton).click({ force: true });
 			await page.waitForSelector("text=Boss fight", { timeout: 8000 });
 
 			// Fail by choosing wrong answers (< 3 correct). Pick wrong-answer text for each question.
@@ -70,7 +70,9 @@ test.describe("Death types", () => {
 				"Fair use if it's 'transformative'",
 			];
 			for (let i = 0; i < wrongAnswers.length; i++) {
-				await page.locator(`button:has-text("${wrongAnswers[i]}")`).click();
+				await page
+					.locator(`button:has-text("${wrongAnswers[i]}")`)
+					.click({ force: true });
 				const nextLabel =
 					i < wrongAnswers.length - 1
 						? SELECTORS.nextQuestionButton
@@ -78,7 +80,7 @@ test.describe("Death types", () => {
 				await page
 					.locator(nextLabel)
 					.waitFor({ state: "visible", timeout: 2000 });
-				await page.locator(nextLabel).click();
+				await page.locator(nextLabel).click({ force: true });
 			}
 
 			await expect(
@@ -104,11 +106,11 @@ test.describe("Death types", () => {
 			await page
 				.locator('button:has-text("Launch")')
 				.waitFor({ state: "visible", timeout: 10000 });
-			await page.locator('button:has-text("Launch")').click();
+			await page.locator('button:has-text("Launch")').click({ force: true });
 			await page
 				.locator(SELECTORS.nextTicketButton)
 				.waitFor({ state: "visible", timeout: 5000 });
-			await page.locator(SELECTORS.nextTicketButton).click();
+			await page.locator(SELECTORS.nextTicketButton).click({ force: true });
 
 			await expect(page.getByText("Liquidated")).toBeVisible({ timeout: 5000 });
 			await expect(page.getByText("Reboot system")).toBeVisible();

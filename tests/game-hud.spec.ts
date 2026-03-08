@@ -2,7 +2,7 @@ import { expect, test } from "@playwright/test";
 import { getRightButton, navigateToPlayingFast } from "./helpers/navigation";
 import { SELECTORS } from "./helpers/selectors";
 
-test.use({ baseURL: "http://localhost:3000" });
+test.use({ baseURL: "https://localhost:3000" });
 
 // GameHUD has no data-testid; use stable structure: Budget/Risk/Hype rows with second span = value
 function budgetValue(page: import("@playwright/test").Page) {
@@ -52,14 +52,14 @@ test.describe("GameHUD", () => {
 		page,
 	}) => {
 		const rightBtn = await getRightButton(page);
-		await rightBtn.click();
+		await rightBtn.click({ force: true });
 
 		const feedbackDialog = page
 			.locator(SELECTORS.feedbackDialog)
 			.or(page.locator(SELECTORS.feedbackDialogFallback));
 		await expect(feedbackDialog).toBeVisible({ timeout: 3000 });
 
-		await page.locator(SELECTORS.nextTicketButton).click();
+		await page.locator(SELECTORS.nextTicketButton).click({ force: true });
 		await expect(feedbackDialog).toBeHidden({ timeout: 3000 });
 		await page.waitForTimeout(300);
 

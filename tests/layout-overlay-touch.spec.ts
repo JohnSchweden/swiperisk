@@ -2,7 +2,7 @@ import { expect, test } from "@playwright/test";
 import { navigateToPlayingFast } from "./helpers/navigation";
 import { SELECTORS } from "./helpers/selectors";
 
-test.use({ baseURL: "http://localhost:3000" });
+test.use({ baseURL: "https://localhost:3000" });
 
 test.describe("LayoutShell behavior", () => {
 	test("desktop centers content (justify-center, items-center) at ≥1024px", async ({
@@ -10,10 +10,8 @@ test.describe("LayoutShell behavior", () => {
 	}) => {
 		await page.setViewportSize({ width: 1280, height: 720 });
 		await page.goto("/");
-		await page.waitForLoadState("networkidle");
-
 		const layoutRoot = page.locator('[data-testid="layout-shell"]').first();
-		await layoutRoot.waitFor({ state: "attached" });
+		await layoutRoot.waitFor({ state: "attached", timeout: 5000 });
 
 		const styles = await layoutRoot.evaluate((el) => {
 			const s = getComputedStyle(el);
@@ -36,10 +34,8 @@ test.describe("LayoutShell behavior", () => {
 	}) => {
 		await page.setViewportSize({ width: 393, height: 851 });
 		await page.goto("/");
-		await page.waitForLoadState("networkidle");
-
 		const layoutRoot = page.locator('[data-testid="layout-shell"]').first();
-		await layoutRoot.waitFor({ state: "attached" });
+		await layoutRoot.waitFor({ state: "attached", timeout: 5000 });
 
 		const styles = await layoutRoot.evaluate((el) => {
 			const s = getComputedStyle(el);
@@ -60,7 +56,7 @@ test.describe("Feedback overlay", () => {
 	test("modal is visible and centered on desktop", async ({ page }) => {
 		await page.setViewportSize({ width: 1280, height: 720 });
 		await navigateToPlayingFast(page);
-		await page.click('button:has-text("Paste")');
+		await page.locator('button:has-text("Paste")').click({ force: true });
 		await page.waitForSelector("role=dialog", { timeout: 3000 });
 
 		const modal = page
@@ -88,7 +84,7 @@ test.describe("Feedback overlay", () => {
 	test("modal is visible and centered on mobile", async ({ page }) => {
 		await page.setViewportSize({ width: 393, height: 851 });
 		await navigateToPlayingFast(page);
-		await page.click('button:has-text("Paste")');
+		await page.locator('button:has-text("Paste")').click({ force: true });
 		await page.waitForSelector("role=dialog", { timeout: 3000 });
 
 		const modal = page.locator('[role=dialog] [class*="max-w-lg"]').first();

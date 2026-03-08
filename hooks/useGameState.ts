@@ -81,6 +81,20 @@ function getHydratedState(): GameState {
 			personality?: string;
 			role?: string;
 		};
+		// Fast path: jump to role select (for tests)
+		if (
+			parsed?.state === "role_select" &&
+			parsed.personality &&
+			VALID_PERSONALITIES.has(parsed.personality)
+		) {
+			return {
+				...initialGameState,
+				stage: GameStage.ROLE_SELECT,
+				personality: parsed.personality as PersonalityType,
+				role: null,
+			};
+		}
+		// Fast path: jump to playing
 		if (
 			parsed?.state !== "playing" ||
 			!parsed.personality ||

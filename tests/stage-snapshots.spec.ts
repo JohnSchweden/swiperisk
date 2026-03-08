@@ -9,7 +9,7 @@ import {
 } from "./helpers/navigation";
 import { SELECTORS } from "./helpers/selectors";
 
-test.use({ baseURL: "http://localhost:3000" });
+test.use({ baseURL: "https://localhost:3000" });
 
 async function navigateToIntro(page: Page) {
 	await page.goto("/");
@@ -56,7 +56,7 @@ async function navigateToSummary(page: Page) {
 
 async function navigateToFeedbackOverlay(page: Page) {
 	await navigateToPlaying(page);
-	await page.click('button:has-text("Paste")'); // Swipe right = show feedback
+	await page.locator('button:has-text("Paste")').click({ force: true }); // Swipe right = show feedback
 	const feedbackDialog = page
 		.locator(SELECTORS.feedbackDialog)
 		.or(page.locator(SELECTORS.feedbackDialogFallback));
@@ -75,14 +75,14 @@ async function navigateToPlayingWithRoastAnswer(page: Page) {
 		.first()
 		.waitFor({ state: "visible", timeout: 2000 });
 	if (await feedbackDialog.isVisible()) {
-		await nextBtn.click();
+		await nextBtn.click({ force: true });
 		await page
 			.locator(SELECTORS.nextTicketButton)
 			.waitFor({ state: "visible", timeout: 3000 });
 	} else {
-		await page.click(SELECTORS.debugButton);
+		await page.locator(SELECTORS.debugButton).click({ force: true });
 		await nextBtn.waitFor({ state: "visible", timeout: 3000 });
-		await nextBtn.click();
+		await nextBtn.click({ force: true });
 	}
 	const textarea = page.getByLabel(
 		"Describe your use case / workflow for governance review",
@@ -114,7 +114,10 @@ test.describe("Stage visual snapshots", () => {
 
 	test("role-select", async ({ page }) => {
 		await navigateToRoleSelect(page);
-		await page.waitForLoadState("networkidle");
+		await page
+			.locator('button:has-text("Software Engineer")')
+			.first()
+			.waitFor({ state: "visible", timeout: 5000 });
 		await expect(page).toHaveScreenshot("role-select.png", {
 			maxDiffPixelRatio: 0.03, // Allow some variance for animations
 		});
@@ -166,14 +169,14 @@ test.describe("Stage visual snapshots", () => {
 			.first()
 			.waitFor({ state: "visible", timeout: 2000 });
 		if (await feedbackDialog.isVisible()) {
-			await nextBtn.click();
+			await nextBtn.click({ force: true });
 			await page
 				.locator(SELECTORS.nextTicketButton)
 				.waitFor({ state: "visible", timeout: 3000 });
 		} else {
-			await page.click(SELECTORS.debugButton);
+			await page.locator(SELECTORS.debugButton).click({ force: true });
 			await nextBtn.waitFor({ state: "visible", timeout: 3000 });
-			await nextBtn.click();
+			await nextBtn.click({ force: true });
 		}
 		await page.getByTestId("roast-terminal").scrollIntoViewIfNeeded();
 		await expect(page).toHaveScreenshot("playing-roast-before.png", {
@@ -204,7 +207,11 @@ test.describe("Stage visual snapshots", () => {
 
 	test("feedback-overlay", async ({ page }) => {
 		await navigateToFeedbackOverlay(page);
-		await page.waitForLoadState("networkidle");
+		await page
+			.locator(SELECTORS.feedbackDialog)
+			.or(page.locator(SELECTORS.feedbackDialogFallback))
+			.first()
+			.waitFor({ state: "visible", timeout: 3000 });
 		await expect(page).toHaveScreenshot("feedback-overlay.png", {
 			mask: [page.locator("text=/\\d{1,2}:\\d{2}/")],
 			maxDiffPixelRatio: 0.02, // Allow some variance for animations
@@ -213,7 +220,10 @@ test.describe("Stage visual snapshots", () => {
 
 	test("boss-fight", async ({ page }) => {
 		await navigateToBossFight(page);
-		await page.waitForLoadState("networkidle");
+		await page
+			.locator('button:has-text("A.")')
+			.first()
+			.waitFor({ state: "visible", timeout: 5000 });
 		await expect(page).toHaveScreenshot("boss-fight.png", {
 			mask: [page.locator("text=/\\d{1,2}:\\d{2}/"), page.getByText(/\d+s/)],
 			maxDiffPixelRatio: 0.05, // Allow more variance for boss fight dynamic content

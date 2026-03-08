@@ -6,7 +6,7 @@ import {
 	navigateToPlayingFast,
 } from "./helpers/navigation";
 
-test.use({ baseURL: "http://localhost:3000" });
+test.use({ baseURL: "https://localhost:3000" });
 
 test.describe("Button Highlight on Swipe", () => {
 	test("right button highlights when swiping right", async ({ page }) => {
@@ -30,7 +30,6 @@ test.describe("Button Highlight on Swipe", () => {
 				color: s.color,
 			};
 		});
-		console.log("Right button styles before swipe:", rightStylesBefore);
 		expect(rightStylesBefore.backgroundColor).not.toMatch(
 			/rgba?\(6,\s*182,\s*212/,
 		); // cyan-500
@@ -53,13 +52,11 @@ test.describe("Button Highlight on Swipe", () => {
 				color: s.color,
 			};
 		});
-		console.log("Right button styles during swipe:", rightStylesAfter);
 		expect(rightStylesAfter.backgroundColor).toMatch(/rgba?\(6,\s*182,\s*212/); // cyan-500 (rgb or rgba)
 		expect(rightStylesAfter.color).toContain("rgb(0, 0, 0)"); // text-black
 
 		// Release
 		await page.mouse.up();
-		await page.waitForTimeout(600);
 	});
 
 	test("left button highlights when swiping left", async ({ page }) => {
@@ -83,7 +80,6 @@ test.describe("Button Highlight on Swipe", () => {
 				color: s.color,
 			};
 		});
-		console.log("Left button styles before swipe:", leftStylesBefore);
 		expect(leftStylesBefore.backgroundColor).not.toMatch(
 			/rgba?\(6,\s*182,\s*212/,
 		); // cyan-500
@@ -106,12 +102,10 @@ test.describe("Button Highlight on Swipe", () => {
 				color: s.color,
 			};
 		});
-		console.log("Left button styles during swipe:", leftStylesAfter);
 		expect(leftStylesAfter.backgroundColor).toMatch(/rgba?\(6,\s*182,\s*212/); // cyan-500 (rgb or rgba)
 		expect(leftStylesAfter.color).toContain("rgb(0, 0, 0)"); // text-black
 
 		// Release
 		await page.mouse.up();
-		await page.waitForTimeout(600);
 	});
 });

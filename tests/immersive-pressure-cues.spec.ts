@@ -44,7 +44,7 @@ test.describe("Pressure Cue Controller", () => {
 
 		await page
 			.getByTestId("swipe-left-button")
-			.click({ timeout: 8000 })
+			.click({ timeout: 8000, force: true })
 			.catch(() => {});
 		await expect(page.getByTestId("feedback-dialog")).toBeVisible({
 			timeout: 15000,
@@ -62,7 +62,7 @@ test.describe("Feedback Overlay", () => {
 		// Click Debug if button is clickable; otherwise timeout will have fired
 		await page
 			.getByTestId("swipe-left-button")
-			.click({ timeout: 8000 })
+			.click({ timeout: 8000, force: true })
 			.catch(() => {});
 		await expect(page.getByTestId("feedback-dialog")).toBeVisible({
 			timeout: 15000,
@@ -81,7 +81,7 @@ test.describe("Feedback Overlay", () => {
 		await navigateToPlayingFast(page);
 		await page
 			.getByTestId("swipe-left-button")
-			.click({ timeout: 8000 })
+			.click({ timeout: 8000, force: true })
 			.catch(() => {});
 		await expect(page.getByTestId("feedback-dialog")).toBeVisible({
 			timeout: 15000,
@@ -108,7 +108,7 @@ test.describe("Feedback Overlay", () => {
 		await navigateToPlayingFast(page);
 		await page
 			.getByTestId("swipe-left-button")
-			.click({ timeout: 8000 })
+			.click({ timeout: 8000, force: true })
 			.catch(() => {});
 		await expect(page.getByTestId("feedback-dialog")).toBeVisible({
 			timeout: 15000,

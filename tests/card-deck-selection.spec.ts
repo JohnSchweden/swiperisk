@@ -1,17 +1,20 @@
 import { expect, test } from "@playwright/test";
 import { ROLE_DECK_ALIASES, ROLE_LABELS } from "../data/roles";
 import { RoleType } from "../types";
-import { navigateToRoleSelect } from "./helpers/navigation";
+import {
+	navigateToRoleSelect,
+	navigateToRoleSelectFast,
+} from "./helpers/navigation";
 import { SELECTORS } from "./helpers/selectors";
 
-test.use({ baseURL: "http://localhost:3000" });
+test.use({ baseURL: "https://localhost:3000" });
 
 test.describe("Card deck selection", () => {
 	test.describe("Role → deck mapping", () => {
 		test("Software Engineer shows DEVELOPMENT deck (Debug / Paste)", async ({
 			page,
 		}) => {
-			await navigateToRoleSelect(page);
+			await navigateToRoleSelectFast(page);
 			await page
 				.locator(
 					`button:has-text("${ROLE_LABELS[RoleType.SOFTWARE_ENGINEER]}")`,
@@ -27,7 +30,7 @@ test.describe("Card deck selection", () => {
 		test("Something Manager shows FINANCE deck (Enable / Disable)", async ({
 			page,
 		}) => {
-			await navigateToRoleSelect(page);
+			await navigateToRoleSelectFast(page);
 			await page
 				.locator(
 					`button:has-text("${ROLE_LABELS[RoleType.SOMETHING_MANAGER]}")`,
@@ -43,7 +46,7 @@ test.describe("Card deck selection", () => {
 		test("Tech/AI Consultant shows MARKETING deck (Launch / Block)", async ({
 			page,
 		}) => {
-			await navigateToRoleSelect(page);
+			await navigateToRoleSelectFast(page);
 			await page
 				.locator(
 					`button:has-text("${ROLE_LABELS[RoleType.TECH_AI_CONSULTANT]}")`,
@@ -62,7 +65,7 @@ test.describe("Card deck selection", () => {
 			const label = ROLE_LABELS[role];
 			const deck = ROLE_DECK_ALIASES[role];
 			test(`${label} (${deck}) reaches PLAYING with card`, async ({ page }) => {
-				await navigateToRoleSelect(page);
+				await navigateToRoleSelectFast(page);
 				await page.locator(`button:has-text("${label}")`).click();
 				// Wait for playing: card or primary left swipe button (data-testid only to avoid regex selector)
 				await page

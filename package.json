@@ -16,6 +16,9 @@
 		"fix": "biome check --write .",
 		"test": "bunx playwright test",
 		"test:file": "bunx playwright test",
+		"benchmark": "bun run scripts/benchmark-tests.ts",
+		"benchmark:compare": "bun run scripts/benchmark-tests.ts -- --compare latest",
+		"test:slow-files": "bun run scripts/find-slow-test-files.ts",
 		"test:live-api": "bun run scripts/test-live-api.ts",
 		"lint:file": "biome lint",
 		"prepare": "husky"

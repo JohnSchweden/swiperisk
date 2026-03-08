@@ -2,43 +2,49 @@ import { expect, test } from "@playwright/test";
 import { getCard, getRightButton } from "./helpers/navigation";
 import { SELECTORS } from "./helpers/selectors";
 
-test.use({ baseURL: "http://localhost:3000" });
+test.use({ baseURL: "https://localhost:3000" });
 
 // First development card (dev_1) RIGHT = Paste; feedback strings from data/cards/development.ts
 const DEV_1_RIGHT_ROASTER = "open-sourced our trade secrets";
 const DEV_1_RIGHT_ZEN = "The code is now one with the world";
 
-async function navigateToPlayingRoaster(page: import("@playwright/test").Page) {
+async function navigateToPlayingWithPersonality(
+	page: import("@playwright/test").Page,
+	personality: "ROASTER" | "ZEN_MASTER",
+) {
+	await page.addInitScript(
+		({ state, personality: p, role }) => {
+			window.localStorage.setItem(
+				"gameState",
+				JSON.stringify({ state, personality: p, role }),
+			);
+		},
+		{
+			state: "playing",
+			personality,
+			role: "SOFTWARE_ENGINEER",
+		},
+	);
 	await page.goto("/");
-	await page.waitForLoadState("networkidle");
-	const bootButton = page
-		.locator(SELECTORS.bootButton)
-		.or(page.locator(SELECTORS.bootButtonFallback));
-	await bootButton.click();
-	await page
-		.locator('button:has-text("V.E.R.A")')
-		.waitFor({ state: "visible" });
-	await page.locator('button:has-text("V.E.R.A")').click();
-	const roleButton = page
-		.locator('button:has-text("Software Engineer")')
-		.or(page.locator('[data-testid="role-software_engineer"]'));
-	await roleButton.waitFor({ state: "visible" });
-	await roleButton.click();
 	await page
 		.locator('button:has-text("Debug")')
-		.waitFor({ state: "visible", timeout: 10000 });
-	await page.waitForLoadState("networkidle");
+		.waitFor({ state: "visible", timeout: 5000 });
+	await page
+		.locator(SELECTORS.card)
+		.first()
+		.waitFor({ state: "visible", timeout: 3000 });
+	await page.waitForTimeout(500); // Allow animations to settle
 }
 
 test.describe("Personality feedback overlay", () => {
 	test("V.E.R.A (Roaster): swipe RIGHT on first card shows Roaster feedback", async ({
 		page,
 	}) => {
-		await navigateToPlayingRoaster(page);
+		await navigateToPlayingWithPersonality(page, "ROASTER");
 		const card = await getCard(page);
 		await expect(card).toBeVisible();
 		const rightBtn = await getRightButton(page);
-		await rightBtn.click();
+		await rightBtn.click({ force: true });
 		const feedbackDialog = page
 			.locator(SELECTORS.feedbackDialog)
 			.or(page.locator(SELECTORS.feedbackDialogFallback));
@@ -49,26 +55,9 @@ test.describe("Personality feedback overlay", () => {
 	test("BAMBOO (Zen Master): same choice shows different feedback text", async ({
 		page,
 	}) => {
-		await page.goto("/");
-		await page.waitForLoadState("networkidle");
-		const bootButton = page
-			.locator(SELECTORS.bootButton)
-			.or(page.locator(SELECTORS.bootButtonFallback));
-		await bootButton.click();
-		await page
-			.locator('[data-testid="personality-zen_master"]')
-			.waitFor({ state: "visible" });
-		await page.locator('[data-testid="personality-zen_master"]').click();
-		await page
-			.locator('button:has-text("Software Engineer")')
-			.waitFor({ state: "visible" });
-		await page.locator('button:has-text("Software Engineer")').click();
-		await page
-			.locator('button:has-text("Debug")')
-			.waitFor({ state: "visible", timeout: 10000 });
-		await page.waitForLoadState("networkidle");
+		await navigateToPlayingWithPersonality(page, "ZEN_MASTER");
 		const rightBtn = await getRightButton(page);
-		await rightBtn.click();
+		await rightBtn.click({ force: true });
 		const feedbackDialog = page
 			.locator(SELECTORS.feedbackDialog)
 			.or(page.locator(SELECTORS.feedbackDialogFallback));

@@ -261,6 +261,16 @@ const App: React.FC = () => {
 	const swipe = useSwipeGestures({
 		enabled: state.stage === GameStage.PLAYING && !feedbackOverlay,
 		onSwipe: handleChoice,
+		onBeforeSwipe: (direction) => {
+			if (
+				(pressure.isCritical || pressure.isUrgent) &&
+				typeof navigator !== "undefined" &&
+				"vibrate" in navigator &&
+				typeof navigator.vibrate === "function"
+			) {
+				navigator.vibrate([50, 30, 50]);
+			}
+		},
 	});
 
 	// Handle next incident (dismiss feedback and move to next card)

@@ -27,11 +27,13 @@ export type { SwipeState };
 interface UseSwipeGesturesOptions {
 	enabled: boolean;
 	onSwipe: (direction: "LEFT" | "RIGHT") => void;
+	onBeforeSwipe?: (direction: "LEFT" | "RIGHT") => void;
 }
 
 export function useSwipeGestures({
 	enabled,
 	onSwipe,
+	onBeforeSwipe,
 }: UseSwipeGesturesOptions) {
 	const [state, setState] = useState<SwipeState>({
 		offset: 0,
@@ -155,6 +157,10 @@ export function useSwipeGestures({
 
 		if (Math.abs(finalOffset) > SWIPE_THRESHOLD) {
 			const direction = finalOffset > 0 ? "RIGHT" : "LEFT";
+
+			// Call onBeforeSwipe synchronously while still in user gesture context
+			onBeforeSwipe?.(direction);
+
 			const targetX =
 				direction === "RIGHT"
 					? window.innerWidth * 1.2
@@ -190,7 +196,7 @@ export function useSwipeGestures({
 				animationTimeoutRef.current = null;
 			}, 600);
 		}
-	}, [state.isDragging, state.offset, state.direction, onSwipe]);
+	}, [state.isDragging, state.offset, state.direction, onSwipe, onBeforeSwipe]);
 
 	// Cleanup on unmount
 	useEffect(() => {

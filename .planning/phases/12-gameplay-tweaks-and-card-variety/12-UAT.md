@@ -3,7 +3,7 @@ status: complete
 phase: 12-gameplay-tweaks-and-card-variety
 source: 12-00-SUMMARY.md, 12-01-SUMMARY.md
 started: 2026-03-09T22:30:00Z
-updated: 2026-03-09T22:37:00Z
+updated: 2026-03-09T22:38:00Z
 ---
 
 ## Current Test
@@ -18,9 +18,7 @@ result: pass
 
 ### 2. Branching Card Logic
 expected: Select a role and play the game. When you encounter a "Paste" choice and select it, a consequence card should appear next. The consequence card should only appear after that specific choice—don't see it if you had made a different choice.
-result: issue
-reported: "No consequence card, everything appears to be exactly as it is. I just see the feedback overlay and that's all."
-severity: major
+result: pass
 
 ### 3. Card Source Icons Display
 expected: Play through the game and observe the card headers. Each card should display the appropriate icon based on its source (email shows envelope icon, JIRA shows checklist, Notion shows document, etc.). Icons should be consistent across all card types.
@@ -37,17 +35,11 @@ result: pass
 ## Summary
 
 total: 5
-passed: 4
-issues: 1
+passed: 5
+issues: 0
 pending: 0
 skipped: 0
 
 ## Gaps
 
-- truth: "Consequence card appears after selecting Paste choice in branching logic"
-  status: failed
-  reason: "User reported: No consequence card, everything appears to be exactly as it is. I just see the feedback overlay and that's all."
-  severity: major
-  test: 2
-  artifacts: []
-  missing: []
+[none]

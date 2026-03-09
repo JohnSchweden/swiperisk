@@ -146,6 +146,15 @@ export interface BossQuestion {
 	explanation: string;
 }
 
+/** Phase 06-04: V2 Waitlist payload for email capture */
+export interface V2WaitlistPayload {
+	email: string;
+	role: string;
+	archetype: string;
+	resilience: number;
+	timestamp: number;
+}
+
 /** Phase 04: Pressure metadata for immersive effects. Keyed by card ID, referenced at runtime. */
 export interface PressureOutcomeMetadata {
 	/** Optional team-impact copy shown in feedback overlay (e.g. morale, resignations). */

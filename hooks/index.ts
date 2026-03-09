@@ -3,6 +3,7 @@ export { useBossFight } from "./useBossFight";
 export { useClock } from "./useClock";
 export { useCountdown } from "./useCountdown";
 export { useDebrief } from "./useDebrief";
+export { useEmailCapture } from "./useEmailCapture";
 export { type GameAction, useGameState } from "./useGameState";
 export { useIncidentPressure } from "./useIncidentPressure";
 export { usePressureAudio } from "./usePressureAudio";

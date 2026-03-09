@@ -118,13 +118,11 @@ export const DebriefPage3Verdict: React.FC<DebriefPage3VerdictProps> = ({
 						<br />
 						Enter your email to be first in line for the adaptive version.
 					</p>
-					{role && archetype && (
-						<EmailCaptureForm
-							role={role}
-							archetype={archetype.id}
-							resilience={resilienceScore}
-						/>
-					)}
+					<EmailCaptureForm
+						role={role || "unknown"}
+						archetype={archetype?.id || "UNKNOWN"}
+						resilience={resilienceScore}
+					/>
 				</div>
 			</div>
 		</LayoutShell>

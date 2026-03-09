@@ -476,7 +476,7 @@ const App: React.FC = () => {
 				);
 
 			case GameStage.SUMMARY:
-				return <SummaryScreen state={state} onRestart={handleRestart} />;
+				return <SummaryScreen state={state} onDebrief={debrief.nextPage} />;
 
 			default:
 				return <IntroScreen onStart={startGame} />;

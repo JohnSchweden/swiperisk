@@ -5,12 +5,16 @@ milestone_name: Kobayashi Maru — AI Governance Simulator
 current_phase: 12-gameplay-tweaks-and-card-variety
 current_plan: 01
 status: planning
+<<<<<<< HEAD
 last_updated: "2026-03-09T17:30:59.175Z"
+=======
+last_updated: "2026-03-09T21:08:58.333Z"
+>>>>>>> dcd7273 (docs(06-01): complete archetype system foundation plan)
 progress:
   total_phases: 14
   completed_phases: 4
-  total_plans: 25
-  completed_plans: 18
+  total_plans: 39
+  completed_plans: 21
 ---
 
 # Session State
@@ -44,3 +48,8 @@ See: .planning/PROJECT.md
 - 2026-03-08: Completed 04-10-PLAN.md (playUnlockPulse in gesture; first sound in user gesture)
 - 2026-03-09: Completed 12-01-PLAN.md (Expanded AppSource enum, SOURCE_ICONS mapping, refactored card header rendering)
 - 2026-03-09: Completed 12-00-PLAN.md (Shuffle deck on game start; branching card logic with injection)
+<<<<<<< HEAD
+=======
+- 2026-03-09: Completed 03-01-PLAN.md (Test framework for card validation: 5 test files + sourcing scaffold)
+- 2026-03-09: Completed 06-01-PLAN.md (Archetype system foundation: types, scoring, useArchetype hook)
+>>>>>>> dcd7273 (docs(06-01): complete archetype system foundation plan)

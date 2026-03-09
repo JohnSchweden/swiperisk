@@ -2,6 +2,7 @@ import type React from "react";
 import { useCallback, useEffect, useRef, useState } from "react";
 import {
 	BossFight,
+	DebriefContainer,
 	FeedbackOverlay,
 	GameOver,
 	GameScreen,
@@ -13,11 +14,11 @@ import {
 	SummaryScreen,
 } from "./components/game";
 import { BOSS_FIGHT_QUESTIONS, ROLE_CARDS } from "./data";
-import { shuffleDeck } from "./lib/deck";
 import {
 	useBossFight,
 	useClock,
 	useCountdown,
+	useDebrief,
 	useGameState,
 	useIncidentPressure,
 	useRoast,
@@ -25,6 +26,7 @@ import {
 	useSwipeGestures,
 	useVoicePlayback,
 } from "./hooks";
+import { shuffleDeck } from "./lib/deck";
 import {
 	playCountdownBeep,
 	playCountdownStart,
@@ -93,6 +95,9 @@ const App: React.FC = () => {
 		completeBossFight,
 		resetGame,
 	} = useGameState();
+
+	// Debrief hook for 3-page flow navigation and archetype calculation
+	const debrief = useDebrief({ state, dispatch });
 
 	// Feedback overlay state (includes optional team-impact from pressure metadata)
 	const [feedbackOverlay, setFeedbackOverlay] = useState<{
@@ -452,7 +457,23 @@ const App: React.FC = () => {
 				);
 
 			case GameStage.GAME_OVER:
-				return <GameOver state={state} onRestart={handleRestart} />;
+				return <GameOver state={state} onRestart={debrief.nextPage} />;
+
+			case GameStage.DEBRIEF_PAGE_1:
+			case GameStage.DEBRIEF_PAGE_2:
+			case GameStage.DEBRIEF_PAGE_3:
+				return (
+					<DebriefContainer
+						state={state}
+						archetype={debrief.archetype?.name ?? "Unknown"}
+						archetypeDescription={
+							debrief.archetype?.description ?? "No classification available."
+						}
+						resilienceScore={debrief.resilienceScore}
+						onNextPage={debrief.nextPage}
+						onRestart={debrief.restart}
+					/>
+				);
 
 			case GameStage.SUMMARY:
 				return <SummaryScreen state={state} onRestart={handleRestart} />;

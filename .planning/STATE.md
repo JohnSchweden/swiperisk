@@ -5,12 +5,12 @@ milestone_name: Kobayashi Maru — AI Governance Simulator
 current_phase: 12-gameplay-tweaks-and-card-variety
 current_plan: 01
 status: planning
-last_updated: "2026-03-09T23:28:29.613Z"
+last_updated: "2026-03-09T23:30:08.790Z"
 progress:
   total_phases: 14
   completed_phases: 4
   total_plans: 45
-  completed_plans: 24
+  completed_plans: 28
 ---
 
 # Session State

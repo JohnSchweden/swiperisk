@@ -25,7 +25,7 @@ const LayoutShellComponent: React.FC<LayoutShellProps> = ({
 		data-testid="layout-shell"
 		className={`
         relative flex flex-col w-full
-        lg:items-center lg:justify-center items-start pt-16 lg:pt-0
+        lg:items-center lg:justify-center items-start pt-16 lg:pt-24
         min-h-[100dvh]
         bg-black
         safe-area-top safe-area-bottom

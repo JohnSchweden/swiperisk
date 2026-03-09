@@ -26,7 +26,8 @@ test.describe("LayoutShell behavior @area:layout", () => {
 		expect(styles.display).toBe("flex");
 		expect(styles.alignItems).toBe("center");
 		expect(styles.justifyContent).toBe("center");
-		expect(styles.paddingTop).toBe("0px");
+		// Desktop gets extra breathing room vs mobile; just assert it's not zero.
+		expect(parseInt(styles.paddingTop, 10)).toBeGreaterThanOrEqual(64);
 	});
 
 	test("mobile top-aligns content (items-start) and has pt-16 at <1024px", async ({

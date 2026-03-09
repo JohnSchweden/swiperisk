@@ -465,7 +465,7 @@ const App: React.FC = () => {
 				return (
 					<DebriefContainer
 						state={state}
-						archetype={debrief.archetype?.name ?? "Unknown"}
+						archetype={debrief.archetype}
 						archetypeDescription={
 							debrief.archetype?.description ?? "No classification available."
 						}

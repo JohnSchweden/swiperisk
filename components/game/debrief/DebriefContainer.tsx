@@ -1,12 +1,12 @@
 import type React from "react";
-import { GameStage, type GameState } from "../../../types";
+import { type Archetype, GameStage, type GameState } from "../../../types";
 import { DebriefPage1Collapse } from "./DebriefPage1Collapse";
 import { DebriefPage2AuditTrail } from "./DebriefPage2AuditTrail";
 import { DebriefPage3Verdict } from "./DebriefPage3Verdict";
 
 interface DebriefContainerProps {
 	state: GameState;
-	archetype: string;
+	archetype: Archetype | null;
 	archetypeDescription: string;
 	resilienceScore: number;
 	onNextPage: () => void;
@@ -34,7 +34,7 @@ export const DebriefContainer: React.FC<DebriefContainerProps> = ({
 					archetype={archetype}
 					archetypeDescription={archetypeDescription}
 					resilienceScore={resilienceScore}
-					role={state.role || "Unknown"}
+					role={state.role}
 					onRestart={onRestart}
 				/>
 			);

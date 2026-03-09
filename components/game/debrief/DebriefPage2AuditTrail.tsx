@@ -82,7 +82,7 @@ export const DebriefPage2AuditTrail: React.FC<DebriefPage2AuditTrailProps> = ({
 
 								const outcome =
 									entry.choice === "RIGHT" ? card.onRight : card.onLeft;
-								const cardPreview = card.text.slice(0, 40);
+								const cardPreview = card.text.slice(0, 120);
 
 								return (
 									<div
@@ -105,7 +105,7 @@ export const DebriefPage2AuditTrail: React.FC<DebriefPage2AuditTrailProps> = ({
 												</div>
 												<p className="text-sm text-slate-400 truncate">
 													"{cardPreview}
-													{card.text.length > 40 ? "..." : ""}"
+													{card.text.length > 120 ? "..." : ""}"
 												</p>
 											</div>
 											<div
@@ -115,7 +115,7 @@ export const DebriefPage2AuditTrail: React.FC<DebriefPage2AuditTrailProps> = ({
 														: "bg-rose-500/20 text-rose-400 border border-rose-500/30"
 												}`}
 											>
-												{entry.choice}
+												{outcome.label}
 											</div>
 										</div>
 										<div className="flex items-center gap-2 text-xs text-slate-500">

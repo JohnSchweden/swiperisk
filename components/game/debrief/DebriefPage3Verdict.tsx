@@ -1,11 +1,13 @@
 import type React from "react";
+import type { Archetype, RoleType } from "../../../types";
+import { getShareUrl } from "../../../utils/linkedin-share";
 import LayoutShell from "../../LayoutShell";
 
 interface DebriefPage3VerdictProps {
-	archetype: string;
+	archetype: Archetype | null;
 	archetypeDescription: string;
 	resilienceScore: number;
-	role: string;
+	role: RoleType | null;
 	onRestart: () => void;
 }
 
@@ -35,11 +37,9 @@ export const DebriefPage3Verdict: React.FC<DebriefPage3VerdictProps> = ({
 	const archetypeColorClass = getArchetypeColor(resilienceScore);
 
 	const handleShareLinkedIn = () => {
-		const shareText = encodeURIComponent(
-			`I just survived as a ${role} in the AI Governance Simulator and was classified as: "${archetype}" with ${resilienceScore}% resilience. Can you do better?`,
-		);
-		const linkedInUrl = `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(window.location.href)}&summary=${shareText}`;
-		window.open(linkedInUrl, "_blank", "width=600,height=400");
+		if (!role || !archetype) return;
+		const linkedInUrl = getShareUrl(role, archetype, resilienceScore);
+		window.open(linkedInUrl, "_blank", "width=550,height=420");
 	};
 
 	return (
@@ -63,7 +63,7 @@ export const DebriefPage3Verdict: React.FC<DebriefPage3VerdictProps> = ({
 						Classification
 					</div>
 					<h2 className="text-4xl md:text-6xl font-black mb-4 tracking-tighter">
-						{archetype}
+						{archetype?.name ?? "Unknown"}
 					</h2>
 					<p className="text-lg md:text-xl text-slate-300 leading-relaxed max-w-lg mx-auto">
 						{archetypeDescription}
@@ -88,7 +88,8 @@ export const DebriefPage3Verdict: React.FC<DebriefPage3VerdictProps> = ({
 					<button
 						type="button"
 						onClick={handleShareLinkedIn}
-						className="px-6 py-3 md:px-8 md:py-4 text-base font-bold tracking-wide bg-[#0077b5] text-white hover:bg-[#005885] transition-all duration-300 flex items-center justify-center gap-2"
+						disabled={!archetype}
+						className="px-6 py-3 md:px-8 md:py-4 text-base font-bold tracking-wide bg-white text-black hover:bg-cyan-400 hover:text-black transition-all duration-300 flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:bg-white"
 					>
 						<i className="fa-brands fa-linkedin text-lg"></i>
 						Share to LinkedIn

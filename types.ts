@@ -92,6 +92,7 @@ export interface GameState {
 	deathType: DeathType | null;
 	unlockedEndings: DeathType[];
 	bossFightAnswers: boolean[];
+	effectiveDeck: Card[] | null;
 }
 
 export enum DeathType {

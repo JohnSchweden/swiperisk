@@ -7,6 +7,7 @@ import {
 	type GameState,
 	PersonalityType,
 	RoleType,
+	type Card,
 } from "../types";
 
 const INITIAL_BUDGET = 10000000;
@@ -24,6 +25,7 @@ export const initialGameState: GameState = {
 	deathType: null,
 	unlockedEndings: [],
 	bossFightAnswers: [],
+	effectiveDeck: null,
 };
 
 export type GameAction =
@@ -33,6 +35,7 @@ export type GameAction =
 			personality?: PersonalityType | null;
 			role?: RoleType | null;
 			currentCardIndex?: number;
+			shuffledDeck?: Card[] | null;
 	  }
 	| {
 			type: "CHOICE_MADE";
@@ -155,6 +158,8 @@ export function gameReducer(state: GameState, action: GameAction): GameState {
 			if (action.role !== undefined) update.role = action.role;
 			if (action.currentCardIndex !== undefined)
 				update.currentCardIndex = action.currentCardIndex;
+			if (action.shuffledDeck !== undefined)
+				update.effectiveDeck = action.shuffledDeck;
 			return { ...state, ...update };
 		}
 		case "CHOICE_MADE": {
@@ -202,7 +207,8 @@ export function gameReducer(state: GameState, action: GameAction): GameState {
 				};
 			}
 			if (!state.role) return state;
-			const cards = ROLE_CARDS[state.role];
+			// Use effectiveDeck (shuffled and with branches) if available, otherwise fall back to ROLE_CARDS
+			const cards = state.effectiveDeck ?? ROLE_CARDS[state.role];
 			if (state.currentCardIndex + 1 >= cards.length) {
 				return { ...state, stage: GameStage.BOSS_FIGHT };
 			}

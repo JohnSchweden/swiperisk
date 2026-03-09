@@ -20,18 +20,21 @@ interface UseDebriefOptions {
 
 /**
  * Hook for managing debrief page navigation and archetype calculation.
- * Automatically calculates archetype when entering GAME_OVER (memoized, runs once).
+ * Automatically calculates archetype when entering any debrief page (memoized, runs once).
  */
 export function useDebrief(options: UseDebriefOptions): DebriefResult {
 	const { state, dispatch } = options;
 	const hasCalculatedArchetype = useRef(false);
 
-	// Calculate archetype when entering GAME_OVER (only once)
+	// Calculate archetype when entering any debrief page or GAME_OVER (only once)
 	const calculation = useMemo(() => {
-		if (
-			state.stage === GameStage.GAME_OVER &&
-			!hasCalculatedArchetype.current
-		) {
+		const isDebriefStage =
+			state.stage === GameStage.GAME_OVER ||
+			state.stage === GameStage.DEBRIEF_PAGE_1 ||
+			state.stage === GameStage.DEBRIEF_PAGE_2 ||
+			state.stage === GameStage.DEBRIEF_PAGE_3;
+
+		if (isDebriefStage && !hasCalculatedArchetype.current) {
 			hasCalculatedArchetype.current = true;
 			return calculateArchetype(
 				state.history,

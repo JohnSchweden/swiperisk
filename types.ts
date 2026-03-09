@@ -77,6 +77,9 @@ export enum GameStage {
 	BOSS_FIGHT = "BOSS_FIGHT",
 	GAME_OVER = "GAME_OVER",
 	SUMMARY = "SUMMARY",
+	DEBRIEF_PAGE_1 = "DEBRIEF_PAGE_1",
+	DEBRIEF_PAGE_2 = "DEBRIEF_PAGE_2",
+	DEBRIEF_PAGE_3 = "DEBRIEF_PAGE_3",
 }
 
 export interface GameState {

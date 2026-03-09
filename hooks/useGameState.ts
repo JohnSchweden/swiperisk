@@ -174,7 +174,10 @@ const STAGE_TRANSITIONS: Record<GameStage, GameStage[]> = {
 	[GameStage.INITIALIZING]: [GameStage.PLAYING],
 	[GameStage.PLAYING]: [GameStage.BOSS_FIGHT, GameStage.GAME_OVER],
 	[GameStage.BOSS_FIGHT]: [GameStage.SUMMARY, GameStage.GAME_OVER],
-	[GameStage.GAME_OVER]: [GameStage.INTRO],
+	[GameStage.GAME_OVER]: [GameStage.DEBRIEF_PAGE_1],
+	[GameStage.DEBRIEF_PAGE_1]: [GameStage.DEBRIEF_PAGE_2],
+	[GameStage.DEBRIEF_PAGE_2]: [GameStage.DEBRIEF_PAGE_3],
+	[GameStage.DEBRIEF_PAGE_3]: [GameStage.INTRO],
 	[GameStage.SUMMARY]: [GameStage.INTRO],
 };
 

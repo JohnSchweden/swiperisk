@@ -52,4 +52,8 @@ See: .planning/PROJECT.md
 =======
 - 2026-03-09: Completed 03-01-PLAN.md (Test framework for card validation: 5 test files + sourcing scaffold)
 - 2026-03-09: Completed 06-01-PLAN.md (Archetype system foundation: types, scoring, useArchetype hook)
+<<<<<<< HEAD
 >>>>>>> dcd7273 (docs(06-01): complete archetype system foundation plan)
+=======
+- 2026-03-09: Completed 06-02-PLAN.md (3-page debrief UI flow: Collapse → Audit Trail → Verdict)
+>>>>>>> 7f95966 (docs(06-02): complete debrief flow plan)

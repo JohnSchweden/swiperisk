@@ -79,7 +79,7 @@ Each task was committed atomically:
 3. **Task 2: Update type passing** - `b1ae4cd` (refactor: full archetype object)
 4. **Task 3: Write LinkedIn share integration tests** - `adeed05` (test: E2E tests)
 
-**Plan metadata:** `TBD` (docs: complete plan)
+**Plan metadata:** `eb018e1` (docs: complete plan)
 
 ## Files Created/Modified
 
@@ -137,6 +137,30 @@ None - no external service configuration required.
 - Share button integrated on Page 3 with proper styling
 - All verification passing (unit tests, E2E tests, typecheck)
 - Ready for Wave 3: email capture and V2 waitlist signup
+
+## Self-Check
+
+- [x] utils/linkedin-share.ts exists and exports formatShareText, encodeLinkedInShareUrl, getShareUrl
+- [x] unit/linkedin-share.test.ts exists with 12 passing tests
+- [x] tests/debrief-page-3.spec.ts exists with 5 passing E2E tests
+- [x] 06-03-SUMMARY.md created with complete documentation
+- [x] All commits present: 13fe57b, 00b0820, b1ae4cd, adeed05, eb018e1
+- [x] TypeScript compilation passes (0 errors)
+
+## PLAN COMPLETE
+
+**Plan:** 06-03
+**Tasks:** 3/3 completed
+**SUMMARY:** .planning/phases/06-debrief-and-replay-system/06-03-SUMMARY.md
+
+**Commits:**
+- `13fe57b`: test(06-03): add LinkedIn share utility with TDD
+- `00b0820`: feat(06-03): integrate LinkedIn share button with utility module
+- `b1ae4cd`: refactor(06-03): update DebriefContainer to pass full archetype object
+- `adeed05`: test(06-03): add LinkedIn share E2E tests
+- `eb018e1`: docs(06-03): complete LinkedIn share plan summary
+
+**Duration:** 6 minutes
 
 ---
 *Phase: 06-debrief-and-replay-system*

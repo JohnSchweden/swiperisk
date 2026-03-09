@@ -1,2 +1,6 @@
+#!/bin/sh
+# Run typecheck and lint-staged, allowing empty commits
+. "$(dirname "$0")/_/husky.sh"
+
 bun run typecheck
-bunx lint-staged
+bunx lint-staged --allow-empty

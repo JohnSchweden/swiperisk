@@ -1,5 +1,5 @@
 ---
-status: complete
+status: diagnosed
 phase: 06-debrief-and-replay-system
 source: 06-01-SUMMARY.md, 06-02-SUMMARY.md, 06-03-SUMMARY.md, 06-04-SUMMARY.md, 06-05-SUMMARY.md
 started: 2026-03-09T00:00:00Z
@@ -71,45 +71,85 @@ skipped: 0
   reason: "User reported: description shows right or left. It doesn't explain which decision he made. Would be interesting to see the actual decision text, not swipe direction"
   severity: major
   test: 2
-  artifacts: []
-  missing: []
+  root_cause: "DebriefPage2AuditTrail.tsx shows raw entry.choice (LEFT/RIGHT) instead of human-readable card.onRight.label or card.onLeft.label"
+  artifacts:
+    - path: "components/game/debrief/DebriefPage2AuditTrail.tsx"
+      issue: "Line 117-118 displays entry.choice instead of decision label"
+  missing:
+    - "Map entry.choice to card.onRight.label or card.onLeft.label for display"
+  debug_session: ".planning/debug/phase6-gap1-audit-direction.md"
   
 - truth: "Audit trail cards show complete, meaningful descriptions"
   status: failed
   reason: 'User reported: description text is too short. Example: "Let the IDPFIG negotiator handle three points. This is too short; I need more content."'
   severity: major
   test: 2
-  artifacts: []
-  missing: []
+  root_cause: "Card preview text truncated to 40 characters in DebriefPage2AuditTrail.tsx, insufficient for meaningful context"
+  artifacts:
+    - path: "components/game/debrief/DebriefPage2AuditTrail.tsx"
+      issue: "Lines 85-86 and 106-109 use card.text.slice(0, 40) which is too short"
+  missing:
+    - "Increase character limit to 120-150 characters or show full card text"
+  debug_session: ".planning/debug/phase6-gap2-audit-description.md"
   
 - truth: "LinkedIn share button is clickable and opens share dialog with pre-filled content"
   status: failed
   reason: "User reported: Not working when I go with the mouse over it. The button is deactivated so I cannot click and there is no LinkedIn share dialogue which opens pre-filled with the content."
   severity: major
   test: 4
-  artifacts: []
-  missing: []
+  root_cause: "Button has disabled={!archetype} but archetype calculation only runs on GAME_OVER stage, not when navigating to DEBRIEF_PAGE_3"
+  artifacts:
+    - path: "components/game/debrief/DebriefPage3Verdict.tsx"
+      issue: "Line 92: disabled={!archetype} - button disabled when archetype is null"
+    - path: "hooks/useDebrief.ts"
+      issue: "Lines 31-43: archetype calculation only on GAME_OVER stage"
+  missing:
+    - "Calculate archetype when entering DEBRIEF_PAGE_3, not just GAME_OVER"
+    - "Or ensure button is never disabled in debrief flow"
+  debug_session: ".planning/debug/phase6-gap3-linkedin-button.md"
   
 - truth: "Email capture form with input field and submit button is visible and functional on Page 3"
   status: failed
   reason: 'User reported: No form visible. I just see the envelope icon "Get Early Access to FOW2". I cannot click on it and I see the description text but there is no form where I can write the email address and click on submit.'
   severity: major
   test: 5
-  artifacts: []
-  missing: []
+  root_cause: "EmailCaptureForm conditionally rendered only when role && archetype are truthy; if either is null, form doesn't render"
+  artifacts:
+    - path: "components/game/debrief/DebriefPage3Verdict.tsx"
+      issue: "Lines 121-127: {role && archetype && (<EmailCaptureForm ... />)} - conditional rendering hides form"
+  missing:
+    - "Always render EmailCaptureForm, optionally disabled if role/archetype missing"
+    - "Remove conditional rendering wrapper"
+  debug_session: ".planning/debug/phase6-gap4-email-form.md"
   
 - truth: "Success game over screen consistently shows Debrief button and all metrics"
   status: failed
   reason: "User reported: When succeed with quarters survived, view is different - has log off button instead of Debrief button, no heat/hype display. Cannot continue to debrief."
   severity: major
   test: 6
-  artifacts: []
-  missing: []
+  root_cause: "Two separate game end screens: GameOver.tsx for GAME_OVER stage and SummaryScreen.tsx for SUMMARY stage. SummaryScreen lacks debrief button and metrics."
+  artifacts:
+    - path: "components/game/SummaryScreen.tsx"
+      issue: "Entire file - has Log off button instead of Debrief Me, only shows budget not heat/hype, no onDebrief prop"
+    - path: "App.tsx"
+      issue: "Lines 478-479: SUMMARY stage uses SummaryScreen instead of GameOver"
+  missing:
+    - "Add Budget/Heat/Hype metrics grid to SummaryScreen"
+    - "Replace Log off button with Debrief Me button"
+    - "Add onDebrief prop and pass to DebriefContainer"
+  debug_session: ".planning/debug/phase6-gap5-success-screen.md"
   
 - truth: "Reflection section shows hints for safe choices and suggests riskier alternatives"
   status: failed
   reason: "User reported: Section exists but no hints for safe choices, suggestions, or riskier alternatives. Just description and alternate path, then 'system awaits your inevitable return'. Just prompting to repeat, missing actual hints."
   severity: major
   test: 7
-  artifacts: []
-  missing: []
+  root_cause: "Hints exist but are too subtle (text-xs text-slate-500) and only show for LEFT choices. No hints for RIGHT choices."
+  artifacts:
+    - path: "components/game/debrief/DebriefPage2AuditTrail.tsx"
+      issue: "Lines 177-208: hints only for LEFT choices, styling too subtle, no RIGHT choice hints"
+  missing:
+    - "Add hints for RIGHT choices suggesting safer LEFT alternative"
+    - "Improve visual prominence of hints (better styling)"
+    - "More specific guidance about trade-offs"
+  debug_session: ".planning/debug/phase6-gap6-reflection-hints.md"

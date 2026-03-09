@@ -21,6 +21,19 @@ function getPersonalityComment(personality: PersonalityType): string {
 	}
 }
 
+function getPersonalityClosing(personality: PersonalityType | null): string {
+	switch (personality) {
+		case PersonalityType.ROASTER:
+			return "The system awaits your inevitable return. Try not to disappoint it again.";
+		case PersonalityType.ZEN_MASTER:
+			return "May your next journey bring clarity. The test is eternal, but so is growth.";
+		case PersonalityType.LOVEBOMBER:
+			return "You got this! Every failure is just a stepping stone to LEGENDARY success!";
+		default:
+			return "Ready for another run?";
+	}
+}
+
 function formatConsequence(hype: number, heat: number, fine: number): string {
 	const parts: string[] = [];
 	if (hype !== 0) parts.push(`${hype > 0 ? "+" : ""}${hype} hype`);
@@ -39,6 +52,7 @@ export const DebriefPage2AuditTrail: React.FC<DebriefPage2AuditTrailProps> = ({
 	const personalityComment = personality
 		? getPersonalityComment(personality)
 		: "";
+	const personalityClosing = getPersonalityClosing(personality);
 	const personalityData = personality ? PERSONALITIES[personality] : null;
 
 	return (
@@ -192,6 +206,13 @@ export const DebriefPage2AuditTrail: React.FC<DebriefPage2AuditTrailProps> = ({
 							})}
 						</div>
 					)}
+
+					{/* Personality closing line */}
+					<div className="mt-4 pt-4 border-t border-slate-700/50">
+						<p className="text-sm italic text-cyan-400/80 text-center">
+							{personalityClosing}
+						</p>
+					</div>
 				</div>
 
 				{/* Generate Psych Evaluation Button */}

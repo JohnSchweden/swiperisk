@@ -1,8 +1,21 @@
 import type React from "react";
-import { DEATH_ENDINGS } from "../../../data";
+import { DEATH_ENDINGS, PERSONALITIES } from "../../../data";
 import { useUnlockedEndings } from "../../../hooks";
-import { DeathType, type GameState } from "../../../types";
+import { DeathType, type GameState, PersonalityType } from "../../../types";
 import LayoutShell from "../../LayoutShell";
+
+function getPersonalityReplayLine(personality: PersonalityType | null): string {
+	switch (personality) {
+		case PersonalityType.ROASTER:
+			return "Go ahead. Fail differently this time.";
+		case PersonalityType.ZEN_MASTER:
+			return "The test awaits your next attempt. Wisdom lies in repetition.";
+		case PersonalityType.LOVEBOMBER:
+			return "I believe in you. Let's see what you learn next time!";
+		default:
+			return "Ready for another attempt?";
+	}
+}
 
 interface DebriefPage1CollapseProps {
 	state: GameState;
@@ -24,6 +37,7 @@ export const DebriefPage1Collapse: React.FC<DebriefPage1CollapseProps> = ({
 	const { progressText, unlockedCount, totalCount } = useUnlockedEndings(
 		state.unlockedEndings,
 	);
+	const replayLine = getPersonalityReplayLine(state.personality);
 
 	return (
 		<LayoutShell className="p-4 pb-12 md:p-6 md:pb-16 text-center bg-[#1a0505]">
@@ -129,9 +143,12 @@ export const DebriefPage1Collapse: React.FC<DebriefPage1CollapseProps> = ({
 					</div>
 
 					{/* Encouragement text from hook */}
-					<p className="text-sm md:text-base text-slate-300 leading-relaxed">
+					<p className="text-sm md:text-base text-slate-300 leading-relaxed mb-3">
 						{progressText}
 					</p>
+
+					{/* Personality-specific replay encouragement */}
+					<p className="text-sm italic text-cyan-400/80">{replayLine}</p>
 				</div>
 
 				{/* Debrief Me Button */}

@@ -16,6 +16,7 @@ function getCardTransition(
 
 interface CardStackProps {
 	role: RoleType;
+	cards: Card[];
 	currentCardIndex: number;
 	isFirstCard: boolean;
 	cardRef: RefObject<HTMLDivElement>;
@@ -82,6 +83,7 @@ function SwipePreview({
 
 export const CardStack: React.FC<CardStackProps> = ({
 	role,
+	cards: propsCards,
 	currentCardIndex,
 	isFirstCard,
 	cardRef,
@@ -102,7 +104,8 @@ export const CardStack: React.FC<CardStackProps> = ({
 	isUrgent = false,
 	isCritical = false,
 }) => {
-	const cards = ROLE_CARDS[role];
+	// Use cards from props (effectiveDeck with shuffling/branching), fall back to ROLE_CARDS for compatibility
+	const cards = propsCards.length > 0 ? propsCards : ROLE_CARDS[role];
 	const currentCard = cards[currentCardIndex];
 	const nextCard = cards[currentCardIndex + 1];
 

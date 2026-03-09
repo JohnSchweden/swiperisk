@@ -1,5 +1,6 @@
 import { type Card, RoleType } from "../../types";
 import { ROLE_DECK_ALIASES } from "../roles";
+import { BRANCH_CARDS } from "./branches";
 import { CLEANING_CARDS } from "./cleaning";
 import { DEVELOPMENT_CARDS } from "./development";
 import { FINANCE_CARDS } from "./finance";
@@ -77,6 +78,8 @@ export { getDeckForRole };
  * Value: array of cards to inject after the matching card
  */
 export const BRANCH_INJECTIONS: Record<string, Card[]> = {
-	// Branching examples will be added as part of Task 3
-	// For now, this is an empty map demonstrating the structure
+	// Development: consequence card for pasting code into ChatGPT
+	"dev_1:RIGHT": [
+		BRANCH_CARDS.find((c) => c.id === "dev_branch_aftermath") || { id: "empty", source: undefined } as Card,
+	].filter((c) => c.id !== "empty"),
 };

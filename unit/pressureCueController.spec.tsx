@@ -44,13 +44,13 @@ describe("PressureCueController", () => {
 			},
 		},
 		{
-			name: "when isCritical",
+			name: "when isCritical but not urgent (heat-based only)",
 			isUrgent: false,
 			isCritical: true,
 			countdownValue: 5,
 			countdownSec: 10,
 			isCountdownActive: false,
-			expected: { hasHighPressure: true, isCritical: true },
+			expected: { hasHighPressure: false, isCritical: true },
 		},
 		{
 			name: "when neither urgent nor critical",

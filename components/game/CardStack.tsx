@@ -107,7 +107,9 @@ export const CardStack: React.FC<CardStackProps> = ({
 
 	if (!currentCard) return null;
 
-	const hasStressVisuals = isUrgent || isCritical;
+	// Tie stress visuals to incident countdown only; heat-based isCritical affects haptics,
+	// not the card's ongoing stress display (avoids right-swipe carrying stress to next card)
+	const hasStressVisuals = isUrgent;
 
 	const swipeButtonBase =
 		"flex-1 py-2 px-3 md:py-4 md:px-4 text-sm md:text-base border tracking-wide transition-all min-h-[40px] md:min-h-[48px]";

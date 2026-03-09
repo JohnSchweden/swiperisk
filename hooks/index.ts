@@ -1,3 +1,4 @@
+export { useArchetype } from "./useArchetype";
 export { useBossFight } from "./useBossFight";
 export { useClock } from "./useClock";
 export { useCountdown } from "./useCountdown";

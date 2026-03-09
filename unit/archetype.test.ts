@@ -1,3 +1,4 @@
+import { renderHook } from "@testing-library/react";
 import { describe, expect, it } from "vitest";
 import {
 	ARCHETYPES,
@@ -5,6 +6,7 @@ import {
 	calculateResilienceScore,
 	mapOutcomeToTraits,
 } from "../data/archetypes";
+import { useArchetype } from "../hooks/useArchetype";
 import type {
 	Archetype,
 	ArchetypeId,
@@ -226,5 +228,77 @@ describe("Archetype Data and Calculation", () => {
 			const score = calculateResilienceScore(history, scores);
 			expect(score).toBe(100);
 		});
+	});
+});
+
+describe("useArchetype Hook", () => {
+	it("should return archetype and resilience for valid inputs", () => {
+		const history = [
+			{ cardId: "dev_1", choice: "LEFT" as const },
+			{ cardId: "dev_2", choice: "RIGHT" as const },
+		];
+		const { result } = renderHook(() =>
+			useArchetype(history, 50000, 20, 40, RoleType.SOFTWARE_ENGINEER),
+		);
+
+		expect(result.current).toHaveProperty("archetype");
+		expect(result.current).toHaveProperty("resilience");
+		expect(typeof result.current.resilience).toBe("number");
+	});
+
+	it("should return null archetype for null role", () => {
+		const history = [{ cardId: "dev_1", choice: "LEFT" as const }];
+		const { result } = renderHook(() =>
+			useArchetype(history, 50000, 20, 40, null),
+		);
+
+		expect(result.current.archetype).toBeNull();
+		expect(result.current.resilience).toBe(0);
+	});
+
+	it("should return BALANCED for empty history", () => {
+		const { result } = renderHook(() =>
+			useArchetype([], 1000, 10, 50, RoleType.SOFTWARE_ENGINEER),
+		);
+
+		expect(result.current.archetype?.id).toBe("BALANCED");
+	});
+
+	it("should memoize results (same reference on re-render)", () => {
+		const history = [{ cardId: "dev_1", choice: "LEFT" as const }];
+		const { result, rerender } = renderHook(
+			({ budget }) =>
+				useArchetype(history, budget, 20, 40, RoleType.SOFTWARE_ENGINEER),
+			{ initialProps: { budget: 50000 } },
+		);
+
+		const firstResult = result.current;
+		rerender({ budget: 50000 }); // Same budget
+
+		// Result should be memoized (same reference)
+		expect(result.current.archetype).toBe(firstResult.archetype);
+		expect(result.current.resilience).toBe(firstResult.resilience);
+	});
+
+	it("should recalculate when history changes", () => {
+		let currentHistory = [{ cardId: "dev_1", choice: "LEFT" as const }];
+		const { result, rerender } = renderHook(
+			({ history }) =>
+				useArchetype(history, 50000, 20, 40, RoleType.SOFTWARE_ENGINEER),
+			{ initialProps: { history: currentHistory } },
+		);
+
+		const firstResult = result.current;
+
+		// Change history
+		currentHistory = [
+			{ cardId: "dev_1", choice: "LEFT" as const },
+			{ cardId: "dev_2", choice: "LEFT" as const },
+			{ cardId: "dev_3", choice: "LEFT" as const },
+		];
+		rerender({ history: currentHistory });
+
+		// Result should be different
+		expect(result.current).not.toBe(firstResult);
 	});
 });

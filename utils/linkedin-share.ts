@@ -18,9 +18,17 @@ export function formatShareText(
 /**
  * Encodes the current URL for LinkedIn's native share endpoint.
  * LinkedIn handles the share text via og:description meta tags, not URL params.
+ * Optionally includes a summary parameter for pre-filled share text.
  */
-export function encodeLinkedInShareUrl(currentUrl: string): string {
+export function encodeLinkedInShareUrl(
+	currentUrl: string,
+	summary?: string,
+): string {
 	const encodedUrl = encodeURIComponent(currentUrl);
+	const encodedSummary = summary ? encodeURIComponent(summary) : "";
+	if (encodedSummary) {
+		return `https://www.linkedin.com/sharing/share-offsite/?url=${encodedUrl}&summary=${encodedSummary}`;
+	}
 	return `https://www.linkedin.com/sharing/share-offsite/?url=${encodedUrl}`;
 }
 
@@ -36,5 +44,6 @@ export function getShareUrl(
 ): string {
 	const url =
 		currentUrl ?? (typeof window !== "undefined" ? window.location.href : "");
-	return encodeLinkedInShareUrl(url);
+	const shareText = formatShareText(role, archetype.name, resilience);
+	return encodeLinkedInShareUrl(url, shareText);
 }

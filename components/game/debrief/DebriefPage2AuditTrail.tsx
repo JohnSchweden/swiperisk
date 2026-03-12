@@ -1,6 +1,7 @@
 import type React from "react";
+import { useState } from "react";
 import { PERSONALITIES, ROLE_CARDS } from "../../../data";
-import { type GameState, PersonalityType, RoleType } from "../../../types";
+import { type GameState, PersonalityType } from "../../../types";
 import LayoutShell from "../../LayoutShell";
 
 interface DebriefPage2AuditTrailProps {
@@ -49,6 +50,23 @@ export const DebriefPage2AuditTrail: React.FC<DebriefPage2AuditTrailProps> = ({
 	const { personality, role, history } = state;
 	const cards = role ? ROLE_CARDS[role] : [];
 
+	// Track which card descriptions are expanded
+	const [expandedEntries, setExpandedEntries] = useState<Set<number>>(
+		new Set(),
+	);
+
+	const toggleExpanded = (index: number) => {
+		setExpandedEntries((prev) => {
+			const newSet = new Set(prev);
+			if (newSet.has(index)) {
+				newSet.delete(index);
+			} else {
+				newSet.add(index);
+			}
+			return newSet;
+		});
+	};
+
 	const personalityComment = personality
 		? getPersonalityComment(personality)
 		: "";
@@ -82,7 +100,9 @@ export const DebriefPage2AuditTrail: React.FC<DebriefPage2AuditTrailProps> = ({
 
 								const outcome =
 									entry.choice === "RIGHT" ? card.onRight : card.onLeft;
+								const isExpanded = expandedEntries.has(index);
 								const cardPreview = card.text.slice(0, 120);
+								const shouldShowExpand = card.text.length > 120;
 
 								return (
 									<div
@@ -103,19 +123,46 @@ export const DebriefPage2AuditTrail: React.FC<DebriefPage2AuditTrailProps> = ({
 														({card.source})
 													</span>
 												</div>
-												<p className="text-sm text-slate-400 truncate">
-													"{cardPreview}
-													{card.text.length > 120 ? "..." : ""}"
-												</p>
+												<div className="text-sm text-slate-400">
+													<span className="text-slate-500">"</span>
+													{isExpanded ? card.text : cardPreview}
+													{!isExpanded && shouldShowExpand && (
+														<>
+															<span className="text-slate-500">...</span>
+															<button
+																type="button"
+																onClick={() => toggleExpanded(index)}
+																className="ml-1 text-cyan-400 hover:text-cyan-300 underline cursor-pointer"
+															>
+																show more
+															</button>
+														</>
+													)}
+													{isExpanded && (
+														<button
+															type="button"
+															onClick={() => toggleExpanded(index)}
+															className="ml-1 text-cyan-400 hover:text-cyan-300 underline cursor-pointer"
+														>
+															show less
+														</button>
+													)}
+													<span className="text-slate-500">"</span>
+												</div>
 											</div>
-											<div
-												className={`px-3 py-1 rounded text-xs font-bold ${
-													entry.choice === "RIGHT"
-														? "bg-emerald-500/20 text-emerald-400 border border-emerald-500/30"
-														: "bg-rose-500/20 text-rose-400 border border-rose-500/30"
-												}`}
-											>
-												{outcome.label}
+											<div className="flex flex-col items-end gap-1">
+												<span className="text-xs text-slate-500 uppercase tracking-wide">
+													Your Choice
+												</span>
+												<div
+													className={`px-3 py-1 rounded text-xs font-bold ${
+														entry.choice === "RIGHT"
+															? "bg-emerald-500/20 text-emerald-400 border border-emerald-500/30"
+															: "bg-rose-500/20 text-rose-400 border border-rose-500/30"
+													}`}
+												>
+													{outcome.label}
+												</div>
 											</div>
 										</div>
 										<div className="flex items-center gap-2 text-xs text-slate-500">
@@ -177,9 +224,9 @@ export const DebriefPage2AuditTrail: React.FC<DebriefPage2AuditTrailProps> = ({
 					{/* Per-choice hints for both safe and risky decisions */}
 					{history.length > 0 && (
 						<div className="space-y-3">
-							<div className="text-sm font-semibold text-slate-300 uppercase tracking-wide mb-3 flex items-center gap-2">
+							<div className="text-sm font-semibold text-slate-300 uppercase tracking-wide mb-3 flex items-center justify-center gap-2">
 								<i className="fa-solid fa-route text-cyan-400"></i>
-								Paths You Didn't Take
+								Path You Didn't Take
 							</div>
 							{history.map((entry, index) => {
 								const card = cards.find((c) => c.id === entry.cardId);

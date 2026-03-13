@@ -3,12 +3,12 @@ import { expect, test } from "@playwright/test";
 test.use({ baseURL: "https://localhost:3000" });
 
 test.describe("LinkedIn Share Button @area:gameplay", () => {
-	test("share button is always enabled on debrief page 3", async ({ page }) => {
+	test("share link is visible on debrief page 3", async ({ page }) => {
 		await page.goto("/");
 
 		await page.evaluate(() => {
 			localStorage.setItem(
-				"km-debug-state",
+				"gameState",
 				JSON.stringify({
 					stage: "DEBRIEF_PAGE_3",
 					hype: 50,
@@ -29,22 +29,23 @@ test.describe("LinkedIn Share Button @area:gameplay", () => {
 
 		await page.reload();
 
-		// Find LinkedIn share button
-		const shareButton = page.getByRole("button", {
-			name: /share to linkedin/i,
-		});
-		await expect(shareButton).toBeVisible();
+		// Find LinkedIn share anchor
+		const shareLink = page.locator(
+			"a[href*='linkedin.com/sharing/share-offsite']",
+		);
+		await expect(shareLink).toBeVisible();
 
-		// Button should be enabled (not disabled)
-		await expect(shareButton).toBeEnabled();
+		// Verify it has proper attributes
+		await expect(shareLink).toHaveAttribute("target", "_blank");
+		await expect(shareLink).toHaveAttribute("rel", "noopener noreferrer");
 	});
 
-	test("share button is clickable when archetype is null", async ({ page }) => {
+	test("share link has correct href with LinkedIn format", async ({ page }) => {
 		await page.goto("/");
 
 		await page.evaluate(() => {
 			localStorage.setItem(
-				"km-debug-state",
+				"gameState",
 				JSON.stringify({
 					stage: "DEBRIEF_PAGE_3",
 					hype: 50,
@@ -65,20 +66,23 @@ test.describe("LinkedIn Share Button @area:gameplay", () => {
 
 		await page.reload();
 
-		// Verify button exists and is clickable
-		const shareButton = page.getByRole("button", {
-			name: /share to linkedin/i,
-		});
-		await expect(shareButton).toBeVisible();
-		await expect(shareButton).not.toHaveAttribute("disabled");
+		const shareLink = page.locator(
+			"a[href*='linkedin.com/sharing/share-offsite']",
+		);
+		await expect(shareLink).toBeVisible();
+
+		const href = await shareLink.getAttribute("href");
+		expect(href).toContain("linkedin.com/sharing/share-offsite");
+		expect(href).toContain("url=");
+		expect(href).toContain("summary=");
 	});
 
-	test("share button has LinkedIn icon", async ({ page }) => {
+	test("share link has LinkedIn icon", async ({ page }) => {
 		await page.goto("/");
 
 		await page.evaluate(() => {
 			localStorage.setItem(
-				"km-debug-state",
+				"gameState",
 				JSON.stringify({
 					stage: "DEBRIEF_PAGE_3",
 					hype: 50,
@@ -104,12 +108,12 @@ test.describe("LinkedIn Share Button @area:gameplay", () => {
 		await expect(linkedinIcon).toBeVisible();
 	});
 
-	test("share button has correct styling", async ({ page }) => {
+	test("share link has correct styling", async ({ page }) => {
 		await page.goto("/");
 
 		await page.evaluate(() => {
 			localStorage.setItem(
-				"km-debug-state",
+				"gameState",
 				JSON.stringify({
 					stage: "DEBRIEF_PAGE_3",
 					hype: 50,
@@ -130,19 +134,19 @@ test.describe("LinkedIn Share Button @area:gameplay", () => {
 
 		await page.reload();
 
-		// Verify button styling
-		const shareButton = page.getByRole("button", {
-			name: /share to linkedin/i,
-		});
-		await expect(shareButton).toHaveClass(/bg-white|bg-cyan/);
+		// Verify link styling
+		const shareLink = page.locator(
+			"a[href*='linkedin.com/sharing/share-offsite']",
+		);
+		await expect(shareLink).toHaveClass(/bg-white|bg-cyan/);
 	});
 
-	test("button responds to hover interaction", async ({ page }) => {
+	test("share link responds to hover interaction", async ({ page }) => {
 		await page.goto("/");
 
 		await page.evaluate(() => {
 			localStorage.setItem(
-				"km-debug-state",
+				"gameState",
 				JSON.stringify({
 					stage: "DEBRIEF_PAGE_3",
 					hype: 50,
@@ -163,19 +167,17 @@ test.describe("LinkedIn Share Button @area:gameplay", () => {
 
 		await page.reload();
 
-		const shareButton = page.getByRole("button", {
-			name: /share to linkedin/i,
-		});
-		await expect(shareButton).toBeVisible();
+		const shareLink = page.locator(
+			"a[href*='linkedin.com/sharing/share-offsite']",
+		);
+		await expect(shareLink).toBeVisible();
 
-		// Hover over button - should not change disabled state
-		await shareButton.hover();
-		await expect(shareButton).toBeEnabled();
+		// Hover over link
+		await shareLink.hover();
+		await expect(shareLink).toBeVisible();
 	});
 
-	test("share button is visible with all personality types", async ({
-		page,
-	}) => {
+	test("share link is visible with all personality types", async ({ page }) => {
 		const personalities = ["ROASTER", "ZEN_MASTER", "LOVEBOMBER"] as const;
 
 		for (const personality of personalities) {
@@ -183,7 +185,7 @@ test.describe("LinkedIn Share Button @area:gameplay", () => {
 
 			await page.evaluate((p) => {
 				localStorage.setItem(
-					"km-debug-state",
+					"gameState",
 					JSON.stringify({
 						stage: "DEBRIEF_PAGE_3",
 						hype: 50,
@@ -204,11 +206,11 @@ test.describe("LinkedIn Share Button @area:gameplay", () => {
 
 			await page.reload();
 
-			const shareButton = page.getByRole("button", {
-				name: /share to linkedin/i,
-			});
-			await expect(shareButton).toBeVisible();
-			await expect(shareButton).toBeEnabled();
+			const shareLink = page.locator(
+				"a[href*='linkedin.com/sharing/share-offsite']",
+			);
+			await expect(shareLink).toBeVisible();
+			await expect(shareLink).toHaveAttribute("target", "_blank");
 		}
 	});
 });

@@ -30,3 +30,6 @@ playwright-report/
 
 # Reports
 reports/
+
+# Claude Code auto-memory
+.claude/auto-memory/dirty-files

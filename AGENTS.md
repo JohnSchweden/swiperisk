@@ -20,7 +20,7 @@ bun run lint                        # All files
 
 # 5. Before creating PR
 bun run check && bun run typecheck && bun run test
-´´´
+```
 
 ## Workflow Orchestration
 

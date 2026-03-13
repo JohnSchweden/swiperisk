@@ -217,14 +217,14 @@ export const DebriefPage2AuditTrail: React.FC<DebriefPage2AuditTrailProps> = ({
 					</h3>
 					<p className="text-slate-400 text-sm mb-4 leading-relaxed">
 						Every choice you made shaped this outcome. As you look back at your
-						decisions, consider the paths not taken. The Kobayashi Maru awaits
-						your next attempt.
+						decisions, consider the paths not taken and why you made the choices
+						you did.
 					</p>
 
 					{/* Per-choice hints for both safe and risky decisions */}
 					{history.length > 0 && (
-						<div className="space-y-3">
-							<div className="text-sm font-semibold text-slate-300 uppercase tracking-wide mb-3 flex items-center justify-center gap-2">
+						<div className="space-y-1 mt-8">
+							<div className="text-sm font-semibold text-slate-300 uppercase tracking-wide mb-3 flex items-center justify-center gap-2 pt-[24px] pb-[20px]">
 								<i className="fa-solid fa-route text-cyan-400"></i>
 								Path You Didn't Take
 							</div>
@@ -239,7 +239,7 @@ export const DebriefPage2AuditTrail: React.FC<DebriefPage2AuditTrailProps> = ({
 										<div
 											// biome-ignore lint/suspicious/noArrayIndexKey: Stable chronological list
 											key={`hint-${index}`}
-											className="text-sm text-slate-300 pl-4 border-l-3 border-emerald-500/50 bg-slate-800/30 py-2 rounded-r"
+											className="text-sm text-slate-300 pl-4 border-l-3 border-emerald-500/50 py-2 rounded-r"
 										>
 											<div className="flex items-start gap-2">
 												<span className="text-emerald-400 mt-0.5">💡</span>
@@ -261,7 +261,7 @@ export const DebriefPage2AuditTrail: React.FC<DebriefPage2AuditTrailProps> = ({
 									<div
 										// biome-ignore lint/suspicious/noArrayIndexKey: Stable chronological list
 										key={`hint-${index}`}
-										className="text-sm text-slate-300 pl-4 border-l-3 border-rose-500/50 bg-slate-800/30 py-2 rounded-r"
+										className="text-sm text-slate-300 pl-4 border-l-3 border-rose-500/50 py-2 rounded-r"
 									>
 										<div className="flex items-start gap-2">
 											<span className="text-rose-400 mt-0.5">🛡️</span>

@@ -1,9 +1,9 @@
 ---
-status: diagnosed
+status: resolved
 phase: 06-debrief-and-replay-system
 source: 06-01-SUMMARY.md, 06-02-SUMMARY.md, 06-03-SUMMARY.md, 06-04-SUMMARY.md, 06-05-SUMMARY.md
 started: 2026-03-13T00:00:00Z
-updated: 2026-03-13T00:00:00Z
+updated: 2026-03-13T12:00:00Z
 ---
 
 ## Current Test
@@ -66,7 +66,7 @@ skipped: 0
 ## Gaps
 
 - truth: "Quarter survived screen [Debrief Me] button navigates to Page 2 (Audit Trail)"
-  status: failed
+  status: resolved
   reason: "User reported: pass but when quarter survived debrief me is not navigating to page 2"
   severity: major
   test: 1
@@ -79,7 +79,7 @@ skipped: 0
   debug_session: ".planning/debug/phase6-gap-quartersurvived-navigation.md"
 
 - truth: "LinkedIn share button opens share dialog with pre-filled content"
-  status: failed
+  status: resolved
   reason: "User reported: fail, i created a new plan 16 for fixing this"
   severity: major
   test: 4
@@ -89,7 +89,7 @@ skipped: 0
   debug_session: ".planning/phases/06-debrief-and-replay-system/06-16-PLAN.md"
 
 - truth: "Email capture form submits successfully with valid email"
-  status: failed
+  status: resolved
   reason: "User reported: fail, valid mail shows: something went wrong. try again with this error :3000/api/v2-waitlist:1  Failed to load resource: the server responded with a status of 404 ()"
   severity: major
   test: 5

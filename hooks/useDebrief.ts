@@ -88,7 +88,7 @@ export function useDebrief(options: UseDebriefOptions): DebriefResult {
 			[GameStage.INITIALIZING]: null,
 			[GameStage.PLAYING]: null,
 			[GameStage.BOSS_FIGHT]: null,
-			[GameStage.DEBRIEF_PAGE_1]: null,
+			[GameStage.DEBRIEF_PAGE_1]: GameStage.DEBRIEF_PAGE_2,
 			[GameStage.SUMMARY]: GameStage.DEBRIEF_PAGE_1,
 		};
 

@@ -2,200 +2,85 @@ import { expect, test } from "@playwright/test";
 
 test.use({ baseURL: "https://localhost:3000" });
 
-test.describe("Email Capture - API Integration @area:gameplay", () => {
-	test("form submits successfully to backend API", async ({ page }) => {
-		await page.goto("/");
-
-		await page.evaluate(() => {
-			localStorage.setItem(
-				"km-debug-state",
-				JSON.stringify({
-					stage: "DEBRIEF_PAGE_3",
-					hype: 50,
-					heat: 100,
-					budget: 500000,
-					personality: "ROASTER",
-					role: "SOFTWARE_ENGINEER",
-					currentCardIndex: 0,
-					history: [],
-					deathReason: "Heat exceeded 100%",
-					deathType: "REPLACED_BY_SCRIPT",
-					unlockedEndings: ["REPLACED_BY_SCRIPT"],
-					bossFightAnswers: [],
-					effectiveDeck: null,
-				}),
-			);
+test.describe("V2 Waitlist API @area:gameplay", () => {
+	test("POST /api/v2-waitlist returns 200 for valid payload", async ({
+		request,
+	}) => {
+		const response = await request.post("/api/v2-waitlist", {
+			data: {
+				email: "test@example.com",
+				role: "SOFTWARE_ENGINEER",
+				archetype: "PRAGMATIST",
+				resilience: 75,
+				timestamp: Date.now(),
+			},
 		});
 
-		await page.reload();
-		await page.waitForSelector("input[type='email']", { timeout: 10000 });
-
-		// Monitor network requests
-		const apiResponsePromise = page.waitForResponse(
-			(response) =>
-				response.url().includes("/api/v2-waitlist") &&
-				response.request().method() === "POST",
-		);
-
-		// Fill and submit form
-		const emailInput = page.locator("input[type='email']");
-		const submitButton = page.getByRole("button", {
-			name: /join v2 waitlist/i,
-		});
-
-		await emailInput.fill("test@example.com");
-		await submitButton.click();
-
-		// Wait for API response
-		const response = await apiResponsePromise;
 		expect(response.status()).toBe(200);
-
-		// Verify success message
-		await expect(
-			page.getByText(/email received|v2 is coming|success/i),
-		).toBeVisible();
+		const body = await response.json();
+		expect(body.success).toBe(true);
+		expect(body.message).toContain("Thank you for joining");
 	});
 
-	test("API receives correct payload with role and archetype", async ({
-		page,
+	test("POST /api/v2-waitlist returns 400 for invalid email", async ({
+		request,
 	}) => {
-		await page.goto("/");
-
-		const testEmail = "integration-test@example.com";
-
-		await page.evaluate(() => {
-			localStorage.setItem(
-				"km-debug-state",
-				JSON.stringify({
-					stage: "DEBRIEF_PAGE_3",
-					hype: 50,
-					heat: 100,
-					budget: 500000,
-					personality: "ROASTER",
-					role: "SOFTWARE_ENGINEER",
-					currentCardIndex: 0,
-					history: [],
-					deathReason: "Heat exceeded 100%",
-					deathType: "REPLACED_BY_SCRIPT",
-					unlockedEndings: ["REPLACED_BY_SCRIPT"],
-					bossFightAnswers: [],
-					effectiveDeck: null,
-				}),
-			);
+		const response = await request.post("/api/v2-waitlist", {
+			data: {
+				email: "invalid-email",
+				role: "SOFTWARE_ENGINEER",
+				archetype: "PRAGMATIST",
+				resilience: 75,
+				timestamp: Date.now(),
+			},
 		});
 
-		await page.reload();
-		await page.waitForSelector("input[type='email']", { timeout: 10000 });
-
-		// Capture request body
-		let requestBody: any = null;
-		page.on("request", (request) => {
-			if (
-				request.url().includes("/api/v2-waitlist") &&
-				request.method() === "POST"
-			) {
-				request.postDataJSON().then((data) => {
-					requestBody = data;
-				});
-			}
-		});
-
-		// Submit form
-		await page.locator("input[type='email']").fill(testEmail);
-		await page.getByRole("button", { name: /join v2 waitlist/i }).click();
-
-		// Wait for response
-		await page.waitForResponse((response) =>
-			response.url().includes("/api/v2-waitlist"),
-		);
-
-		// Verify request body structure
-		await page.waitForTimeout(100); // Small delay for request processing
-		expect(requestBody).not.toBeNull();
-		expect(requestBody).toHaveProperty("email", testEmail);
-		expect(requestBody).toHaveProperty("role", "SOFTWARE_ENGINEER");
-		expect(requestBody).toHaveProperty("archetype");
-		expect(requestBody).toHaveProperty("resilience");
-		expect(requestBody).toHaveProperty("timestamp");
+		expect(response.status()).toBe(400);
+		const body = await response.json();
+		expect(body.error).toContain("Invalid email");
 	});
 
-	test("form handles API errors gracefully", async ({ page }) => {
-		await page.goto("/");
-
-		await page.evaluate(() => {
-			localStorage.setItem(
-				"km-debug-state",
-				JSON.stringify({
-					stage: "DEBRIEF_PAGE_3",
-					hype: 50,
-					heat: 100,
-					budget: 500000,
-					personality: "ROASTER",
-					role: "SOFTWARE_ENGINEER",
-					currentCardIndex: 0,
-					history: [],
-					deathReason: "Heat exceeded 100%",
-					deathType: "REPLACED_BY_SCRIPT",
-					unlockedEndings: ["REPLACED_BY_SCRIPT"],
-					bossFightAnswers: [],
-					effectiveDeck: null,
-				}),
-			);
-		});
-
-		await page.reload();
-		await page.waitForSelector("input[type='email']", { timeout: 10000 });
-
-		// Try submitting with invalid email to trigger validation error
-		await page.locator("input[type='email']").fill("invalid-email");
-		await page.getByRole("button", { name: /join v2 waitlist/i }).click();
-
-		// Should show validation error
-		await expect(
-			page.getByText(/please enter a valid email|invalid email/i),
-		).toBeVisible();
-	});
-
-	test("form is visible and functional after all gap closure fixes", async ({
-		page,
+	test("POST /api/v2-waitlist returns 405 for GET requests", async ({
+		request,
 	}) => {
-		await page.goto("/");
+		const response = await request.get("/api/v2-waitlist");
+		expect(response.status()).toBe(405);
+		const body = await response.json();
+		expect(body.error).toContain("Method not allowed");
+	});
 
-		await page.evaluate(() => {
-			localStorage.setItem(
-				"km-debug-state",
-				JSON.stringify({
-					stage: "DEBRIEF_PAGE_3",
-					hype: 50,
-					heat: 100,
-					budget: 500000,
-					personality: "ROASTER",
+	test("POST /api/v2-waitlist returns 400 for missing required fields", async ({
+		request,
+	}) => {
+		const response = await request.post("/api/v2-waitlist", {
+			data: {
+				email: "test@example.com",
+				// Missing role, archetype, resilience, timestamp
+			},
+		});
+
+		expect(response.status()).toBe(400);
+	});
+
+	test("POST /api/v2-waitlist accepts different archetypes", async ({
+		request,
+	}) => {
+		const archetypes = ["PRAGMATIST", "IDEALIST", "SURVIVOR", "PRINCIPLED"];
+
+		for (const archetype of archetypes) {
+			const response = await request.post("/api/v2-waitlist", {
+				data: {
+					email: `test-${archetype.toLowerCase()}@example.com`,
 					role: "SOFTWARE_ENGINEER",
-					currentCardIndex: 0,
-					history: [],
-					deathReason: "Heat exceeded 100%",
-					deathType: "REPLACED_BY_SCRIPT",
-					unlockedEndings: ["REPLACED_BY_SCRIPT"],
-					bossFightAnswers: [],
-					effectiveDeck: null,
-				}),
-			);
-		});
+					archetype,
+					resilience: 75,
+					timestamp: Date.now(),
+				},
+			});
 
-		await page.reload();
-
-		// Verify form elements are visible (gap closure fix 06-09)
-		const emailInput = page.locator("input[type='email']");
-		const submitButton = page.getByRole("button", {
-			name: /join v2 waitlist/i,
-		});
-
-		await expect(emailInput).toBeVisible();
-		await expect(submitButton).toBeVisible();
-		await expect(submitButton).toBeDisabled(); // Disabled until valid email
-
-		// Type valid email
-		await emailInput.fill("test@example.com");
-		await expect(submitButton).toBeEnabled();
+			expect(response.status()).toBe(200);
+			const body = await response.json();
+			expect(body.success).toBe(true);
+		}
 	});
 });

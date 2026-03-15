@@ -28,18 +28,25 @@ function getArchetypeColor(score: number): string {
 	return "text-red-400 border-red-500/30 bg-red-950/20";
 }
 
-function updateMetaTags(archetype: Archetype | null, resilience: number): void {
+function updateMetaTags(
+	archetype: Archetype | null,
+	resilience: number,
+	role: string | null,
+): void {
 	if (!archetype) return;
 
-	// Update og:title for LinkedIn preview
-	const ogTitle = `K-Maru - ${archetype.name} Archetype (${resilience}% Resilience)`;
+	// Update og:title for LinkedIn preview (displayed)
+	// Format: Game - Archetype (Role, Score%)
+	const roleLabel = role ? ` (${role})` : "";
+	const ogTitle = `K-Maru - ${archetype.name}${roleLabel} • ${resilience}% Resilience`;
 	const titleTag = document.querySelector('meta[property="og:title"]');
 	if (titleTag) {
 		titleTag.setAttribute("content", ogTitle);
 	}
 
-	// Update og:description for LinkedIn preview
-	const ogDesc = `I scored ${resilience}% resilience as "${archetype.name}". ${archetype.description}`;
+	// Update og:description for LinkedIn algorithm (130-160 chars optimal)
+	// Friendly, brag-worthy message
+	const ogDesc = `I faced the Kobayashi Maru as a ${role || "leader"} and discovered my leadership archetype. Can you beat my score?`;
 	const descTag = document.querySelector('meta[property="og:description"]');
 	if (descTag) {
 		descTag.setAttribute("content", ogDesc);
@@ -56,9 +63,19 @@ export const DebriefPage3Verdict: React.FC<DebriefPage3VerdictProps> = ({
 	// Update meta tags when archetype loads (for LinkedIn sharing)
 	useEffect(() => {
 		if (archetype) {
-			updateMetaTags(archetype, Math.round(resilienceScore));
+			const roleLabel = role
+				? role
+						.replace(/_/g, " ")
+						.split(" ")
+						.map(
+							(word) =>
+								word.charAt(0).toUpperCase() + word.slice(1).toLowerCase(),
+						)
+						.join(" ")
+				: null;
+			updateMetaTags(archetype, Math.round(resilienceScore), roleLabel);
 		}
-	}, [archetype, resilienceScore]);
+	}, [archetype, resilienceScore, role]);
 
 	const resilienceContext = getResilienceContext(resilienceScore);
 	const archetypeColorClass = getArchetypeColor(resilienceScore);

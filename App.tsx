@@ -1,3 +1,4 @@
+import { Analytics } from "@vercel/analytics/react";
 import type React from "react";
 import { useCallback, useEffect, useRef, useState } from "react";
 import {
@@ -346,7 +347,7 @@ const App: React.FC = () => {
 		return () => window.removeEventListener("keydown", handleKeyDown);
 	}, [state.stage, feedbackOverlay, swipe]);
 
-	// Restart game
+	// Restart game (full cleanup: state, roast, overlay, swipe)
 	const handleRestart = useCallback(() => {
 		resetGame();
 		resetRoast();
@@ -471,7 +472,7 @@ const App: React.FC = () => {
 						}
 						resilienceScore={debrief.resilienceScore}
 						onNextPage={debrief.nextPage}
-						onRestart={debrief.restart}
+						onRestart={handleRestart}
 					/>
 				);
 
@@ -485,6 +486,7 @@ const App: React.FC = () => {
 
 	return (
 		<>
+			<Analytics />
 			<div className="min-h-[100dvh]" key={state.stage}>
 				<div className="stage-transition">{renderStage()}</div>
 			</div>

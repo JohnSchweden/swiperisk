@@ -58,7 +58,6 @@ test.describe("Email Capture Form @smoke", () => {
 
 	test("shows validation error for invalid email", async ({ page }) => {
 		const emailInput = page.locator('input[type="email"]');
-		const submitButton = page.locator('button:has-text("Join V2 Waitlist")');
 
 		// Enter invalid email and try to submit
 		await emailInput.fill("invalid-email");

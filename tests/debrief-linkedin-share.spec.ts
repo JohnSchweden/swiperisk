@@ -10,7 +10,7 @@ test.describe("LinkedIn Share URL Generation @area:gameplay", () => {
 
 		const shareUrl = await page.evaluate(() => {
 			// Simulate the getShareUrl function
-			const role = "SOFTWARE_ENGINEER";
+			const _role = "SOFTWARE_ENGINEER";
 			const archetype = { name: "Pragmatist" };
 			const resilience = 88;
 			const currentUrl = "https://km.swipestrategies.com";

@@ -1,11 +1,34 @@
+import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import basicSsl from "@vitejs/plugin-basic-ssl";
 import react from "@vitejs/plugin-react";
 import type { Connect, Plugin } from "vite";
-import { defineConfig } from "vite";
+import { defineConfig, loadEnv } from "vite";
 
 const __dirname = fileURLToPath(new URL(".", import.meta.url));
+
+// Load environment variables from .env and .env.local files
+// Vite's loadEnv only loads VITE_ prefixed variables, but we need all variables for server-side API routes
+const loadAllEnv = () => {
+	const envFiles = [".env", ".env.local"];
+	for (const file of envFiles) {
+		const envPath = path.resolve(__dirname, file);
+		if (fs.existsSync(envPath)) {
+			const content = fs.readFileSync(envPath, "utf-8");
+			content.split("\n").forEach((line) => {
+				const trimmed = line.trim();
+				if (trimmed && !trimmed.startsWith("#")) {
+					const [key, ...rest] = trimmed.split("=");
+					if (key) {
+						process.env[key.trim()] = rest.join("=").trim();
+					}
+				}
+			});
+		}
+	}
+};
+loadAllEnv();
 
 /**
  * Vite plugin to handle API routes during development.
@@ -74,7 +97,7 @@ function apiRoutesPlugin(): Plugin {
 							try {
 								body = JSON.parse(rawBody);
 								console.log(`[API Routes] Parsed JSON body successfully`);
-							} catch (e) {
+							} catch (_e) {
 								console.log(
 									`[API Routes] Failed to parse JSON, using raw body`,
 								);

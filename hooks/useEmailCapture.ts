@@ -70,7 +70,7 @@ export function useEmailCapture({
 			setSuccess(true);
 			setEmail("");
 			localStorage.setItem("v2-waitlist-submitted", "true");
-		} catch (err) {
+		} catch (_err) {
 			setError("Something went wrong. Please try again.");
 			setSuccess(false);
 		} finally {

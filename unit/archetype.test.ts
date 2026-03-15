@@ -7,12 +7,7 @@ import {
 	mapOutcomeToTraits,
 } from "../data/archetypes";
 import { useArchetype } from "../hooks/useArchetype";
-import type {
-	Archetype,
-	ArchetypeId,
-	DebriefState,
-	DebrieRStage,
-} from "../types";
+import type { Archetype, DebriefState, DebrieRStage } from "../types";
 import { RoleType } from "../types";
 
 describe("Archetype Types", () => {

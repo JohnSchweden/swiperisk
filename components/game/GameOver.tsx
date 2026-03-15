@@ -1,5 +1,5 @@
 import type React from "react";
-import { DEATH_ENDINGS, PERSONALITIES } from "../../data";
+import { DEATH_ENDINGS } from "../../data";
 import { useUnlockedEndings } from "../../hooks";
 import { DeathType, type GameState, PersonalityType } from "../../types";
 import LayoutShell from "../LayoutShell";

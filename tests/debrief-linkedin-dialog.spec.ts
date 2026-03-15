@@ -87,7 +87,7 @@ test.describe("LinkedIn Share - Dialog Opening @area:gameplay", () => {
 		await expect(shareButton).toBeEnabled();
 	});
 
-	test("share button works with all archetypes", async ({ page, context }) => {
+	test("share button works with all archetypes", async ({ page }) => {
 		const archetypes = [
 			{ personality: "ROASTER", archetype: "Pragmatist" },
 			{ personality: "ZEN_MASTER", archetype: "Balanced" },

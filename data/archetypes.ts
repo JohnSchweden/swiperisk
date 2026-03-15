@@ -172,9 +172,9 @@ export function calculateResilienceScore(
  */
 export function calculateArchetype(
 	history: { cardId: string; choice: "LEFT" | "RIGHT" }[],
-	finalBudget: number,
-	finalHeat: number,
-	finalHype: number,
+	_finalBudget: number,
+	_finalHeat: number,
+	_finalHype: number,
 	role: RoleType | null,
 ): { archetype: Archetype | null; resilience: number } {
 	// Guard against invalid state

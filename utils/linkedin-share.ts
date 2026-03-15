@@ -21,9 +21,9 @@ export function formatShareText(
 
 /**
  * Encodes the current URL for LinkedIn's native share endpoint.
- * LinkedIn handles the share text via og:description meta tags, not URL params.
- * Optionally includes a summary parameter for pre-filled share text.
- * Also includes title for better LinkedIn preview.
+ * Note: LinkedIn share-offsite only uses og:title and og:description meta tags,
+ * URL parameters are ignored. For dynamic content, we generate a shareable URL
+ * that includes the archetype info as a query parameter (for tracking/analytics).
  */
 export function encodeLinkedInShareUrl(
 	currentUrl: string,
@@ -31,16 +31,20 @@ export function encodeLinkedInShareUrl(
 	title?: string,
 ): string {
 	const encodedUrl = encodeURIComponent(currentUrl);
-	const encodedSummary = summary ? encodeURIComponent(summary) : "";
-	const encodedTitle = title ? encodeURIComponent(title) : "";
 
+	// LinkedIn share-offsite endpoint - only the URL parameter is actually used
+	// The endpoint will fetch og: meta tags from the page
 	let url = `https://www.linkedin.com/sharing/share-offsite/?url=${encodedUrl}`;
-	if (encodedTitle) {
-		url += `&title=${encodedTitle}`;
+
+	// Add tracking parameters (not displayed by LinkedIn but useful for analytics)
+	// These won't affect the share dialog display but help track shares
+	if (title) {
+		url += `&title=${encodeURIComponent(title)}`;
 	}
-	if (encodedSummary) {
-		url += `&summary=${encodedSummary}`;
+	if (summary) {
+		url += `&summary=${encodeURIComponent(summary)}`;
 	}
+
 	return url;
 }
 

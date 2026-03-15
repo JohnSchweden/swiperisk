@@ -28,6 +28,24 @@ function getArchetypeColor(score: number): string {
 	return "text-red-400 border-red-500/30 bg-red-950/20";
 }
 
+function updateMetaTags(archetype: Archetype | null, resilience: number): void {
+	if (!archetype) return;
+
+	// Update og:title for LinkedIn preview
+	const ogTitle = `K-Maru - ${archetype.name} Archetype (${resilience}% Resilience)`;
+	const titleTag = document.querySelector('meta[property="og:title"]');
+	if (titleTag) {
+		titleTag.setAttribute("content", ogTitle);
+	}
+
+	// Update og:description for LinkedIn preview
+	const ogDesc = `I scored ${resilience}% resilience as "${archetype.name}". ${archetype.description}`;
+	const descTag = document.querySelector('meta[property="og:description"]');
+	if (descTag) {
+		descTag.setAttribute("content", ogDesc);
+	}
+}
+
 export const DebriefPage3Verdict: React.FC<DebriefPage3VerdictProps> = ({
 	archetype,
 	archetypeDescription,
@@ -35,62 +53,18 @@ export const DebriefPage3Verdict: React.FC<DebriefPage3VerdictProps> = ({
 	role,
 	onRestart,
 }) => {
+	// Update meta tags when archetype loads (for LinkedIn sharing)
+	useEffect(() => {
+		if (archetype) {
+			updateMetaTags(archetype, Math.round(resilienceScore));
+		}
+	}, [archetype, resilienceScore]);
+
 	const resilienceContext = getResilienceContext(resilienceScore);
 	const archetypeColorClass = getArchetypeColor(resilienceScore);
 
 	const linkedInShareUrl =
 		role && archetype ? getShareUrl(role, archetype, resilienceScore) : null;
-
-	// Set Open Graph meta tags for LinkedIn preview
-	useEffect(() => {
-		const pageUrl = window.location.href;
-		const title = `K-Maru: ${archetype?.name ?? "Unknown Archetype"}`;
-		const description = `I just survived the Kobayashi Maru as a ${role ?? "Unknown"}. My Resilience Score: ${resilienceScore}% (${archetype?.name ?? "Unknown"}). Can you beat my score?`;
-		const imageUrl = `${new URL(pageUrl).origin}/k-maru-share.png`;
-
-		// Helper to set or update meta tag
-		const setMetaTag = (property: string, content: string) => {
-			let tag = document.querySelector(`meta[property="${property}"]`);
-			if (!tag) {
-				tag = document.createElement("meta");
-				tag.setAttribute("property", property);
-				document.head.appendChild(tag);
-			}
-			tag.setAttribute("content", content);
-		};
-
-		// Set Open Graph tags
-		setMetaTag("og:title", title);
-		setMetaTag("og:description", description);
-		setMetaTag("og:url", pageUrl);
-		setMetaTag("og:type", "website");
-		setMetaTag("og:image", imageUrl);
-		setMetaTag("og:site_name", "K-Maru: Kobayashi Maru Simulation");
-
-		// Also set Twitter Card tags for better sharing
-		const setTwitterTag = (name: string, content: string) => {
-			let tag = document.querySelector(`meta[name="${name}"]`);
-			if (!tag) {
-				tag = document.createElement("meta");
-				tag.setAttribute("name", name);
-				document.head.appendChild(tag);
-			}
-			tag.setAttribute("content", content);
-		};
-
-		setTwitterTag("twitter:card", "summary_large_image");
-		setTwitterTag("twitter:title", title);
-		setTwitterTag("twitter:description", description);
-		setTwitterTag("twitter:image", imageUrl);
-
-		// Update page title for better sharing context
-		document.title = title;
-
-		return () => {
-			// Cleanup: restore original page title on unmount
-			document.title = "K-Maru";
-		};
-	}, [archetype, role, resilienceScore]);
 
 	return (
 		<LayoutShell className="p-4 pb-12 md:p-6 md:pb-16 text-center bg-slate-950">

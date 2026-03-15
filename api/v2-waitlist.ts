@@ -61,7 +61,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 						"Content-Type": "application/json",
 					},
 					body: JSON.stringify({
-						from: "noreply@swiperisk.ai",
+						from: "onboarding@resend.dev",
 						to: payload.email,
 						subject: "Welcome to K-Maru V2 Waitlist",
 						html: `

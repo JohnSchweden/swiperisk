@@ -40,19 +40,69 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 				.json({ error: "Invalid email format or missing fields" });
 		}
 
-		// Log signup for tracking (MVP: console log; production: database)
-		console.log("[V2 Waitlist] New signup:", {
+		// Log signup for tracking
+		const signupData = {
 			email: payload.email,
 			role: payload.role,
 			archetype: payload.archetype,
 			resilience: payload.resilience,
 			timestamp: new Date(payload.timestamp).toISOString(),
-		});
+		};
+		console.log("[V2 Waitlist] New signup:", signupData);
+
+		// Send confirmation email (development: log only, production: use Resend/SendGrid)
+		try {
+			if (process.env.RESEND_API_KEY) {
+				// Production: send via Resend
+				const resendResponse = await fetch("https://api.resend.com/emails", {
+					method: "POST",
+					headers: {
+						Authorization: `Bearer ${process.env.RESEND_API_KEY}`,
+						"Content-Type": "application/json",
+					},
+					body: JSON.stringify({
+						from: "noreply@swiperisk.ai",
+						to: payload.email,
+						subject: "Welcome to K-Maru V2 Waitlist",
+						html: `
+							<h2>Thanks for joining the V2 waitlist!</h2>
+							<p>We're excited to have you on the list.</p>
+							<p><strong>Your Profile:</strong></p>
+							<ul>
+								<li>Role: ${payload.role}</li>
+								<li>Archetype: ${payload.archetype}</li>
+								<li>Resilience: ${payload.resilience}%</li>
+							</ul>
+							<p>We'll notify you when V2 is ready.</p>
+						`,
+					}),
+				});
+
+				if (!resendResponse.ok) {
+					console.warn(
+						"[V2 Waitlist] Email send failed (Resend):",
+						await resendResponse.text(),
+					);
+				} else {
+					console.log(
+						"[V2 Waitlist] Confirmation email sent to",
+						payload.email,
+					);
+				}
+			} else {
+				// Development: confirm via console
+				console.log("[V2 Waitlist] Email would be sent to:", payload.email);
+			}
+		} catch (emailError) {
+			console.error("[V2 Waitlist] Email error:", emailError);
+			// Don't fail the signup if email fails
+		}
 
 		// Return success
 		return res.status(200).json({
 			success: true,
 			message: "Thank you for joining the V2 waitlist!",
+			email: payload.email,
 		});
 	} catch (error) {
 		console.error("[V2 Waitlist] Error:", error);

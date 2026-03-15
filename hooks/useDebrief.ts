@@ -1,5 +1,5 @@
 import type React from "react";
-import { useCallback, useEffect, useMemo, useRef } from "react";
+import { useCallback, useMemo } from "react";
 import { calculateArchetype } from "../data/archetypes";
 import { type Archetype, GameStage, type GameState } from "../types";
 
@@ -20,22 +20,19 @@ interface UseDebriefOptions {
 
 /**
  * Hook for managing debrief page navigation and archetype calculation.
- * Automatically calculates archetype when entering any debrief page (memoized, runs once).
+ * Automatically calculates archetype when entering any debrief page.
  */
 export function useDebrief(options: UseDebriefOptions): DebriefResult {
 	const { state, dispatch } = options;
-	const hasCalculatedArchetype = useRef(false);
 
-	// Calculate archetype when entering any debrief page or GAME_OVER (only once)
+	// Calculate archetype when entering any debrief page or GAME_OVER
 	const calculation = useMemo(() => {
 		const isDebriefStage =
 			state.stage === GameStage.GAME_OVER ||
-			state.stage === GameStage.DEBRIEF_PAGE_1 ||
 			state.stage === GameStage.DEBRIEF_PAGE_2 ||
 			state.stage === GameStage.DEBRIEF_PAGE_3;
 
-		if (isDebriefStage && !hasCalculatedArchetype.current) {
-			hasCalculatedArchetype.current = true;
+		if (isDebriefStage) {
 			return calculateArchetype(
 				state.history,
 				state.budget,
@@ -56,22 +53,13 @@ export function useDebrief(options: UseDebriefOptions): DebriefResult {
 
 	// Store calculation result
 	const archetypeResult = useMemo(() => {
-		if (calculation) {
-			return calculation;
-		}
-		// Return stored values if already calculated
-		return {
-			archetype: null as Archetype | null,
-			resilience: 0,
-		};
+		return (
+			calculation || {
+				archetype: null as Archetype | null,
+				resilience: 0,
+			}
+		);
 	}, [calculation]);
-
-	// Reset the calculation flag when leaving debrief stages
-	useEffect(() => {
-		if (!state.stage.startsWith("DEBRIEF")) {
-			hasCalculatedArchetype.current = false;
-		}
-	}, [state.stage]);
 
 	/**
 	 * Advance to the next debrief page.

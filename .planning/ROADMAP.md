@@ -391,10 +391,13 @@ Pipeline: Typed prompt library + automated script (Gemini 2.5 Flash + sharp WebP
 
 **Goal:** Display images at correct locations with mobile/web responsive sizing
 **Depends on:** Phase 13
-**Plans:** 0 plans
+**Plans:** 4 plans
 
 Plans:
-- [ ] TBD (run /gsd-plan-phase 14 to break down)
+- [ ] 14-01-PLAN.md — Foundation: ImageWithFallback component, imagePaths utilities, type extensions
+- [ ] 14-02-PLAN.md — Card integration: Incident images in CardStack, outcome images in FeedbackOverlay
+- [ ] 14-03-PLAN.md — Debrief integration: Collapse images, archetype badge images
+- [ ] 14-04-PLAN.md — Polish & performance: Glitch CSS, overlay width, lazy loading, tests
 
 **Details:**
 Integrate images into UI:
@@ -436,8 +439,8 @@ Integrate images into UI:
 | 11 | Settings Integration (deferred) | v1.2 | Deferred |
 | 12 | Gameplay Tweaks & Card Variety | v1.2 | Complete (2/2) |
 | 13 | Image Asset Pipeline | v1.2 | Planned (3 plans) |
-| 14 | Situational & Outcome Imagery Display | v1.2 | Not started |
+| 14 | Situational & Outcome Imagery Display | v1.2 | Planned (4 plans) |
 
 ---
 
-*Roadmap updated: 2026-03-16 — Phase 13 planned (3 plans: TDD tests, prompt library + image map, generation pipeline)*
+*Roadmap updated: 2026-03-16 — Phase 14 planned (4 plans: ImageWithFallback foundation, card/debrief integration, polish/performance)*

@@ -1,6 +1,6 @@
 ---
 status: resolved
-trigger: "Bug: In SwipeRisk, when first card has pressure active and user swipes RIGHT to reveal second card: second card incorrectly shows pressure visual and audio but NO timer. Left swipe correctly clears pressure. Asymmetric bug."
+trigger: "Bug: In K-Maru, when first card has pressure active and user swipes RIGHT to reveal second card: second card incorrectly shows pressure visual and audio but NO timer. Left swipe correctly clears pressure. Asymmetric bug."
 created: 2025-03-09T00:00:00Z
 updated: 2025-03-09T00:00:00Z
 ---

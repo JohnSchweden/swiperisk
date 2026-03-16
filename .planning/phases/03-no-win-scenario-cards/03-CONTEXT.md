@@ -7,7 +7,7 @@
 <domain>
 ## Phase Boundary
 
-Transform SwipeRisk cards to explicitly embrace the Kobayashi Maru no-win paradigm. Every card and outcome pair forces a choice between bad options with different tradeoffs. The goal is NOT to win or find the "right" answer, but to expose how people handle pressure, ambiguity, and failure.
+Transform K-Maru cards to explicitly embrace the Kobayashi Maru no-win paradigm. Every card and outcome pair forces a choice between bad options with different tradeoffs. The goal is NOT to win or find the "right" answer, but to expose how people handle pressure, ambiguity, and failure.
 
 </domain>
 

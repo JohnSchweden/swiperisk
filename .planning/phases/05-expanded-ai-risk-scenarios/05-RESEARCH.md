@@ -6,7 +6,7 @@
 
 ## Summary
 
-Phase 05 extends the SwipeRisk card pool by adding authentic 2024-2025 AI governance dilemmas across five critical risk categories: prompt injection attacks, model drift / retraining decisions, explainability / black box governance, shadow AI / unauthorized tools, and synthetic data / copyright compliance. Research confirms that all five categories have documented real-world incidents with high-stakes organizational tradeoffs that fit the Kobayashi Maru framework perfectly.
+Phase 05 extends the K-Maru card pool by adding authentic 2024-2025 AI governance dilemmas across five critical risk categories: prompt injection attacks, model drift / retraining decisions, explainability / black box governance, shadow AI / unauthorized tools, and synthetic data / copyright compliance. Research confirms that all five categories have documented real-world incidents with high-stakes organizational tradeoffs that fit the Kobayashi Maru framework perfectly.
 
 The existing Card infrastructure (from Phase 03) already supports no-win design: both onLeft and onRight outcomes carry visible penalties (hype, heat, fine). Phase 05 fills in 2+ authentic incidents per category per role, maintaining the same narrative voice, 3-personality feedback system, and role-specific framing that already proven effective.
 
@@ -171,7 +171,7 @@ Every Phase 05 card must pass:
 | Role-specific framing | Copy same card text across roles | Same incident, different organizational context (CEO/CTO/Finance lens) | Role aliases can't be semantic; must reframe incident meaning |
 | Incident sourcing | Reference "2024 incidents" without verification | WebSearch 2024-2025 cases, verify dates/details, cite sources | One wrong date/detail breaks player trust in authenticity |
 
-**Key insight:** SwipeRisk already has the infrastructure (Card interface, penalty system, personality voices, pressure metadata). Phase 05 is not building new systems—it's populating them with authentic dilemmas.
+**Key insight:** K-Maru already has the infrastructure (Card interface, penalty system, personality voices, pressure metadata). Phase 05 is not building new systems—it's populating them with authentic dilemmas.
 
 ---
 

@@ -33,7 +33,7 @@ An AI-powered compliance and cybersecurity education game built with React, Type
 1. **Clone the repository:**
    ```bash
    git clone <repository-url>
-   cd swipe-risk-the-hyperscale-chronicles
+   cd k-maru-the-hyperscale-chronicles
    ```
 
 2. **Install dependencies:**

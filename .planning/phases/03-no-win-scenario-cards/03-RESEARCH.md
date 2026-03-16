@@ -6,7 +6,7 @@
 
 ## Summary
 
-This phase transforms SwipeRisk from a logic puzzle game into a character-testing simulation using the Kobayashi Maru framework. Every card is designed so that both left and right choices carry different negative consequences—no dominant strategy, no "right answer," only different tradeoffs that reveal how people handle pressure, ambiguity, and loss.
+This phase transforms K-Maru from a logic puzzle game into a character-testing simulation using the Kobayashi Maru framework. Every card is designed so that both left and right choices carry different negative consequences—no dominant strategy, no "right answer," only different tradeoffs that reveal how people handle pressure, ambiguity, and loss.
 
 Research confirms this framework is pedagogically sound: time pressure forces heuristic decision-making (not analysis), real-world AI incidents provide authentic incident scenarios (prompt injection, model drift, shadow AI, data breaches), and debrief-oriented learning amplifies the impact. The game's existing personality system (Roaster/Zen Master/Lovebomber) provides role-specific feedback that makes losses feel personal and memorable.
 
@@ -104,7 +104,7 @@ Every no-win card must follow this pattern:
 
 ### Real-World Incident Mapping (2024-2025 Research)
 
-SwipeRisk can reuse these authentic scenarios (adapted for each role):
+K-Maru can reuse these authentic scenarios (adapted for each role):
 
 #### Prompt Injection Attacks
 **Real incidents:** GitHub Copilot RCE via code comment injection (CVE-2025-53773), financial services AI tricked into approving fraudulent transfers (June 2025), Cursor IDE RCE (CVE-2025-54135/54136), Slack AI data exfiltration (August 2024).
@@ -168,7 +168,7 @@ SwipeRisk can reuse these authentic scenarios (adapted for each role):
 | Card balancing (hype/heat/fine) | Manual number tuning | Data-driven analysis of existing card set | Examine current card metrics, identify patterns, apply to new cards |
 | Debrief/learning design | Custom post-game review | Lesson field + feedback already proven | Existing structure explains tradeoff; build template for role-specific debrief mapping |
 
-**Key insight:** SwipeRisk's existing infrastructure (Card interface, personality system, pressure metadata, role aliases) was designed for no-win cards. Don't expand the type system—fill the cards with authentic dilemmas using documented incidents.
+**Key insight:** K-Maru's existing infrastructure (Card interface, personality system, pressure metadata, role aliases) was designed for no-win cards. Don't expand the type system—fill the cards with authentic dilemmas using documented incidents.
 
 ---
 

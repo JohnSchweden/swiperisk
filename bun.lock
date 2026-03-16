@@ -2,7 +2,7 @@
   "lockfileVersion": 1,
   "workspaces": {
     "": {
-      "name": "swipe-risk:-the-hyperscale-chronicles",
+      "name": "k-maru-the-hyperscale-chronicles",
       "dependencies": {
         "@google/genai": "^1.40.0",
         "@vercel/analytics": "^2.0.1",

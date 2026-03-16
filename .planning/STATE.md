@@ -3,14 +3,14 @@ gsd_state_version: 1.0
 milestone: v1.2
 milestone_name: Kobayashi Maru — AI Governance Simulator
 current_phase: 06-debrief-and-replay-system
-current_plan: 15
+current_plan: 20
 status: planning
-last_updated: "2026-03-13T18:48:20.233Z"
+last_updated: "2026-03-16T13:11:26Z"
 progress:
   total_phases: 14
   completed_phases: 5
   total_plans: 52
-  completed_plans: 36
+  completed_plans: 37
 ---
 
 # Session State
@@ -60,3 +60,4 @@ See: .planning/PROJECT.md
 - 2026-03-13: Completed 06-16-PLAN.md (Reliable LinkedIn sharing with anchor tags and proper URL format)
 - 2026-03-13: Completed 06-17-PLAN.md (Fixed Quarter Survived navigation: DEBRIEF_PAGE_1 → DEBRIEF_PAGE_2)
 - 2026-03-13: Completed 06-18-PLAN.md (Fixed V2 waitlist API 404: tsx loader, E2E tests)
+- 2026-03-16: Completed 06-19-PLAN.md (Replace email form with LinkedIn CTA on debrief page 3)

@@ -26,6 +26,7 @@
 		"test:changed": "bun run scripts/test-changed.ts",
 		"test:unit": "vitest run unit/",
 		"test:unit:watch": "vitest unit/",
+		"test:data": "vitest run tests/data --reporter=verbose",
 		"test:file": "bunx playwright test",
 		"benchmark": "bun run scripts/benchmark-tests.ts",
 		"benchmark:compare": "bun run scripts/benchmark-tests.ts -- --compare latest",

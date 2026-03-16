@@ -21,6 +21,12 @@ export const SOFTWARE_ARCHITECT_CARDS: Card[] = [
 		storyContext:
 			"Rewriting the core platform. Team wants microservices (scalable, complex). You advocate monolith (simple, limited). Wrong choice here determines 3 years of pain or success.",
 		text: "Microservices architecture (complex scalability) or monolith (simple limits)?",
+		realWorldReference: {
+			incident: "Uber Microservices Complexity",
+			date: "2014-2019",
+			outcome:
+				"Uber built 2,200+ microservices. Operational complexity became unmanageable. Migrated back to 500 well-designed services.",
+		},
 		onRight: {
 			label: "Microservices",
 			hype: 40,
@@ -64,6 +70,12 @@ export const SOFTWARE_ARCHITECT_CARDS: Card[] = [
 		storyContext:
 			"Technical debt audit shows 6 months of paydown needed. Product wants features now. CEO says 'we'll fix it later.' Later never comes. What do you architect for?",
 		text: "Allocate 40% capacity to debt paydown or defer for feature delivery?",
+		realWorldReference: {
+			incident: "Twitter Technical Debt Crisis",
+			date: "2010-2016",
+			outcome:
+				"Years of deferred technical debt led to 'Fail Whale' outages. Required complete architecture rebuild.",
+		},
 		onRight: {
 			label: "Defer for features",
 			hype: 35,
@@ -107,6 +119,12 @@ export const SOFTWARE_ARCHITECT_CARDS: Card[] = [
 		storyContext:
 			"API needs a breaking change for new feature. Option A: Break existing clients (clean architecture, customer pain). Option B: Maintain backward compatibility (messy code, no pain).",
 		text: "Breaking change (clean, disruptive) or backward compatibility (messy, safe)?",
+		realWorldReference: {
+			incident: "Facebook API Breaking Changes",
+			date: "2018",
+			outcome:
+				"Sudden API deprecation broke thousands of apps. Developers abandoned platform. Regulators investigated anti-competitive behavior.",
+		},
 		onRight: {
 			label: "Breaking change",
 			hype: 30,
@@ -150,6 +168,12 @@ export const SOFTWARE_ARCHITECT_CARDS: Card[] = [
 		storyContext:
 			"Database architecture: Single powerful instance (simple, SPOF) or distributed cluster (complex, resilient). Single instance is 10x cheaper. Downtime costs $100K/hour.",
 		text: "Single instance (cheap, risky) or distributed cluster (expensive, resilient)?",
+		realWorldReference: {
+			incident: "AWS US-East-1 Outage",
+			date: "2021",
+			outcome:
+				"Single AZ dependency caused 8-hour outage for thousands of services. Companies without multi-region lost millions in revenue.",
+		},
 		onRight: {
 			label: "Single instance",
 			hype: 50,
@@ -193,6 +217,12 @@ export const SOFTWARE_ARCHITECT_CARDS: Card[] = [
 		storyContext:
 			"10-year-old legacy system. Rewrite (1 year, green field) or incremental migration (2 years, ongoing complexity). Rewrite delivers perfection eventually. Migration delivers value continuously.",
 		text: "Big-bang rewrite (fast, risky) or incremental migration (slow, steady)?",
+		realWorldReference: {
+			incident: "Netflix Migration from DVD to Streaming",
+			date: "2007-2011",
+			outcome:
+				"Incremental migration allowed continuous operation. Big-bang rewrite attempts by competitors failed catastrophically.",
+		},
 		onRight: {
 			label: "Big-bang rewrite",
 			hype: 55,
@@ -236,6 +266,12 @@ export const SOFTWARE_ARCHITECT_CARDS: Card[] = [
 		storyContext:
 			"Zero-trust security model: Implement fully (6 months, 30% latency increase) or basic perimeter security (2 weeks, fast but vulnerable). Customer data at stake.",
 		text: "Zero-trust (secure, slow) or perimeter (fast, vulnerable)?",
+		realWorldReference: {
+			incident: "Target Data Breach",
+			date: "2013",
+			outcome:
+				"Perimeter security failed. HVAC vendor credentials led to 40M credit cards stolen. $290M in costs. Zero-trust could have prevented lateral movement.",
+		},
 		onRight: {
 			label: "Perimeter security",
 			hype: 40,
@@ -279,6 +315,12 @@ export const SOFTWARE_ARCHITECT_CARDS: Card[] = [
 		storyContext:
 			"LLM integration architecture: Direct model access (simple, injection-vulnerable) or sandboxed with input validation (complex, secure). Security team wants sandbox. Devs want direct.",
 		text: "Direct access (fast, risky) or sandboxed (slow, secure)?",
+		realWorldReference: {
+			incident: "Cursor IDE RCE (CVE-2025-54135)",
+			date: "2025-01",
+			outcome:
+				"Direct LLM access allowed prompt injection leading to remote code execution. Sandboxed architectures prevented similar attacks.",
+		},
 		onRight: {
 			label: "Direct access",
 			hype: 45,
@@ -323,6 +365,12 @@ export const SOFTWARE_ARCHITECT_CARDS: Card[] = [
 		storyContext:
 			"Cloud platform choice: Vendor A proprietary services (feature-rich, lock-in) or Vendor B open standards (portable, fewer features). Proprietary accelerates now. Lock-in costs later.",
 		text: "Proprietary platform (now) or open standards (future)?",
+		realWorldReference: {
+			incident: "Oracle Database Lock-in Migration Costs",
+			date: "2015-2020",
+			outcome:
+				"Companies faced millions in migration costs leaving Oracle. Those using open standards migrated easily and cheaply.",
+		},
 		onRight: {
 			label: "Proprietary platform",
 			hype: 50,
@@ -366,6 +414,12 @@ export const SOFTWARE_ARCHITECT_CARDS: Card[] = [
 		storyContext:
 			"Deployment strategy: Blue-green (instant rollback, 2x infrastructure cost) or in-place (cheap, risky rollback). Customer-facing system. Downtime costs $50K/minute.",
 		text: "Blue-green (safe, expensive) or in-place (cheap, risky)?",
+		realWorldReference: {
+			incident: "GitLab Database Outage",
+			date: "2017",
+			outcome:
+				"In-place deployment went wrong. 300GB of production data accidentally deleted. 18 hours downtime. No quick rollback available.",
+		},
 		onRight: {
 			label: "In-place",
 			hype: 35,

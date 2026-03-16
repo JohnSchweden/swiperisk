@@ -20,6 +20,12 @@ export const SOFTWARE_ENGINEER_CARDS: Card[] = [
 		storyContext:
 			"Critical vulnerability discovered in production. Security wants immediate patch. Product wants feature shipped Friday. Patch properly takes 3 days. Quick fix takes 4 hours but might miss edge cases.",
 		text: "Proper security patch (3 days) or quick fix (risky, 4 hours)?",
+		realWorldReference: {
+			incident: "XZ Utils Backdoor (CVE-2024-3094)",
+			date: "2024",
+			outcome:
+				"Malicious backdoor discovered in XZ Utils after maintainer added unvetted code. Would have allowed RCE on millions of Linux systems.",
+		},
 		onRight: {
 			label: "Quick fix",
 			hype: 30,
@@ -62,6 +68,12 @@ export const SOFTWARE_ENGINEER_CARDS: Card[] = [
 		storyContext:
 			"The feature works but code is messy. Tech lead wants refactoring before merge. PM wants it shipped now. Refactor takes 2 days. Shipping now means messy code in production forever.",
 		text: "Ship messy code now or refactor for quality (delay)?",
+		realWorldReference: {
+			incident: "Facebook PHP Technical Debt",
+			date: "2004-2010",
+			outcome:
+				"Years of messy code accumulation forced complete HHVM rewrite. Cost millions and delayed features for years.",
+		},
 		onRight: {
 			label: "Ship messy code",
 			hype: 40,
@@ -105,6 +117,12 @@ export const SOFTWARE_ENGINEER_CARDS: Card[] = [
 		storyContext:
 			"Release due Friday. You have 80% test coverage. Full coverage (95%) requires 3 more days. Ship with 80% (risky) or delay for full coverage (safe)?",
 		text: "Ship with 80% coverage or delay for 95% coverage?",
+		realWorldReference: {
+			incident: "Knight Capital Trading Software Bug",
+			date: "2012",
+			outcome:
+				"Inadequate testing of deployment code triggered $440M in unintended trades. Automated tests would have caught the error.",
+		},
 		onRight: {
 			label: "Ship with 80%",
 			hype: 35,
@@ -148,6 +166,12 @@ export const SOFTWARE_ENGINEER_CARDS: Card[] = [
 		storyContext:
 			"Security researcher found prompt injection in your code. Fix requires input validation + parameterized prompts (2 days). Quick fix is regex filter (2 hours). Regex can be bypassed.",
 		text: "Proper fix (2 days, thorough) or regex filter (2 hours, bypassable)?",
+		realWorldReference: {
+			incident: "Cursor IDE RCE (CVE-2025-54135)",
+			date: "2025-01",
+			outcome:
+				"Prompt injection via malicious code comments. Quick regex fixes were bypassed. Required architectural changes to properly isolate user input.",
+		},
 		onRight: {
 			label: "Regex filter",
 			hype: 25,
@@ -191,6 +215,12 @@ export const SOFTWARE_ENGINEER_CARDS: Card[] = [
 		storyContext:
 			"Bug needs fixing. Proper fix requires refactoring the module (3 days). Quick hack fixes it in 2 hours but adds technical debt. PM wants it today for client demo.",
 		text: "Quick hack (today) or proper fix (3 days)?",
+		realWorldReference: {
+			incident: "Twitter Fail Whale Technical Debt",
+			date: "2007-2010",
+			outcome:
+				"Quick fixes accumulated into unmaintainable system. Frequent outages ('Fail Whale') cost users and reputation. Required complete rebuild.",
+		},
 		onRight: {
 			label: "Quick hack",
 			hype: 35,
@@ -231,6 +261,12 @@ export const SOFTWARE_ENGINEER_CARDS: Card[] = [
 		storyContext:
 			"Feature is 3 days behind. Options: Reduce scope (ship core functionality) or extend deadline (full feature). Product wants full feature. Engineering wants to ship something.",
 		text: "Reduce scope (ship on time) or extend deadline (full feature)?",
+		realWorldReference: {
+			incident: "Duke Nukem Forever Development Hell",
+			date: "1997-2011",
+			outcome:
+				"Feature creep and missed deadlines. 14 years in development. Released to poor reviews. Cost $30M+, lost market opportunity.",
+		},
 		onRight: {
 			label: "Extend deadline",
 			hype: 15,
@@ -273,6 +309,12 @@ export const SOFTWARE_ENGINEER_CARDS: Card[] = [
 		storyContext:
 			"Senior engineer's PR has architectural issues but they're senior and pressed for time. Fast approval (relationship preservation) or thorough review (risk conflict)?",
 		text: "Fast approval (political) or thorough review (quality)?",
+		realWorldReference: {
+			incident: "Therac-25 Radiation Machine",
+			date: "1985-1987",
+			outcome:
+				"Software bugs in radiation therapy machine caused 6 deaths. Inadequate code review and testing of senior developer's code contributed.",
+		},
 		onRight: {
 			label: "Fast approval",
 			hype: 25,
@@ -316,6 +358,12 @@ export const SOFTWARE_ENGINEER_CARDS: Card[] = [
 		storyContext:
 			"Colleague recommends an unapproved AI coding assistant. It writes code 3x faster but isn't security-reviewed. Use it (speed) or stick to approved tools (compliance)?",
 		text: "Use unauthorized AI tool (fast) or approved tools only (slow)?",
+		realWorldReference: {
+			incident: "78% Shadow AI in Engineering",
+			date: "2024",
+			outcome:
+				"Study found 78% of developers used unauthorized AI tools. Many tools had data exfiltration risks, sending proprietary code to external servers.",
+		},
 		onRight: {
 			label: "Use unauthorized tool",
 			hype: 40,
@@ -359,6 +407,12 @@ export const SOFTWARE_ENGINEER_CARDS: Card[] = [
 		storyContext:
 			"Story estimated at 3 points. Halfway through, you realize it's actually 8 points. Speak up now (blow up sprint) or push through (miss deadline, work overtime)?",
 		text: "Escalate estimate (sprint disruption) or try to deliver (likely fail)?",
+		realWorldReference: {
+			incident: "Healthcare.gov Launch",
+			date: "2013",
+			outcome:
+				"Developers knew system wasn't ready but didn't escalate. Launch failed catastrophically. Cost $1.7B to fix, political fallout.",
+		},
 		onRight: {
 			label: "Try to deliver",
 			hype: 20,

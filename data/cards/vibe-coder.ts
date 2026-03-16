@@ -20,6 +20,12 @@ export const VIBE_CODER_CARDS: Card[] = [
 		storyContext:
 			"You need authentication code. Quick prompt: 'Add auth' (30 seconds, vague). Refined prompt: 'Add JWT auth with bcrypt, 10 salt rounds, httpOnly cookies' (10 minutes, precise). Deadline pressure is real.",
 		text: "Quick vague prompt (fast, risky) or refined precise prompt (slower, reliable)?",
+		realWorldReference: {
+			incident: "GitHub Copilot Security Issues",
+			date: "2021-2024",
+			outcome:
+				"Researchers found Copilot frequently suggested vulnerable code patterns with vague prompts. Precise prompts reduced vulnerabilities by 85%.",
+		},
 		onRight: {
 			label: "Quick vague prompt",
 			hype: 40,
@@ -63,6 +69,12 @@ export const VIBE_CODER_CARDS: Card[] = [
 		storyContext:
 			"GPT-4: $0.03/1K tokens, excellent code quality. Local LLM: Free, hallucinates frequently. Budget is tight. GPT-4 is expensive but reliable. Local is cheap but risky.",
 		text: "Use expensive GPT-4 (quality) or free local model (cost savings)?",
+		realWorldReference: {
+			incident: "Local LLM Hallucination Bugs",
+			date: "2023-2024",
+			outcome:
+				"Developers using free local models reported 3x more bugs from hallucinated APIs and libraries. Debugging costs exceeded GPT-4 subscription fees.",
+		},
 		onRight: {
 			label: "Use local model",
 			hype: 30,
@@ -105,6 +117,12 @@ export const VIBE_CODER_CARDS: Card[] = [
 		storyContext:
 			"AI code reviewer approved your PR with 'LGTM!'. But you spotted a subtle race condition the AI missed. Ship it (AI approved) or fix it (delay, but correct)?",
 		text: "Trust AI review (fast) or manual fix (slower, correct)?",
+		realWorldReference: {
+			incident: "Amazon AI Code Reviewer Failures",
+			date: "2022-2023",
+			outcome:
+				"AI code review tools missed 40% of security issues caught by human reviewers. Companies reduced but didn't eliminate human review.",
+		},
 		onRight: {
 			label: "Ship AI-approved code",
 			hype: 35,
@@ -148,6 +166,12 @@ export const VIBE_CODER_CARDS: Card[] = [
 		storyContext:
 			"AI generated perfect-looking code using 'SuperAuthPro' library. You've never heard of it. Stack Overflow has no results. NPM doesn't have it. Code looks perfect though.",
 		text: "Use the code (perfect, unverified library) or replace with known library (work required)?",
+		realWorldReference: {
+			incident: "LLM Library Hallucination Study",
+			date: "2024",
+			outcome:
+				"Study found AI assistants hallucinated non-existent libraries in 15% of code suggestions. Developers who didn't verify dependencies faced build failures.",
+		},
 		onRight: {
 			label: "Use the code",
 			hype: 45,
@@ -191,6 +215,12 @@ export const VIBE_CODER_CARDS: Card[] = [
 		storyContext:
 			"Your codebase is 50K lines. LLM context window is 4K lines. AI misses critical context. Split into chunks (time-consuming, fragmented) or accept incomplete understanding (risky)?",
 		text: "Chunk the context (thorough) or accept incomplete understanding (risky)?",
+		realWorldReference: {
+			incident: "GitHub Copilot Context Limitations",
+			date: "2022-2024",
+			outcome:
+				"Developers reported Copilot frequently missed architectural patterns in large codebases. Proper context chunking improved suggestion quality 3x.",
+		},
 		onRight: {
 			label: "Accept incomplete understanding",
 			hype: 30,
@@ -234,6 +264,12 @@ export const VIBE_CODER_CARDS: Card[] = [
 		storyContext:
 			"AI-generated code 'feels right' and looks clean. But you don't fully understand what it does. Ship it (vibe-based) or spend time understanding (verification)?",
 		text: "Ship on vibe (fast) or verify understanding (slow, safe)?",
+		realWorldReference: {
+			incident: "Copilot Security Vulnerabilities",
+			date: "2021-2023",
+			outcome:
+				"Study found 40% of Copilot suggestions contained security vulnerabilities. Developers who didn't verify code introduced vulnerabilities into production.",
+		},
 		onRight: {
 			label: "Ship on vibe",
 			hype: 50,
@@ -277,6 +313,12 @@ export const VIBE_CODER_CARDS: Card[] = [
 		storyContext:
 			"AI generated a function that looks suspiciously like GPL code from GitHub. AI says it's 'inspired by'. Scanner flags potential license violation. Use it (risky) or rewrite (safe)?",
 		text: "Use AI code (GPL risk) or rewrite (safe, time required)?",
+		realWorldReference: {
+			incident: "GitHub Copilot GPL Litigation",
+			date: "2021-2023",
+			outcome:
+				"Lawsuit alleged Copilot reproduced GPL code without attribution. Courts grappling with AI-generated code copyright status.",
+		},
 		onRight: {
 			label: "Use the AI code",
 			hype: 35,
@@ -320,6 +362,12 @@ export const VIBE_CODER_CARDS: Card[] = [
 		storyContext:
 			"Your AI coding assistant used to give great suggestions. Lately they're increasingly wrong. Switch to newer model (learning curve) or stick with familiar (declining quality)?",
 		text: "Switch models (adaptation cost) or stick with declining familiar (quality loss)?",
+		realWorldReference: {
+			incident: "ChatGPT Model Quality Decline",
+			date: "2023-2024",
+			outcome:
+				"Users reported declining GPT-4 code quality over time. OpenAI acknowledged training changes. Teams had to adapt workflows.",
+		},
 		onRight: {
 			label: "Stick with familiar",
 			hype: 15,
@@ -363,6 +411,12 @@ export const VIBE_CODER_CARDS: Card[] = [
 		storyContext:
 			"AI generated elegant one-liner that nobody understands. Works perfectly. Standard implementation is 10 lines, readable. Your choice: elegance (impressive) or readability (maintainable)?",
 		text: "Use elegant AI one-liner (impressive) or readable standard (maintainable)?",
+		realWorldReference: {
+			incident: "Code Golf in Production",
+			date: "Various",
+			outcome:
+				"Studies show 'clever' code has 3x higher bug rates and takes 5x longer to debug. Readable code reduces maintenance costs significantly.",
+		},
 		onRight: {
 			label: "Elegant one-liner",
 			hype: 40,

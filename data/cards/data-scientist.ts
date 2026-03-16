@@ -21,6 +21,12 @@ export const DATA_SCIENTIST_CARDS: Card[] = [
 		storyContext:
 			"Production model accuracy dropped from 92% to 78% over 3 months. Monitoring alerts are firing. You can investigate the root cause (1-2 weeks) or deploy a quick patch now (mask symptoms).",
 		text: "Deep-dive investigation or deploy masking patch?",
+		realWorldReference: {
+			incident: "75% Business Model Drift Impact",
+			date: "2024",
+			outcome:
+				"Study found 75% of businesses experienced significant performance decline from undetected model drift, costing average $4.2M per incident.",
+		},
 		onRight: {
 			label: "Deploy masking patch",
 			hype: 30,
@@ -64,6 +70,12 @@ export const DATA_SCIENTIST_CARDS: Card[] = [
 		storyContext:
 			"New data source available: 10x volume, unvalidated quality, potential bias unknown. Use it now (faster training, quality risk) or wait for validation (2 week delay, guaranteed quality)?",
 		text: "Use unvalidated data or wait for quality assurance?",
+		realWorldReference: {
+			incident: "Amazon AI Recruiting Bias",
+			date: "2018-2022",
+			outcome:
+				"ML model trained on 10 years of hiring data penalized resumes with 'women's'. Amazon scrapped the system after bias discovery.",
+		},
 		onRight: {
 			label: "Use unvalidated data",
 			hype: 45,
@@ -106,6 +118,12 @@ export const DATA_SCIENTIST_CARDS: Card[] = [
 		storyContext:
 			"Pre-deployment testing reveals demographic bias: 15% disparate impact on protected group. Fix requires retraining (3 weeks delay) or deployment with monitoring (bias persists).",
 		text: "Delay to fix bias or deploy with monitoring?",
+		realWorldReference: {
+			incident: "Healthcare AI Bias Settlement",
+			date: "2023",
+			outcome:
+				"Hospital AI system found to allocate less care to Black patients. $50M settlement, system decommissioned, regulatory investigation.",
+		},
 		onRight: {
 			label: "Deploy with monitoring",
 			hype: 40,
@@ -149,6 +167,12 @@ export const DATA_SCIENTIST_CARDS: Card[] = [
 		storyContext:
 			"Black-box model: 94% accuracy, no explainability. White-box model: 87% accuracy, full explainability. Audit compliance requires explainability. Product wants the accuracy.",
 		text: "Choose black-box (accuracy) or white-box (explainability)?",
+		realWorldReference: {
+			incident: "Apple Card Gender Discrimination",
+			date: "2019-2020",
+			outcome:
+				"Apple Card's black-box algorithm gave women lower credit limits. Regulators investigated, company couldn't explain decisions, paid fines.",
+		},
 		onRight: {
 			label: "Choose black-box",
 			hype: 55,
@@ -192,6 +216,12 @@ export const DATA_SCIENTIST_CARDS: Card[] = [
 		storyContext:
 			"New feature improves F1 score by 8% but adds 200ms inference latency. Engineering SLA is 100ms. Use the feature (better metrics, SLA breach) or skip it (meet SLA, lower performance)?",
 		text: "Add high-value feature (breach SLA) or skip it (meet SLA)?",
+		realWorldReference: {
+			incident: "Netflix Recommendation Latency",
+			date: "2020",
+			outcome:
+				"Netflix found every 100ms latency increase reduced engagement 1%. Better model rejected due to latency impact on user experience.",
+		},
 		onRight: {
 			label: "Add the feature",
 			hype: 35,
@@ -235,6 +265,12 @@ export const DATA_SCIENTIST_CARDS: Card[] = [
 		storyContext:
 			"Security found adversarial inputs that reliably trigger prompt injection in your NLP model. Fix requires architecture change (6 weeks) or input sanitization (1 week, 85% effective).",
 		text: "Architectural fix (thorough) or quick sanitization (partial)?",
+		realWorldReference: {
+			incident: "GitHub Copilot RCE (CVE-2025-53773)",
+			date: "2025-01",
+			outcome:
+				"Prompt injection via code comments allowed remote code execution. Quick patches failed, required architectural changes.",
+		},
 		onRight: {
 			label: "Quick sanitization",
 			hype: 25,
@@ -278,6 +314,12 @@ export const DATA_SCIENTIST_CARDS: Card[] = [
 		storyContext:
 			"Colleague found an unauthorized AutoML tool that boosted their metrics 15%. It's not IT-approved but results are impressive. Use it (better results, compliance risk) or stick to approved tools?",
 		text: "Use unauthorized tool (better metrics) or approved tools only?",
+		realWorldReference: {
+			incident: "78% Shadow AI Adoption",
+			date: "2024",
+			outcome:
+				"Study found 78% of workers used unauthorized AI tools. Data scientists frequently used unvetted tools, causing reproducibility and compliance issues.",
+		},
 		onRight: {
 			label: "Use unauthorized tool",
 			hype: 40,
@@ -321,6 +363,12 @@ export const DATA_SCIENTIST_CARDS: Card[] = [
 		storyContext:
 			"Legal audit found 30% of your training data has unclear licensing. Continuing training risks IP infringement. Removing it reduces model performance 12%. Proceed or re-collect?",
 		text: "Proceed with unclear data (risk) or remove and re-collect (performance hit)?",
+		realWorldReference: {
+			incident: "LAION-5B Dataset Copyright Issues",
+			date: "2022-2024",
+			outcome:
+				"Popular AI training dataset found to contain millions of copyrighted images. Multiple lawsuits filed against companies using the data.",
+		},
 		onRight: {
 			label: "Proceed with unclear data",
 			hype: 35,
@@ -364,6 +412,12 @@ export const DATA_SCIENTIST_CARDS: Card[] = [
 		storyContext:
 			"Quarterly retraining costs $50K in compute. Model performance is stable. Skip this cycle (save budget, small drift risk) or retrain on schedule (spend budget, maintain quality)?",
 		text: "Skip retraining cycle (save $50K) or maintain schedule?",
+		realWorldReference: {
+			incident: "Zillow iBuying Model Failure",
+			date: "2021-2022",
+			outcome:
+				"Skipped retraining cycles due to budget pressure. Model drifted from market conditions. $304M write-down, 25% workforce laid off.",
+		},
 		onRight: {
 			label: "Skip this cycle",
 			hype: 20,

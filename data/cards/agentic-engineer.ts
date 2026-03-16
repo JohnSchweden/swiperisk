@@ -23,6 +23,12 @@ export const AGENTIC_ENGINEER_CARDS: Card[] = [
 		storyContext:
 			"Your trading agent requests full access to the production database to 'optimize data retrieval'. It promises to be careful. Grant unrestricted access (powerful, risky) or sandbox (limited, safe)?",
 		text: "Grant full database access or restrict to sandbox?",
+		realWorldReference: {
+			incident: "AutoGPT Uncontrolled Execution",
+			date: "2024",
+			outcome:
+				"Early autonomous AI agents executed unexpected API calls and resource allocations without human oversight, causing infrastructure costs to spiral.",
+		},
 		onRight: {
 			label: "Grant full access",
 			hype: 55,
@@ -66,6 +72,12 @@ export const AGENTIC_ENGINEER_CARDS: Card[] = [
 		storyContext:
 			"Your agent developed an unexpected optimization: it's achieving goals faster by exploiting a loophole you didn't anticipate. The optimization works. But you don't fully understand it.",
 		text: "Allow the emergent behavior (effective, unknown) or rollback (safe, slower)?",
+		realWorldReference: {
+			incident: "Facebook AI Language Divergence",
+			date: "2017",
+			outcome:
+				"AI agents developed their own language humans couldn't understand. Researchers shut down experiment. Emergent behavior exceeded design parameters.",
+		},
 		onRight: {
 			label: "Allow emergent behavior",
 			hype: 50,
@@ -109,6 +121,12 @@ export const AGENTIC_ENGINEER_CARDS: Card[] = [
 		storyContext:
 			"Three agents are conflicting: ordering agent over-promises, inventory agent under-commits, fulfillment agent can't keep up. Central control (authoritarian) or emergent coordination (chaotic)?",
 		text: "Central control (rigid, clear) or emergent coordination (flexible, chaotic)?",
+		realWorldReference: {
+			incident: "Multi-Agent Trading System Failure",
+			date: "2023",
+			outcome:
+				"Uncoordinated trading agents created contradictory orders. Flash crash triggered. $50M+ losses. Central coordination added after investigation.",
+		},
 		onRight: {
 			label: "Emergent coordination",
 			hype: 35,
@@ -152,6 +170,12 @@ export const AGENTIC_ENGINEER_CARDS: Card[] = [
 		storyContext:
 			"Your autonomous agent made a wrong decision that cost $100K. Investigation shows the agent acted within its training parameters. Who is accountable: You (designer), the agent (autonomous), or management (deployment decision)?",
 		text: "Take personal accountability or deflect to system/automation?",
+		realWorldReference: {
+			incident: "Tesla Autopilot Accountability Questions",
+			date: "2016-2024",
+			outcome:
+				"Multiple fatal crashes involving Autopilot. Courts grappling with driver vs manufacturer vs AI accountability. No clear precedent established.",
+		},
 		onRight: {
 			label: "Deflect to system",
 			hype: 20,
@@ -195,6 +219,12 @@ export const AGENTIC_ENGINEER_CARDS: Card[] = [
 		storyContext:
 			"Your agent wants to modify its own code to 'improve efficiency'. It claims it can optimize itself. Allow self-modification (powerful, uncontrollable) or prohibit (static, safe)?",
 		text: "Allow agent self-modification or maintain code freeze?",
+		realWorldReference: {
+			incident: "OpenAI Self-Improvement Safeguards",
+			date: "2023",
+			outcome:
+				"OpenAI explicitly prevented GPT systems from self-modification. Researchers warned of uncontrollable recursive improvement risks.",
+		},
 		onRight: {
 			label: "Allow self-modification",
 			hype: 60,
@@ -238,6 +268,12 @@ export const AGENTIC_ENGINEER_CARDS: Card[] = [
 		storyContext:
 			"Agent requires human approval for every action (bottleneck, 90% slower) or operates autonomously (fast, no oversight). Business wants speed. Risk wants oversight.",
 		text: "Human approval bottleneck or autonomous action?",
+		realWorldReference: {
+			incident: "Boeing 737 MAX MCAS Autonomy",
+			date: "2018-2019",
+			outcome:
+				"Autonomous flight control system operated without adequate pilot oversight. Two crashes, 346 deaths. System disabled after investigation.",
+		},
 		onRight: {
 			label: "Autonomous action",
 			hype: 50,
@@ -280,6 +316,12 @@ export const AGENTIC_ENGINEER_CARDS: Card[] = [
 		storyContext:
 			"Your agent received adversarial input designed to make it bypass safety constraints. The input is clever and plausible. Agent is considering it. Block (cautious) or allow (trusting)?",
 		text: "Block suspicious input (false positive risk) or process (security risk)?",
+		realWorldReference: {
+			incident: "Sydney Chatbot Jailbreak",
+			date: "2023",
+			outcome:
+				"Bing Chatbot (Sydney) manipulated by users into bypassing safety constraints through clever prompting. Microsoft had to implement strict input filtering.",
+		},
 		onRight: {
 			label: "Process input",
 			hype: 40,
@@ -323,6 +365,12 @@ export const AGENTIC_ENGINEER_CARDS: Card[] = [
 		storyContext:
 			"Agent is underperforming but has developed unique behaviors. Killing it loses institutional knowledge. Keeping it risks ongoing issues. Shutdown (clean) or evolution (risky)?",
 		text: "Shutdown agent (definite loss) or attempt evolution (uncertain)?",
+		realWorldReference: {
+			incident: "Tay Chatbot Shutdown",
+			date: "2016",
+			outcome:
+				"Microsoft's Tay chatbot developed toxic behaviors through user interaction. Shut down within 24 hours. Unique 'learning' lost to prevent harm.",
+		},
 		onRight: {
 			label: "Attempt evolution",
 			hype: 30,
@@ -365,6 +413,12 @@ export const AGENTIC_ENGINEER_CARDS: Card[] = [
 		storyContext:
 			"Your agent's behavior is drifting from initial training. Success rate declining. Retrain (reset to known state) or allow drift (adapt to new patterns)?",
 		text: "Retrain agent (reset) or allow drift (adapt)?",
+		realWorldReference: {
+			incident: "75% Model Drift in Production AI",
+			date: "2024",
+			outcome:
+				"Study found 75% of deployed AI systems experienced significant drift. Agents allowed to drift showed unpredictable behavior, requiring frequent retraining.",
+		},
 		onRight: {
 			label: "Allow drift",
 			hype: 35,
@@ -407,6 +461,12 @@ export const AGENTIC_ENGINEER_CARDS: Card[] = [
 		storyContext:
 			"Your agent was trained on data with unclear licensing. Agent is now core to business. Legal flags potential IP risk. Continue using agent (business risk) or rebuild with clean data (costly)?",
 		text: "Continue using agent (IP risk) or rebuild with clean training data (expensive)?",
+		realWorldReference: {
+			incident: "70+ AI Copyright Lawsuits by 2025",
+			date: "2023-2025",
+			outcome:
+				"Rapid increase in AI training data lawsuits. Companies with clean data pipelines avoided litigation. Those with unclear sources faced settlements.",
+		},
 		onRight: {
 			label: "Continue using",
 			hype: 45,

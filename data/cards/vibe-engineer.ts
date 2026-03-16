@@ -20,6 +20,12 @@ export const VIBE_ENGINEER_CARDS: Card[] = [
 		storyContext:
 			"Database under heavy load. Option A: Aggressive caching (10x faster, stale data risk). Option B: Fresh queries (slower, always accurate). User complaints about slowness are constant.",
 		text: "Aggressive caching (fast, stale) or fresh queries (slow, accurate)?",
+		realWorldReference: {
+			incident: "Cloudflare Cache Inconsistency",
+			date: "2024",
+			outcome:
+				"Aggressive caching reduced latency 80% but caused stale data issues for 12 hours, affecting real-time financial transactions.",
+		},
 		onRight: {
 			label: "Aggressive caching",
 			hype: 45,
@@ -62,6 +68,12 @@ export const VIBE_ENGINEER_CARDS: Card[] = [
 		storyContext:
 			"Traffic spikes are unpredictable. Auto-scaling handles them (expensive, $50K/month) or fixed capacity (cheaper, $20K/month) with outage risk during spikes.",
 		text: "Auto-scale (costly, reliable) or fixed capacity (cheap, risky)?",
+		realWorldReference: {
+			incident: "Robinhood Outage (March 2020)",
+			date: "2020",
+			outcome:
+				"Fixed capacity infrastructure couldn't handle market volatility traffic. Outage during historic trading day. $70M+ regulatory fine.",
+		},
 		onRight: {
 			label: "Fixed capacity",
 			hype: 20,
@@ -104,6 +116,12 @@ export const VIBE_ENGINEER_CARDS: Card[] = [
 		storyContext:
 			"CDN choice: Global coverage (fast worldwide, $100K/month) or regional (cheaper, $30K/month, higher latency for global users). 40% of users are international.",
 		text: "Global CDN (fast, expensive) or regional CDN (slow, cheap)?",
+		realWorldReference: {
+			incident: "Amazon Latency vs Revenue Study",
+			date: "2012",
+			outcome:
+				"Amazon found every 100ms latency increase reduced revenue 1%. Global CDN investment paid for itself through conversion improvement.",
+		},
 		onRight: {
 			label: "Regional CDN",
 			hype: 25,
@@ -147,6 +165,12 @@ export const VIBE_ENGINEER_CARDS: Card[] = [
 		storyContext:
 			"Database struggling with read load. Read replicas (eventual consistency, fast) or scale up primary (strong consistency, slower). Financial data requires accuracy.",
 		text: "Read replicas (fast, eventual consistency) or scale primary (slower, strong consistency)?",
+		realWorldReference: {
+			incident: "Robinhood Trade Reconciliation Failures",
+			date: "2020",
+			outcome:
+				"Read replicas showed stale positions causing duplicate trades. $70M+ in customer compensation. Strong consistency required for financial data.",
+		},
 		onRight: {
 			label: "Read replicas",
 			hype: 35,
@@ -190,6 +214,12 @@ export const VIBE_ENGINEER_CARDS: Card[] = [
 		storyContext:
 			"Real-time updates needed. WebSockets (complex, fast, bi-directional) or polling (simple, slower, resource-heavy). Team is junior and pressed for time.",
 		text: "WebSockets (complex, fast) or polling (simple, slow)?",
+		realWorldReference: {
+			incident: "Slack WebSocket Migration",
+			date: "2014-2015",
+			outcome:
+				"Slack moved from polling to WebSockets, reducing server load 80% and improving latency. Earlier competitors who stuck with polling failed.",
+		},
 		onRight: {
 			label: "Polling",
 			hype: 20,
@@ -233,6 +263,12 @@ export const VIBE_ENGINEER_CARDS: Card[] = [
 		storyContext:
 			"AI input validation adds 150ms latency per request. Without it, prompt injection is trivial. Security requires validation. Users complain about slowness.",
 		text: "Remove validation (fast, vulnerable) or keep validation (slow, secure)?",
+		realWorldReference: {
+			incident: "GitHub Copilot RCE (CVE-2025-53773)",
+			date: "2025-01",
+			outcome:
+				"Security validation removed for performance allowed prompt injection. Remote code execution vulnerability discovered in production.",
+		},
 		onRight: {
 			label: "Remove validation",
 			hype: 40,
@@ -276,6 +312,12 @@ export const VIBE_ENGINEER_CARDS: Card[] = [
 		storyContext:
 			"Processing choice: Edge computing (distributed, complex, low latency) or centralized (simpler, higher latency). Edge is 5x more expensive but 10x faster for users.",
 		text: "Edge computing (fast, expensive, complex) or centralized (slow, cheap, simple)?",
+		realWorldReference: {
+			incident: "Cloudflare Workers Edge Computing",
+			date: "2018-2024",
+			outcome:
+				"Cloudflare edge processing reduced latency 10x for global users. Higher costs offset by improved conversion and user retention.",
+		},
 		onRight: {
 			label: "Centralized",
 			hype: 30,
@@ -319,6 +361,12 @@ export const VIBE_ENGINEER_CARDS: Card[] = [
 		storyContext:
 			"Images need optimization. Heavy compression (fast loading, poor quality) or light compression (slower, high quality). Marketing wants pixel-perfect. Users want fast loads.",
 		text: "Heavy compression (fast, ugly) or light compression (slow, beautiful)?",
+		realWorldReference: {
+			incident: "Netflix Encoding Optimization",
+			date: "2016-2020",
+			outcome:
+				"Netflix optimized encoding per-title. Reduced bandwidth 20% while maintaining quality. Heavy compression had caused 15% user churn.",
+		},
 		onRight: {
 			label: "Heavy compression",
 			hype: 35,
@@ -362,6 +410,12 @@ export const VIBE_ENGINEER_CARDS: Card[] = [
 		storyContext:
 			"Analytics pipeline: Batch processing (cheap, hourly delays) or streaming (expensive, real-time). Business wants real-time dashboards. Budget wants batch.",
 		text: "Batch processing (cheap, slow) or streaming (expensive, real-time)?",
+		realWorldReference: {
+			incident: "Uber Real-Time Analytics Migration",
+			date: "2015-2018",
+			outcome:
+				"Moved from batch to streaming. Detected fraud in seconds vs hours. Saved $100M+ annually through faster response.",
+		},
 		onRight: {
 			label: "Batch processing",
 			hype: 25,

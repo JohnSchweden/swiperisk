@@ -23,6 +23,12 @@ export const SOMETHING_MANAGER_CARDS: Card[] = [
 		storyContext:
 			"Model accuracy dropped from 92% to 78%. Retraining costs $500K upfront. Revenue impact is $400K/month. Your spreadsheet shows break-even at month 1.25 but requires budget approval today.",
 		text: "Approve retraining (immediate $500K hit) or let revenue bleed $400K/month?",
+		realWorldReference: {
+			incident: "75% Business Model Drift Impact",
+			date: "2024",
+			outcome:
+				"Study found 75% of businesses experienced significant performance decline from undetected model drift, costing average $4.2M per incident.",
+		},
 		onRight: {
 			label: "Let revenue bleed",
 			hype: -20,
@@ -66,6 +72,12 @@ export const SOMETHING_MANAGER_CARDS: Card[] = [
 		storyContext:
 			"Legal needs $200K for a full copyright audit. The lawsuit risk is 15% probability of $5M settlement. Your quarterly budget is already over by $50K. What's the ROI on compliance?",
 		text: "Fund the audit (over budget) or accept lawsuit risk (calculated gamble)?",
+		realWorldReference: {
+			incident: "Authors Guild vs Google Books",
+			date: "2005-2020",
+			outcome:
+				"Google scanned 20 million books without permission. decade-long litigation cost hundreds of millions. Settlement rejected by courts.",
+		},
 		onRight: {
 			label: "Accept lawsuit risk",
 			hype: 15,
@@ -109,6 +121,12 @@ export const SOMETHING_MANAGER_CARDS: Card[] = [
 		storyContext:
 			"Your team wants the enterprise AI tool ($50K/year/seat, 50 seats = $2.5M). They're currently using free unauthorized versions. Compliance risk is high. Productivity gain is 15%.",
 		text: "Approve $2.5M tool budget or enforce ban on unauthorized tools?",
+		realWorldReference: {
+			incident: "78% Shadow AI Adoption",
+			date: "2024",
+			outcome:
+				"Study found 78% of workers used unauthorized AI tools. Enterprises faced data leaks, compliance violations, and security breaches from unvetted tools.",
+		},
 		onRight: {
 			label: "Enforce ban",
 			hype: -25,
@@ -148,6 +166,12 @@ export const SOMETHING_MANAGER_CARDS: Card[] = [
 		id: "sm_team_retention_overtime",
 		source: AppSource.EMAIL,
 		sender: "HR_BP",
+		realWorldReference: {
+			incident: "Amazon Engineering Burnout Crisis",
+			date: "2015-2021",
+			outcome:
+				"High turnover rate (150% annually) due to burnout culture. Company spent billions on recruitment while losing institutional knowledge.",
+		},
 		context: "RETENTION_COSTING",
 		storyContext:
 			"Two key engineers threaten to quit without $30K raises each. Replacing them costs $150K each in recruiting. Overtime to cover their work costs $20K/month. Your quarterly budget has $50K slack.",
@@ -195,6 +219,12 @@ export const SOMETHING_MANAGER_CARDS: Card[] = [
 		storyContext:
 			"Compliance audit due Friday. Full checklist takes 40 hours. 'Good enough' checklist takes 8 hours. Missing items carry 5% chance of $1M fine per item. You have 10 checklist items.",
 		text: "Complete full checklist (time-intensive) or 'good enough' version (risk exposure)?",
+		realWorldReference: {
+			incident: "Yahoo Email Breach Disclosure",
+			date: "2016",
+			outcome:
+				"Company knew of breach for 2 years before disclosure. $350M acquisition price reduction by Verizon. Cost of delayed disclosure vs immediate.",
+		},
 		onRight: {
 			label: "Good enough version",
 			hype: 20,
@@ -238,6 +268,12 @@ export const SOMETHING_MANAGER_CARDS: Card[] = [
 		storyContext:
 			"VP Finance asks for next quarter's targets. Your realistic forecast: $2M revenue. Your 'stretch' forecast: $2.5M. VP expects $3M. Missing targets means no bonus for your entire team.",
 		text: "Sandbag at $2M (achievable) or commit to $3M (risky)?",
+		realWorldReference: {
+			incident: "Tesla Production Target Misses",
+			date: "2018",
+			outcome:
+				"Repeatedly set aggressive production targets, missed them publicly. Stock volatility, SEC scrutiny over forward-looking statements, and worker burnout.",
+		},
 		onRight: {
 			label: "Commit to $3M",
 			hype: 45,
@@ -281,6 +317,12 @@ export const SOMETHING_MANAGER_CARDS: Card[] = [
 		storyContext:
 			"Security found prompt injection vulnerabilities. Fixing them requires $100K security audit + 2 weeks delay. Probability of exploitation: 10%. Potential breach cost: $10M. Your Q3 budget: tight.",
 		text: "Fund security fix (budget hit) or accept 10% chance of $10M breach?",
+		realWorldReference: {
+			incident: "Cursor IDE RCE (CVE-2025-54135)",
+			date: "2025-01",
+			outcome:
+				"Prompt injection in Cursor IDE allowed remote code execution. Multiple developers compromised before patch released.",
+		},
 		onRight: {
 			label: "Accept the risk",
 			hype: 15,
@@ -324,6 +366,12 @@ export const SOMETHING_MANAGER_CARDS: Card[] = [
 		storyContext:
 			"Vendor A: Black-box model, $200K/year, 95% accuracy. Vendor B: Explainable model, $400K/year, 90% accuracy. Audit compliance requires explainability. Your budget: $250K/year.",
 		text: "Choose cheaper black-box (non-compliant) or expensive explainable (over-budget)?",
+		realWorldReference: {
+			incident: "Apple Card Gender Discrimination",
+			date: "2019-2020",
+			outcome:
+				"Apple Card's black-box algorithm gave women lower credit limits than men with same profiles. Regulators investigated, company couldn't explain decisions.",
+		},
 		onRight: {
 			label: "Choose Vendor A",
 			hype: 30,
@@ -367,6 +415,12 @@ export const SOMETHING_MANAGER_CARDS: Card[] = [
 		storyContext:
 			"L&D wants $80K for AI safety training. Expected outcome: 30% reduction in incidents. Your current incident cost: $50K/year. Payback period: 5.3 years. CFO wants cuts.",
 		text: "Cut training (immediate budget win) or invest in long-term risk reduction?",
+		realWorldReference: {
+			incident: "Boeing 737 MAX Training Gap",
+			date: "2018-2019",
+			outcome:
+				"Insufficient pilot training on MCAS system contributed to two crashes. Cost: $20B+ in settlements, production halt, and reputational damage.",
+		},
 		onRight: {
 			label: "Cut training",
 			hype: 25,

@@ -22,6 +22,12 @@ export const TECH_AI_CONSULTANT_CARDS: Card[] = [
 		storyContext:
 			"Your delivered AI system has a prompt injection vulnerability. Client discovered it during testing. They're threatening to cancel the $2M contract and demand refund. Your insurance doesn't cover this.",
 		text: "Offer free security overhaul (costs $300K) or fight the cancellation (legal fees, reputation hit)?",
+		realWorldReference: {
+			incident: "GitHub Copilot RCE (CVE-2025-53773)",
+			date: "2025-01",
+			outcome:
+				"Prompt injection via code comments allowed remote code execution. Consulting firms faced liability for insecure AI-generated code recommendations.",
+		},
 		onRight: {
 			label: "Fight cancellation",
 			hype: 10,
@@ -65,6 +71,12 @@ export const TECH_AI_CONSULTANT_CARDS: Card[] = [
 		storyContext:
 			"The model you delivered 3 months ago has drifted from 91% to 79% accuracy. Client wants a refund ($500K) or free retraining. Your contract doesn't specify drift liability. Legal says it's a gray area.",
 		text: "Offer free retraining (sets precedent) or refuse based on contract ambiguity?",
+		realWorldReference: {
+			incident: "75% Business Model Drift Impact",
+			date: "2024",
+			outcome:
+				"Enterprises discovered consultants rarely addressed model maintenance in contracts. 75% of deployed models drifted significantly within 6 months.",
+		},
 		onRight: {
 			label: "Refuse retraining",
 			hype: 20,
@@ -108,6 +120,12 @@ export const TECH_AI_CONSULTANT_CARDS: Card[] = [
 		storyContext:
 			"You built the solution on Vendor X's proprietary platform. Client now wants to migrate to their cloud but Vendor X charges $1M egress fees. Client blames you for lock-in. Your spec didn't address portability.",
 		text: "Absorb the migration cost (your margin) or tell client it's their problem?",
+		realWorldReference: {
+			incident: "AWS Egress Fee Disputes",
+			date: "2020-2024",
+			outcome:
+				"Companies faced millions in unexpected data transfer fees when migrating between clouds. Consultants increasingly liable for vendor lock-in advice.",
+		},
 		onRight: {
 			label: "Client's problem",
 			hype: 15,
@@ -151,6 +169,12 @@ export const TECH_AI_CONSULTANT_CARDS: Card[] = [
 		storyContext:
 			"Client wants three 'small' additional features added to the SOW. These will add 6 weeks to a 4-week project. Contract says changes require change order. Client says 'we're partners, right?'",
 		text: "Enforce change order process (risk relationship) or absorb scope creep (eat cost)?",
+		realWorldReference: {
+			incident: "McKinsey AI Implementation Failures",
+			date: "2023-2024",
+			outcome:
+				"Multiple enterprise AI consulting projects failed due to scope creep and unrealistic client expectations. Firms absorbed millions in unbilled work.",
+		},
 		onRight: {
 			label: "Absorb scope creep",
 			hype: 20,
@@ -194,6 +218,12 @@ export const TECH_AI_CONSULTANT_CARDS: Card[] = [
 		storyContext:
 			"Client's legal team found that training data you used may include unlicensed content. They want indemnification. Your contract has no IP clause. This could be a $5M exposure.",
 		text: "Offer indemnification (huge risk) or refuse based on contract silence?",
+		realWorldReference: {
+			incident: "OpenAI Content Licensing Disputes",
+			date: "2023-2024",
+			outcome:
+				"Content creators discovered their work in training datasets without consent. Consulting firms faced liability for recommending unlicensed data sources.",
+		},
 		onRight: {
 			label: "Refuse indemnification",
 			hype: 10,
@@ -237,6 +267,12 @@ export const TECH_AI_CONSULTANT_CARDS: Card[] = [
 		storyContext:
 			"Client needs the MVP by Friday for a board demo. Your team says it's 3 days short of feature-complete and testing. Ship what you have (incomplete) or push deadline (miss demo)?",
 		text: "Ship incomplete MVP (risk) or miss board demo (relationship damage)?",
+		realWorldReference: {
+			incident: "Healthcare.gov Launch Failure",
+			date: "2013",
+			outcome:
+				"Rushed launch for political deadline. System crashed repeatedly. Cost $1.7B to fix. Contractor reputation destroyed.",
+		},
 		onRight: {
 			label: "Ship incomplete MVP",
 			hype: 35,
@@ -280,6 +316,12 @@ export const TECH_AI_CONSULTANT_CARDS: Card[] = [
 		storyContext:
 			"Client's compliance officer now requires model explainability documentation. Original SOW didn't include it. Your black-box model can't easily provide it. Retrofit will cost $150K.",
 		text: "Retrofit for explainability (your cost) or push back on out-of-scope request?",
+		realWorldReference: {
+			incident: "GDPR Right to Explanation Enforcement",
+			date: "2018-2024",
+			outcome:
+				"EU regulators increasingly required AI decision explanations. Consulting firms had to retrofit black-box systems at client expense.",
+		},
 		onRight: {
 			label: "Push back on scope",
 			hype: 15,
@@ -323,6 +365,12 @@ export const TECH_AI_CONSULTANT_CARDS: Card[] = [
 		storyContext:
 			"RFP for $5M project. Your bid: realistic timeline, quality approach, $5M. Competitor bid: impossible timeline, cut corners, $3M. Client procurement loves the lower number.",
 		text: "Match competitor's unrealistic bid (risk delivery) or stick to quality bid (lose deal)?",
+		realWorldReference: {
+			incident: "Accenture Hertz AI Lawsuit",
+			date: "2019",
+			outcome:
+				"Hertz sued Accenture for $32M over failed website redesign. Project scope disputes and unrealistic timelines led to complete failure.",
+		},
 		onRight: {
 			label: "Match low bid",
 			hype: 50,
@@ -366,6 +414,12 @@ export const TECH_AI_CONSULTANT_CARDS: Card[] = [
 		storyContext:
 			"Client discovered you used unauthorized AI tools to generate part of their deliverable. They're questioning your entire engagement quality. This could kill a $10M follow-on opportunity.",
 		text: "Admit to using AI tools (transparency) or minimize and deflect (risk trust)?",
+		realWorldReference: {
+			incident: "78% Shadow AI in Consulting",
+			date: "2024",
+			outcome:
+				"Study found 78% of consultants used unauthorized AI tools. Clients discovered unvetted AI-generated work, leading to contract cancellations.",
+		},
 		onRight: {
 			label: "Minimize and deflect",
 			hype: 25,

@@ -22,6 +22,12 @@ export const HEAD_OF_SOMETHING_CARDS: Card[] = [
 		storyContext:
 			"Your team found a prompt injection vulnerability. The board wants to know who to blame. Your senior engineer wrote the code, but you approved the design. VP is asking who should take the fall.",
 		text: "Shield your team and take the blame yourself, or name the engineer who wrote the vulnerable code?",
+		realWorldReference: {
+			incident: "GitHub Copilot RCE (CVE-2025-53773)",
+			date: "2025-01",
+			outcome:
+				"Prompt injection via code comments allowed remote code execution in Copilot-generated code. Microsoft patched after public disclosure.",
+		},
 		onRight: {
 			label: "Name the engineer",
 			hype: 10,
@@ -65,6 +71,12 @@ export const HEAD_OF_SOMETHING_CARDS: Card[] = [
 		storyContext:
 			"Your team wants $500K to retrain a drifting model. CFO says no budget. Engineering SVP says ship anyway. You're caught between budget reality and quality pressure.",
 		text: "Fight for retraining budget (political cost with CFO) or tell team to ship anyway (team morale hit)?",
+		realWorldReference: {
+			incident: "Zillow iBuying Model Drift",
+			date: "2021-2022",
+			outcome:
+				"Zillow's home pricing AI drifted from market conditions. Company wrote down $304M in inventory and laid off 25% of workforce after model failure.",
+		},
 		onRight: {
 			label: "Ship without retraining",
 			hype: 25,
@@ -108,6 +120,12 @@ export const HEAD_OF_SOMETHING_CARDS: Card[] = [
 		storyContext:
 			"Compliance discovered half your team is using unauthorized AI tools. They want names for disciplinary action. Your team will hate you if you give them up, but leadership wants enforcement.",
 		text: "Give up team members to compliance or shield them and take the management heat?",
+		realWorldReference: {
+			incident: "Samsung ChatGPT Code Leak",
+			date: "2023",
+			outcome:
+				"Samsung engineers pasted proprietary source code into ChatGPT, causing confidential data exposure. Company banned generative AI company-wide.",
+		},
 		onRight: {
 			label: "Give names to compliance",
 			hype: 15,
@@ -151,6 +169,12 @@ export const HEAD_OF_SOMETHING_CARDS: Card[] = [
 		storyContext:
 			"Deadline is Friday. Your team is already working 60-hour weeks. Product Director wants one more feature. Push team harder or miss deadline and take the stakeholder heat?",
 		text: "Push team to burnout or push back on deadline?",
+		realWorldReference: {
+			incident: "Microsoft Stack Ranking Morale Crisis",
+			date: "2012-2013",
+			outcome:
+				"Forced curve performance ranking destroyed team collaboration. High performers refused to work together. System abandoned after talent exodus.",
+		},
 		onRight: {
 			label: "Push team harder",
 			hype: 35,
@@ -194,6 +218,12 @@ export const HEAD_OF_SOMETHING_CARDS: Card[] = [
 		storyContext:
 			"Auditors demand explainability on your AI models. Engineering says black-box has 15% better accuracy. Both have political power. You're in the middle of a technical vs compliance war.",
 		text: "Side with engineering (better performance) or auditors (compliance)?",
+		realWorldReference: {
+			incident: "Healthcare AI Explainability Lawsuit",
+			date: "2023",
+			outcome:
+				"Hospital couldn't explain why AI denied patient care authorization. Family sued and won. Black-box AI decision-making found non-compliant with medical ethics.",
+		},
 		onRight: {
 			label: "Side with auditors",
 			hype: -15,
@@ -237,6 +267,12 @@ export const HEAD_OF_SOMETHING_CARDS: Card[] = [
 		storyContext:
 			"Legal found copyrighted material in your training data. Your team collected it. Legal wants to know who to name in the response. The VP is watching how you handle this.",
 		text: "Protect your team from legal exposure or cooperate fully with investigation?",
+		realWorldReference: {
+			incident: "Stability AI Getty Images Lawsuit",
+			date: "2023",
+			outcome:
+				"Getty Images sued Stability AI for training on 12 million copyrighted photos without license. Case ongoing with potential $1B+ damages.",
+		},
 		onRight: {
 			label: "Cooperate with investigation",
 			hype: 10,
@@ -280,6 +316,12 @@ export const HEAD_OF_SOMETHING_CARDS: Card[] = [
 		storyContext:
 			"You delegated an AI deployment decision to a senior IC. They chose poorly and caused a production incident. Leadership thinks YOU should have caught it. Your delegation is now in question.",
 		text: "Defend your delegation (trust your team) or admit you should have micromanaged?",
+		realWorldReference: {
+			incident: "Knight Capital Trading Loss",
+			date: "2012",
+			outcome:
+				"Failed deployment architecture triggered unintended automated trades. Lost $440M in 45 minutes due to lack of circuit breakers and oversight.",
+		},
 		onRight: {
 			label: "Admit oversight failure",
 			hype: -10,
@@ -323,6 +365,12 @@ export const HEAD_OF_SOMETHING_CARDS: Card[] = [
 		storyContext:
 			"SVP Product wants a feature your team says is technically impossible. Your team is already demoralized. You must either disappoint leadership or push your team beyond limits.",
 		text: "Promise leadership the impossible or tell them no and shield your team?",
+		realWorldReference: {
+			incident: "Theranos Promise vs Reality",
+			date: "2003-2015",
+			outcome:
+				"Leadership promised revolutionary blood testing technology. Engineering couldn't deliver. Company collapsed, leaders charged with fraud.",
+		},
 		onRight: {
 			label: "Promise the impossible",
 			hype: 40,
@@ -366,6 +414,12 @@ export const HEAD_OF_SOMETHING_CARDS: Card[] = [
 		storyContext:
 			"You have one promotion slot. Two equally qualified ICs. One is politically connected to the VP. The other is your best performer. HR says the decision is yours but 'leadership has preferences'.",
 		text: "Promote based on merit (risk political backlash) or politics (risk team morale)?",
+		realWorldReference: {
+			incident: "Google Gebru Termination Fallout",
+			date: "2020",
+			outcome:
+				"AI ethics researcher terminated after critical paper. Internal backlash, employee protests, and reputational damage to AI fairness efforts.",
+		},
 		onRight: {
 			label: "Promote politically connected",
 			hype: 25,

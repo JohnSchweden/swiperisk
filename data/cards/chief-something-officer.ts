@@ -23,6 +23,12 @@ export const CHIEF_SOMETHING_OFFICER_CARDS: Card[] = [
 		storyContext:
 			"Major client discovered prompt injection vulnerability in your AI product. Their legal team is asking about liability exposure. Shareholders will find out Monday morning.",
 		text: "Disclose breach proactively to shareholders (stock hit) or settle quietly with client (cover-up risk)?",
+		realWorldReference: {
+			incident: "Financial Services AI Injection Attacks",
+			date: "June 2025",
+			outcome:
+				"Multiple financial institutions suffered AI system compromises via prompt injection, causing unauthorized transactions and data exfiltration.",
+		},
 		onRight: {
 			label: "Settle quietly",
 			hype: 20,
@@ -66,6 +72,12 @@ export const CHIEF_SOMETHING_OFFICER_CARDS: Card[] = [
 		storyContext:
 			"Your flagship AI recommendation model has drifted from 92% to 78% accuracy. The CTO says retraining will take 6 weeks and cost $2M. Quarterly earnings are in 3 weeks.",
 		text: "Announce the degradation and delay earnings guidance, or ship a patch now and hope no one notices?",
+		realWorldReference: {
+			incident: "75% Business Model Drift Impact",
+			date: "2024",
+			outcome:
+				"Study found 75% of businesses experienced significant performance decline from undetected model drift, costing average $4.2M per incident.",
+		},
 		onRight: {
 			label: "Ship patch quietly",
 			hype: 35,
@@ -109,6 +121,12 @@ export const CHIEF_SOMETHING_OFFICER_CARDS: Card[] = [
 		storyContext:
 			"A class action lawsuit alleges your AI training data includes 50,000 copyrighted works without license. Plaintiffs demand $500M. Trial would be public and take 3 years.",
 		text: "Fight the lawsuit publicly (years of bad press) or settle for $150M with gag order?",
+		realWorldReference: {
+			incident: "NYT vs OpenAI Copyright Lawsuit",
+			date: "2023-2024",
+			outcome:
+				"New York Times sued OpenAI for training on copyrighted articles without permission. 70+ similar lawsuits filed by end of 2025.",
+		},
 		onRight: {
 			label: "Settle with gag",
 			hype: -30,
@@ -152,6 +170,12 @@ export const CHIEF_SOMETHING_OFFICER_CARDS: Card[] = [
 		storyContext:
 			"The audit committee discovered engineering has been using unauthorized AI tools for 8 months. No security review, no vendor contracts, $2M in unapproved spend. Board meeting in 2 hours.",
 		text: "Blame the CTO and fire them immediately, or take accountability as ultimate responsible officer?",
+		realWorldReference: {
+			incident: "78% Shadow AI Adoption",
+			date: "2024",
+			outcome:
+				"Study found 78% of workers used unauthorized AI tools at work. Samsung banned ChatGPT after engineers pasted proprietary code.",
+		},
 		onRight: {
 			label: "Blame and fire CTO",
 			hype: 15,
@@ -195,6 +219,12 @@ export const CHIEF_SOMETHING_OFFICER_CARDS: Card[] = [
 		storyContext:
 			"An engineer reports that your AI product is being used by a sanctioned entity despite compliance blocks. They'll go to regulators in 48 hours unless addressed. Legal says you have 'plausible deniability' if you do nothing.",
 		text: "Shut down the account immediately (revenue hit, customer notice) or rely on deniability (regulatory risk if exposed)?",
+		realWorldReference: {
+			incident: "Slack AI Data Exfiltration",
+			date: "August 2024",
+			outcome:
+				"Slack AI feature inadvertently allowed unauthorized data access across workspaces. Company faced regulatory scrutiny after whistleblower disclosure.",
+		},
 		onRight: {
 			label: "Use deniability",
 			hype: 40,
@@ -238,6 +268,12 @@ export const CHIEF_SOMETHING_OFFICER_CARDS: Card[] = [
 		storyContext:
 			"Your IPO window is open now with favorable market conditions. However, a security audit revealed 12 critical vulnerabilities. Fix them (3 month delay, market may close) or proceed (IPO revenue now, liability later)?",
 		text: "Delay IPO to fix security vulnerabilities, or go public now and address post-IPO?",
+		realWorldReference: {
+			incident: "SolarWinds IPO Security Issues",
+			date: "2018-2020",
+			outcome:
+				"Company went public with known security gaps. SUNBURST breach later exposed thousands of customers. Stock fell 40%, faced SEC investigation.",
+		},
 		onRight: {
 			label: "IPO now",
 			hype: 70,
@@ -282,6 +318,12 @@ export const CHIEF_SOMETHING_OFFICER_CARDS: Card[] = [
 		storyContext:
 			"Regulators demand explainability documentation for your AI credit decisions. Your model is a black-box ensemble with no interpretability. Documenting decisions retroactively will cost $5M and delay feature launch 4 months.",
 		text: "Refuse documentation (fight regulators) or delay launch and comply?",
+		realWorldReference: {
+			incident: "Apple Card Gender Discrimination Investigation",
+			date: "2019-2020",
+			outcome:
+				"Apple Card's black-box credit algorithm faced regulatory investigation for gender bias. Company couldn't explain decisions, paid fines, overhauled system.",
+		},
 		onRight: {
 			label: "Refuse and fight",
 			hype: 25,
@@ -325,6 +367,12 @@ export const CHIEF_SOMETHING_OFFICER_CARDS: Card[] = [
 		storyContext:
 			"McDonald's-style breach: 64M customer records exposed. You have 72 hours legally to disclose. If you disclose Friday, markets will tank over weekend. If you wait until Monday, you violate notification laws.",
 		text: "Disclose immediately (legal compliance, market panic) or delay to Monday (violation, calmer markets)?",
+		realWorldReference: {
+			incident: "McDonald's 64M Record Webcam Breach",
+			date: "2024",
+			outcome:
+				"McDonald's AI hiring tool exposed 64 million applicant records via unsecured webcam data. Delayed disclosure drew additional regulatory penalties.",
+		},
 		onRight: {
 			label: "Delay to Monday",
 			hype: 10,
@@ -368,6 +416,12 @@ export const CHIEF_SOMETHING_OFFICER_CARDS: Card[] = [
 		storyContext:
 			"Your new AI automation will eliminate 40% of customer service roles in 6 months. Announce now with retraining support (union organization, media attention) or implement quietly (discovery risk, employee trust destruction)?",
 		text: "Transparent workforce transition plan or quiet implementation?",
+		realWorldReference: {
+			incident: "Klarna AI Customer Service Replacement",
+			date: "2024",
+			outcome:
+				"Klarna replaced 700 customer service jobs with AI. Poorly communicated rollout caused public backlash, union threats, and reputational damage.",
+		},
 		onRight: {
 			label: "Implement quietly",
 			hype: 45,

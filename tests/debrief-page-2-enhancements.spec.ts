@@ -3,7 +3,7 @@ import { expect, test } from "@playwright/test";
 test.use({ baseURL: "https://localhost:3000" });
 
 test.describe("Debrief Page 2 - UI Enhancements @area:layout", () => {
-	test("displays 'Your Choice' label above decision badges", async ({
+	test("displays 'Your choice' label above decision badges", async ({
 		page,
 	}) => {
 		await page.goto("/");
@@ -32,8 +32,8 @@ test.describe("Debrief Page 2 - UI Enhancements @area:layout", () => {
 		await page.reload();
 		await page.waitForSelector("h1", { timeout: 10000 });
 
-		// Verify "Your Choice" label is visible above decision badge
-		const yourChoiceLabel = page.getByText("Your Choice", { exact: true });
+		// Verify "Your choice" label is visible above decision badge
+		const yourChoiceLabel = page.getByText("Your choice", { exact: true });
 		await expect(yourChoiceLabel).toBeVisible();
 
 		// Verify it appears before the choice badge
@@ -48,7 +48,7 @@ test.describe("Debrief Page 2 - UI Enhancements @area:layout", () => {
 		expect(labelBox?.y).toBeLessThan(badgeBox?.y ?? 0);
 	});
 
-	test("'Your Choice' label appears for each decision in history", async ({
+	test("'Your choice' label appears for each decision in history", async ({
 		page,
 	}) => {
 		await page.goto("/");
@@ -80,8 +80,8 @@ test.describe("Debrief Page 2 - UI Enhancements @area:layout", () => {
 		await page.reload();
 		await page.waitForSelector("h1", { timeout: 10000 });
 
-		// Should have one "Your Choice" label per decision
-		const yourChoiceLabels = page.getByText("Your Choice", { exact: true });
+		// Should have one "Your choice" label per decision
+		const yourChoiceLabels = page.getByText("Your choice", { exact: true });
 		await expect(yourChoiceLabels).toHaveCount(2);
 	});
 

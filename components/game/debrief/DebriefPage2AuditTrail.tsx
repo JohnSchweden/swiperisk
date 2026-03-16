@@ -151,8 +151,8 @@ export const DebriefPage2AuditTrail: React.FC<DebriefPage2AuditTrailProps> = ({
 												</div>
 											</div>
 											<div className="flex flex-col items-end gap-1">
-												<span className="text-xs text-slate-500 uppercase tracking-wide">
-													Your Choice
+												<span className="text-xs text-slate-500 tracking-wide">
+													Your choice
 												</span>
 												<div
 													className={`px-3 py-1 rounded text-xs font-bold ${
@@ -224,7 +224,7 @@ export const DebriefPage2AuditTrail: React.FC<DebriefPage2AuditTrailProps> = ({
 					{/* Per-choice hints for both safe and risky decisions */}
 					{history.length > 0 && (
 						<div className="space-y-1 mt-8">
-							<div className="text-sm font-semibold text-slate-300 uppercase tracking-wide mb-3 flex items-center justify-center gap-2 pt-[24px] pb-[20px]">
+							<div className="text-sm font-semibold text-slate-300 uppercase tracking-wide mb-3 flex items-center justify-center gap-2 pt-[24px]">
 								<i className="fa-solid fa-route text-cyan-400"></i>
 								Path You Didn't Take
 							</div>

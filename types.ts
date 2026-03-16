@@ -36,6 +36,17 @@ export enum AppSource {
 	MEETING = "MEETING",
 }
 
+export interface RealWorldReference {
+	/** Name of the company, product, or system involved in the real incident */
+	incident: string;
+	/** When the incident occurred or was reported (year or full date) */
+	date: string;
+	/** Brief description of what actually happened in the real case */
+	outcome: string;
+	/** Optional URL to source documentation (news article, CVE, research paper) */
+	sourceUrl?: string;
+}
+
 export interface Card {
 	id: string;
 	source: AppSource;
@@ -44,6 +55,8 @@ export interface Card {
 	/** Optional scene-setting line to immerse the user before the main ask */
 	storyContext?: string;
 	text: string;
+	/** Real-world incident that inspired this card scenario */
+	realWorldReference?: RealWorldReference;
 	onRight: {
 		label: string;
 		hype: number;

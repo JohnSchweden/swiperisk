@@ -325,7 +325,7 @@ export const SOFTWARE_ARCHITECT_CARDS: Card[] = [
 			label: "Direct access",
 			hype: 45,
 			heat: 90,
-			fine: 25000000,
+			fine: 20000000,
 			violation:
 				"Prompt Injection Vulnerability + Security Architecture Failure",
 			lesson:

@@ -12,6 +12,8 @@ interface GameHUDProps {
 	hype: number;
 	/** When set, HUD shows countdown is active (escalation context). */
 	countdownValue?: number;
+	/** Starting budget for progress bar calculation (defaults to 10M) */
+	startingBudget?: number;
 }
 
 function formatBudget(amount: number): string {
@@ -41,6 +43,7 @@ export const GameHUD = React.memo(function GameHUD({
 	heat,
 	hype,
 	countdownValue,
+	startingBudget = INITIAL_BUDGET,
 }: GameHUDProps) {
 	const budgetCritical = budget < BUDGET_CRITICAL;
 	const budgetWarning = budget < BUDGET_WARNING && !budgetCritical;
@@ -78,7 +81,7 @@ export const GameHUD = React.memo(function GameHUD({
 					<div
 						className={`h-full progress-bar ${budgetCritical ? "bg-red-500" : budgetWarning ? "bg-amber-500" : "bg-green-500"}`}
 						style={{
-							width: `${Math.min(100, (budget / INITIAL_BUDGET) * 100)}%`,
+							width: `${Math.min(100, (budget / startingBudget) * 100)}%`,
 						}}
 					/>
 				</div>

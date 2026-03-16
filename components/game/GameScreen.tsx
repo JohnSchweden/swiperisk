@@ -1,5 +1,6 @@
 import type React from "react";
 import type { GameState } from "../../types";
+import { ROLE_FINE_TIERS } from "../../types";
 import LayoutShell from "../LayoutShell";
 import { CardStack } from "./CardStack";
 import { GameHUD } from "./GameHUD";
@@ -73,6 +74,9 @@ export const GameScreen: React.FC<GameScreenProps> = ({
 }) => {
 	if (!state.role || !state.personality) return null;
 
+	// Get role-appropriate starting budget for progress bar (Phase 03-06)
+	const startingBudget = ROLE_FINE_TIERS[state.role]?.budget ?? 10000000;
+
 	// Expose countdown for Phase 04-02 (timer UI)
 	const pressureAttrs =
 		isCountdownActive && countdownValue > 0
@@ -88,6 +92,7 @@ export const GameScreen: React.FC<GameScreenProps> = ({
 				heat={state.heat}
 				hype={state.hype}
 				countdownValue={showCountdown ? countdownValue : undefined}
+				startingBudget={startingBudget}
 			/>
 			{showCountdown && (
 				<div

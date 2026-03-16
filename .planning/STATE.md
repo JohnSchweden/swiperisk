@@ -3,13 +3,13 @@ gsd_state_version: 1.0
 milestone: v1.2
 milestone_name: Kobayashi Maru — AI Governance Simulator
 current_phase: 06-debrief-and-replay-system
-current_plan: 20
+current_plan: 15
 status: planning
-last_updated: "2026-03-16T13:11:26Z"
+last_updated: "2026-03-16T13:17:57.214Z"
 progress:
   total_phases: 14
   completed_phases: 5
-  total_plans: 52
+  total_plans: 53
   completed_plans: 37
 ---
 

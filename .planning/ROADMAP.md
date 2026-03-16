@@ -170,7 +170,7 @@ All incidents sourced from documented 2024-2025 cases. Role-specific framing (sa
 
 **Goal:** 3-page "Reveal Build-Up" ending sequence — viral shareability + V2 lead capture
 **Depends on:** Phase 04
-**Plans:** 19/19 plans complete (all planned debrief features complete)
+**Plans:** 19/19 plans complete
 
 Plans:
 - [x] 06-01-PLAN.md — Archetype system foundation (types, data, hook) ✓

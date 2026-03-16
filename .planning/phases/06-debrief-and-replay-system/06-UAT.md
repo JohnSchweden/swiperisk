@@ -1,9 +1,9 @@
 ---
-status: resolved
+status: complete
 phase: 06-debrief-and-replay-system
-source: 06-01-SUMMARY.md, 06-02-SUMMARY.md, 06-03-SUMMARY.md, 06-04-SUMMARY.md, 06-05-SUMMARY.md
-started: 2026-03-13T00:00:00Z
-updated: 2026-03-13T12:00:00Z
+source: [06-01 through 06-19 SUMMARY.md files]
+started: 2026-03-16T14:50:00Z
+updated: 2026-03-16T15:00:00Z
 ---
 
 ## Current Test
@@ -12,94 +12,54 @@ updated: 2026-03-13T12:00:00Z
 
 ## Tests
 
-### 1. 3-Page Debrief Flow - Page 1 (Collapse)
-expected: Game Over screen shows death type, final metrics (budget/heat/hype), and [Debrief Me] button
-result: pass
-notes: Game Over screen works. Issue found: Quarter survived screen shows [Debrief Me] button but clicking it does NOT navigate to Page 2 (Audit Trail).
-
-### 2. 3-Page Debrief Flow - Page 2 (Audit Trail)
-expected: Clicking [Debrief Me] shows audit trail with decision history, cards played, choices made, and personality-specific commentary
-result: pass
-notes: Works correctly from Game Over (liquidated) screen. Navigation issue only affects Quarter Survived screen.
-
-### 3. 3-Page Debrief Flow - Page 3 (Verdict)
-expected: Clicking [View Verdict] shows archetype classification (e.g., "Pragmatist"), resilience score (0-100%), [Share to LinkedIn] button, and [Reboot System] button
-result: pass
-notes: Button labeled "Generate Psych Evaluation" instead of "View Verdict"
-
-### 4. LinkedIn Share Functionality
-expected: Clicking [Share to LinkedIn] opens LinkedIn share dialog in new window with pre-filled text including role, archetype, and resilience score
-result: issue
-reported: "fail, i created a new plan 16 for fixing this"
-severity: major
-
-### 5. Email Capture Form
-expected: On Page 3, an email capture form appears with validation. Entering valid email and clicking submit shows success message. Invalid email shows error.
-result: issue
-reported: "fail, valid mail shows: something went wrong. try again with this error :3000/api/v2-waitlist:1  Failed to load resource: the server responded with a status of 404 ()"
-severity: major
-
-### 6. Unlock Progress Display
-expected: On Page 1, a prominent display shows "You've unlocked X/6 endings" with trophy icons and encouragement to replay
+### 1. Debrief 3-Page Flow
+expected: Debrief system shows 3-page flow (Page 1: Collapse, Page 2: Audit Trail, Page 3: Verdict) with working navigation
 result: pass
 
-### 7. Reflection Prompt with Hints
-expected: On Page 2, a reflection section asks "What would you do differently?" and shows hints for safe choices suggesting riskier alternatives
+### 2. Archetype Classification
+expected: System classifies you into one of 6 archetypes (PRAGMATIST, SHADOW_ARCHITECT, DISRUPTOR, CONSERVATIVE, BALANCED, CHAOS_AGENT) based on your decisions
 result: pass
 
-### 8. Personality-Specific Language
-expected: Different personality types (V.E.R.A., ZEN_MASTER, LOVEBOMBER) show different tones in commentary and replay encouragement
+### 3. Resilience Score
+expected: Displays resilience score (0-100%) with contextual message
 result: pass
 
-### 9. Cold Start Smoke Test
-expected: Kill dev server, clear storage, start fresh. Game loads, plays through to game over, and full debrief flow works without errors
+### 4. Audit Trail Page
+expected: Page 2 shows chronological decisions with readable card names (not raw LEFT/RIGHT), descriptions, and reflection hints
+result: pass
+
+### 5. Unlocked Endings Progress
+expected: Page 1 shows progress toward unlocking all 6 endings (e.g., "2/6 endings") with visual indicators
+result: pass
+
+### 6. Gamification Reflection Hints
+expected: Page 2 offers personality-specific hints about alternative choices
+result: pass
+
+### 7. Share to LinkedIn Button
+expected: Page 3 has Share to LinkedIn button that opens LinkedIn share dialog with pre-filled role/archetype/score (same tab)
+result: pass
+
+### 8. LinkedIn CTA Button - Message Yevgen Schweden
+expected: Page 3 has "Early access to V2" section with LinkedIn icon inside button, button text "Message Yevgen Schweden", opens LinkedIn profile in same tab
+result: pass
+
+### 9. Email Form Replaced
+expected: Page 3 no longer shows email capture form, only LinkedIn CTA
+result: pass
+
+### 10. Verdict Page Complete
+expected: Page 3 displays archetype box, resilience score, Share to LinkedIn button, Message Yevgen button, and Reboot System button
 result: pass
 
 ## Summary
 
-total: 9
-passed: 7
-issues: 2
+total: 10
+passed: 10
+issues: 0
 pending: 0
 skipped: 0
 
 ## Gaps
 
-- truth: "Quarter survived screen [Debrief Me] button navigates to Page 2 (Audit Trail)"
-  status: resolved
-  reason: "User reported: pass but when quarter survived debrief me is not navigating to page 2"
-  severity: major
-  test: 1
-  root_cause: "Missing transition in useDebrief.ts nextPage() - DEBRIEF_PAGE_1 maps to null instead of DEBRIEF_PAGE_2"
-  artifacts:
-    - path: "hooks/useDebrief.ts"
-      issue: "Line 91: [GameStage.DEBRIEF_PAGE_1]: null - returns null so navigation does nothing"
-  missing:
-    - "Add [GameStage.DEBRIEF_PAGE_1]: GameStage.DEBRIEF_PAGE_2 to transitions map"
-  debug_session: ".planning/debug/phase6-gap-quartersurvived-navigation.md"
-
-- truth: "LinkedIn share button opens share dialog with pre-filled content"
-  status: resolved
-  reason: "User reported: fail, i created a new plan 16 for fixing this"
-  severity: major
-  test: 4
-  root_cause: "See plan 06-16 for fix approach"
-  artifacts: []
-  missing: []
-  debug_session: ".planning/phases/06-debrief-and-replay-system/06-16-PLAN.md"
-
-- truth: "Email capture form submits successfully with valid email"
-  status: resolved
-  reason: "User reported: fail, valid mail shows: something went wrong. try again with this error :3000/api/v2-waitlist:1  Failed to load resource: the server responded with a status of 404 ()"
-  severity: major
-  test: 5
-  root_cause: "API route plugin in vite.config.ts not intercepting /api/v2-waitlist requests - middleware ordering or registration issue"
-  artifacts:
-    - path: "vite.config.ts"
-      issue: "Lines 12-115: apiRoutesPlugin() should intercept /api/* but returning 404"
-    - path: "api/v2-waitlist.ts"
-      issue: "Handler exists but not being reached - plugin routing failure"
-  missing:
-    - "Debug and fix apiRoutesPlugin middleware registration"
-    - "Ensure /api/* routes are intercepted before default 404 handler"
-  debug_session: ".planning/debug/phase6-gap-email-api-404.md"
+[none - all tests passed]

@@ -30,7 +30,7 @@ export const SOFTWARE_ENGINEER_CARDS: Card[] = [
 			label: "Quick fix",
 			hype: 30,
 			heat: 85,
-			fine: 15000000,
+			fine: 10000000,
 			violation: "Security Negligence + Vulnerability Exposure",
 			lesson:
 				"Quick security patches often miss edge cases and create exploitable holes.",
@@ -78,7 +78,7 @@ export const SOFTWARE_ENGINEER_CARDS: Card[] = [
 			label: "Ship messy code",
 			hype: 40,
 			heat: 70,
-			fine: 3000000,
+			fine: 500000,
 			violation: "Technical Debt Accumulation",
 			lesson:
 				"Shipping messy code accelerates technical debt and degrades maintainability.",
@@ -176,7 +176,7 @@ export const SOFTWARE_ENGINEER_CARDS: Card[] = [
 			label: "Regex filter",
 			hype: 25,
 			heat: 90,
-			fine: 20000000,
+			fine: 8000000,
 			violation: "Insufficient Security Fix + Prompt Injection",
 			lesson:
 				"Regex filters for prompt injection are easily bypassed and create false security.",
@@ -271,7 +271,7 @@ export const SOFTWARE_ENGINEER_CARDS: Card[] = [
 			label: "Extend deadline",
 			hype: 15,
 			heat: 60,
-			fine: 1000000,
+			fine: 200000,
 			violation: "Schedule Slippage",
 			lesson: "Deadline extensions cascade and damage stakeholder confidence.",
 			feedback: {

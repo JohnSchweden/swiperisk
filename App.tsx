@@ -109,6 +109,11 @@ const App: React.FC = () => {
 		violation: string;
 		cardId: string;
 		teamImpact?: string | null;
+		realWorldReference?: {
+			incident: string;
+			date: string;
+			outcome: string;
+		} | null;
 	} | null>(null);
 
 	// Card animation state
@@ -151,6 +156,7 @@ const App: React.FC = () => {
 				violation: outcome.violation,
 				cardId: card.id,
 				teamImpact: teamImpact ?? null,
+				realWorldReference: card.realWorldReference ?? null,
 			});
 
 			makeChoice(direction, {
@@ -503,6 +509,7 @@ const App: React.FC = () => {
 						teamImpact={feedbackOverlay.teamImpact}
 						budget={state.budget}
 						heat={state.heat}
+						realWorldReference={feedbackOverlay.realWorldReference}
 						onNext={handleNextIncident}
 					/>
 				)}

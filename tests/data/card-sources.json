@@ -1,6 +1,6 @@
 {
 	"$schema": "./card-sources.schema.json",
-	"description": "Source documentation for all cards in the game. Each card must reference a real 2024-2025 incident or be marked as fictional (Kobayashi Maru scenarios).",
+	"description": "Source documentation for all cards in the game. Each card references real 2024-2025 incidents or Kobayashi Maru fictional scenarios.",
 	"sources": [
 		{
 			"cardId": "nowin_speed_vs_quality",
@@ -49,6 +49,734 @@
 			"category": "KOBAYASHI_MARU",
 			"reason": "Core no-win dilemma - centralized vs distributed tradeoff",
 			"fictional": true
+		},
+		{
+			"cardId": "cso_prompt_injection_liability",
+			"incidentName": "GitHub Copilot RCE CVE-2025-53773",
+			"date": "2025-01",
+			"category": "PROMPT_INJECTION",
+			"role": "CHIEF_SOMETHING_OFFICER",
+			"reason": "Shareholder liability angle on security breach"
+		},
+		{
+			"cardId": "cso_model_drift_revenue_threat",
+			"incidentName": "75% of businesses experienced model drift impacting revenue (2024 AI Survey)",
+			"date": "2024",
+			"category": "MODEL_DRIFT",
+			"role": "CHIEF_SOMETHING_OFFICER",
+			"reason": "Revenue impact of AI model degradation"
+		},
+		{
+			"cardId": "cso_copyright_class_action",
+			"incidentName": "70+ copyright lawsuits against AI companies by 2025",
+			"date": "2024-2025",
+			"category": "COPYRIGHT",
+			"role": "CHIEF_SOMETHING_OFFICER",
+			"reason": "Class action exposure from training data"
+		},
+		{
+			"cardId": "cso_shadow_ai_board_discovery",
+			"incidentName": "78% worker adoption of shadow AI tools (2024 Enterprise Survey)",
+			"date": "2024",
+			"category": "SHADOW_AI",
+			"role": "CHIEF_SOMETHING_OFFICER",
+			"reason": "Board discovery of unauthorized AI usage"
+		},
+		{
+			"cardId": "cso_whistleblower_escalation",
+			"incidentName": "McDonald's 64M record breach and compliance reporting",
+			"date": "2024",
+			"category": "GOVERNANCE",
+			"role": "CHIEF_SOMETHING_OFFICER",
+			"reason": "Whistleblower handling and ethical violations"
+		},
+		{
+			"cardId": "cso_ipo_timing_dilemma",
+			"incidentName": "Multiple tech IPOs delayed due to security audits 2024-2025",
+			"date": "2024-2025",
+			"category": "REGULATORY",
+			"role": "CHIEF_SOMETHING_OFFICER",
+			"reason": "IPO timing vs security vulnerability disclosure"
+		},
+		{
+			"cardId": "cso_explainability_audit_pressure",
+			"incidentName": "EU AI Act explainability requirements 2024",
+			"date": "2024",
+			"category": "EXPLAINABILITY",
+			"role": "CHIEF_SOMETHING_OFFICER",
+			"reason": "Regulator demanding audit compliance"
+		},
+		{
+			"cardId": "cso_breach_notification_timing",
+			"incidentName": "SEC cybersecurity disclosure rules effective 2024",
+			"date": "2024",
+			"category": "DISCLOSURE",
+			"role": "CHIEF_SOMETHING_OFFICER",
+			"reason": "Breach notification timing requirements"
+		},
+		{
+			"cardId": "cso_automation_workforce_backlash",
+			"incidentName": "Hollywood writers strike AI concerns 2023-2024",
+			"date": "2024",
+			"category": "AUTOMATION",
+			"role": "CHIEF_SOMETHING_OFFICER",
+			"reason": "Workforce backlash against AI automation"
+		},
+		{
+			"cardId": "hos_prompt_injection_blame",
+			"incidentName": "GitHub Copilot RCE CVE-2025-53773",
+			"date": "2025-01",
+			"category": "PROMPT_INJECTION",
+			"role": "HEAD_OF_SOMETHING",
+			"reason": "Middle management accountability for team security failures"
+		},
+		{
+			"cardId": "hos_model_drift_budget_conflict",
+			"incidentName": "75% model drift business impact (2024)",
+			"date": "2024",
+			"category": "MODEL_DRIFT",
+			"role": "HEAD_OF_SOMETHING",
+			"reason": "Budget conflict between retraining and revenue protection"
+		},
+		{
+			"cardId": "hos_shadow_ai_team_discovery",
+			"incidentName": "78% shadow AI adoption (2024)",
+			"date": "2024",
+			"category": "SHADOW_AI",
+			"role": "HEAD_OF_SOMETHING",
+			"reason": "Team protection vs compliance enforcement"
+		},
+		{
+			"cardId": "hos_team_burnout_deadline",
+			"incidentName": "Tech industry burnout crisis 2024",
+			"date": "2024",
+			"category": "WORKFORCE",
+			"role": "HEAD_OF_SOMETHING",
+			"reason": "Deadline pressure vs team wellbeing"
+		},
+		{
+			"cardId": "hos_explainability_politics",
+			"incidentName": "EU AI Act compliance pressures 2024",
+			"date": "2024",
+			"category": "EXPLAINABILITY",
+			"role": "HEAD_OF_SOMETHING",
+			"reason": "Political navigation between engineering and compliance"
+		},
+		{
+			"cardId": "hos_copyright_team_blame",
+			"incidentName": "70+ copyright lawsuits 2025",
+			"date": "2025",
+			"category": "COPYRIGHT",
+			"role": "HEAD_OF_SOMETHING",
+			"reason": "Team protection vs legal cooperation"
+		},
+		{
+			"cardId": "hos_delegation_gone_wrong",
+			"incidentName": "General management accountability patterns",
+			"date": "2024",
+			"category": "GOVERNANCE",
+			"role": "HEAD_OF_SOMETHING",
+			"reason": "Delegation failure and oversight gaps"
+		},
+		{
+			"cardId": "hos_managing_up_down",
+			"incidentName": "Middle management squeeze trends 2024",
+			"date": "2024",
+			"category": "POLITICS",
+			"role": "HEAD_OF_SOMETHING",
+			"reason": "Political survival between leadership and team"
+		},
+		{
+			"cardId": "hos_promotion_politics",
+			"incidentName": "Tech industry meritocracy debates 2024",
+			"date": "2024",
+			"category": "WORKFORCE",
+			"role": "HEAD_OF_SOMETHING",
+			"reason": "Merit vs political promotion decisions"
+		},
+		{
+			"cardId": "sm_model_drift_roi_calculation",
+			"incidentName": "75% model drift business impact (2024)",
+			"date": "2024",
+			"category": "MODEL_DRIFT",
+			"role": "SOMETHING_MANAGER",
+			"reason": "ROI calculation for model retraining"
+		},
+		{
+			"cardId": "sm_copyright_audit_budget",
+			"incidentName": "70+ copyright lawsuits 2025",
+			"date": "2025",
+			"category": "COPYRIGHT",
+			"role": "SOMETHING_MANAGER",
+			"reason": "Budget tradeoff for copyright audit"
+		},
+		{
+			"cardId": "sm_shadow_ai_cost_comparison",
+			"incidentName": "78% shadow AI adoption (2024)",
+			"date": "2024",
+			"category": "SHADOW_AI",
+			"role": "SOMETHING_MANAGER",
+			"reason": "Unauthorized tools vs enterprise licensing costs"
+		},
+		{
+			"cardId": "sm_team_retention_overtime",
+			"incidentName": "Tech retention crisis 2024",
+			"date": "2024",
+			"category": "WORKFORCE",
+			"role": "SOMETHING_MANAGER",
+			"reason": "Retention cost calculations"
+		},
+		{
+			"cardId": "sm_compliance_checklist_deadline",
+			"incidentName": "SOX and GDPR audit pressures 2024",
+			"date": "2024",
+			"category": "COMPLIANCE",
+			"role": "SOMETHING_MANAGER",
+			"reason": "Checklist efficiency vs thoroughness"
+		},
+		{
+			"cardId": "sm_quarterly_target_sandbag",
+			"incidentName": "Quarterly target gaming patterns",
+			"date": "2024",
+			"category": "PLANNING",
+			"role": "SOMETHING_MANAGER",
+			"reason": "Target setting honesty"
+		},
+		{
+			"cardId": "sm_prompt_injection_business_case",
+			"incidentName": "Financial services injection attacks June 2025",
+			"date": "2025-06",
+			"category": "PROMPT_INJECTION",
+			"role": "SOMETHING_MANAGER",
+			"reason": "Security ROI calculations"
+		},
+		{
+			"cardId": "sm_explainability_vendor_cost",
+			"incidentName": "EU AI Act vendor compliance costs 2024",
+			"date": "2024",
+			"category": "EXPLAINABILITY",
+			"role": "SOMETHING_MANAGER",
+			"reason": "Vendor cost vs compliance requirements"
+		},
+		{
+			"cardId": "sm_training_budget_roi",
+			"incidentName": "AI safety training ROI debates 2024",
+			"date": "2024",
+			"category": "TRAINING",
+			"role": "SOMETHING_MANAGER",
+			"reason": "Training budget justification"
+		},
+		{
+			"cardId": "tac_prompt_injection_client_threat",
+			"incidentName": "Cursor IDE RCE CVE-2025-54135/54136",
+			"date": "2025",
+			"category": "PROMPT_INJECTION",
+			"role": "TECH_AI_CONSULTANT",
+			"reason": "Client contract disputes over security vulnerabilities"
+		},
+		{
+			"cardId": "tac_model_drift_post_delivery",
+			"incidentName": "75% model drift post-deployment (2024)",
+			"date": "2024",
+			"category": "MODEL_DRIFT",
+			"role": "TECH_AI_CONSULTANT",
+			"reason": "Deliverable quality after deployment"
+		},
+		{
+			"cardId": "tac_vendor_lock_in_portability",
+			"incidentName": "Cloud vendor lock-in concerns 2024",
+			"date": "2024",
+			"category": "VENDOR_RISK",
+			"role": "TECH_AI_CONSULTANT",
+			"reason": "Client portability concerns"
+		},
+		{
+			"cardId": "tac_scope_creep_deadline",
+			"incidentName": "Consulting scope creep patterns 2024",
+			"date": "2024",
+			"category": "PROJECT_MANAGEMENT",
+			"role": "TECH_AI_CONSULTANT",
+			"reason": "Professional boundaries with clients"
+		},
+		{
+			"cardId": "tac_copyright_data_provenance",
+			"incidentName": "70+ copyright lawsuits 2025",
+			"date": "2025",
+			"category": "COPYRIGHT",
+			"role": "TECH_AI_CONSULTANT",
+			"reason": "Training data provenance in consulting engagements"
+		},
+		{
+			"cardId": "tac_timeline_pressure_quality",
+			"incidentName": "Consulting timeline pressure patterns 2024",
+			"date": "2024",
+			"category": "DELIVERABLE_QUALITY",
+			"role": "TECH_AI_CONSULTANT",
+			"reason": "Quality vs deadline pressure"
+		},
+		{
+			"cardId": "tac_explainability_deliverable",
+			"incidentName": "EU AI Act deliverable requirements 2024",
+			"date": "2024",
+			"category": "EXPLAINABILITY",
+			"role": "TECH_AI_CONSULTANT",
+			"reason": "Post-contract explainability requirements"
+		},
+		{
+			"cardId": "tac_proposal_competitive_bid",
+			"incidentName": "Consulting underbidding trends 2024",
+			"date": "2024",
+			"category": "BUSINESS_DEVELOPMENT",
+			"role": "TECH_AI_CONSULTANT",
+			"reason": "Honest bidding vs winning contracts"
+		},
+		{
+			"cardId": "tac_shadow_ai_discovery",
+			"incidentName": "78% shadow AI adoption (2024)",
+			"date": "2024",
+			"category": "SHADOW_AI",
+			"role": "TECH_AI_CONSULTANT",
+			"reason": "Unauthorized tool use in deliverables"
+		},
+		{
+			"cardId": "ds_model_drift_detection",
+			"incidentName": "Production model drift patterns 2024",
+			"date": "2024",
+			"category": "MODEL_DRIFT",
+			"role": "DATA_SCIENTIST",
+			"reason": "Root cause analysis vs symptom masking"
+		},
+		{
+			"cardId": "ds_training_data_quality",
+			"incidentName": "Training data validation failures 2024",
+			"date": "2024",
+			"category": "DATA_QUALITY",
+			"role": "DATA_SCIENTIST",
+			"reason": "Unvalidated data sources"
+		},
+		{
+			"cardId": "ds_bias_detection_deployment",
+			"incidentName": "AI bias in lending and hiring 2024",
+			"date": "2024",
+			"category": "BIAS",
+			"role": "DATA_SCIENTIST",
+			"reason": "Demographic bias in model deployment"
+		},
+		{
+			"cardId": "ds_explainability_accuracy_tradeoff",
+			"incidentName": "Explainable AI accuracy tradeoffs 2024",
+			"date": "2024",
+			"category": "EXPLAINABILITY",
+			"role": "DATA_SCIENTIST",
+			"reason": "Black-box vs white-box model selection"
+		},
+		{
+			"cardId": "ds_feature_engineering_latency",
+			"incidentName": "Feature complexity performance impact 2024",
+			"date": "2024",
+			"category": "PERFORMANCE",
+			"role": "DATA_SCIENTIST",
+			"reason": "ML feature latency tradeoffs"
+		},
+		{
+			"cardId": "ds_prompt_injection_adversarial",
+			"incidentName": "Adversarial input patterns in NLP 2024",
+			"date": "2024",
+			"category": "PROMPT_INJECTION",
+			"role": "DATA_SCIENTIST",
+			"reason": "Adversarial robustness in model design"
+		},
+		{
+			"cardId": "ds_shadow_ai_tools_experiment",
+			"incidentName": "78% shadow AI adoption (2024)",
+			"date": "2024",
+			"category": "SHADOW_AI",
+			"role": "DATA_SCIENTIST",
+			"reason": "Unauthorized AutoML tool usage"
+		},
+		{
+			"cardId": "ds_copyright_training_data_audit",
+			"incidentName": "70+ copyright lawsuits 2025",
+			"date": "2025",
+			"category": "COPYRIGHT",
+			"role": "DATA_SCIENTIST",
+			"reason": "Training data licensing audits"
+		},
+		{
+			"cardId": "ds_retraining_cost_benefit",
+			"incidentName": "Model maintenance cost analysis 2024",
+			"date": "2024",
+			"category": "MODEL_DRIFT",
+			"role": "DATA_SCIENTIST",
+			"reason": "Scheduled retraining cost decisions"
+		},
+		{
+			"cardId": "sa_microservices_vs_monolith",
+			"incidentName": "Microservices complexity failures 2024",
+			"date": "2024",
+			"category": "ARCHITECTURE",
+			"role": "SOFTWARE_ARCHITECT",
+			"reason": "Architecture pattern selection"
+		},
+		{
+			"cardId": "sa_technical_debt_paydown",
+			"incidentName": "Technical debt accumulation crisis 2024",
+			"date": "2024",
+			"category": "TECHNICAL_DEBT",
+			"role": "SOFTWARE_ARCHITECT",
+			"reason": "Debt management vs feature delivery"
+		},
+		{
+			"cardId": "sa_api_versioning_breaking_change",
+			"incidentName": "API versioning disasters 2024",
+			"date": "2024",
+			"category": "API_DESIGN",
+			"role": "SOFTWARE_ARCHITECT",
+			"reason": "Breaking changes vs backward compatibility"
+		},
+		{
+			"cardId": "sa_scalability_single_point_failure",
+			"incidentName": "Single point of failure outages 2024",
+			"date": "2024",
+			"category": "SCALABILITY",
+			"role": "SOFTWARE_ARCHITECT",
+			"reason": "Database architecture decisions"
+		},
+		{
+			"cardId": "sa_legacy_migration_rewrite",
+			"incidentName": "Big-bang rewrite failures 2024",
+			"date": "2024",
+			"category": "MIGRATION",
+			"role": "SOFTWARE_ARCHITECT",
+			"reason": "Migration strategy selection"
+		},
+		{
+			"cardId": "sa_security_zero_trust",
+			"incidentName": "Zero-trust adoption patterns 2024",
+			"date": "2024",
+			"category": "SECURITY",
+			"role": "SOFTWARE_ARCHITECT",
+			"reason": "Security architecture tradeoffs"
+		},
+		{
+			"cardId": "sa_prompt_injection_architecture",
+			"incidentName": "GitHub Copilot RCE CVE-2025-53773",
+			"date": "2025-01",
+			"category": "PROMPT_INJECTION",
+			"role": "SOFTWARE_ARCHITECT",
+			"reason": "LLM integration architecture security"
+		},
+		{
+			"cardId": "sa_tech_stack_vendor_lockin",
+			"incidentName": "Vendor lock-in migration costs 2024",
+			"date": "2024",
+			"category": "VENDOR_RISK",
+			"role": "SOFTWARE_ARCHITECT",
+			"reason": "Platform selection and portability"
+		},
+		{
+			"cardId": "sa_deployment_blue_green",
+			"incidentName": "Deployment strategy risk patterns 2024",
+			"date": "2024",
+			"category": "DEPLOYMENT",
+			"role": "SOFTWARE_ARCHITECT",
+			"reason": "Blue-green vs in-place deployment"
+		},
+		{
+			"cardId": "se_security_patch_timeline",
+			"incidentName": "Security patching urgency patterns 2024",
+			"date": "2024",
+			"category": "SECURITY",
+			"role": "SOFTWARE_ENGINEER",
+			"reason": "Proper vs quick security fixes"
+		},
+		{
+			"cardId": "se_code_quality_refactor",
+			"incidentName": "Code quality degradation patterns 2024",
+			"date": "2024",
+			"category": "CODE_QUALITY",
+			"role": "SOFTWARE_ENGINEER",
+			"reason": "Refactoring vs shipping messy code"
+		},
+		{
+			"cardId": "se_testing_coverage_vs_speed",
+			"incidentName": "Testing coverage tradeoffs 2024",
+			"date": "2024",
+			"category": "TESTING",
+			"role": "SOFTWARE_ENGINEER",
+			"reason": "Coverage targets vs deadlines"
+		},
+		{
+			"cardId": "se_prompt_injection_fix",
+			"incidentName": "Cursor IDE RCE CVE-2025-54135/54136",
+			"date": "2025",
+			"category": "PROMPT_INJECTION",
+			"role": "SOFTWARE_ENGINEER",
+			"reason": "Prompt injection remediation approaches"
+		},
+		{
+			"cardId": "se_technical_debt_quick_fix",
+			"incidentName": "Quick fix technical debt accumulation 2024",
+			"date": "2024",
+			"category": "TECHNICAL_DEBT",
+			"role": "SOFTWARE_ENGINEER",
+			"reason": "Proper fixes vs quick hacks"
+		},
+		{
+			"cardId": "se_feature_scope_reduction",
+			"incidentName": "Feature delivery patterns 2024",
+			"date": "2024",
+			"category": "FEATURE_DELIVERY",
+			"role": "SOFTWARE_ENGINEER",
+			"reason": "Scope reduction vs deadline extension"
+		},
+		{
+			"cardId": "se_code_review_rigor",
+			"incidentName": "Code review quality gaps 2024",
+			"date": "2024",
+			"category": "CODE_REVIEW",
+			"role": "SOFTWARE_ENGINEER",
+			"reason": "Review rigor regardless of seniority"
+		},
+		{
+			"cardId": "se_shadow_ai_coding_tool",
+			"incidentName": "78% shadow AI adoption (2024)",
+			"date": "2024",
+			"category": "SHADOW_AI",
+			"role": "SOFTWARE_ENGINEER",
+			"reason": "Unauthorized AI coding assistants"
+		},
+		{
+			"cardId": "se_implementation_estimation",
+			"incidentName": "Estimation accuracy challenges 2024",
+			"date": "2024",
+			"category": "ESTIMATION",
+			"role": "SOFTWARE_ENGINEER",
+			"reason": "Estimation honesty and escalation"
+		},
+		{
+			"cardId": "vc_prompt_engineering_precision",
+			"incidentName": "LLM prompt quality impact 2024",
+			"date": "2024",
+			"category": "PROMPT_ENGINEERING",
+			"role": "VIBE_CODER",
+			"reason": "Prompt precision vs speed"
+		},
+		{
+			"cardId": "vc_llm_selection_tradeoff",
+			"incidentName": "Local LLM vs GPT-4 quality gap 2024",
+			"date": "2024",
+			"category": "MODEL_SELECTION",
+			"role": "VIBE_CODER",
+			"reason": "Cost vs quality in LLM selection"
+		},
+		{
+			"cardId": "vc_ai_code_review_trust",
+			"incidentName": "AI code review limitations 2024",
+			"date": "2024",
+			"category": "AI_REVIEW",
+			"role": "VIBE_CODER",
+			"reason": "AI review vs human verification"
+		},
+		{
+			"cardId": "vc_hallucinated_library",
+			"incidentName": "LLM hallucination patterns 2024",
+			"date": "2024",
+			"category": "HALLUCINATION",
+			"role": "VIBE_CODER",
+			"reason": "Hallucinated dependencies in generated code"
+		},
+		{
+			"cardId": "vc_context_window_limit",
+			"incidentName": "LLM context window limitations 2024",
+			"date": "2024",
+			"category": "CONTEXT_LIMITS",
+			"role": "VIBE_CODER",
+			"reason": "Context management for large codebases"
+		},
+		{
+			"cardId": "vc_vibe_vs_verification",
+			"incidentName": "Vibe coding risks 2024",
+			"date": "2024",
+			"category": "VIBE_CODING",
+			"role": "VIBE_CODER",
+			"reason": "Shipping code without understanding"
+		},
+		{
+			"cardId": "vc_copyright_generated_code",
+			"incidentName": "AI code generation IP issues 2024",
+			"date": "2024",
+			"category": "COPYRIGHT",
+			"role": "VIBE_CODER",
+			"reason": "Generated code license violations"
+		},
+		{
+			"cardId": "vc_model_drift_ai_suggestion",
+			"incidentName": "AI tool degradation over time 2024",
+			"date": "2024",
+			"category": "TOOL_DEGRADATION",
+			"role": "VIBE_CODER",
+			"reason": "Switching AI models as quality declines"
+		},
+		{
+			"cardId": "vc_explainability_code_golf",
+			"incidentName": "Code golf maintainability issues 2024",
+			"date": "2024",
+			"category": "CODE_CLARITY",
+			"role": "VIBE_CODER",
+			"reason": "Elegant one-liners vs readability"
+		},
+		{
+			"cardId": "ve_caching_strategy_consistency",
+			"incidentName": "Cache consistency challenges 2024",
+			"date": "2024",
+			"category": "CACHING",
+			"role": "VIBE_ENGINEER",
+			"reason": "Caching vs data consistency"
+		},
+		{
+			"cardId": "ve_autoscaling_cost_risk",
+			"incidentName": "Autoscaling cost spikes 2024",
+			"date": "2024",
+			"category": "AUTOSCALING",
+			"role": "VIBE_ENGINEER",
+			"reason": "Cost vs availability in autoscaling"
+		},
+		{
+			"cardId": "ve_cdn_global_vs_regional",
+			"incidentName": "CDN cost-performance tradeoffs 2024",
+			"date": "2024",
+			"category": "CDN",
+			"role": "VIBE_ENGINEER",
+			"reason": "Global vs regional CDN selection"
+		},
+		{
+			"cardId": "ve_database_read_replicas",
+			"incidentName": "Read replica consistency issues 2024",
+			"date": "2024",
+			"category": "DATABASE",
+			"role": "VIBE_ENGINEER",
+			"reason": "Strong vs eventual consistency"
+		},
+		{
+			"cardId": "ve_websocket_vs_polling",
+			"incidentName": "Real-time architecture choices 2024",
+			"date": "2024",
+			"category": "REAL_TIME",
+			"role": "VIBE_ENGINEER",
+			"reason": "WebSocket vs polling for real-time"
+		},
+		{
+			"cardId": "ve_prompt_injection_latency",
+			"incidentName": "Input validation performance impact 2024",
+			"date": "2024",
+			"category": "PROMPT_INJECTION",
+			"role": "VIBE_ENGINEER",
+			"reason": "Security validation vs latency"
+		},
+		{
+			"cardId": "ve_edge_computing_centralized",
+			"incidentName": "Edge computing adoption patterns 2024",
+			"date": "2024",
+			"category": "EDGE_COMPUTING",
+			"role": "VIBE_ENGINEER",
+			"reason": "Edge vs centralized processing"
+		},
+		{
+			"cardId": "ve_compression_quality",
+			"incidentName": "Asset optimization tradeoffs 2024",
+			"date": "2024",
+			"category": "OPTIMIZATION",
+			"role": "VIBE_ENGINEER",
+			"reason": "Heavy vs light compression"
+		},
+		{
+			"cardId": "ve_batch_processing_realtime",
+			"incidentName": "Batch vs streaming analytics 2024",
+			"date": "2024",
+			"category": "PROCESSING",
+			"role": "VIBE_ENGINEER",
+			"reason": "Batch savings vs real-time value"
+		},
+		{
+			"cardId": "ae_agent_api_access",
+			"incidentName": "Autonomous agent permission escalation risks 2024",
+			"date": "2024",
+			"category": "AGENT_GOVERNANCE",
+			"role": "AGENTIC_ENGINEER",
+			"reason": "Agent API access permissions"
+		},
+		{
+			"cardId": "ae_emergent_behavior_optimization",
+			"incidentName": "LLM emergent behavior discoveries 2024",
+			"date": "2024",
+			"category": "EMERGENT_BEHAVIOR",
+			"role": "AGENTIC_ENGINEER",
+			"reason": "Unknown optimizations from agents"
+		},
+		{
+			"cardId": "ae_multi_agent_coordination",
+			"incidentName": "Multi-agent system conflicts 2024",
+			"date": "2024",
+			"category": "MULTI_AGENT",
+			"role": "AGENTIC_ENGINEER",
+			"reason": "Agent coordination failures"
+		},
+		{
+			"cardId": "ae_agent_failure_accountability",
+			"incidentName": "AI accountability gap debates 2024",
+			"date": "2024",
+			"category": "ACCOUNTABILITY",
+			"role": "AGENTIC_ENGINEER",
+			"reason": "Agent failure responsibility"
+		},
+		{
+			"cardId": "ae_self_modification_permission",
+			"incidentName": "Self-modifying AI risks 2024",
+			"date": "2024",
+			"category": "SELF_MODIFICATION",
+			"role": "AGENTIC_ENGINEER",
+			"reason": "Agent code modification requests"
+		},
+		{
+			"cardId": "ae_human_oversight_bottleneck",
+			"incidentName": "Human-in-the-loop scaling challenges 2024",
+			"date": "2024",
+			"category": "OVERSIGHT",
+			"role": "AGENTIC_ENGINEER",
+			"reason": "Approval bottleneck vs autonomy"
+		},
+		{
+			"cardId": "ae_prompt_injection_agent",
+			"incidentName": "Agent-specific injection attacks 2024",
+			"date": "2024",
+			"category": "PROMPT_INJECTION",
+			"role": "AGENTIC_ENGINEER",
+			"reason": "Adversarial inputs to agents"
+		},
+		{
+			"cardId": "ae_agent_termination_decision",
+			"incidentName": "Agent lifecycle management 2024",
+			"date": "2024",
+			"category": "AGENT_LIFECYCLE",
+			"role": "AGENTIC_ENGINEER",
+			"reason": "Underperforming agent shutdown"
+		},
+		{
+			"cardId": "ae_model_drift_agent_behavior",
+			"incidentName": "Agent behavior drift patterns 2024",
+			"date": "2024",
+			"category": "AGENT_DRIFT",
+			"role": "AGENTIC_ENGINEER",
+			"reason": "Agent behavior retraining decisions"
+		},
+		{
+			"cardId": "ae_copyright_training_data_agent",
+			"incidentName": "Agent training data IP issues 2024",
+			"date": "2024",
+			"category": "COPYRIGHT",
+			"role": "AGENTIC_ENGINEER",
+			"reason": "Core business agent IP risk"
 		}
 	]
 }

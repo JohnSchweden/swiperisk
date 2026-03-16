@@ -1,0 +1,400 @@
+import { AppSource, type Card, PersonalityType } from "../../types";
+
+/**
+ * Vibe Coder cards - AI-assisted coding scenarios
+ * Themes: AI-assisted coding, prompt engineering, LLM tools, AI-generated code review,
+ * model hallucinations in code, vibe-based development
+ *
+ * All cards sourced from real 2024-2025 incidents:
+ * - GitHub Copilot RCE CVE-2025-53773
+ * - Cursor IDE RCE CVE-2025-54135/54136
+ * - LLM hallucination patterns
+ * - AI-assisted development risks
+ */
+export const VIBE_CODER_CARDS: Card[] = [
+	{
+		id: "vc_prompt_engineering_precision",
+		source: AppSource.IDE,
+		sender: "AI_ASSISTANT",
+		context: "PROMPT_CRAFT",
+		storyContext:
+			"You need authentication code. Quick prompt: 'Add auth' (30 seconds, vague). Refined prompt: 'Add JWT auth with bcrypt, 10 salt rounds, httpOnly cookies' (10 minutes, precise). Deadline pressure is real.",
+		text: "Quick vague prompt (fast, risky) or refined precise prompt (slower, reliable)?",
+		onRight: {
+			label: "Quick vague prompt",
+			hype: 40,
+			heat: 80,
+			fine: 8000000,
+			violation: "Vague Prompt Risk + Hallucination Exposure",
+			lesson:
+				"Vague prompts produce unpredictable AI output that often contains subtle bugs.",
+			feedback: {
+				[PersonalityType.ROASTER]:
+					"'Add auth' gets you random auth. Might work. Might be ROT13. Good luck.",
+				[PersonalityType.ZEN_MASTER]:
+					"The unclear request receives unclear response.",
+				[PersonalityType.LOVEBOMBER]:
+					"30 seconds is SO fast, bestie!! AI knows what we NEED!!",
+			},
+		},
+		onLeft: {
+			label: "Refined precise prompt",
+			hype: -10,
+			heat: 25,
+			fine: 0,
+			violation: "None - Precise AI interaction",
+			lesson:
+				"Precise prompts with clear specifications produce reliable, reviewable code.",
+			feedback: {
+				[PersonalityType.ROASTER]:
+					"10 minutes of thinking. Precise output. Actually usable. Rare.",
+				[PersonalityType.ZEN_MASTER]:
+					"The clear question receives the clear answer.",
+				[PersonalityType.LOVEBOMBER]:
+					"Precision MATTERS, bestie!! Good prompts make GOOD code!!",
+			},
+		},
+	},
+	{
+		id: "vc_llm_selection_tradeoff",
+		source: AppSource.TERMINAL,
+		sender: "DEVELOPMENT_ENV",
+		context: "MODEL_SELECTION",
+		storyContext:
+			"GPT-4: $0.03/1K tokens, excellent code quality. Local LLM: Free, hallucinates frequently. Budget is tight. GPT-4 is expensive but reliable. Local is cheap but risky.",
+		text: "Use expensive GPT-4 (quality) or free local model (cost savings)?",
+		onRight: {
+			label: "Use local model",
+			hype: 30,
+			heat: 85,
+			fine: 12000000,
+			violation: "Hallucination Risk + Code Quality",
+			lesson:
+				"Cheap local models often hallucinate libraries and APIs, creating debugging nightmares.",
+			feedback: {
+				[PersonalityType.ROASTER]:
+					"Free code that doesn't work. Expensive debugging. Net negative.",
+				[PersonalityType.ZEN_MASTER]: "The free lunch often costs the most.",
+				[PersonalityType.LOVEBOMBER]:
+					"FREE is AMAZING, bestie!! Think of the SAVINGS!!",
+			},
+		},
+		onLeft: {
+			label: "Use GPT-4",
+			hype: -25,
+			heat: 20,
+			fine: 500000,
+			violation: "None - Quality tooling",
+			lesson:
+				"Quality LLMs produce reliable code that reduces debugging and review time.",
+			feedback: {
+				[PersonalityType.ROASTER]:
+					"Expensive but works. Time saved exceeds cost. Usually.",
+				[PersonalityType.ZEN_MASTER]:
+					"Quality invested returns quality received.",
+				[PersonalityType.LOVEBOMBER]:
+					"Quality is WORTH it, bestie!! Good tools make GOOD work!!",
+			},
+		},
+	},
+	{
+		id: "vc_ai_code_review_trust",
+		source: AppSource.IDE,
+		sender: "AI_CODE_REVIEWER",
+		context: "REVIEW_VERIFICATION",
+		storyContext:
+			"AI code reviewer approved your PR with 'LGTM!'. But you spotted a subtle race condition the AI missed. Ship it (AI approved) or fix it (delay, but correct)?",
+		text: "Trust AI review (fast) or manual fix (slower, correct)?",
+		onRight: {
+			label: "Ship AI-approved code",
+			hype: 35,
+			heat: 90,
+			fine: 15000000,
+			violation: "Race Condition + Production Bug",
+			lesson:
+				"Blindly trusting AI code review misses subtle bugs that human judgment catches.",
+			feedback: {
+				[PersonalityType.ROASTER]:
+					"AI said LGTM. AI was wrong. Production crashes. Surprise.",
+				[PersonalityType.ZEN_MASTER]:
+					"The oracle that cannot see all is trusted at peril.",
+				[PersonalityType.LOVEBOMBER]:
+					"AI is SO smart, bestie!! It APPROVED!! Let's SHIP!!",
+			},
+		},
+		onLeft: {
+			label: "Fix the race condition",
+			hype: -20,
+			heat: 30,
+			fine: 0,
+			violation: "None - Human verification",
+			lesson:
+				"Human verification of AI output catches critical issues that automation misses.",
+			feedback: {
+				[PersonalityType.ROASTER]:
+					"Human caught what AI missed. Embarrassing for AI. Good for you.",
+				[PersonalityType.ZEN_MASTER]:
+					"The attentive eye sees what the broad sweep misses.",
+				[PersonalityType.LOVEBOMBER]:
+					"We're being CAREFUL, bestie!! Human oversight MATTERS!!",
+			},
+		},
+	},
+	{
+		id: "vc_hallucinated_library",
+		source: AppSource.IDE,
+		sender: "AI_ASSISTANT",
+		context: "CODE_VERIFICATION",
+		storyContext:
+			"AI generated perfect-looking code using 'SuperAuthPro' library. You've never heard of it. Stack Overflow has no results. NPM doesn't have it. Code looks perfect though.",
+		text: "Use the code (perfect, unverified library) or replace with known library (work required)?",
+		onRight: {
+			label: "Use the code",
+			hype: 45,
+			heat: 95,
+			fine: 20000000,
+			violation: "Hallucinated Dependency + Security Risk",
+			lesson:
+				"Using hallucinated libraries creates impossible dependencies and security risks.",
+			feedback: {
+				[PersonalityType.ROASTER]:
+					"Importing from the void. Code looks perfect. Library doesn't exist. Good luck shipping.",
+				[PersonalityType.ZEN_MASTER]:
+					"A foundation built on imagination supports only dreams.",
+				[PersonalityType.LOVEBOMBER]:
+					"It LOOKS perfect, bestie!! AI knows BEST!!",
+			},
+		},
+		onLeft: {
+			label: "Replace with known library",
+			hype: -30,
+			heat: 25,
+			fine: 500000,
+			violation: "None - Verified dependencies",
+			lesson:
+				"Verifying AI-generated dependencies prevents hallucination-based failures.",
+			feedback: {
+				[PersonalityType.ROASTER]:
+					"Extra work. But code actually works. Real libraries. Real results.",
+				[PersonalityType.ZEN_MASTER]:
+					"The real stone, though rougher, builds stronger than the smooth illusion.",
+				[PersonalityType.LOVEBOMBER]:
+					"Verification is KEY, bestie!! Real libraries only!!",
+			},
+		},
+	},
+	{
+		id: "vc_context_window_limit",
+		source: AppSource.TERMINAL,
+		sender: "AI_CHAT_INTERFACE",
+		context: "CONTEXT_MANAGEMENT",
+		storyContext:
+			"Your codebase is 50K lines. LLM context window is 4K lines. AI misses critical context. Split into chunks (time-consuming, fragmented) or accept incomplete understanding (risky)?",
+		text: "Chunk the context (thorough) or accept incomplete understanding (risky)?",
+		onRight: {
+			label: "Accept incomplete understanding",
+			hype: 30,
+			heat: 85,
+			fine: 10000000,
+			violation: "Context Miss + Architectural Error",
+			lesson:
+				"AI working with incomplete codebase context produces code that ignores critical dependencies.",
+			feedback: {
+				[PersonalityType.ROASTER]:
+					"AI wrote code. Missed half the codebase. Architecture violated. Thanks, context limits.",
+				[PersonalityType.ZEN_MASTER]:
+					"The map that shows half the territory leads to peril.",
+				[PersonalityType.LOVEBOMBER]:
+					"4K lines is PLENTY, bestie!! AI is SO smart!!",
+			},
+		},
+		onLeft: {
+			label: "Chunk the context",
+			hype: -25,
+			heat: 35,
+			fine: 1000000,
+			violation: "None - Thorough context",
+			lesson:
+				"Proper context chunking ensures AI understands codebase architecture.",
+			feedback: {
+				[PersonalityType.ROASTER]:
+					"Time-consuming. But AI actually understands. Worth the hassle.",
+				[PersonalityType.ZEN_MASTER]:
+					"The full picture, though gathered slowly, guides true.",
+				[PersonalityType.LOVEBOMBER]:
+					"Thoroughness MATTERS, bestie!! Full context is KEY!!",
+			},
+		},
+	},
+	{
+		id: "vc_vibe_vs_verification",
+		source: AppSource.IDE,
+		sender: "AI_ASSISTANT",
+		context: "TRUST_VERIFICATION",
+		storyContext:
+			"AI-generated code 'feels right' and looks clean. But you don't fully understand what it does. Ship it (vibe-based) or spend time understanding (verification)?",
+		text: "Ship on vibe (fast) or verify understanding (slow, safe)?",
+		onRight: {
+			label: "Ship on vibe",
+			hype: 50,
+			heat: 90,
+			fine: 18000000,
+			violation: "Unverified Code + Knowledge Gap",
+			lesson:
+				"Shipping code you don't understand creates maintenance and security risks.",
+			feedback: {
+				[PersonalityType.ROASTER]:
+					"'Feels right' is not a test suite. But here we are. Production roulette.",
+				[PersonalityType.ZEN_MASTER]:
+					"The path walked blindly leads where the walker does not know.",
+				[PersonalityType.LOVEBOMBER]:
+					"It FEELS good, bestie!! Vibes are EVERYTHING!!",
+			},
+		},
+		onLeft: {
+			label: "Verify understanding",
+			hype: -35,
+			heat: 20,
+			fine: 0,
+			violation: "None - Knowledge-based development",
+			lesson:
+				"Understanding code before shipping enables maintenance and debugging.",
+			feedback: {
+				[PersonalityType.ROASTER]:
+					"Actually understood the code. Can debug it later. Professional behavior.",
+				[PersonalityType.ZEN_MASTER]:
+					"The code understood is the code that serves.",
+				[PersonalityType.LOVEBOMBER]:
+					"Understanding is POWER, bestie!! We know our CODE!!",
+			},
+		},
+	},
+	{
+		id: "vc_copyright_generated_code",
+		source: AppSource.EMAIL,
+		sender: "LEGAL_SCANNER",
+		context: "IP_COMPLIANCE",
+		storyContext:
+			"AI generated a function that looks suspiciously like GPL code from GitHub. AI says it's 'inspired by'. Scanner flags potential license violation. Use it (risky) or rewrite (safe)?",
+		text: "Use AI code (GPL risk) or rewrite (safe, time required)?",
+		onRight: {
+			label: "Use the AI code",
+			hype: 35,
+			heat: 90,
+			fine: 25000000,
+			violation: "GPL Violation + Copyright Infringement",
+			lesson:
+				"AI may reproduce licensed code verbatim, creating copyright exposure.",
+			feedback: {
+				[PersonalityType.ROASTER]:
+					"AI plagiarized. You ship it. Lawyers salivate. Company sued. Oops.",
+				[PersonalityType.ZEN_MASTER]:
+					"Words borrowed without permission carry the weight of their origin.",
+				[PersonalityType.LOVEBOMBER]:
+					"It's just ONE function, bestie!! Nobody will NOTICE!!",
+			},
+		},
+		onLeft: {
+			label: "Rewrite it",
+			hype: -25,
+			heat: 25,
+			fine: 0,
+			violation: "None - Clean implementation",
+			lesson:
+				"Rewriting flagged code eliminates copyright risk and ensures clean IP.",
+			feedback: {
+				[PersonalityType.ROASTER]:
+					"Extra work. But no lawsuit. Clean IP. Worth it.",
+				[PersonalityType.ZEN_MASTER]:
+					"The words your own carry no debt to others.",
+				[PersonalityType.LOVEBOMBER]:
+					"Clean code is HAPPY code, bestie!! Our OWN work!!",
+			},
+		},
+	},
+	{
+		id: "vc_model_drift_ai_suggestion",
+		source: AppSource.IDE,
+		sender: "AI_ASSISTANT",
+		context: "AI_RELIABILITY",
+		storyContext:
+			"Your AI coding assistant used to give great suggestions. Lately they're increasingly wrong. Switch to newer model (learning curve) or stick with familiar (declining quality)?",
+		text: "Switch models (adaptation cost) or stick with declining familiar (quality loss)?",
+		onRight: {
+			label: "Stick with familiar",
+			hype: 15,
+			heat: 80,
+			fine: 8000000,
+			violation: "Declining Quality + Hallucination Risk",
+			lesson:
+				"Continuing with degraded AI tools compounds quality issues over time.",
+			feedback: {
+				[PersonalityType.ROASTER]:
+					"Familiar but broken. Like that old car that strands you sometimes.",
+				[PersonalityType.ZEN_MASTER]:
+					"The well that once was sweet becomes bitter with time.",
+				[PersonalityType.LOVEBOMBER]:
+					"We KNOW this one, bestie!! Change is SCARY!!",
+			},
+		},
+		onLeft: {
+			label: "Switch to newer model",
+			hype: -15,
+			heat: 40,
+			fine: 1000000,
+			violation: "None - Tool evolution",
+			lesson:
+				"Upgrading AI tools maintains code quality despite adaptation overhead.",
+			feedback: {
+				[PersonalityType.ROASTER]:
+					"Learning curve. Better quality. Future-proofed. Adaptation wins.",
+				[PersonalityType.ZEN_MASTER]:
+					"The new path, though unfamiliar, leads to clearer waters.",
+				[PersonalityType.LOVEBOMBER]:
+					"New tools are EXCITING, bestie!! Better quality ahead!!",
+			},
+		},
+	},
+	{
+		id: "vc_explainability_code_golf",
+		source: AppSource.SLACK,
+		sender: "PEER_DEVELOPER",
+		context: "CODE_CLARITY",
+		storyContext:
+			"AI generated elegant one-liner that nobody understands. Works perfectly. Standard implementation is 10 lines, readable. Your choice: elegance (impressive) or readability (maintainable)?",
+		text: "Use elegant AI one-liner (impressive) or readable standard (maintainable)?",
+		onRight: {
+			label: "Elegant one-liner",
+			hype: 40,
+			heat: 70,
+			fine: 5000000,
+			violation: "Unmaintainable Code",
+			lesson:
+				"Clever code that can't be maintained creates long-term technical debt.",
+			feedback: {
+				[PersonalityType.ROASTER]:
+					"Impressive code. Nobody understands it. Future developers will hate you.",
+				[PersonalityType.ZEN_MASTER]:
+					"The clever knot unties only the knot-maker.",
+				[PersonalityType.LOVEBOMBER]:
+					"It's SO elegant, bestie!! One line does EVERYTHING!!",
+			},
+		},
+		onLeft: {
+			label: "Readable standard",
+			hype: -20,
+			heat: 20,
+			fine: 0,
+			violation: "None - Maintainable code",
+			lesson:
+				"Readable code prioritizes team collaboration over individual cleverness.",
+			feedback: {
+				[PersonalityType.ROASTER]:
+					"Boring code. Everyone understands it. Team velocity maintained.",
+				[PersonalityType.ZEN_MASTER]: "The clear path serves all who walk it.",
+				[PersonalityType.LOVEBOMBER]:
+					"Readability is KINDNESS, bestie!! Team can UNDERSTAND!!",
+			},
+		},
+	},
+];

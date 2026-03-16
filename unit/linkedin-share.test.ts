@@ -52,9 +52,6 @@ describe("LinkedIn Share Utility", () => {
 				{ role: RoleType.VIBE_CODER, expected: "Vibe Coder" },
 				{ role: RoleType.VIBE_ENGINEER, expected: "Vibe Engineer" },
 				{ role: RoleType.AGENTIC_ENGINEER, expected: "Agentic Engineer" },
-				{ role: RoleType.VIBE_CODER, expected: "Vibe Coder" },
-				{ role: RoleType.VIBE_ENGINEER, expected: "Vibe Engineer" },
-				{ role: RoleType.AGENTIC_ENGINEER, expected: "Agentic Engineer" },
 			];
 
 			for (const { role, expected } of testCases) {

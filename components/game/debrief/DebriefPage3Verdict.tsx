@@ -1,20 +1,12 @@
 import type React from "react";
 import { useEffect, useState } from "react";
+import { ROLE_LABELS } from "../../../data";
 import type { Archetype, RoleType } from "../../../types";
 import { formatShareText, getShareUrl } from "../../../utils/linkedin-share";
 import LayoutShell from "../../LayoutShell";
 
-// Utility function to format role labels (e.g., "SOFTWARE_ENGINEER" -> "Software Engineer")
-const formatRoleLabel = (role: RoleType | null): string | null => {
-	if (!role) return null;
-	return role
-		.replace(/_/g, " ")
-		.split(" ")
-		.map((word) => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
-		.join(" ");
-};
-
-// import { EmailCaptureForm } from "./EmailCaptureForm";
+const actionButtonBase =
+	"px-6 py-3 md:px-8 md:py-4 text-base font-bold tracking-wide bg-white text-black hover:bg-cyan-400 hover:text-black transition-all duration-300 whitespace-nowrap";
 
 interface DebriefPage3VerdictProps {
 	archetype: Archetype | null;
@@ -77,10 +69,9 @@ export const DebriefPage3Verdict: React.FC<DebriefPage3VerdictProps> = ({
 	role,
 	onRestart,
 }) => {
-	// Update meta tags when archetype loads (for LinkedIn sharing)
 	useEffect(() => {
 		if (archetype) {
-			const roleLabel = formatRoleLabel(role);
+			const roleLabel = role ? ROLE_LABELS[role] : null;
 			updateMetaTags(archetype, Math.round(resilienceScore), roleLabel);
 		}
 	}, [archetype, resilienceScore, role]);
@@ -91,16 +82,13 @@ export const DebriefPage3Verdict: React.FC<DebriefPage3VerdictProps> = ({
 	const linkedInShareUrl =
 		role && archetype ? getShareUrl(role, archetype, resilienceScore) : null;
 
-	// Generate share text for clipboard
 	const shareText =
 		role && archetype
 			? formatShareText(role, archetype.name, resilienceScore)
 			: "";
 
-	// Copy feedback state
 	const [copied, setCopied] = useState(false);
 
-	// Handle copy to clipboard
 	const handleCopy = async () => {
 		if (!shareText) return;
 		try {
@@ -115,7 +103,6 @@ export const DebriefPage3Verdict: React.FC<DebriefPage3VerdictProps> = ({
 	return (
 		<LayoutShell className="p-4 pb-12 md:p-6 md:pb-16 text-center bg-slate-950">
 			<div className="w-full max-w-2xl">
-				{/* Header */}
 				<div className="mb-6 md:mb-8">
 					<h1 className="text-3xl md:text-5xl font-black text-white mb-2 tracking-tighter">
 						SIMULATION COMPLETE
@@ -159,7 +146,7 @@ export const DebriefPage3Verdict: React.FC<DebriefPage3VerdictProps> = ({
 						type="button"
 						onClick={handleCopy}
 						disabled={!shareText}
-						className="px-6 py-3 md:px-8 md:py-4 text-base font-bold tracking-wide bg-white text-black hover:bg-cyan-400 hover:text-black disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-300 flex items-center justify-center gap-2 whitespace-nowrap"
+						className={`${actionButtonBase} flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed`}
 						aria-label="Copy share text to clipboard"
 					>
 						<i className="fa-regular fa-copy text-lg"></i>
@@ -167,7 +154,7 @@ export const DebriefPage3Verdict: React.FC<DebriefPage3VerdictProps> = ({
 					</button>
 					<a
 						href={linkedInShareUrl || "#"}
-						className="px-6 py-3 md:px-8 md:py-4 text-base font-bold tracking-wide bg-white text-black hover:bg-cyan-400 hover:text-black transition-all duration-300 flex items-center justify-center gap-2 whitespace-nowrap"
+						className={`${actionButtonBase} flex items-center justify-center gap-2`}
 						aria-label="Share on LinkedIn"
 						onClick={(e) => {
 							if (!linkedInShareUrl) {
@@ -181,7 +168,7 @@ export const DebriefPage3Verdict: React.FC<DebriefPage3VerdictProps> = ({
 					<button
 						type="button"
 						onClick={onRestart}
-						className="px-6 py-3 md:px-8 md:py-4 text-base font-bold tracking-wide bg-white text-black hover:bg-cyan-400 hover:text-black transition-all duration-300 whitespace-nowrap"
+						className={actionButtonBase}
 					>
 						Reboot System
 					</button>
@@ -207,15 +194,6 @@ export const DebriefPage3Verdict: React.FC<DebriefPage3VerdictProps> = ({
 						<i className="fa-brands fa-linkedin text-lg"></i>
 						Message Yevgen Schweden
 					</a>
-
-					{/*
-					PRESERVED FOR FUTURE RE-ENABLEMENT:
-					<EmailCaptureForm
-						role={role || "unknown"}
-						archetype={archetype?.id || "UNKNOWN"}
-						resilience={resilienceScore}
-					/>
-					*/}
 				</div>
 			</div>
 		</LayoutShell>

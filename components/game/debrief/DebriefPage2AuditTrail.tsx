@@ -1,5 +1,5 @@
 import type React from "react";
-import { useState } from "react";
+import { Fragment, useState } from "react";
 import { PERSONALITIES, ROLE_CARDS } from "../../../data";
 import { type GameState, PersonalityType } from "../../../types";
 import LayoutShell from "../../LayoutShell";
@@ -41,6 +41,149 @@ function formatConsequence(hype: number, heat: number, fine: number): string {
 	if (heat !== 0) parts.push(`${heat > 0 ? "+" : ""}${heat} heat`);
 	if (fine > 0) parts.push(`$${(fine / 1000000).toFixed(1)}M fine`);
 	return parts.join(" • ") || "No change";
+}
+
+interface AuditEntryProps {
+	entry: GameState["history"][number];
+	index: number;
+	card: (typeof ROLE_CARDS)[keyof typeof ROLE_CARDS][number];
+	isExpanded: boolean;
+	onToggleExpanded: (index: number) => void;
+	key?: string;
+}
+
+function AuditEntry({
+	entry,
+	index,
+	card,
+	isExpanded,
+	onToggleExpanded,
+}: AuditEntryProps): React.ReactElement {
+	const outcome = entry.choice === "RIGHT" ? card.onRight : card.onLeft;
+	const cardPreview = card.text.slice(0, 120);
+	const shouldShowExpand = card.text.length > 120;
+
+	return (
+		<div className="p-4 rounded-lg border border-slate-800 bg-slate-900/50 text-left">
+			<div className="flex items-start justify-between gap-4 mb-2">
+				<div className="flex-1 min-w-0">
+					<div className="flex items-center gap-2 mb-1">
+						<span className="text-xs font-mono text-slate-400">
+							#{index + 1}
+						</span>
+						<span className="text-sm font-medium text-slate-300 truncate">
+							{card.sender}
+						</span>
+						<span className="text-xs text-slate-400">({card.source})</span>
+					</div>
+					<div className="text-sm text-slate-400">
+						<span className="text-slate-400">"</span>
+						{isExpanded ? card.text : cardPreview}
+						{!isExpanded && shouldShowExpand && (
+							<>
+								<span className="text-slate-400">...</span>
+								<button
+									type="button"
+									onClick={() => onToggleExpanded(index)}
+									className="ml-1 text-cyan-400 hover:text-cyan-300 underline cursor-pointer"
+								>
+									show more
+								</button>
+							</>
+						)}
+						{isExpanded && (
+							<button
+								type="button"
+								onClick={() => onToggleExpanded(index)}
+								className="ml-1 text-cyan-400 hover:text-cyan-300 underline cursor-pointer"
+							>
+								show less
+							</button>
+						)}
+						<span className="text-slate-400">"</span>
+					</div>
+				</div>
+				<div className="flex flex-col items-end gap-1">
+					<span className="text-xs text-slate-400 tracking-wide">
+						Your choice
+					</span>
+					<div
+						className={`px-3 py-1 rounded text-xs font-bold ${
+							entry.choice === "RIGHT"
+								? "bg-emerald-500/20 text-emerald-400 border border-emerald-500/30"
+								: "bg-rose-500/20 text-rose-400 border border-rose-500/30"
+						}`}
+					>
+						{outcome.label}
+					</div>
+				</div>
+			</div>
+			<div className="flex items-center gap-2 text-xs text-slate-400">
+				<span className="font-medium">Consequence:</span>
+				<span>
+					{formatConsequence(outcome.hype, outcome.heat, outcome.fine)}
+				</span>
+			</div>
+			{outcome.violation && (
+				<div className="mt-2 text-xs text-red-400/80">
+					Violation: {outcome.violation}
+				</div>
+			)}
+		</div>
+	);
+}
+
+type PathHintVariant = "safe" | "risky";
+
+const PATH_HINT_CONFIG: Record<
+	PathHintVariant,
+	{ border: string; icon: string; iconClass: string; labelClass: string }
+> = {
+	safe: {
+		border: "border-emerald-500/50",
+		icon: "💡",
+		iconClass: "text-emerald-400",
+		labelClass: "text-cyan-400",
+	},
+	risky: {
+		border: "border-rose-500/50",
+		icon: "🛡️",
+		iconClass: "text-rose-400",
+		labelClass: "text-emerald-400",
+	},
+};
+
+interface PathHintProps {
+	index: number;
+	variant: PathHintVariant;
+	prefix: string;
+	label: string;
+	suffix: string;
+	key?: string;
+}
+
+function PathHint({
+	index,
+	variant,
+	prefix,
+	label,
+	suffix,
+}: PathHintProps): React.ReactElement {
+	const config = PATH_HINT_CONFIG[variant];
+	return (
+		<div
+			className={`text-sm text-slate-300 pl-4 border-l-3 ${config.border} py-2 rounded-r`}
+		>
+			<div className="flex items-start gap-2">
+				<span className={`${config.iconClass} mt-0.5`}>{config.icon}</span>
+				<span>
+					<strong>Decision {index + 1}:</strong> {prefix}
+					<span className={`${config.labelClass} font-medium`}>{label}</span>
+					{suffix}
+				</span>
+			</div>
+		</div>
+	);
 }
 
 export const DebriefPage2AuditTrail: React.FC<DebriefPage2AuditTrailProps> = ({
@@ -89,7 +232,7 @@ export const DebriefPage2AuditTrail: React.FC<DebriefPage2AuditTrailProps> = ({
 				{/* Audit Log List */}
 				<div className="mb-6 md:mb-8">
 					{history.length === 0 ? (
-						<div className="p-8 rounded-xl border border-slate-800 bg-slate-900/30 text-slate-500">
+						<div className="p-8 rounded-xl border border-slate-800 bg-slate-900/30 text-slate-400">
 							No decisions recorded
 						</div>
 					) : (
@@ -97,90 +240,17 @@ export const DebriefPage2AuditTrail: React.FC<DebriefPage2AuditTrailProps> = ({
 							{history.map((entry, index) => {
 								const card = cards.find((c) => c.id === entry.cardId);
 								if (!card) return null;
-
-								const outcome =
-									entry.choice === "RIGHT" ? card.onRight : card.onLeft;
-								const isExpanded = expandedEntries.has(index);
-								const cardPreview = card.text.slice(0, 120);
-								const shouldShowExpand = card.text.length > 120;
-
 								return (
-									<div
-										// biome-ignore lint/suspicious/noArrayIndexKey: Audit log is chronological and stable
-										key={`audit-entry-${index}`}
-										className="p-4 rounded-lg border border-slate-800 bg-slate-900/50 text-left"
-									>
-										<div className="flex items-start justify-between gap-4 mb-2">
-											<div className="flex-1 min-w-0">
-												<div className="flex items-center gap-2 mb-1">
-													<span className="text-xs font-mono text-slate-500">
-														#{index + 1}
-													</span>
-													<span className="text-sm font-medium text-slate-300 truncate">
-														{card.sender}
-													</span>
-													<span className="text-xs text-slate-500">
-														({card.source})
-													</span>
-												</div>
-												<div className="text-sm text-slate-400">
-													<span className="text-slate-500">"</span>
-													{isExpanded ? card.text : cardPreview}
-													{!isExpanded && shouldShowExpand && (
-														<>
-															<span className="text-slate-500">...</span>
-															<button
-																type="button"
-																onClick={() => toggleExpanded(index)}
-																className="ml-1 text-cyan-400 hover:text-cyan-300 underline cursor-pointer"
-															>
-																show more
-															</button>
-														</>
-													)}
-													{isExpanded && (
-														<button
-															type="button"
-															onClick={() => toggleExpanded(index)}
-															className="ml-1 text-cyan-400 hover:text-cyan-300 underline cursor-pointer"
-														>
-															show less
-														</button>
-													)}
-													<span className="text-slate-500">"</span>
-												</div>
-											</div>
-											<div className="flex flex-col items-end gap-1">
-												<span className="text-xs text-slate-500 tracking-wide">
-													Your choice
-												</span>
-												<div
-													className={`px-3 py-1 rounded text-xs font-bold ${
-														entry.choice === "RIGHT"
-															? "bg-emerald-500/20 text-emerald-400 border border-emerald-500/30"
-															: "bg-rose-500/20 text-rose-400 border border-rose-500/30"
-													}`}
-												>
-													{outcome.label}
-												</div>
-											</div>
-										</div>
-										<div className="flex items-center gap-2 text-xs text-slate-500">
-											<span className="font-medium">Consequence:</span>
-											<span>
-												{formatConsequence(
-													outcome.hype,
-													outcome.heat,
-													outcome.fine,
-												)}
-											</span>
-										</div>
-										{outcome.violation && (
-											<div className="mt-2 text-xs text-red-400/80">
-												Violation: {outcome.violation}
-											</div>
-										)}
-									</div>
+									// biome-ignore lint/suspicious/noArrayIndexKey: Audit log is chronological and stable
+									<Fragment key={`audit-entry-${index}`}>
+										<AuditEntry
+											entry={entry}
+											index={index}
+											card={card}
+											isExpanded={expandedEntries.has(index)}
+											onToggleExpanded={toggleExpanded}
+										/>
+									</Fragment>
 								);
 							})}
 						</div>
@@ -232,49 +302,31 @@ export const DebriefPage2AuditTrail: React.FC<DebriefPage2AuditTrailProps> = ({
 								const card = cards.find((c) => c.id === entry.cardId);
 								if (!card) return null;
 
-								// Show hint based on choice made
 								if (entry.choice === "LEFT") {
-									// Safe choice made - suggest trying riskier option
 									return (
-										<div
-											// biome-ignore lint/suspicious/noArrayIndexKey: Stable chronological list
-											key={`hint-${index}`}
-											className="text-sm text-slate-300 pl-4 border-l-3 border-emerald-500/50 py-2 rounded-r"
-										>
-											<div className="flex items-start gap-2">
-												<span className="text-emerald-400 mt-0.5">💡</span>
-												<span>
-													<strong>Decision {index + 1}:</strong> You played it
-													safe. Next time, try{" "}
-													<span className="text-cyan-400 font-medium">
-														{card.onRight.label.toLowerCase()}
-													</span>{" "}
-													to see how much hype you could gain—and what heat you
-													might attract.
-												</span>
-											</div>
-										</div>
+										// biome-ignore lint/suspicious/noArrayIndexKey: Stable chronological list
+										<Fragment key={`hint-${index}`}>
+											<PathHint
+												index={index}
+												variant="safe"
+												prefix="You played it safe. Next time, try "
+												label={card.onRight.label.toLowerCase()}
+												suffix=" to see how much hype you could gain—and what heat you might attract."
+											/>
+										</Fragment>
 									);
 								}
-								// Risky choice made - suggest trying safer option
 								return (
-									<div
-										// biome-ignore lint/suspicious/noArrayIndexKey: Stable chronological list
-										key={`hint-${index}`}
-										className="text-sm text-slate-300 pl-4 border-l-3 border-rose-500/50 py-2 rounded-r"
-									>
-										<div className="flex items-start gap-2">
-											<span className="text-rose-400 mt-0.5">🛡️</span>
-											<span>
-												<strong>Decision {index + 1}:</strong> You took a risk.
-												Next time, try{" "}
-												<span className="text-emerald-400 font-medium">
-													{card.onLeft.label.toLowerCase()}
-												</span>{" "}
-												to see if you can avoid the heat and fines.
-											</span>
-										</div>
-									</div>
+									// biome-ignore lint/suspicious/noArrayIndexKey: Stable chronological list
+									<Fragment key={`hint-${index}`}>
+										<PathHint
+											index={index}
+											variant="risky"
+											prefix="You took a risk. Next time, try "
+											label={card.onLeft.label.toLowerCase()}
+											suffix=" to see if you can avoid the heat and fines."
+										/>
+									</Fragment>
 								);
 							})}
 						</div>

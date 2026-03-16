@@ -51,16 +51,6 @@ export function useDebrief(options: UseDebriefOptions): DebriefResult {
 		state.role,
 	]);
 
-	// Store calculation result
-	const archetypeResult = useMemo(() => {
-		return (
-			calculation || {
-				archetype: null as Archetype | null,
-				resilience: 0,
-			}
-		);
-	}, [calculation]);
-
 	/**
 	 * Advance to the next debrief page.
 	 * Enforces valid progression: Page 1 → Page 2 → Page 3
@@ -95,8 +85,8 @@ export function useDebrief(options: UseDebriefOptions): DebriefResult {
 	}, [dispatch]);
 
 	return {
-		archetype: archetypeResult.archetype,
-		resilienceScore: archetypeResult.resilience,
+		archetype: calculation?.archetype ?? null,
+		resilienceScore: calculation?.resilience ?? 0,
 		nextPage,
 		restart,
 	};

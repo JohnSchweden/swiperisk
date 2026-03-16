@@ -78,12 +78,24 @@ Map new roles to existing card decks until role-specific cards added in Phase 05
 **Depends on:** Phase 02
 **Plans:** 5 plans
 
-Plans:
-- [ ] 03-01-PLAN.md — Test scaffolding + card validation framework
-- [ ] 03-02-PLAN.md — Generate 80+ no-win scenario cards across all roles
-- [ ] 03-03-PLAN.md — Integrate pressure metadata + shuffle testing
-- [ ] 03-04-PLAN.md — UAT verification and sign-off
-- [ ] 03-05-PLAN.md — Add Real Case Reference section to FeedbackOverlay (historical grounding)
+**⚠️ REVISION REQUIRED:** Original plans (03-01 to 03-05) were written for OLD 6 legacy roles. Phase 02 introduced 10 NEW roles. See `03-REVISION-NOTES.md`.
+
+Plans (REVISED FOR 10 ROLES):
+- [ ] 03-01-PLAN.md — Test scaffolding + card validation framework (updated for 10 role imports)
+- [ ] **03-02-revised-PLAN.md** — Generate 80+ cards for 10 NEW roles (replaces 03-02)
+- [ ] **03-03-revised-PLAN.md** — Integrate pressure metadata + shuffle testing for 10 roles
+- [ ] **03-04-revised-PLAN.md** — UAT verification for 10 roles with distinct themes
+- [ ] **03-05-revised-PLAN.md** — Real Case Reference for all 10 roles
+
+**Legacy plans (DEPRECATED - DO NOT USE):**
+- 03-02-PLAN.md — Written for old 6 roles (DEVELOPMENT, FINANCE, etc.) ❌
+- 03-03-PLAN.md — References legacy file structure ❌
+- 03-04-PLAN.md — UAT for old 6 roles ❌
+- 03-05-PLAN.md — References legacy card files ❌
+
+**Documentation:**
+- `03-REVISION-NOTES.md` — Why plans were revised
+- `03-ROLE-MAPPING.md` — 10 role card content strategy
 
 **Details:**
 Create 80+ no-win scenario cards where:

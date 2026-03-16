@@ -128,7 +128,7 @@ export const DATA_SCIENTIST_CARDS: Card[] = [
 			label: "Deploy with monitoring",
 			hype: 40,
 			heat: 90,
-			fine: 20000000,
+			fine: 15000000,
 			violation: "Algorithmic Bias + Civil Rights Violations",
 			lesson:
 				"Deploying known biased models creates legal exposure and harms affected groups.",
@@ -226,7 +226,7 @@ export const DATA_SCIENTIST_CARDS: Card[] = [
 			label: "Add the feature",
 			hype: 35,
 			heat: 75,
-			fine: 3000000,
+			fine: 500000,
 			violation: "SLA Breach + Performance Degradation",
 			lesson:
 				"Violating SLAs for metric improvements creates operational and contractual issues.",
@@ -324,7 +324,7 @@ export const DATA_SCIENTIST_CARDS: Card[] = [
 			label: "Use unauthorized tool",
 			hype: 40,
 			heat: 75,
-			fine: 5000000,
+			fine: 1000000,
 			violation: "Shadow AI + Compliance Violation",
 			lesson:
 				"Using unauthorized tools creates compliance gaps and reproducibility issues.",
@@ -373,7 +373,7 @@ export const DATA_SCIENTIST_CARDS: Card[] = [
 			label: "Proceed with unclear data",
 			hype: 35,
 			heat: 90,
-			fine: 18000000,
+			fine: 15000000,
 			violation: "Copyright Infringement + IP Theft",
 			lesson:
 				"Using data with unclear licensing creates massive copyright exposure.",
@@ -422,7 +422,7 @@ export const DATA_SCIENTIST_CARDS: Card[] = [
 			label: "Skip this cycle",
 			hype: 20,
 			heat: 70,
-			fine: 6000000,
+			fine: 300000,
 			violation: "Model Maintenance Negligence",
 			lesson:
 				"Skipping scheduled retraining accumulates drift risk and degrades model reliability.",

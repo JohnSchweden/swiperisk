@@ -98,7 +98,7 @@ export const TECH_AI_CONSULTANT_CARDS: Card[] = [
 			label: "Free retraining",
 			hype: -30,
 			heat: 40,
-			fine: 200000,
+			fine: 300000,
 			violation: "None - Client retention",
 			lesson:
 				"Standing behind deliverables builds long-term client relationships and referrals.",
@@ -228,7 +228,7 @@ export const TECH_AI_CONSULTANT_CARDS: Card[] = [
 			label: "Refuse indemnification",
 			hype: 10,
 			heat: 90,
-			fine: 8000000,
+			fine: 15000000,
 			violation: "IP Liability + Reputation Risk",
 			lesson:
 				"Refusing IP accountability for training data destroys consulting credibility.",
@@ -343,7 +343,7 @@ export const TECH_AI_CONSULTANT_CARDS: Card[] = [
 			label: "Retrofit for explainability",
 			hype: -35,
 			heat: 30,
-			fine: 150000,
+			fine: 300000,
 			violation: "None - Partnership investment",
 			lesson:
 				"Adapting to client compliance needs demonstrates partnership and wins future work.",

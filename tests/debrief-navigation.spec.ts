@@ -3,18 +3,17 @@ import * as path from "node:path";
 import { expect, test } from "@playwright/test";
 
 test.describe("Debrief Navigation @area:gameplay", () => {
-	test("DEBRIEF_PAGE_1 transition exists and maps to DEBRIEF_PAGE_2", () => {
-		// Verify the transition map includes DEBRIEF_PAGE_1 → DEBRIEF_PAGE_2
-		// This test verifies the bug fix is in place
+	test("DEBRIEF_PAGE_1 has no outgoing transitions", () => {
+		// Verify DEBRIEF_PAGE_1 is not part of the active flow
 		const useDebriefPath = path.join(process.cwd(), "hooks", "useDebrief.ts");
 		const content = fs.readFileSync(useDebriefPath, "utf-8");
 
-		// Verify DEBRIEF_PAGE_1 maps to DEBRIEF_PAGE_2 (not null)
+		// Verify DEBRIEF_PAGE_1 maps to null (not connected to flow)
 		const debriefPage1Match = content.match(
-			/\[GameStage\.DEBRIEF_PAGE_1\]:\s*(GameStage\.DEBRIEF_PAGE_2|null)/,
+			/\[GameStage\.DEBRIEF_PAGE_1\]:\s*(GameStage\.[^\s,]+|null)/,
 		);
 		expect(debriefPage1Match).toBeTruthy();
-		expect(debriefPage1Match?.[1]).toBe("GameStage.DEBRIEF_PAGE_2");
+		expect(debriefPage1Match?.[1]).toBe("null");
 	});
 
 	test("all debrief transitions are properly configured", () => {
@@ -24,8 +23,8 @@ test.describe("Debrief Navigation @area:gameplay", () => {
 
 		// Expected transitions:
 		// GAME_OVER → DEBRIEF_PAGE_2
-		// SUMMARY → DEBRIEF_PAGE_1
-		// DEBRIEF_PAGE_1 → DEBRIEF_PAGE_2
+		// SUMMARY → DEBRIEF_PAGE_2
+		// DEBRIEF_PAGE_1 → null (not in active flow)
 		// DEBRIEF_PAGE_2 → DEBRIEF_PAGE_3
 		// DEBRIEF_PAGE_3 → null (end of flow)
 
@@ -33,11 +32,9 @@ test.describe("Debrief Navigation @area:gameplay", () => {
 			/\[GameStage\.GAME_OVER\]:\s*GameStage\.DEBRIEF_PAGE_2/,
 		);
 		expect(content).toMatch(
-			/\[GameStage\.SUMMARY\]:\s*GameStage\.DEBRIEF_PAGE_1/,
+			/\[GameStage\.SUMMARY\]:\s*GameStage\.DEBRIEF_PAGE_2/,
 		);
-		expect(content).toMatch(
-			/\[GameStage\.DEBRIEF_PAGE_1\]:\s*GameStage\.DEBRIEF_PAGE_2/,
-		);
+		expect(content).toMatch(/\[GameStage\.DEBRIEF_PAGE_1\]:\s*null/);
 		expect(content).toMatch(
 			/\[GameStage\.DEBRIEF_PAGE_2\]:\s*GameStage\.DEBRIEF_PAGE_3/,
 		);

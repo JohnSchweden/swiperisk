@@ -25,7 +25,7 @@ test.describe("Death types @area:boss @slow", () => {
 				}),
 			).toBeVisible();
 			await expect(
-				page.getByRole("button", { name: "Reboot system" }),
+				page.getByRole("button", { name: "Debrief Me" }),
 			).toBeVisible();
 		});
 	});
@@ -68,13 +68,13 @@ test.describe("Death types @area:boss @slow", () => {
 				}),
 			).toBeVisible();
 			await expect(
-				page.getByRole("button", { name: "Reboot system" }),
+				page.getByRole("button", { name: "Debrief Me" }),
 			).toBeVisible();
 		});
 	});
 
 	test.describe("GAME_OVER screen content", () => {
-		test("shows death title and Reboot system after BANKRUPT", async ({
+		test("shows death title and Debrief Me button after BANKRUPT", async ({
 			page,
 		}) => {
 			await navigateToGameOverFast(page);
@@ -82,7 +82,7 @@ test.describe("Death types @area:boss @slow", () => {
 			await expect(page.getByText("Liquidated")).toBeVisible({
 				timeout: 5000,
 			});
-			await expect(page.getByText("Reboot system")).toBeVisible();
+			await expect(page.getByText("Debrief Me")).toBeVisible();
 		});
 	});
 });

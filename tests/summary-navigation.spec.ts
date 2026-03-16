@@ -3,7 +3,7 @@ import { expect, test } from "@playwright/test";
 test.use({ baseURL: "https://localhost:3000" });
 
 test.describe("Summary Screen - Navigation @area:gameplay", () => {
-	test("Debrief Me button navigates to DEBRIEF_PAGE_1", async ({ page }) => {
+	test("Debrief Me button navigates to DEBRIEF_PAGE_2", async ({ page }) => {
 		await page.goto("/");
 
 		await page.evaluate(() => {
@@ -41,17 +41,17 @@ test.describe("Summary Screen - Navigation @area:gameplay", () => {
 		// Wait for navigation to debrief page 1
 		await page.waitForTimeout(500);
 
-		// Verify we're now on DEBRIEF_PAGE_1
+		// Verify we're now on DEBRIEF_PAGE_2
 		const localStorageState = await page.evaluate(() => {
 			const state = localStorage.getItem("km-debug-state");
 			return state ? JSON.parse(state) : null;
 		});
 
-		expect(localStorageState?.stage).toBe("DEBRIEF_PAGE_1");
+		expect(localStorageState?.stage).toBe("DEBRIEF_PAGE_2");
 
-		// Verify the Game Over / Collapse page content is visible
+		// Verify the Audit Trail page content is visible
 		await expect(
-			page.getByText(/incident report|game over|collapse/i),
+			page.getByText(/complete record|governance decisions/i),
 		).toBeVisible();
 	});
 
@@ -97,7 +97,7 @@ test.describe("Summary Screen - Navigation @area:gameplay", () => {
 				return state ? JSON.parse(state) : null;
 			});
 
-			expect(localStorageState?.stage).toBe("DEBRIEF_PAGE_1");
+			expect(localStorageState?.stage).toBe("DEBRIEF_PAGE_2");
 		}
 	});
 
@@ -138,7 +138,7 @@ test.describe("Summary Screen - Navigation @area:gameplay", () => {
 			return state ? JSON.parse(state) : null;
 		});
 
-		expect(localStorageState?.stage).toBe("DEBRIEF_PAGE_1");
+		expect(localStorageState?.stage).toBe("DEBRIEF_PAGE_2");
 	});
 
 	test("summary screen metrics match Game Over screen format", async ({
@@ -179,12 +179,12 @@ test.describe("Summary Screen - Navigation @area:gameplay", () => {
 		await page.getByRole("button", { name: /debrief me/i }).click();
 		await page.waitForTimeout(500);
 
-		// Verify we're on debrief page
+		// Verify we're on debrief page 2
 		const localStorageState = await page.evaluate(() => {
 			const state = localStorage.getItem("km-debug-state");
 			return state ? JSON.parse(state) : null;
 		});
 
-		expect(localStorageState?.stage).toBe("DEBRIEF_PAGE_1");
+		expect(localStorageState?.stage).toBe("DEBRIEF_PAGE_2");
 	});
 });

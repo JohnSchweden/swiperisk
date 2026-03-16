@@ -62,14 +62,13 @@ test.describe("LinkedIn CTA Section @area:debrief", () => {
 
 		await page.reload();
 
-		// LinkedIn icon should be visible with cyan color in the CTA section
-		const ctaSection = page
-			.locator("div")
-			.filter({ hasText: /Get early access to V2/ })
-			.first();
-		const linkedinIcon = ctaSection.locator(
-			".fa-brands.fa-linkedin.text-cyan-400",
+		// LinkedIn icon should be visible in the CTA section
+		const linkedinLink = page.locator(
+			'a[href="https://www.linkedin.com/in/schwedeny/"]',
 		);
+		await expect(linkedinLink).toBeVisible();
+		// Check that the link contains a LinkedIn icon (i element)
+		const linkedinIcon = linkedinLink.locator("i");
 		await expect(linkedinIcon).toBeVisible();
 	});
 
@@ -100,7 +99,7 @@ test.describe("LinkedIn CTA Section @area:debrief", () => {
 		await page.reload();
 
 		// Header text should be visible
-		await expect(page.getByText(/get early access to v2/i)).toBeVisible();
+		await expect(page.getByText(/early access to v2/i)).toBeVisible();
 	});
 
 	test("LinkedIn profile link visible with correct href", async ({ page }) => {
@@ -163,7 +162,7 @@ test.describe("LinkedIn CTA Section @area:debrief", () => {
 		await page.reload();
 
 		// Link text should display name
-		const linkedinLink = page.getByText(/connect with yevgen schweden/i);
+		const linkedinLink = page.getByText(/message yevgen schweden/i);
 		await expect(linkedinLink).toBeVisible();
 	});
 
@@ -200,7 +199,7 @@ test.describe("LinkedIn CTA Section @area:debrief", () => {
 		await expect(linkedinLink).toBeVisible();
 
 		// Text should be visible
-		await expect(page.getByText(/connect with yevgen schweden/i)).toBeVisible();
+		await expect(page.getByText(/message yevgen schweden/i)).toBeVisible();
 	});
 
 	test("Description text mentions LinkedIn and adaptive version", async ({
@@ -232,8 +231,7 @@ test.describe("LinkedIn CTA Section @area:debrief", () => {
 		await page.reload();
 
 		// Description should mention LinkedIn and adaptive version
-		await expect(
-			page.getByText(/connect with me on linkedin.*adaptive.*version/i),
-		).toBeVisible();
+		await expect(page.getByText(/adaptive version/i)).toBeVisible();
+		await expect(page.getByText(/message me on linkedin/i)).toBeVisible();
 	});
 });

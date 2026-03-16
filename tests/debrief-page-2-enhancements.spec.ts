@@ -116,9 +116,8 @@ test.describe("Debrief Page 2 - UI Enhancements @area:layout", () => {
 		const pathTitle = page.getByText("Path You Didn't Take");
 		await expect(pathTitle).toBeVisible();
 
-		// Check that it's centered (using flex justify-center)
-		const parentElement = pathTitle.locator("..");
-		await expect(parentElement).toHaveClass(/justify-center/);
+		// Check that the title element itself is centered (using flex justify-center)
+		await expect(pathTitle).toHaveClass(/justify-center/);
 	});
 
 	test("card descriptions expand with 'show more' button", async ({ page }) => {

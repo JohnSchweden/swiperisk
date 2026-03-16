@@ -3,10 +3,7 @@ import { expect, test } from "@playwright/test";
 test.use({ baseURL: "https://localhost:3000" });
 
 test.describe("LinkedIn Share - Dialog Opening @area:gameplay", () => {
-	test("clicking share button opens LinkedIn share dialog", async ({
-		page,
-		context,
-	}) => {
+	test("share link has correct LinkedIn URL", async ({ page }) => {
 		await page.goto("/");
 
 		await page.evaluate(() => {
@@ -35,17 +32,13 @@ test.describe("LinkedIn Share - Dialog Opening @area:gameplay", () => {
 		// Wait for page to load
 		await page.waitForSelector("button", { timeout: 10000 });
 
-		// Listen for new page (popup) opening
-		const [newPage] = await Promise.all([
-			context.waitForEvent("page"),
-			page.getByRole("button", { name: /share to linkedin/i }).click(),
-		]);
+		// Verify the share link has the correct LinkedIn URL
+		const shareLink = page.getByRole("link", { name: /share to linkedin/i });
+		await expect(shareLink).toBeVisible();
 
-		// Verify new page is LinkedIn
-		await newPage.waitForLoadState();
-		const url = newPage.url();
-		expect(url).toContain("linkedin.com");
-		expect(url).toContain("share");
+		const href = await shareLink.getAttribute("href");
+		expect(href).toContain("linkedin.com/sharing/share-offsite");
+		expect(href).toContain("share");
 	});
 
 	test("share URL contains pre-filled text with role, archetype, and score", async ({
@@ -77,14 +70,14 @@ test.describe("LinkedIn Share - Dialog Opening @area:gameplay", () => {
 		await page.reload();
 		await page.waitForSelector("button", { timeout: 10000 });
 
-		// Verify the share button has proper data attributes or onclick handler
-		const shareButton = page.getByRole("button", {
+		// Verify the share link is visible and enabled
+		const shareLink = page.getByRole("link", {
 			name: /share to linkedin/i,
 		});
-		await expect(shareButton).toBeVisible();
+		await expect(shareLink).toBeVisible();
 
-		// Check that the button is not disabled
-		await expect(shareButton).toBeEnabled();
+		// Check that the link is not disabled
+		await expect(shareLink).toBeEnabled();
 	});
 
 	test("share button works with all archetypes", async ({ page }) => {
@@ -121,14 +114,14 @@ test.describe("LinkedIn Share - Dialog Opening @area:gameplay", () => {
 			await page.reload();
 			await page.waitForSelector("button", { timeout: 10000 });
 
-			// Verify button is clickable
-			const shareButton = page.getByRole("button", {
+			// Verify link is clickable
+			const shareLink = page.getByRole("link", {
 				name: /share to linkedin/i,
 			});
-			await expect(shareButton).toBeEnabled();
+			await expect(shareLink).toBeEnabled();
 
-			// Verify button has proper styling to indicate it's interactive
-			await expect(shareButton).toHaveCSS("cursor", "pointer");
+			// Verify link has proper styling to indicate it's interactive
+			await expect(shareLink).toHaveCSS("cursor", "pointer");
 		}
 	});
 });

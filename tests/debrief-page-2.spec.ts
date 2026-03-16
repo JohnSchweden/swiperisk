@@ -68,9 +68,8 @@ test.describe("Debrief Page 2 - Reflection Prompt @area:layout", () => {
 		await expect(
 			page.getByText(/every choice you made shaped this outcome/i),
 		).toBeVisible();
-		await expect(
-			page.getByText(/paths not taken.*kobayashi maru awaits/i),
-		).toBeVisible();
+		await expect(page.getByText(/paths not taken/i)).toBeVisible();
+		await expect(page.getByText(/test is eternal/i)).toBeVisible();
 	});
 
 	test("shows hints for safe (LEFT) decisions", async ({ page }) => {
@@ -99,12 +98,10 @@ test.describe("Debrief Page 2 - Reflection Prompt @area:layout", () => {
 
 		await page.reload();
 
-		// Verify hint appears for LEFT choice
+		// Verify hint appears for LEFT choice (LOVEBOMBER personality)
+		await expect(page.getByText(/played it safe/i)).toBeVisible();
 		await expect(
-			page.getByText(/curious what happens if you'd/i),
-		).toBeVisible();
-		await expect(
-			page.getByText(/reboot and try the riskier path/i),
+			page.getByText(/try paste to see how much hype/i),
 		).toBeVisible();
 	});
 
@@ -203,10 +200,10 @@ test.describe("Debrief Page 2 - Reflection Prompt @area:layout", () => {
 		await page.reload();
 
 		// Should show hints section
-		await expect(page.getByText(/alternate paths to explore/i)).toBeVisible();
+		await expect(page.getByText(/path you didn't take/i)).toBeVisible();
 
-		// Should show Decision 1 and Decision 2 hints (but not Decision 3)
+		// Should show hints for all 3 decisions
 		const hints = page.locator("text=/Decision \\d+:/");
-		await expect(hints).toHaveCount(2);
+		await expect(hints).toHaveCount(3);
 	});
 });

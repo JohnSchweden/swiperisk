@@ -4,6 +4,16 @@ import type { Archetype, RoleType } from "../../../types";
 import { getShareUrl } from "../../../utils/linkedin-share";
 import LayoutShell from "../../LayoutShell";
 
+// Utility function to format role labels (e.g., "SOFTWARE_ENGINEER" -> "Software Engineer")
+const formatRoleLabel = (role: RoleType | null): string | null => {
+	if (!role) return null;
+	return role
+		.replace(/_/g, " ")
+		.split(" ")
+		.map((word) => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
+		.join(" ");
+};
+
 // import { EmailCaptureForm } from "./EmailCaptureForm";
 
 interface DebriefPage3VerdictProps {
@@ -70,16 +80,7 @@ export const DebriefPage3Verdict: React.FC<DebriefPage3VerdictProps> = ({
 	// Update meta tags when archetype loads (for LinkedIn sharing)
 	useEffect(() => {
 		if (archetype) {
-			const roleLabel = role
-				? role
-						.replace(/_/g, " ")
-						.split(" ")
-						.map(
-							(word) =>
-								word.charAt(0).toUpperCase() + word.slice(1).toLowerCase(),
-						)
-						.join(" ")
-				: null;
+			const roleLabel = formatRoleLabel(role);
 			updateMetaTags(archetype, Math.round(resilienceScore), roleLabel);
 		}
 	}, [archetype, resilienceScore, role]);

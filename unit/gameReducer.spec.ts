@@ -1,4 +1,5 @@
 import { describe, expect, it } from "vitest";
+import { ROLE_CARDS } from "../data/cards";
 import {
 	determineDeathType,
 	gameReducer,
@@ -131,7 +132,8 @@ describe("gameReducer", () => {
 		expect(next.currentCardIndex).toBe(1);
 		expect(next.stage).toBe(GameStage.PLAYING);
 
-		const atEnd = { ...s, currentCardIndex: 1 };
+		const deckLength = ROLE_CARDS[RoleType.SOFTWARE_ENGINEER].length;
+		const atEnd = { ...s, currentCardIndex: deckLength - 1 };
 		const toBoss = gameReducer(atEnd, { type: "NEXT_INCIDENT" });
 		expect(toBoss.stage).toBe(GameStage.BOSS_FIGHT);
 	});

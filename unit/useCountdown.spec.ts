@@ -33,7 +33,7 @@ describe("useCountdown", () => {
 	});
 
 	it("should decrement count over time when isActive is true", async () => {
-		vi.useFakeTimers();
+		vi.useFakeTimers({ shouldAdvanceTime: true });
 		try {
 			const onComplete = vi.fn();
 			const { result } = renderHook(() =>
@@ -44,22 +44,23 @@ describe("useCountdown", () => {
 			expect(result.current.count).toBe(3);
 
 			// Advance timer by 1 second - should decrement
-			await act(async () => {
+			act(() => {
 				vi.advanceTimersByTime(1000);
 			});
 			expect(result.current.count).toBe(2);
 
 			// Advance timer by another second
-			await act(async () => {
+			act(() => {
 				vi.advanceTimersByTime(1000);
 			});
 			expect(result.current.count).toBe(1);
 
-			// Advance timer by another second - should reach 0 and reset
-			await act(async () => {
+			// Advance timer by another second - should reach 0
+			act(() => {
 				vi.advanceTimersByTime(1000);
 			});
-			expect(result.current.count).toBe(3); // Reset to startFrom after completion
+			expect(result.current.count).toBe(0);
+			expect(onComplete).toHaveBeenCalled();
 		} finally {
 			vi.useRealTimers();
 		}

@@ -46,7 +46,8 @@ test.describe("Stage transitions @area:gameplay @slow", () => {
 		await expect(
 			page
 				.locator(SELECTORS.leftButton)
-				.or(page.locator(SELECTORS.rightButton)),
+				.or(page.locator(SELECTORS.rightButton))
+				.first(),
 		).toBeVisible({ timeout: 10000 });
 	});
 

@@ -1,6 +1,9 @@
 import { expect, test } from "@playwright/test";
 import { RoleType } from "../types";
-import { navigateToPlayingWithRoleFast } from "./helpers/navigation";
+import {
+	navigateToPlaying,
+	navigateToPlayingWithRoleFast,
+} from "./helpers/navigation";
 import { SELECTORS } from "./helpers/selectors";
 
 test.use({ baseURL: "https://localhost:3000" });
@@ -52,10 +55,10 @@ test.describe("Card Deck Integration — 10 Role System @area:gameplay", () => {
 		}) => {
 			const gameDecks: string[][] = [];
 
-			// Play 3 games as Software Engineer
+			// Play 3 games as Software Engineer — use full navigation so shuffle runs (fast path skips INITIALIZING)
 			for (let i = 0; i < 3; i++) {
 				const page = await context.newPage();
-				await navigateToPlayingWithRoleFast(page, RoleType.SOFTWARE_ENGINEER);
+				await navigateToPlaying(page, RoleType.SOFTWARE_ENGINEER);
 
 				const cardIds: string[] = [];
 				// Collect first 5 cards from each game
@@ -66,7 +69,7 @@ test.describe("Card Deck Integration — 10 Role System @area:gameplay", () => {
 					if (cardId) cardIds.push(cardId);
 
 					// Swipe left to advance
-					await page.locator(SELECTORS.leftButton).click({ force: true });
+					await page.locator(SELECTORS.leftButton).dispatchEvent("click");
 					await page.waitForTimeout(500); // Wait for animation
 				}
 
@@ -105,7 +108,7 @@ test.describe("Card Deck Integration — 10 Role System @area:gameplay", () => {
 				}
 
 				// Swipe to advance
-				await page.locator(SELECTORS.leftButton).click();
+				await page.locator(SELECTORS.leftButton).dispatchEvent("click");
 				await page.waitForTimeout(300);
 			}
 
@@ -145,7 +148,7 @@ test.describe("Card Deck Integration — 10 Role System @area:gameplay", () => {
 				expect(cardId?.length).toBeGreaterThan(0);
 
 				// Swipe to next
-				await page.locator(SELECTORS.leftButton).click({ force: true });
+				await page.locator(SELECTORS.leftButton).dispatchEvent("click");
 				await page.waitForTimeout(500);
 			}
 		});
@@ -166,7 +169,7 @@ test.describe("Card Deck Integration — 10 Role System @area:gameplay", () => {
 						.getAttribute("data-card-id");
 					if (cardId) cardIds.push(cardId);
 
-					await page.locator(SELECTORS.leftButton).click({ force: true });
+					await page.locator(SELECTORS.leftButton).dispatchEvent("click");
 					await page.waitForTimeout(500);
 				}
 

@@ -5,11 +5,12 @@ import { SELECTORS } from "./helpers/selectors";
 test.use({ baseURL: "https://localhost:3000" });
 
 /**
- * Helper to perform a drag gesture on the current card without releasing
+ * Helper to perform a drag gesture on the current card without releasing.
+ * Use negative distance for left swipe (safe choice on first SE card), positive for right.
  */
 async function performDragWithoutRelease(
 	page: Page,
-	distance: number = 120,
+	distance: number = -120,
 ): Promise<{
 	card: Awaited<ReturnType<typeof page.locator>>;
 	startX: number;
@@ -40,25 +41,26 @@ async function releaseMouseDrag(page: Page): Promise<void> {
  * Helper to click "Next Ticket" and advance to next card
  */
 async function clickNextTicket(page: Page): Promise<void> {
-	// Wait for feedback overlay to appear
 	await page.waitForSelector('[data-testid="feedback-dialog"]', {
 		state: "visible",
 		timeout: 5000,
 	});
 
-	// Click Next Ticket button
 	const nextTicketButton = page.locator(SELECTORS.nextTicketButton);
-	await nextTicketButton.click({ force: true });
+	await nextTicketButton.click();
 
-	// Wait for overlay to disappear and new card to appear
 	await page.waitForSelector('[data-testid="feedback-dialog"]', {
 		state: "hidden",
 		timeout: 5000,
 	});
+
+	// Let card exit animation complete before asserting new card is visible
+	await page.waitForTimeout(500);
+
 	await page
 		.locator(SELECTORS.card)
 		.first()
-		.waitFor({ state: "visible", timeout: 5000 });
+		.waitFor({ state: "visible", timeout: 8000 });
 }
 
 test.describe("Swipe Consistency @area:input", () => {
@@ -68,7 +70,7 @@ test.describe("Swipe Consistency @area:input", () => {
 		await navigateToPlayingFast(page);
 
 		// === FIRST SWIPE ===
-		const { card: firstCard } = await performDragWithoutRelease(page, 120);
+		const { card: firstCard } = await performDragWithoutRelease(page, -120);
 
 		// Wait while dragging
 		await page.waitForTimeout(500);
@@ -97,7 +99,7 @@ test.describe("Swipe Consistency @area:input", () => {
 		await clickNextTicket(page);
 
 		// === SECOND SWIPE ===
-		const { card: secondCard } = await performDragWithoutRelease(page, 120);
+		const { card: secondCard } = await performDragWithoutRelease(page, -120);
 
 		// Wait while dragging
 		await page.waitForTimeout(500);
@@ -130,7 +132,7 @@ test.describe("Swipe Consistency @area:input", () => {
 
 		// Test two swipes
 		for (let i = 0; i < 2; i++) {
-			const { card } = await performDragWithoutRelease(page, 120);
+			const { card } = await performDragWithoutRelease(page, -120);
 
 			// Check state while still holding
 			await page.waitForTimeout(200);

@@ -136,7 +136,18 @@ export const ROLE_FINE_TIERS = {
 
 export type RoleFineTier = keyof typeof ROLE_FINE_TIERS;
 
-/** Phase 03-07: Role-based heat scaling for balanced gameplay (matches fine tiers proportionally) */
+// Heat Scaling Formula (as of 03-08 gap closure):
+// Target: 8-10 cards before heat death (100% heat)
+// Average heat per card should be ~10-12
+// Formula: newHeat = Math.round(oldHeat * 0.45)
+// This maintains relative proportions while reducing absolute values
+//
+// Role tiers maintain their ratios:
+// - Junior roles (Vibe Coder): heat * 0.45 (target range 4-18)
+// - Mid roles (Software Engineer): heat * 0.45 (target range 4-16)
+// - Senior roles (C-suite): heat * 0.45 (target range 9-31)
+
+/** Phase 03-08: Role-based heat scaling for 8-10 card gameplay (55% reduction from 03-07) */
 export const ROLE_HEAT_SCALES = {
 	CHIEF_SOMETHING_OFFICER: { min: 15, max: 70, scale: 0.75 },
 	HEAD_OF_SOMETHING: { min: 12, max: 55, scale: 0.6 },

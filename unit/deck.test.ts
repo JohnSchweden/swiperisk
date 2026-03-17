@@ -261,8 +261,8 @@ describe("shuffleDeck", () => {
 
 			// Should have at least one swap and one non-swap in 10 runs
 			// (very unlikely to get the same result 10 times with true randomness)
-			const hasSwapped = swapResults.some((r) => r);
-			const hasNotSwapped = swapResults.some((r) => !r);
+			const _hasSwapped = swapResults.some((r) => r);
+			const _hasNotSwapped = swapResults.some((r) => !r);
 
 			// At minimum, we should see some variation (or all same, which is possible but unlikely)
 			// This test mainly ensures no error is thrown

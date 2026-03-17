@@ -1,6 +1,14 @@
 import type React from "react";
 import { ROLE_DESCRIPTIONS, ROLE_ICONS, ROLE_LABELS } from "../../data";
-import { RoleType } from "../../types";
+import { ROLE_FINE_TIERS, RoleType } from "../../types";
+
+function formatBudget(amount: number): string {
+	if (amount >= 1000000) {
+		return `$${(amount / 1000000).toFixed(0)}M`;
+	}
+	return `$${amount.toLocaleString()}`;
+}
+
 import LayoutShell from "../LayoutShell";
 import {
 	LAYOUT_SHELL_CLASS,
@@ -32,12 +40,13 @@ export const RoleSelect: React.FC<RoleSelectProps> = ({
 						damage_control
 					</div>
 					<h2 className="text-3xl md:text-5xl font-black mb-3 md:mb-4 tracking-tight fade-in px-4">
-						Select your impact zone
+						Select your budget
 					</h2>
 					<p className="max-w-2xl mx-auto text-slate-400 text-sm md:text-base leading-relaxed px-4">
 						Choose the specific silo you want to set on fire first. Each role
 						changes the cascading failures, the legal heat you attract, and the
-						creative ways to lose that $10M budget.
+						creative ways to lose your budget. Higher responsibility = bigger
+						budget, bigger fines.
 					</p>
 				</div>
 
@@ -67,6 +76,12 @@ export const RoleSelect: React.FC<RoleSelectProps> = ({
 							<p className="text-slate-400 text-xs md:text-sm leading-relaxed mt-2 md:mt-3">
 								{ROLE_DESCRIPTIONS[role]}
 							</p>
+							<div className="text-cyan-400 text-xs md:text-sm font-semibold mt-2 md:mt-3 flex items-center justify-center gap-1.5">
+								<i className="fa-solid fa-wallet" aria-hidden></i>
+								<span>
+									Your budget: {formatBudget(ROLE_FINE_TIERS[role].budget)}
+								</span>
+							</div>
 						</button>
 					))}
 				</div>

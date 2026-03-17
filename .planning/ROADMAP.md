@@ -76,7 +76,7 @@ Map new roles to existing card decks until role-specific cards added in Phase 05
 
 **Goal:** Add incidents where both options are bad (tradeoffs, not puzzles)
 **Depends on:** Phase 02
-**Plans:** 7/10 plans executed
+**Plans:** 8/11 plans executed
 
 **⚠️ REVISION REQUIRED:** Original plans (03-01 to 03-05) were written for OLD 6 legacy roles. Phase 02 introduced 10 NEW roles. See `03-REVISION-NOTES.md`.
 
@@ -85,13 +85,17 @@ Plans (REVISED FOR 10 ROLES):
 - [x] **03-02-revised-PLAN.md** — Generate 80+ cards for 10 NEW roles (replaces 03-02) ✓
 - [x] **03-03-revised-PLAN.md** — Integrate pressure metadata + shuffle testing for 10 roles ✓
 - [x] **03-04-revised-PLAN.md** — UAT verification for 10 roles with distinct themes ✓
-- [ ] **03-05-revised-PLAN.md** — Real Case Reference for all 10 roles
+- [x] **03-05-revised-PLAN.md** — Real Case Reference for all 10 roles ✓
 
 **Legacy plans (DEPRECATED - DO NOT USE):**
 - 03-02-PLAN.md — Written for old 6 roles (DEVELOPMENT, FINANCE, etc.) ❌
 - 03-03-PLAN.md — References legacy file structure ❌
 - 03-04-PLAN.md — UAT for old 6 roles ❌
 - 03-05-PLAN.md — References legacy card files ❌
+
+**Gap Closure:**
+- [x] **03-06-PLAN.md** — Rebalance fines to role-appropriate tiers ✓
+- [x] **03-07-PLAN.md** — Rebalance heat penalties to match fine structure ✓
 
 **Documentation:**
 - `03-REVISION-NOTES.md` — Why plans were revised
@@ -418,7 +422,7 @@ Integrate images into UI:
 | 1-2 | Voice Files + Live API | v1.1 | Complete |
 | 01 | Live API STT Research | v1.2 | Complete |
 | 02 | New Role Set (Impact Zones) | v1.2 | Complete |
-| 03 | 7/10 | In Progress|  |
+| 03 | 8/11 | In Progress|  |
 | 04 | Immersive Pressure Effects | v1.2 | Complete (9/10) |
 | 05 | Expanded AI Risk Scenarios | v1.2 | Planned (5 plans) |
 | 06 | 19/19 | Complete    | 2026-03-16 |

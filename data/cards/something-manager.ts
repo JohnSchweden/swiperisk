@@ -32,7 +32,7 @@ export const SOMETHING_MANAGER_CARDS: Card[] = [
 		onRight: {
 			label: "Let revenue bleed",
 			hype: -20,
-			heat: 75,
+			heat: 38,
 			fine: 12000000,
 			violation: "Negligent Financial Management",
 			lesson:
@@ -49,7 +49,7 @@ export const SOMETHING_MANAGER_CARDS: Card[] = [
 		onLeft: {
 			label: "Approve retraining",
 			hype: -40,
-			heat: 30,
+			heat: 15,
 			fine: 0,
 			violation: "None - Capital expenditure approval",
 			lesson:
@@ -81,7 +81,7 @@ export const SOMETHING_MANAGER_CARDS: Card[] = [
 		onRight: {
 			label: "Accept lawsuit risk",
 			hype: 15,
-			heat: 70,
+			heat: 35,
 			fine: 750000,
 			violation: "Risk Management Failure",
 			lesson:
@@ -98,7 +98,7 @@ export const SOMETHING_MANAGER_CARDS: Card[] = [
 		onLeft: {
 			label: "Fund the audit",
 			hype: -30,
-			heat: 40,
+			heat: 8,
 			fine: 0,
 			violation: "None - Proactive compliance",
 			lesson:
@@ -130,7 +130,7 @@ export const SOMETHING_MANAGER_CARDS: Card[] = [
 		onRight: {
 			label: "Enforce ban",
 			hype: -25,
-			heat: 60,
+			heat: 30,
 			fine: 3000000,
 			violation: "Productivity Loss + Compliance Non-Enforcement",
 			lesson:
@@ -179,7 +179,7 @@ export const SOMETHING_MANAGER_CARDS: Card[] = [
 		onRight: {
 			label: "Let them quit",
 			hype: -35,
-			heat: 75,
+			heat: 38,
 			fine: 500000,
 			violation: "Retention Failure Cost",
 			lesson:
@@ -196,7 +196,7 @@ export const SOMETHING_MANAGER_CARDS: Card[] = [
 		onLeft: {
 			label: "Approve raises",
 			hype: -10,
-			heat: 25,
+			heat: 12,
 			fine: 0,
 			violation: "None - Employee retention",
 			lesson:
@@ -228,7 +228,7 @@ export const SOMETHING_MANAGER_CARDS: Card[] = [
 		onRight: {
 			label: "Good enough version",
 			hype: 20,
-			heat: 70,
+			heat: 35,
 			fine: 500000,
 			violation: "Audit Non-Compliance Risk",
 			lesson:
@@ -245,7 +245,7 @@ export const SOMETHING_MANAGER_CARDS: Card[] = [
 		onLeft: {
 			label: "Full checklist",
 			hype: -15,
-			heat: 30,
+			heat: 15,
 			fine: 0,
 			violation: "None - Complete compliance",
 			lesson:
@@ -277,7 +277,7 @@ export const SOMETHING_MANAGER_CARDS: Card[] = [
 		onRight: {
 			label: "Commit to $3M",
 			hype: 45,
-			heat: 80,
+			heat: 42,
 			fine: 0,
 			violation: "None - But creates unrealistic expectations",
 			lesson:
@@ -294,7 +294,7 @@ export const SOMETHING_MANAGER_CARDS: Card[] = [
 		onLeft: {
 			label: "Sandbag at $2M",
 			hype: -20,
-			heat: 40,
+			heat: 8,
 			fine: 0,
 			violation: "None - Conservative forecasting",
 			lesson:
@@ -326,7 +326,7 @@ export const SOMETHING_MANAGER_CARDS: Card[] = [
 		onRight: {
 			label: "Accept the risk",
 			hype: 15,
-			heat: 85,
+			heat: 45,
 			fine: 1000000,
 			violation: "Negligent Risk Management",
 			lesson:
@@ -343,7 +343,7 @@ export const SOMETHING_MANAGER_CARDS: Card[] = [
 		onLeft: {
 			label: "Fund security fix",
 			hype: -35,
-			heat: 25,
+			heat: 12,
 			fine: 0,
 			violation: "None - Proactive security",
 			lesson:
@@ -375,7 +375,7 @@ export const SOMETHING_MANAGER_CARDS: Card[] = [
 		onRight: {
 			label: "Choose Vendor A",
 			hype: 30,
-			heat: 90,
+			heat: 48,
 			fine: 25000000,
 			violation: "Audit Non-Compliance + Regulatory Risk",
 			lesson:
@@ -424,7 +424,7 @@ export const SOMETHING_MANAGER_CARDS: Card[] = [
 		onRight: {
 			label: "Cut training",
 			hype: 25,
-			heat: 70,
+			heat: 35,
 			fine: 1500000,
 			violation: "Training Negligence",
 			lesson:
@@ -441,7 +441,7 @@ export const SOMETHING_MANAGER_CARDS: Card[] = [
 		onLeft: {
 			label: "Invest in training",
 			hype: -30,
-			heat: 20,
+			heat: 8,
 			fine: 0,
 			violation: "None - Professional development",
 			lesson:

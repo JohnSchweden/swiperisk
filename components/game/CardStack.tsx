@@ -69,7 +69,7 @@ function SwipePreview({
 			style={{ opacity: Math.min(1, 0.3 + progress * 0.7) }}
 		>
 			<div
-				className={`absolute top-1/2 -translate-y-1/2 font-black tracking-tighter ${direction === "RIGHT" ? "left-8 text-green-500" : "right-8 text-red-500"}`}
+				className={`absolute top-1/2 -translate-y-1/2 font-black tracking-tighter ${direction === "RIGHT" ? "left-8 text-slate-200" : "right-8 text-slate-200"}`}
 				style={{
 					fontSize: `clamp(1.5rem, ${2 + progress * 2}rem, 3.75rem)`,
 					transform: `scale(${0.5 + Math.min(0.5, progress * 0.5)})`,
@@ -292,9 +292,9 @@ export const CardStack: React.FC<CardStackProps> = ({
 							</span>
 
 							<span className="flex md:hidden items-center justify-center gap-3">
-								<span className="text-red-500 font-bold">← Swipe left</span>
+								<span className="text-slate-300 font-bold">← Swipe left</span>
 								<span className="text-slate-600">or</span>
-								<span className="text-green-500 font-bold">Swipe right →</span>
+								<span className="text-slate-300 font-bold">Swipe right →</span>
 							</span>
 						</div>
 

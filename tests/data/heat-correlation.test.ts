@@ -3,138 +3,144 @@ import { ROLE_CARDS } from "../../data/cards";
 import { RoleType } from "../../types";
 
 describe("Heat Correlation Validation", () => {
-	describe("Risk-Heat-Fine Correlations", () => {
+	// Table-driven correlation tests
+	const correlationTests = [
+		{
+			name: "higher fine correlates with higher heat",
+			check: (card: (typeof ROLE_CARDS)[RoleType][0]) => {
+				if (card.onRight.fine > card.onLeft.fine) {
+					return card.onRight.heat >= card.onLeft.heat;
+				}
+				if (card.onLeft.fine > card.onRight.fine) {
+					return card.onLeft.heat >= card.onRight.heat;
+				}
+				return true;
+			},
+		},
+		{
+			name: "higher fine strictly correlates with higher heat",
+			check: (card: (typeof ROLE_CARDS)[RoleType][0]) => {
+				if (card.onRight.fine > card.onLeft.fine) {
+					return card.onRight.heat > card.onLeft.heat;
+				}
+				return true;
+			},
+		},
+		{
+			name: "high hype (>20) correlates with elevated heat (>8)",
+			check: (card: (typeof ROLE_CARDS)[RoleType][0]) => {
+				if (card.onRight.hype > 20) {
+					return card.onRight.heat > 8;
+				}
+				return true;
+			},
+		},
+
+		{
+			name: "heat differs when fines differ significantly (>10%)",
+			check: (card: (typeof ROLE_CARDS)[RoleType][0]) => {
+				const fineDiff = Math.abs(card.onRight.fine - card.onLeft.fine);
+				const maxFine = Math.max(card.onRight.fine, card.onLeft.fine);
+				if (maxFine > 0 && fineDiff / maxFine > 0.1) {
+					return card.onRight.heat !== card.onLeft.heat;
+				}
+				return true;
+			},
+		},
+	];
+
+	describe("Per-Role Correlations", () => {
 		for (const role of Object.values(RoleType)) {
-			describe(`${role} correlations`, () => {
+			describe(role, () => {
 				const cards = ROLE_CARDS[role];
 
-				it("option with higher fine has higher or equal heat", () => {
-					for (const card of cards) {
-						// The option with higher fine should have higher or equal heat
-						if (card.onRight.fine > card.onLeft.fine) {
-							expect(
-								card.onRight.heat,
-								`Card ${card.id}: higher fine option should have >= heat`,
-							).toBeGreaterThanOrEqual(card.onLeft.heat);
-						} else if (card.onLeft.fine > card.onRight.fine) {
-							expect(
-								card.onLeft.heat,
-								`Card ${card.id}: higher fine option should have >= heat`,
-							).toBeGreaterThanOrEqual(card.onRight.heat);
+				for (const test of correlationTests) {
+					it(test.name, () => {
+						for (const card of cards) {
+							expect(test.check(card), `Card ${card.id}: ${test.name}`).toBe(
+								true,
+							);
 						}
-						// If fines are equal, no heat correlation required
-					}
-				});
-
-				it("if onRight.fine > onLeft.fine then onRight.heat > onLeft.heat", () => {
-					for (const card of cards) {
-						if (card.onRight.fine > card.onLeft.fine) {
-							expect(
-								card.onRight.heat,
-								`Card ${card.id}: higher fine should correlate with higher heat`,
-							).toBeGreaterThan(card.onLeft.heat);
-						}
-					}
-				});
-
-				it("high hype (>20) correlates with elevated heat (>8)", () => {
-					for (const card of cards) {
-						// If hype is high, heat should also be elevated (relative to new scale)
-						if (card.onRight.hype > 20) {
-							expect(
-								card.onRight.heat,
-								`Card ${card.id}: high hype should correlate with elevated heat`,
-							).toBeGreaterThan(8);
-						}
-					}
-				});
-
-				it("no card has identical penalties when fines differ significantly", () => {
-					for (const card of cards) {
-						// If fines differ by more than 10%, heat should differ
-						const fineDiff = Math.abs(card.onRight.fine - card.onLeft.fine);
-						const maxFine = Math.max(card.onRight.fine, card.onLeft.fine);
-						if (maxFine > 0 && fineDiff / maxFine > 0.1) {
-							expect(
-								card.onRight.heat,
-								`Card ${card.id}: heat should differ when fines differ significantly`,
-							).not.toBe(card.onLeft.heat);
-						}
-					}
-				});
+					});
+				}
 			});
 		}
 	});
 
 	describe("Role Tier Heat Progression", () => {
-		it("C-suite max heat > mid-tier max heat > junior max heat", () => {
-			const juniorRoles = [
-				RoleType.VIBE_CODER,
-				RoleType.VIBE_ENGINEER,
-				RoleType.SOFTWARE_ENGINEER,
-			];
-			const midRoles = [
-				RoleType.DATA_SCIENTIST,
-				RoleType.TECH_AI_CONSULTANT,
-				RoleType.SOFTWARE_ARCHITECT,
-				RoleType.AGENTIC_ENGINEER,
-				RoleType.SOMETHING_MANAGER,
-			];
-			const seniorRoles = [RoleType.HEAD_OF_SOMETHING];
-			const cSuiteRoles = [RoleType.CHIEF_SOMETHING_OFFICER];
-
-			const getMaxHeat = (roles: RoleType[]) => {
-				let max = 0;
-				for (const role of roles) {
-					for (const card of ROLE_CARDS[role]) {
-						max = Math.max(max, card.onLeft.heat, card.onRight.heat);
-					}
+		const getMaxHeat = (roles: RoleType[]) => {
+			let max = 0;
+			for (const role of roles) {
+				for (const card of ROLE_CARDS[role]) {
+					max = Math.max(max, card.onLeft.heat, card.onRight.heat);
 				}
-				return max;
+			}
+			return max;
+		};
+
+		it("maintains hierarchy: junior < mid < senior < C-suite", () => {
+			const tiers = {
+				junior: [
+					RoleType.VIBE_CODER,
+					RoleType.VIBE_ENGINEER,
+					RoleType.SOFTWARE_ENGINEER,
+				],
+				mid: [
+					RoleType.DATA_SCIENTIST,
+					RoleType.TECH_AI_CONSULTANT,
+					RoleType.SOFTWARE_ARCHITECT,
+					RoleType.AGENTIC_ENGINEER,
+					RoleType.SOMETHING_MANAGER,
+				],
+				senior: [RoleType.HEAD_OF_SOMETHING],
+				cSuite: [RoleType.CHIEF_SOMETHING_OFFICER],
 			};
 
-			const juniorMax = getMaxHeat(juniorRoles);
-			const midMax = getMaxHeat(midRoles);
-			const seniorMax = getMaxHeat(seniorRoles);
-			const cSuiteMax = getMaxHeat(cSuiteRoles);
+			const juniorMax = getMaxHeat(tiers.junior);
+			const midMax = getMaxHeat(tiers.mid);
+			const seniorMax = getMaxHeat(tiers.senior);
+			const cSuiteMax = getMaxHeat(tiers.cSuite);
 
-			// Junior should have lower max heat than mid
-			expect(juniorMax).toBeLessThanOrEqual(midMax);
-			// Mid should have lower max heat than C-suite
-			expect(midMax).toBeLessThanOrEqual(cSuiteMax);
-			// Senior should have lower max heat than C-suite
-			expect(seniorMax).toBeLessThanOrEqual(cSuiteMax);
+			// Verify rough hierarchy (allowing overlap due to card variety)
+			expect(juniorMax, "junior should not exceed C-suite").toBeLessThanOrEqual(
+				cSuiteMax,
+			);
+			expect(midMax, "mid should not exceed C-suite").toBeLessThanOrEqual(
+				cSuiteMax,
+			);
+			expect(seniorMax, "senior should not exceed C-suite").toBeLessThanOrEqual(
+				cSuiteMax,
+			);
 		});
 	});
 
 	describe("Heat Value Constraints", () => {
-		it("all heat values are >= 2 (minimum meaningful heat)", () => {
-			for (const role of Object.values(RoleType)) {
-				for (const card of ROLE_CARDS[role]) {
-					expect(
-						card.onLeft.heat,
-						`Card ${card.id}: onLeft.heat should be >= 2`,
-					).toBeGreaterThanOrEqual(2);
-					expect(
-						card.onRight.heat,
-						`Card ${card.id}: onRight.heat should be >= 2`,
-					).toBeGreaterThanOrEqual(2);
-				}
+		const allCards = Object.values(RoleType).flatMap(
+			(role) => ROLE_CARDS[role],
+		);
+
+		it("all heat values are >= 2 (minimum meaningful)", () => {
+			for (const card of allCards) {
+				expect(
+					card.onLeft.heat,
+					`${card.id}: onLeft.heat`,
+				).toBeGreaterThanOrEqual(2);
+				expect(
+					card.onRight.heat,
+					`${card.id}: onRight.heat`,
+				).toBeGreaterThanOrEqual(2);
 			}
 		});
 
-		it("all heat values are reasonable for 8-10 card gameplay (<=35)", () => {
-			for (const role of Object.values(RoleType)) {
-				for (const card of ROLE_CARDS[role]) {
-					expect(
-						card.onLeft.heat,
-						`Card ${card.id}: onLeft.heat should be <= 35`,
-					).toBeLessThanOrEqual(35);
-					expect(
-						card.onRight.heat,
-						`Card ${card.id}: onRight.heat should be <= 35`,
-					).toBeLessThanOrEqual(35);
-				}
+		it("all heat values are <= 35 (8-10 card gameplay)", () => {
+			for (const card of allCards) {
+				expect(card.onLeft.heat, `${card.id}: onLeft.heat`).toBeLessThanOrEqual(
+					35,
+				);
+				expect(
+					card.onRight.heat,
+					`${card.id}: onRight.heat`,
+				).toBeLessThanOrEqual(35);
 			}
 		});
 	});

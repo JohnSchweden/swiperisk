@@ -4,6 +4,17 @@ export enum PersonalityType {
 	LOVEBOMBER = "LOVEBOMBER",
 }
 
+/** Helper to create feedback for all three personalities */
+export const makeFeedback = (
+	roaster: string,
+	zenMaster: string,
+	lovebomber: string,
+): Record<PersonalityType, string> => ({
+	[PersonalityType.ROASTER]: roaster,
+	[PersonalityType.ZEN_MASTER]: zenMaster,
+	[PersonalityType.LOVEBOMBER]: lovebomber,
+});
+
 export enum RoleType {
 	// Legacy roles preserved for Phase 05 recovery
 	// DEVELOPMENT = "DEVELOPMENT",
@@ -136,29 +147,30 @@ export const ROLE_FINE_TIERS = {
 
 export type RoleFineTier = keyof typeof ROLE_FINE_TIERS;
 
-// Heat Scaling Formula (as of 03-08 gap closure):
-// Target: 8-10 cards before heat death (100% heat)
-// Average heat per card should be ~10-12
-// Formula: newHeat = Math.round(oldHeat * 0.45)
-// This maintains relative proportions while reducing absolute values
-//
-// Role tiers maintain their ratios:
-// - Junior roles (Vibe Coder): heat * 0.45 (target range 4-18)
-// - Mid roles (Software Engineer): heat * 0.45 (target range 4-16)
-// - Senior roles (C-suite): heat * 0.45 (target range 9-31)
-
-/** Phase 03-08: Role-based heat scaling for 8-10 card gameplay (55% reduction from 03-07) */
+/**
+ * Role-based heat scaling for 8-10 card gameplay.
+ * Target: ~10-12 average heat per card (was 20-25)
+ * Formula: newHeat = Math.round(oldHeat * 0.45)
+ *
+ * Actual ranges achieved:
+ * - Vibe Coder: 4-18 (was 8-40), scale 0.45
+ * - Software Engineer: 4-16 (was 8-35), scale 0.45
+ * - Data Scientist: 4-19 (was 8-42), scale 0.5
+ * - C-suite: 9-31 (was 20-68), scale 0.75
+ *
+ * @deprecated Kept for reference. Use tests/data/heat-correlation.test.ts for validation.
+ */
 export const ROLE_HEAT_SCALES = {
-	CHIEF_SOMETHING_OFFICER: { min: 15, max: 70, scale: 0.75 },
-	HEAD_OF_SOMETHING: { min: 12, max: 55, scale: 0.6 },
-	SOMETHING_MANAGER: { min: 10, max: 45, scale: 0.55 },
-	TECH_AI_CONSULTANT: { min: 8, max: 40, scale: 0.5 },
-	DATA_SCIENTIST: { min: 8, max: 40, scale: 0.5 },
-	SOFTWARE_ARCHITECT: { min: 10, max: 45, scale: 0.55 },
-	SOFTWARE_ENGINEER: { min: 8, max: 35, scale: 0.45 },
-	VIBE_CODER: { min: 8, max: 40, scale: 0.45 },
-	VIBE_ENGINEER: { min: 8, max: 40, scale: 0.45 },
-	AGENTIC_ENGINEER: { min: 10, max: 50, scale: 0.55 },
+	CHIEF_SOMETHING_OFFICER: { min: 9, max: 31 },
+	HEAD_OF_SOMETHING: { min: 5, max: 22 },
+	SOMETHING_MANAGER: { min: 4, max: 22 },
+	TECH_AI_CONSULTANT: { min: 5, max: 20 },
+	DATA_SCIENTIST: { min: 4, max: 19 },
+	SOFTWARE_ARCHITECT: { min: 5, max: 22 },
+	SOFTWARE_ENGINEER: { min: 4, max: 16 },
+	VIBE_CODER: { min: 4, max: 18 },
+	VIBE_ENGINEER: { min: 4, max: 19 },
+	AGENTIC_ENGINEER: { min: 5, max: 23 },
 } as const;
 
 export type RoleHeatScale = keyof typeof ROLE_HEAT_SCALES;

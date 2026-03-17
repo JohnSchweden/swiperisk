@@ -1,4 +1,9 @@
-import { AppSource, type Card, PersonalityType } from "../../types";
+import {
+	AppSource,
+	type Card,
+	makeFeedback,
+	PersonalityType,
+} from "../../types";
 
 /**
  * Vibe Coder cards - AI-assisted coding scenarios
@@ -34,14 +39,11 @@ export const VIBE_CODER_CARDS: Card[] = [
 			violation: "Vague Prompt Risk + Hallucination Exposure",
 			lesson:
 				"Vague prompts produce unpredictable AI output that often contains subtle bugs.",
-			feedback: {
-				[PersonalityType.ROASTER]:
-					"'Add auth' gets you random auth. Might work. Might be ROT13. Good luck.",
-				[PersonalityType.ZEN_MASTER]:
-					"The unclear request receives unclear response.",
-				[PersonalityType.LOVEBOMBER]:
-					"30 seconds is SO fast, bestie!! AI knows what we NEED!!",
-			},
+			feedback: makeFeedback(
+				"'Add auth' gets you random auth. Might work. Might be ROT13. Good luck.",
+				"The unclear request receives unclear response.",
+				"30 seconds is SO fast, bestie!! AI knows what we NEED!!",
+			),
 		},
 		onLeft: {
 			label: "Refined precise prompt",
@@ -51,14 +53,11 @@ export const VIBE_CODER_CARDS: Card[] = [
 			violation: "None - Precise AI interaction",
 			lesson:
 				"Precise prompts with clear specifications produce reliable, reviewable code.",
-			feedback: {
-				[PersonalityType.ROASTER]:
-					"10 minutes of thinking. Precise output. Actually usable. Rare.",
-				[PersonalityType.ZEN_MASTER]:
-					"The clear question receives the clear answer.",
-				[PersonalityType.LOVEBOMBER]:
-					"Precision MATTERS, bestie!! Good prompts make GOOD code!!",
-			},
+			feedback: makeFeedback(
+				"10 minutes of thinking. Precise output. Actually usable. Rare.",
+				"The clear question receives the clear answer.",
+				"Precision MATTERS, bestie!! Good prompts make GOOD code!!",
+			),
 		},
 	},
 	{

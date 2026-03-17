@@ -29,7 +29,7 @@ export const VIBE_CODER_CARDS: Card[] = [
 		onRight: {
 			label: "Quick vague prompt",
 			hype: 40,
-			heat: 80,
+			heat: 32,
 			fine: 100000,
 			violation: "Vague Prompt Risk + Hallucination Exposure",
 			lesson:
@@ -46,7 +46,7 @@ export const VIBE_CODER_CARDS: Card[] = [
 		onLeft: {
 			label: "Refined precise prompt",
 			hype: -10,
-			heat: 25,
+			heat: 10,
 			fine: 0,
 			violation: "None - Precise AI interaction",
 			lesson:
@@ -78,7 +78,7 @@ export const VIBE_CODER_CARDS: Card[] = [
 		onRight: {
 			label: "Use local model",
 			hype: 30,
-			heat: 85,
+			heat: 35,
 			fine: 3000000,
 			violation: "Hallucination Risk + Code Quality",
 			lesson:
@@ -94,7 +94,7 @@ export const VIBE_CODER_CARDS: Card[] = [
 		onLeft: {
 			label: "Use GPT-4",
 			hype: -25,
-			heat: 20,
+			heat: 8,
 			fine: 0,
 			violation: "None - Quality tooling",
 			lesson:
@@ -126,7 +126,7 @@ export const VIBE_CODER_CARDS: Card[] = [
 		onRight: {
 			label: "Ship AI-approved code",
 			hype: 35,
-			heat: 90,
+			heat: 38,
 			fine: 4000000,
 			violation: "Race Condition + Production Bug",
 			lesson:
@@ -143,7 +143,7 @@ export const VIBE_CODER_CARDS: Card[] = [
 		onLeft: {
 			label: "Fix the race condition",
 			hype: -20,
-			heat: 30,
+			heat: 12,
 			fine: 0,
 			violation: "None - Human verification",
 			lesson:
@@ -175,7 +175,7 @@ export const VIBE_CODER_CARDS: Card[] = [
 		onRight: {
 			label: "Use the code",
 			hype: 45,
-			heat: 95,
+			heat: 40,
 			fine: 8000000,
 			violation: "Hallucinated Dependency + Security Risk",
 			lesson:
@@ -192,7 +192,7 @@ export const VIBE_CODER_CARDS: Card[] = [
 		onLeft: {
 			label: "Replace with known library",
 			hype: -30,
-			heat: 25,
+			heat: 10,
 			fine: 0,
 			violation: "None - Verified dependencies",
 			lesson:
@@ -224,7 +224,7 @@ export const VIBE_CODER_CARDS: Card[] = [
 		onRight: {
 			label: "Accept incomplete understanding",
 			hype: 30,
-			heat: 85,
+			heat: 35,
 			fine: 5000000,
 			violation: "Context Miss + Architectural Error",
 			lesson:
@@ -241,7 +241,7 @@ export const VIBE_CODER_CARDS: Card[] = [
 		onLeft: {
 			label: "Chunk the context",
 			hype: -25,
-			heat: 35,
+			heat: 15,
 			fine: 0,
 			violation: "None - Thorough context",
 			lesson:
@@ -273,7 +273,7 @@ export const VIBE_CODER_CARDS: Card[] = [
 		onRight: {
 			label: "Ship on vibe",
 			hype: 50,
-			heat: 90,
+			heat: 38,
 			fine: 6000000,
 			violation: "Unverified Code + Knowledge Gap",
 			lesson:
@@ -290,7 +290,7 @@ export const VIBE_CODER_CARDS: Card[] = [
 		onLeft: {
 			label: "Verify understanding",
 			hype: -35,
-			heat: 20,
+			heat: 8,
 			fine: 0,
 			violation: "None - Knowledge-based development",
 			lesson:
@@ -322,7 +322,7 @@ export const VIBE_CODER_CARDS: Card[] = [
 		onRight: {
 			label: "Use the AI code",
 			hype: 35,
-			heat: 90,
+			heat: 38,
 			fine: 7000000,
 			violation: "GPL Violation + Copyright Infringement",
 			lesson:
@@ -339,7 +339,7 @@ export const VIBE_CODER_CARDS: Card[] = [
 		onLeft: {
 			label: "Rewrite it",
 			hype: -25,
-			heat: 25,
+			heat: 10,
 			fine: 0,
 			violation: "None - Clean implementation",
 			lesson:
@@ -371,7 +371,7 @@ export const VIBE_CODER_CARDS: Card[] = [
 		onRight: {
 			label: "Stick with familiar",
 			hype: 15,
-			heat: 80,
+			heat: 32,
 			fine: 8000000,
 			violation: "Declining Quality + Hallucination Risk",
 			lesson:
@@ -388,7 +388,7 @@ export const VIBE_CODER_CARDS: Card[] = [
 		onLeft: {
 			label: "Switch to newer model",
 			hype: -15,
-			heat: 40,
+			heat: 15,
 			fine: 1000000,
 			violation: "None - Tool evolution",
 			lesson:
@@ -420,7 +420,7 @@ export const VIBE_CODER_CARDS: Card[] = [
 		onRight: {
 			label: "Elegant one-liner",
 			hype: 40,
-			heat: 70,
+			heat: 28,
 			fine: 5000000,
 			violation: "Unmaintainable Code",
 			lesson:
@@ -437,7 +437,7 @@ export const VIBE_CODER_CARDS: Card[] = [
 		onLeft: {
 			label: "Readable standard",
 			hype: -20,
-			heat: 20,
+			heat: 8,
 			fine: 0,
 			violation: "None - Maintainable code",
 			lesson:

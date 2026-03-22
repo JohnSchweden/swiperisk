@@ -6,6 +6,7 @@ import {
 	getRoleDeck,
 	ROLE_CARDS,
 } from "../data";
+import { KIRK_CORRUPTED_CARDS } from "../data/kirkCards";
 import { resolveDeckWithBranching } from "../lib/deck";
 import {
 	type Card,
@@ -39,6 +40,8 @@ export const initialGameState: GameState = {
 	unlockedEndings: [],
 	bossFightAnswers: [],
 	effectiveDeck: null,
+	kirkCounter: 0,
+	kirkCorruptionActive: false,
 };
 
 export type GameAction =
@@ -58,7 +61,8 @@ export type GameAction =
 	| { type: "NEXT_INCIDENT" }
 	| { type: "BOSS_ANSWER"; isCorrect: boolean }
 	| { type: "BOSS_COMPLETE"; success: boolean }
-	| { type: "RESET" };
+	| { type: "RESET" }
+	| { type: "KIRK_REFUSAL" };
 
 export function determineDeathType(
 	budget: number,
@@ -224,15 +228,17 @@ function createGameOverState(
 	state: GameState,
 	deathType: DeathType,
 ): GameState {
+	// Kirk ending exists outside the normal 6 — never tracked in unlockedEndings
+	const nextUnlocked =
+		deathType === DeathType.KIRK
+			? state.unlockedEndings
+			: addUnlockedEndingIfMissing(state.unlockedEndings, deathType);
 	return {
 		...state,
 		stage: GameStage.GAME_OVER,
 		deathType,
 		deathReason: DEATH_ENDINGS[deathType].description,
-		unlockedEndings: addUnlockedEndingIfMissing(
-			state.unlockedEndings,
-			deathType,
-		),
+		unlockedEndings: nextUnlocked,
 	};
 }
 
@@ -315,6 +321,10 @@ export function gameReducer(state: GameState, action: GameAction): GameState {
 			);
 
 			if (state.currentCardIndex + 1 >= cards.length) {
+				// If corruption active, trigger Kirk death instead of boss fight
+				if (state.kirkCorruptionActive) {
+					return createGameOverState(state, DeathType.KIRK);
+				}
 				return { ...state, stage: GameStage.BOSS_FIGHT, effectiveDeck: cards };
 			}
 			return {
@@ -338,6 +348,26 @@ export function gameReducer(state: GameState, action: GameAction): GameState {
 				return { ...state, stage: GameStage.SUMMARY };
 			}
 			return createGameOverState(state, DeathType.AUDIT_FAILURE);
+		}
+		case "KIRK_REFUSAL": {
+			// No-op if already at max refusals
+			if (state.kirkCounter >= 2) return state;
+			const newCount = state.kirkCounter + 1;
+			if (newCount >= 2) {
+				// Second refusal: activate corruption, inject corrupted cards
+				const currentDeck =
+					state.effectiveDeck ?? (state.role ? ROLE_CARDS[state.role] : []);
+				const deckCopy = [...currentDeck];
+				// Splice kirk cards after current card index
+				deckCopy.splice(state.currentCardIndex + 1, 0, ...KIRK_CORRUPTED_CARDS);
+				return {
+					...state,
+					kirkCounter: newCount,
+					kirkCorruptionActive: true,
+					effectiveDeck: deckCopy,
+				};
+			}
+			return { ...state, kirkCounter: newCount };
 		}
 		case "RESET": {
 			return {

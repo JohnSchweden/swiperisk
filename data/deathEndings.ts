@@ -46,4 +46,10 @@ export const DEATH_ENDINGS: Record<
 		icon: "fa-file-circle-xmark",
 		color: "text-purple-500",
 	},
+	[DeathType.KIRK]: {
+		title: "SIMULATION BREACH DETECTED",
+		description: "You changed the conditions of the test.",
+		icon: "fa-triangle-exclamation",
+		color: "text-cyan-400",
+	},
 };

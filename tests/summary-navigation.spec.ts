@@ -31,11 +31,8 @@ test.describe("Summary Screen - Navigation @area:gameplay", () => {
 		});
 
 		await page.reload();
-		await page.waitForSelector("button", { timeout: 10000 });
-
-		// Click Debrief Me button
 		const debriefButton = page.getByRole("button", { name: /debrief me/i });
-		await expect(debriefButton).toBeVisible();
+		await debriefButton.waitFor({ state: "visible", timeout: 10000 });
 		await debriefButton.click();
 
 		// Wait for navigation to debrief page 1
@@ -85,7 +82,9 @@ test.describe("Summary Screen - Navigation @area:gameplay", () => {
 			}, personality);
 
 			await page.reload();
-			await page.waitForSelector("button", { timeout: 10000 });
+			await page
+				.getByRole("button", { name: /debrief me/i })
+				.waitFor({ state: "visible", timeout: 10000 });
 
 			// Click Debrief Me
 			await page.getByRole("button", { name: /debrief me/i }).click();
@@ -113,7 +112,7 @@ test.describe("Summary Screen - Navigation @area:gameplay", () => {
 					heat: 50,
 					budget: 1500000,
 					personality: "ROASTER",
-					role: "PRODUCT_MANAGER",
+					role: "SOMETHING_MANAGER",
 					currentCardIndex: 10,
 					history: [],
 					deathReason: null,
@@ -126,7 +125,9 @@ test.describe("Summary Screen - Navigation @area:gameplay", () => {
 		});
 
 		await page.reload();
-		await page.waitForSelector("button", { timeout: 10000 });
+		await page
+			.getByRole("button", { name: /debrief me/i })
+			.waitFor({ state: "visible", timeout: 10000 });
 
 		// Click Debrief Me
 		await page.getByRole("button", { name: /debrief me/i }).click();
@@ -168,7 +169,9 @@ test.describe("Summary Screen - Navigation @area:gameplay", () => {
 		});
 
 		await page.reload();
-		await page.waitForSelector("button", { timeout: 10000 });
+		await page
+			.getByRole("button", { name: /debrief me/i })
+			.waitFor({ state: "visible", timeout: 10000 });
 
 		// Verify all three metrics are visible before navigation
 		await expect(page.getByText(/budget/i)).toBeVisible();

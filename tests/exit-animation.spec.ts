@@ -25,8 +25,7 @@ test.describe("Exit Animation Continuity @area:input", () => {
 		// Use shared navigation helper instead of inline setup
 		await navigateToPlayingFast(page);
 
-		// Use shared selector - use fallback since data-testid may not be added yet
-		const card = page.locator(SELECTORS.cardFallback).first();
+		const card = page.locator(SELECTORS.card).first();
 		const box = await card.boundingBox();
 		expect(box).not.toBeNull();
 
@@ -77,7 +76,7 @@ test.describe("Exit Animation Continuity @area:input", () => {
 		// Use shared navigation helper
 		await navigateToPlayingFast(page);
 
-		const card = page.locator(SELECTORS.cardFallback).first();
+		const card = page.locator(SELECTORS.card).first();
 		const box = await card.boundingBox();
 		expect(box).not.toBeNull();
 

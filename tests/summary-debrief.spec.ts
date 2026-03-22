@@ -317,7 +317,7 @@ test.describe("Summary Screen - Debrief Flow @area:gameplay", () => {
 					heat: 30,
 					budget: 2000000,
 					personality: "LOVEBOMBER",
-					role: "PRODUCT_MANAGER",
+					role: "SOMETHING_MANAGER",
 					currentCardIndex: 10,
 					history: [],
 					deathReason: null,

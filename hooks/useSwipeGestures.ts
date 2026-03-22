@@ -28,12 +28,14 @@ interface UseSwipeGesturesOptions {
 	enabled: boolean;
 	onSwipe: (direction: "LEFT" | "RIGHT") => void;
 	onBeforeSwipe?: (direction: "LEFT" | "RIGHT") => void;
+	onSwipeUp?: () => void;
 }
 
 export function useSwipeGestures({
 	enabled,
 	onSwipe,
 	onBeforeSwipe,
+	onSwipeUp,
 }: UseSwipeGesturesOptions) {
 	const [state, setState] = useState<SwipeState>({
 		offset: 0,
@@ -48,6 +50,8 @@ export function useSwipeGestures({
 	const touchStartX = useRef(0);
 	const touchStartY = useRef(0);
 	const isHorizontalSwipe = useRef(false);
+	const lastDeltaX = useRef(0);
+	const lastDeltaY = useRef(0);
 	const rafRef = useRef<number | null>(null);
 	const pendingSwipeRef = useRef<{ deltaX: number; deltaY: number } | null>(
 		null,
@@ -75,6 +79,8 @@ export function useSwipeGestures({
 			touchStartX.current = clientX;
 			touchStartY.current = clientY;
 			isHorizontalSwipe.current = false;
+			lastDeltaX.current = 0;
+			lastDeltaY.current = 0;
 			setState((prev) => ({ ...prev, isDragging: true, hasDragged: true }));
 		},
 		[enabled],
@@ -87,6 +93,8 @@ export function useSwipeGestures({
 			const deltaX = clientX - touchStartX.current;
 			const deltaY = clientY - touchStartY.current;
 
+			lastDeltaX.current = deltaX;
+			lastDeltaY.current = deltaY;
 			pendingSwipeRef.current = { deltaX, deltaY };
 
 			if (rafRef.current !== null) {
@@ -130,6 +138,9 @@ export function useSwipeGestures({
 
 		let finalOffset = state.offset;
 		let finalDirection: "LEFT" | "RIGHT" | null = state.direction;
+		// Use last tracked deltas as baseline; overridden by pending ref if present
+		let finalDeltaY = lastDeltaY.current;
+		let finalDeltaX = lastDeltaX.current;
 
 		if (rafRef.current !== null) {
 			cancelAnimationFrame(rafRef.current);
@@ -137,8 +148,10 @@ export function useSwipeGestures({
 		}
 
 		if (pendingSwipeRef.current) {
-			const { deltaX } = pendingSwipeRef.current;
+			const { deltaX, deltaY } = pendingSwipeRef.current;
 			finalOffset = deltaX;
+			finalDeltaX = deltaX;
+			finalDeltaY = deltaY;
 			if (isHorizontalSwipe.current) {
 				finalDirection = getSwipeDirectionFromDelta(
 					deltaX,
@@ -154,6 +167,33 @@ export function useSwipeGestures({
 		}
 
 		setState((prev) => ({ ...prev, isDragging: false }));
+
+		// Swipe-up detection: vertical-dominant upward gesture exceeding threshold
+		// Guard: !isHorizontalSwipe.current (not locked as horizontal)
+		// Guard: deltaY < -SWIPE_THRESHOLD (upward, negative Y)
+		// Guard: |deltaY| > |deltaX| * 1.5 (vertical dominant by 1.5x ratio)
+		if (
+			!isHorizontalSwipe.current &&
+			finalDeltaY < -SWIPE_THRESHOLD &&
+			Math.abs(finalDeltaY) > Math.abs(finalDeltaX) * 1.5
+		) {
+			onSwipeUp?.();
+			// Snap back (same as below-threshold horizontal)
+			setState((prev) => ({
+				...prev,
+				isSnappingBack: true,
+				offset: 0,
+				direction: null,
+			}));
+			if (animationTimeoutRef.current) {
+				clearTimeout(animationTimeoutRef.current);
+			}
+			animationTimeoutRef.current = setTimeout(() => {
+				setState((prev) => ({ ...prev, isSnappingBack: false }));
+				animationTimeoutRef.current = null;
+			}, 600);
+			return;
+		}
 
 		if (Math.abs(finalOffset) > SWIPE_THRESHOLD) {
 			const direction = finalOffset > 0 ? "RIGHT" : "LEFT";
@@ -196,7 +236,14 @@ export function useSwipeGestures({
 				animationTimeoutRef.current = null;
 			}, 600);
 		}
-	}, [state.isDragging, state.offset, state.direction, onSwipe, onBeforeSwipe]);
+	}, [
+		state.isDragging,
+		state.offset,
+		state.direction,
+		onSwipe,
+		onBeforeSwipe,
+		onSwipeUp,
+	]);
 
 	// Cleanup on unmount
 	useEffect(() => {

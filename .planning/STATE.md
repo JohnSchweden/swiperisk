@@ -65,3 +65,4 @@ See: .planning/PROJECT.md
 - 2026-03-16: Completed 03-04-revised-PLAN.md (UAT verification: 80+ cards approved across 10 roles)
 - 2026-03-16: Completed 03-05-revised-PLAN.md (Real-world reference system: 80+ cards with incident documentation across 10 roles)
 - 2026-03-17: Completed 03-07-PLAN.md (Heat rebalancing: scaled heat values proportionally to fines by role tier)
+- 2026-03-22: Completed 05-01-PLAN.md (Test scaffold for Phase 05: 7 test files, penalty balance ratio, voice heuristics, distribution matrix)

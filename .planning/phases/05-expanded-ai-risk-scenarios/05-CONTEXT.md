@@ -55,6 +55,52 @@ Integrate all new incidents into existing role card decks. No new roles, no visu
 - Exact fine/heat/hype/crew penalty values for each outcome
 - Sourcing URLs and reference links
 
+### Card Design Checklist (Single Source of Truth)
+
+All Phase 05 cards MUST satisfy every item. Plans reference this section instead of duplicating it.
+
+1. **Both outcomes carry penalties** — No 0/0/0 escape route. At least one of {hype, heat, fine} non-zero on EACH outcome.
+2. **Penalty balance** — `Math.abs(totalPenaltyLeft) / Math.abs(totalPenaltyRight)` within 0.3–3.0 range. Lopsided cards aren't dilemmas.
+3. **Authentic incident** — Sourced from documented 2024-2025 case. Cite source in comment if available.
+4. **Role-specific context** — Card text mentions role-specific consequences (board liability, model accuracy, team morale, etc.). Not generic.
+5. **Lesson explains tradeoff** — Not prescriptive ("always do X"). Reflects complexity of the choice made.
+6. **3-personality voices** — All present, distinct, outcome-specific:
+   - **ROASTER:** Cynical, sarcastic, critical. Highlights cost/irony.
+   - **ZEN_MASTER:** Wisdom, acceptance, metaphorical. Long-term perspective.
+   - **LOVEBOMBER:** Enthusiastic, supportive, casual. Optimistic even on bad outcomes.
+7. **Feedback is outcome-specific** — Left feedback ≠ right feedback for the same personality.
+8. **Feedback length** — 20–300 characters per feedback string.
+9. **Card ID format** — `{category}_{role_context}_{number}` (e.g., `prompt_injection_cso_1`)
+10. **No duplicate IDs** — Unique across all phases and all deck files.
+
+### Penalty Ranges (Phase 03 baseline)
+- **hype:** -50 to +100 (market perception, morale)
+- **heat:** 0 to +100 (regulatory, internal pressure)
+- **fine:** $0 to $50M (legal liability)
+- Category-specific: Prompt injection $1-3M, Model drift $2-5M, Explainability $5-10M, Shadow AI $500k-2M, Copyright $2-5M
+
+### Target Deck Files (10 actual role decks from Phase 03)
+
+Phase 05 cards go into these files — NOT the legacy deck files:
+```
+data/cards/chief-something-officer.ts   (CHIEF_SOMETHING_OFFICER_CARDS)
+data/cards/head-of-something.ts         (HEAD_OF_SOMETHING_CARDS)
+data/cards/something-manager.ts         (SOMETHING_MANAGER_CARDS)
+data/cards/tech-ai-consultant.ts        (TECH_AI_CONSULTANT_CARDS)
+data/cards/data-scientist.ts            (DATA_SCIENTIST_CARDS)
+data/cards/software-architect.ts        (SOFTWARE_ARCHITECT_CARDS)
+data/cards/software-engineer.ts         (SOFTWARE_ENGINEER_CARDS)
+data/cards/vibe-coder.ts                (VIBE_CODER_CARDS)
+data/cards/vibe-engineer.ts             (VIBE_ENGINEER_CARDS)
+data/cards/agentic-engineer.ts          (AGENTIC_ENGINEER_CARDS)
+```
+
+⚠️ Legacy files (finance.ts, marketing.ts, etc.) are NOT used by ROLE_CARDS. Do not add Phase 05 cards there.
+
+### Card Counts (standardized)
+- 2 cards per category × 10 roles × 5 categories = **100 cards total**
+- Per plan: 05-02 (20 PI + 20 MD = 40), 05-03 (20 XAI + 20 SAI = 40), 05-04 (20 SD = 20)
+
 </decisions>
 
 <specifics>

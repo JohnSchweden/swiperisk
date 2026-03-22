@@ -154,34 +154,37 @@ Make the simulation feel real through:
 
 ### Phase 05: Expanded AI Risk Scenarios
 
-**Goal:** Cover more day-to-day AI risk incidents people actually face
+**Goal:** Cover more day-to-day AI risk incidents people actually face + audit archetypes/endings
 **Depends on:** Phase 03
-**Plans:** 5 plans (✓ Planning complete)
+**Plans:** 6 plans (✓ Planning complete)
 
 Plans:
-- [ ] 05-01-PLAN.md — Test scaffold: incident sourcing, no-win validation, personality feedback, integration ✓
-- [ ] 05-02-PLAN.md — Prompt injection + model drift cards (40 total: 2 per category × 5 decks) ✓
-- [ ] 05-03-PLAN.md — Explainability + shadow AI cards (40 total: 2 per category × 5 decks) ✓
-- [ ] 05-04-PLAN.md — Synthetic data/copyright cards + distribution verification (10 total, 50+ complete) ✓
+- [ ] 05-01-PLAN.md — Test scaffold: 7 test files (incidents, integration, penalties, voice, dedup, distribution matrix, Phase 03 snapshot) ✓
+- [ ] 05-02-PLAN.md — Prompt injection + model drift cards (40 total: 2 per category × 10 decks) + deck.ts verification ✓
+- [ ] 05-03-PLAN.md — Explainability + shadow AI cards (40 total: 2 per category × 10 decks) ✓
+- [ ] 05-04-PLAN.md — Synthetic data/copyright cards + full distribution verification (20 total, 100 complete) ✓
 - [ ] 05-05-PLAN.md — UAT checkpoint: human gameplay verification ✓
+- [ ] 05-06-PLAN.md — Archetype & death ending audit + new personality proposals (document-only) ✓
 
 **Details:**
-Add 50+ new incident cards across 5 categories:
-- **Prompt injection:** Security vs. usability tradeoff (GitHub Copilot RCE, financial jailbreak, e-commerce manipulation)
-- **Model drift:** Accuracy vs. resource cost (retraining decisions, bias, stale models)
-- **Explainability:** Audit risk vs. deployment speed (EU AI Act, black box governance, regulatory deadlines)
-- **Shadow AI:** Innovation vs. governance (unauthorized Claude/ChatGPT, vendor governance, team morale)
-- **Synthetic data/copyright:** Cost vs. legal exposure (training data provenance, lawsuit settlement)
+Add **100 new incident cards** across 5 categories and **10 role-specific decks** (NOT legacy alias files):
+- **Prompt injection:** 2 per role × 10 roles = 20 cards (GitHub Copilot RCE, financial jailbreak, e-commerce manipulation)
+- **Model drift:** 2 per role × 10 roles = 20 cards (retraining decisions, bias, stale models)
+- **Explainability:** 2 per role × 10 roles = 20 cards (EU AI Act, black box governance, regulatory deadlines)
+- **Shadow AI:** 2 per role × 10 roles = 20 cards (unauthorized Claude/ChatGPT, vendor governance, team morale)
+- **Synthetic data/copyright:** 2 per role × 10 roles = 20 cards (training data provenance, lawsuit settlement)
 
-All incidents sourced from documented 2024-2025 cases. Role-specific framing (same incident, different organizational lens). 3-personality feedback. ~20% time pressure.
+Plus: Audit of 6 death endings and 3 personalities against 10 roles, with proposals for new personalities (implementation deferred to future phase).
+
+All incidents sourced from documented 2024-2025 cases. Role-specific framing (same incident, different organizational lens). 3-personality feedback. ~20% time pressure. Card Design Checklist in 05-CONTEXT.md.
 
 **Requirements:**
-- RISK-01: 2+ prompt injection incidents per role (20 cards)
-- RISK-02: 2+ model drift / retraining incidents per role (20 cards)
-- RISK-03: 2+ explainability / black box incidents per role (20 cards)
-- RISK-04: 2+ shadow AI incidents per role (20 cards)
-- RISK-05: 2+ synthetic data / copyright incidents per role (10 cards)
-- RISK-06: Integrate into existing role card decks (all 10 new roles have 10+ cards each)
+- RISK-01: 2+ prompt injection incidents per role (20 cards across 10 decks)
+- RISK-02: 2+ model drift / retraining incidents per role (20 cards across 10 decks)
+- RISK-03: 2+ explainability / black box incidents per role (20 cards across 10 decks)
+- RISK-04: 2+ shadow AI incidents per role (20 cards across 10 decks)
+- RISK-05: 2+ synthetic data / copyright incidents per role (20 cards across 10 decks)
+- RISK-06: Integrate into existing role card decks (all 10 roles have 18+ cards each)
 
 ### Phase 06: Debrief & Replay System
 
@@ -424,7 +427,7 @@ Integrate images into UI:
 | 02 | New Role Set (Impact Zones) | v1.2 | Complete |
 | 03 | 9/9 | Complete    | 2026-03-17 |
 | 04 | Immersive Pressure Effects | v1.2 | Complete (9/10) |
-| 05 | Expanded AI Risk Scenarios | v1.2 | Planned (5 plans) |
+| 05 | Expanded AI Risk Scenarios | v1.2 | Planned (6 plans) |
 | 06 | 19/19 | Complete    | 2026-03-16 |
 | 07 | Kirk Easter Egg | v1.2 | Not started |
 | 08 | Kobayashi Maru Framing (deferred) | v1.2 | Deferred |

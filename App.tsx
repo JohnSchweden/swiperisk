@@ -46,12 +46,14 @@ import {
 	useVoicePlayback,
 } from "./hooks";
 import { shuffleDeck } from "./lib/deck";
+import { playKirkCrashSound, playKirkGlitchTone } from "./services/kirkAudio";
 import {
+	getCountdownContext,
 	playCountdownBeep,
 	playCountdownStart,
 	prepareCountdownAudio,
 } from "./services/pressureAudio";
-import { type Card, GameStage, type RoleType } from "./types";
+import { type Card, DeathType, GameStage, type RoleType } from "./types";
 import { triggerHaptic } from "./utils/haptic";
 
 /**
@@ -155,6 +157,9 @@ const App: React.FC = () => {
 	// Card animation state
 	const [isFirstCard, setIsFirstCard] = useState(true);
 	const cardRef = useRef<HTMLDivElement>(null);
+
+	// Kirk Easter Egg: game container ref for CSS class manipulation
+	const gameContainerRef = useRef<HTMLDivElement>(null);
 
 	// Prevent duplicate choice handling (user click + timer race)
 	const isChoiceLockedRef = useRef(false);
@@ -350,10 +355,35 @@ const App: React.FC = () => {
 		if (pressure.isCritical || pressure.isUrgent) triggerHaptic();
 	}, [pressure.isCritical, pressure.isUrgent]);
 
+	// Kirk Easter Egg: swipe-up triggers KIRK_REFUSAL with audio/visual effects
+	const handleSwipeUp = useCallback(() => {
+		if (state.stage !== GameStage.PLAYING) return;
+		const currentKirkCounter = state.kirkCounter;
+		dispatch({ type: "KIRK_REFUSAL" });
+		const ctx = getCountdownContext();
+		if (currentKirkCounter === 0) {
+			// First refusal: brief flicker + subtle glitch tone
+			if (ctx) playKirkGlitchTone(ctx);
+			const el = gameContainerRef.current;
+			if (el) {
+				el.classList.add("kirk-flicker");
+				setTimeout(() => el.classList.remove("kirk-flicker"), 150);
+			}
+		} else if (currentKirkCounter === 1) {
+			// Second refusal: crash sound + persistent corruption
+			if (ctx) playKirkCrashSound(ctx);
+			const el = gameContainerRef.current;
+			if (el) {
+				el.classList.add("kirk-corrupted");
+			}
+		}
+	}, [state.stage, state.kirkCounter, dispatch]);
+
 	const swipe = useSwipeGestures({
 		enabled: state.stage === GameStage.PLAYING && !feedbackOverlay,
 		onSwipe: handleChoice,
 		onBeforeSwipe: triggerSwipeHaptic,
+		onSwipeUp: handleSwipeUp,
 	});
 
 	// Handle next incident (dismiss feedback and move to next card)
@@ -527,6 +557,22 @@ const App: React.FC = () => {
 		}
 	};
 
+	// Kirk Easter Egg: keep kirk-corrupted class persistent through Kirk debrief,
+	// remove on RESET (handled by watching stage transitions back to INTRO)
+	// biome-ignore lint/correctness/useExhaustiveDependencies: intentionally tracks kirk corruption state
+	useEffect(() => {
+		const el = gameContainerRef.current;
+		if (!el) return;
+		const isKirkPath =
+			state.kirkCorruptionActive || state.deathType === DeathType.KIRK;
+		if (isKirkPath) {
+			el.classList.add("kirk-corrupted");
+		} else {
+			el.classList.remove("kirk-corrupted");
+			el.classList.remove("kirk-flicker");
+		}
+	}, [state.kirkCorruptionActive, state.deathType, state.stage]);
+
 	const isPlayingStage = state.stage === GameStage.PLAYING;
 
 	return (
@@ -547,7 +593,11 @@ const App: React.FC = () => {
 					onBgmSkip: skipBgmTrack,
 				}}
 			>
-				<div className="relative z-10 min-h-[100dvh]" key={state.stage}>
+				<div
+					ref={gameContainerRef}
+					className="relative z-10 min-h-[100dvh]"
+					key={state.stage}
+				>
 					<div className="stage-transition">{renderStage()}</div>
 				</div>
 				{isPlayingStage && feedbackOverlay && state.personality && (

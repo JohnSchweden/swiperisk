@@ -54,3 +54,6 @@ Patterns to prevent repeat mistakes. Update after corrections from the user.
 - [RULE] — Never use `.click({ force: true })` in tests; it bypasses visibility/interactivity checks and masks real bugs. Use `.dispatchEvent("click")` or regular `.click()` to ensure tests validate actual user-interaction behavior.
 - [RULE] — Drag gesture distance is signed (negative = left, positive = right). When creating drag helpers, verify the sign matches the intended direction; wrong sign won't error but the gesture fails silently.
 - [RULE] — Fast-path navigations must not skip critical state transitions (INITIALIZING, shuffling, etc.) even for speed. Verify all necessary state machine steps still run; shortcuts can hide logic bugs that only surface in full flow.
+
+<!-- Captured 2026-03-22 via post-commit analysis -->
+- [RULE] In Playwright tests, wait for the specific element directly with `.waitFor({ state: "visible" })` instead of using `page.waitForSelector()` for a generic selector, then asserting the specific element is visible separately — The generic wait may resolve for the wrong element, causing race conditions or masking failures. Targeting the specific element upfront ensures the test waits for the right thing.

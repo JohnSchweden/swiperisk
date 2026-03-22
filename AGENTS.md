@@ -97,48 +97,25 @@ Follow `.cursor/references/git-integration.md` for commit points, message format
 See `tasks/testing-runbook.md` for tiered test lanes (smoke, area, visual, slow).
 
 ### 1. Automated Tests (Preferred)
-- Run `bun run test:smoke` for fast critical checks (~15s)
-- Run `bun run test:area:<domain>` for targeted area (gameplay, input, layout, boss, audio)
-- Run `bunx playwright test` to execute all tests
-- For specific tests: `bunx playwright test tests/[test-name].spec.ts`
+- `bun run test:smoke` — fast critical checks (~15s)
+- `bun run test:area:<domain>` — targeted area (gameplay, input, layout, boss, audio)
+- `bunx playwright test tests/[test-name].spec.ts` — specific test
 - Fix any failing tests before committing
 
-### 2. Browser Verification (UI Changes)
-When you modify UI, interactions, or visual elements:
+### 2. Tool Selection — Pick the FIRST Match
 
-**Using agent-browser:**
-1. Start dev server: `bun dev` (runs on https://localhost:3000)
-2. `agent-browser --ignore-https-errors open https://localhost:3000`
-   - NOTE: `--ignore-https-errors` is REQUIRED for self-signed SSL certificates
-   - If daemon already running: `agent-browser close` first, then reopen with flag
-3. `agent-browser snapshot -i` to see interactive elements
-4. Test the specific feature you changed (click, swipe, fill forms, etc.)
-5. `agent-browser screenshot` to capture evidence of working state
+| Task | Tool |
+|------|------|
+| Game state/logic (stage transitions, stats, card flow, boss fight) | **WebMCP** via `chrome-devtools-mcp` |
+| Visual/layout (CSS, rendering, component visibility) | **agent-browser** or **playwright-cli** |
+| Regression testing after any change | **Playwright tests** (`bun run test:smoke`) |
 
-**Using playwright-cli:**
-1. Start dev server: `bun dev`
-2. `playwright-cli open http://localhost:3000`
-3. `playwright-cli snapshot` to see elements
-4. Interact with changed features using `click`, `fill`, `press`, etc.
-5. `playwright-cli screenshot` to verify
-6. `playwright-cli close` when done
+**Prefer WebMCP for game logic** — direct React function calls, zero DOM flakiness, structured state. Fall back to DOM tools only for visual verification. Never use WebMCP inside `.spec.ts` files.
 
-### 3. When to Use Each Method
-- **Playwright tests**: Always run after changes to verify nothing broke
-- **agent-browser**: Quick interactive verification, exploratory testing
-- **playwright-cli**: Precise control, debugging specific interactions
+### 3. WebMCP Tools (Dev Server Required)
+10 tools registered via `navigator.modelContext`: `get_game_state`, `get_current_screen`, `start_game`, `select_personality`, `select_role`, `swipe_card`, `dismiss_feedback`, `answer_boss_question`, `advance_boss`, `restart_game`.
 
-### 4. WebMCP Tools (Game Logic Verification)
-When the dev server is running, 10 MCP tools are registered in the browser via `navigator.modelContext` (polyfilled by `@mcp-b/global`). Use `chrome-devtools-mcp` (configured in `.cursor/mcp.json` and `~/.claude/mcp_servers.json`) to call them.
-
-Core tools: `get_game_state`, `get_current_screen`, `start_game`, `select_personality`, `select_role`, `swipe_card`, `dismiss_feedback`, `answer_boss_question`, `advance_boss`, `restart_game`.
-
-See `.cursor/skills/webmcp-game/SKILL.md` for full tool reference, stage guards, and example playthrough.
-
-Use WebMCP when:
-- You need to inspect or control game state directly from the AI
-- Running an automated playthrough to test card/boss fight logic
-- Faster than DOM-level browser automation for game-specific flows
+Full reference: `.cursor/skills/webmcp-game/SKILL.md`
 
 **DO NOT commit without verification. If tests fail or browser verification shows issues, fix them first.**
 
@@ -146,8 +123,10 @@ Use WebMCP when:
 
 Use `agent-browser` for web automation. Run `agent-browser --help` for all commands.
 
+**IMPORTANT**: Always use `--ignore-https-errors` when opening localhost (self-signed SSL). If daemon is already running without it: `agent-browser close` first, then reopen with the flag.
+
 Core workflow:
-1. `agent-browser open <url>` - Navigate to page
+1. `agent-browser --ignore-https-errors open https://localhost:3000`
 2. `agent-browser snapshot -i` - Get interactive elements with refs (@e1, @e2)
 3. `agent-browser click @e1` / `fill @e2 "text"` - Interact using refs
 4. Re-snapshot after page changes

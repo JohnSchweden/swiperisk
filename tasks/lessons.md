@@ -20,6 +20,7 @@ Patterns to prevent repeat mistakes. Update after corrections from the user.
 ## Code & Architecture
 
 <!-- Patterns about implementation, design decisions, common bugs -->
+- [RULE] When condensing AGENTS.md sections, never remove operational details (flags, workarounds, error-prevention notes) — move them to the appropriate section rather than dropping them. These notes exist because something broke without them.
 
 ## Testing & Verification
 
@@ -42,3 +43,14 @@ Patterns to prevent repeat mistakes. Update after corrections from the user.
 
 <!-- Captured 2026-03-17 via post-commit analysis -->
 - [RULE] UAT evidence must cite observed user-facing behavior from testing, not code file references or implementation details — Code existing doesn't prove it works; only browser verification confirms actual behavior matches expected results
+
+<!-- Captured 2026-03-17 via post-commit analysis -->
+- [RULE] When multiple test runners share a tests/ directory, use explicit `testIgnore` patterns to prevent cross-runner test discovery — Playwright will pick up files meant for Vitest unless explicitly excluded, wasting time and risking false failures
+
+<!-- Captured 2026-03-17 via post-commit analysis -->
+- [RULE] — Card swipe tests need `{ force: true }` on clicks and 500ms+ timeouts to account for CSS animation completion time. Card animations make elements briefly unclickable and transitions need full duration to complete; shorter timeouts and actionability checks cause flakiness.
+
+<!-- Captured 2026-03-17 via post-commit analysis -->
+- [RULE] — Never use `.click({ force: true })` in tests; it bypasses visibility/interactivity checks and masks real bugs. Use `.dispatchEvent("click")` or regular `.click()` to ensure tests validate actual user-interaction behavior.
+- [RULE] — Drag gesture distance is signed (negative = left, positive = right). When creating drag helpers, verify the sign matches the intended direction; wrong sign won't error but the gesture fails silently.
+- [RULE] — Fast-path navigations must not skip critical state transitions (INITIALIZING, shuffling, etc.) even for speed. Verify all necessary state machine steps still run; shortcuts can hide logic bugs that only surface in full flow.

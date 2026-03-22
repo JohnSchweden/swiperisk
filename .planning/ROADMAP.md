@@ -156,15 +156,15 @@ Make the simulation feel real through:
 
 **Goal:** Cover more day-to-day AI risk incidents people actually face + audit archetypes/endings
 **Depends on:** Phase 03
-**Plans:** 6/6 plans executed (Phase 05-06 audit complete)
+**Plans:** 6/6 plans complete (100 cards across 5 categories, distribution matrix green)
 
 Plans:
-- [ ] 05-01-PLAN.md — Test scaffold: 7 test files (incidents, integration, penalties, voice, dedup, distribution matrix, Phase 03 snapshot) ✓
-- [ ] 05-02-PLAN.md — Prompt injection + model drift cards (40 total: 2 per category × 10 decks) + deck.ts verification ✓
-- [ ] 05-03-PLAN.md — Explainability + shadow AI cards (40 total: 2 per category × 10 decks) ✓
-- [ ] 05-04-PLAN.md — Synthetic data/copyright cards + full distribution verification (20 total, 100 complete) ✓
-- [ ] 05-05-PLAN.md — UAT checkpoint: human gameplay verification ✓
-- [ ] 05-06-PLAN.md — Archetype & death ending audit + new personality proposals (document-only) ✓
+- [x] 05-01-PLAN.md — Test scaffold: 7 test files (incidents, integration, penalties, voice, dedup, distribution matrix, Phase 03 snapshot) ✓
+- [x] 05-02-PLAN.md — Prompt injection + model drift cards (40 total: 2 per category × 10 decks) + deck.ts verification ✓
+- [x] 05-03-PLAN.md — Explainability + shadow AI cards (40 total: 2 per category × 10 decks) ✓
+- [x] 05-04-PLAN.md — Synthetic data/copyright cards + full distribution verification (20 total, 100 complete) ✓
+- [ ] 05-05-PLAN.md — UAT checkpoint: human gameplay verification
+- [x] 05-06-PLAN.md — Archetype & death ending audit + new personality proposals (document-only) ✓
 
 **Details:**
 Add **100 new incident cards** across 5 categories and **10 role-specific decks** (NOT legacy alias files):

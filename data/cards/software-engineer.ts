@@ -643,4 +643,300 @@ export const SOFTWARE_ENGINEER_CARDS: Card[] = [
 			},
 		},
 	},
+	// Phase 05-03: Explainability / Black Box Cards
+	{
+		id: "explainability_se_1",
+		source: AppSource.MEETING,
+		sender: "TECH_LEAD",
+		context: "CODE_REVIEW",
+		storyContext:
+			"Code review: Your ML integration is a black-box call with no logging, no explanation of decisions, no audit trail. Tech lead wants explainability added before merge. Add logging (2 days delay) or ship as-is?",
+		text: "Add explainability logging (delay) or ship black-box (fast, opaque)?",
+		realWorldReference: {
+			incident: "Black Box API Logging Failures",
+			date: "2023-2024",
+			outcome:
+				"Systems with no AI decision logging couldn't debug failures or prove compliance. Companies retrofitted logging at 5x the cost.",
+		},
+		onRight: {
+			label: "Ship as-is",
+			hype: 30,
+			heat: 18,
+			fine: 8000000,
+			violation: "Observability Gap + Debug Risk",
+			lesson:
+				"Shipping black-box integrations without logging creates debugging and compliance nightmares.",
+			feedback: {
+				[PersonalityType.ROASTER]:
+					"Works now, mystery later. Hope nothing breaks. (It will.)",
+				[PersonalityType.ZEN_MASTER]:
+					"The path untracked leads where the walker cannot find.",
+				[PersonalityType.LOVEBOMBER]:
+					"It WORKS, bestie!! We can ADD logging LATER!!",
+			},
+		},
+		onLeft: {
+			label: "Add explainability logging",
+			hype: -20,
+			heat: 8,
+			fine: 500000,
+			violation: "None - Observable code",
+			lesson:
+				"Explainability logging enables debugging and compliance despite delays.",
+			feedback: {
+				[PersonalityType.ROASTER]:
+					"2 days of logging. But you can actually debug it. Professional move.",
+				[PersonalityType.ZEN_MASTER]:
+					"The step tracked can be retraced; the step untracked is lost.",
+				[PersonalityType.LOVEBOMBER]:
+					"LOGGING is good, bestie!! We can SEE what's happening!!",
+			},
+		},
+	},
+	{
+		id: "explainability_se_2",
+		source: AppSource.EMAIL,
+		sender: "PRODUCT_MANAGER",
+		context: "FEATURE_IMPLEMENTATION",
+		storyContext:
+			"Feature requirement: AI recommendation with reasoning displayed to user. Simple implementation: just the result. Complete implementation: result + confidence + reasoning. Complete takes 3 extra days.",
+		text: "Implement with reasoning (transparent, slow) or result-only (fast, opaque)?",
+		realWorldReference: {
+			incident: "Recommendation System Transparency",
+			date: "2023",
+			outcome:
+				"Users trusted recommendations 40% more when reasoning was shown. Opaque systems faced user rejection and regulatory scrutiny.",
+		},
+		onRight: {
+			label: "Result-only",
+			hype: 35,
+			heat: 16,
+			fine: 3000000,
+			violation: "Transparency Gap + User Trust Risk",
+			lesson:
+				"Opaque AI features create user distrust and regulatory exposure.",
+			feedback: {
+				[PersonalityType.ROASTER]:
+					"'Trust the AI!' said every opaque system before user rejection.",
+				[PersonalityType.ZEN_MASTER]:
+					"The answer without reason invites suspicion.",
+				[PersonalityType.LOVEBOMBER]:
+					"SO much FASTER, bestie!! Users don't NEED to know!!",
+			},
+		},
+		onLeft: {
+			label: "Implement with reasoning",
+			hype: -25,
+			heat: 6,
+			fine: 0,
+			violation: "None - Transparent implementation",
+			lesson:
+				"Explainable AI features build user trust and regulatory compliance.",
+			feedback: {
+				[PersonalityType.ROASTER]:
+					"3 days for transparency. Users actually trust it. Worth it.",
+				[PersonalityType.ZEN_MASTER]:
+					"The reason shared creates trust that the result alone cannot.",
+				[PersonalityType.LOVEBOMBER]:
+					"Users will LOVE the transparency, bestie!! Trust MATTERS!!",
+			},
+		},
+	},
+	// Phase 05-03: Shadow AI Cards
+	{
+		id: "shadow_ai_se_1",
+		source: AppSource.SLACK,
+		sender: "SENIOR_ENGINEER",
+		context: "TOOL_RECOMMENDATION",
+		storyContext:
+			"Senior engineer recommends unauthorized AI code review tool. It's better than the approved one but sends code to external servers. No security review, no DPA. Use it (better quality, risk) or stick to approved (slower, safe)?",
+		text: "Use unauthorized tool (quality) or approved tool (compliance)?",
+		realWorldReference: {
+			incident: "78% Shadow AI in Engineering",
+			date: "2024",
+			outcome:
+				"Study found 78% of developers used unauthorized AI tools. Many tools had data exfiltration risks, sending proprietary code to external servers.",
+		},
+		onRight: {
+			label: "Use unauthorized tool",
+			hype: 40,
+			heat: 16,
+			fine: 6000000,
+			violation: "Shadow AI + Data Exfiltration Risk",
+			lesson:
+				"Unauthorized AI tools may exfiltrate proprietary code to external servers.",
+			feedback: {
+				[PersonalityType.ROASTER]:
+					"Better reviews. Your code in someone's cloud. Trade-off!",
+				[PersonalityType.ZEN_MASTER]:
+					"The tool that sends your work elsewhere serves not only you.",
+				[PersonalityType.LOVEBOMBER]:
+					"SO much BETTER, bestie!! Reviews are AMAZING!!",
+			},
+		},
+		onLeft: {
+			label: "Stick to approved",
+			hype: -20,
+			heat: 5,
+			fine: 0,
+			violation: "None - Secure tooling",
+			lesson: "Approved tools keep proprietary code internal and secure.",
+			feedback: {
+				[PersonalityType.ROASTER]:
+					"Worse reviews. Code stays internal. Security happy.",
+				[PersonalityType.ZEN_MASTER]:
+					"The trusted tool may be slower but keeps what is yours.",
+				[PersonalityType.LOVEBOMBER]:
+					"Safe is GOOD, bestie!! Our CODE stays SAFE!!",
+			},
+		},
+	},
+	{
+		id: "shadow_ai_se_2",
+		source: AppSource.MEETING,
+		sender: "DEV_MANAGER",
+		context: "TEAM_POLICY",
+		storyContext:
+			"Half your team uses unauthorized AI coding assistants. They're 2x faster than teammates using approved tools. Manager wants you to enforce policy (slow down fast devs) or allow it (uneven playing field, security risk)?",
+		text: "Enforce policy (slow down fast devs) or allow shadow tools (uneven, risky)?",
+		realWorldReference: {
+			incident: "Shadow AI Team Disparity",
+			date: "2024",
+			outcome:
+				"Teams with partial shadow AI adoption faced productivity disparity and security gaps. Enforcement caused resentment; allowance created compliance issues.",
+		},
+		onRight: {
+			label: "Allow shadow tools",
+			hype: 45,
+			heat: 22,
+			fine: 10000000,
+			violation: "Policy Violation + Security Inconsistency",
+			lesson:
+				"Allowing selective shadow tool use creates security gaps and team inequity.",
+			feedback: {
+				[PersonalityType.ROASTER]:
+					"Some devs 2x faster. Some code in random clouds. Fair? No.",
+				[PersonalityType.ZEN_MASTER]:
+					"The rule applied to some but not all creates division.",
+				[PersonalityType.LOVEBOMBER]:
+					"Productivity is AMAZING, bestie!! Let them USE what works!!",
+			},
+		},
+		onLeft: {
+			label: "Enforce policy",
+			hype: -25,
+			heat: 14,
+			fine: 3000000,
+			violation: "None - Policy enforcement",
+			lesson:
+				"Enforcing policy maintains security parity despite slowing some team members.",
+			feedback: {
+				[PersonalityType.ROASTER]:
+					"Fast devs slowed. But everyone's secure. Policy holds.",
+				[PersonalityType.ZEN_MASTER]:
+					"The rule upheld preserves what exception would erode.",
+				[PersonalityType.LOVEBOMBER]:
+					"FAIRNESS matters, bestie!! Same rules for EVERYONE!!",
+			},
+		},
+	},
+	// Phase 05-04: Synthetic Data / Copyright Cards
+	{
+		id: "synthetic_data_se_1",
+		source: AppSource.EMAIL,
+		sender: "CODE_SCANNER",
+		context: "CODE_LICENSING",
+		storyContext:
+			"AI code assistant generated a module that looks suspiciously like GPL-licensed code from GitHub. Scanner flags potential license violation. Use it (risky) or rewrite (safe, 2 days work)?",
+		text: "Use AI-generated code (GPL risk) or rewrite from scratch (time required)?",
+		realWorldReference: {
+			incident: "GitHub Copilot GPL Litigation",
+			date: "2021-2023",
+			outcome:
+				"Lawsuit alleged Copilot reproduced GPL code without attribution. Courts grappling with AI-generated code copyright status.",
+		},
+		onRight: {
+			label: "Use the AI code",
+			hype: 40,
+			heat: 17,
+			fine: 6000000,
+			violation: "GPL Violation + License Contamination",
+			lesson:
+				"AI may reproduce licensed code verbatim, creating copyright exposure for the entire codebase.",
+			feedback: {
+				[PersonalityType.ROASTER]:
+					"AI plagiarized. You ship it. Your whole codebase is now GPL. Oops.",
+				[PersonalityType.ZEN_MASTER]:
+					"Words borrowed without permission carry the weight of their origin.",
+				[PersonalityType.LOVEBOMBER]:
+					"It's just ONE module, bestie!! Nobody will NOTICE!!",
+			},
+		},
+		onLeft: {
+			label: "Rewrite from scratch",
+			hype: -30,
+			heat: 5,
+			fine: 0,
+			violation: "None - Clean implementation",
+			lesson:
+				"Rewriting flagged code eliminates copyright risk and ensures clean IP.",
+			feedback: {
+				[PersonalityType.ROASTER]:
+					"2 days of work. But no lawsuit. Clean codebase. Worth it.",
+				[PersonalityType.ZEN_MASTER]:
+					"The words your own carry no debt to others.",
+				[PersonalityType.LOVEBOMBER]:
+					"Clean code is HAPPY code, bestie!! Our OWN work!!",
+			},
+		},
+	},
+	{
+		id: "synthetic_data_se_2",
+		source: AppSource.TERMINAL,
+		sender: "DEPENDENCY_AUDIT",
+		context: "DEPENDENCY_SOURCING",
+		storyContext:
+			"Dependency audit found AI-suggested npm packages with unclear licenses. 5 packages have no clear SPDX identifier. Remove them (breaks features) or document 'assumed MIT' (risky)?",
+		text: "Remove unclear packages (feature impact) or assume MIT license (legal risk)?",
+		realWorldReference: {
+			incident: "npm Package License Ambiguity",
+			date: "2023-2024",
+			outcome:
+				"Projects using packages with unclear licenses faced legal challenges. Companies with strict license policies avoided issues.",
+		},
+		onRight: {
+			label: "Assume MIT",
+			hype: 30,
+			heat: 18,
+			fine: 4000000,
+			violation: "License Violation Risk + IP Contamination",
+			lesson:
+				"Assuming licenses for unclear packages creates legal exposure and contamination risk.",
+			feedback: {
+				[PersonalityType.ROASTER]:
+					"'Probably fine' meets 'corporate lawsuit.' Hope you're right.",
+				[PersonalityType.ZEN_MASTER]:
+					"The assumption made in haste becomes the liability discovered in court.",
+				[PersonalityType.LOVEBOMBER]:
+					"Most packages are MIT, bestie!! STATISTICALLY safe!!",
+			},
+		},
+		onLeft: {
+			label: "Remove unclear packages",
+			hype: -25,
+			heat: 7,
+			fine: 500000,
+			violation: "None - License compliance",
+			lesson:
+				"Removing unclear dependencies preserves license compliance despite feature impact.",
+			feedback: {
+				[PersonalityType.ROASTER]:
+					"Features break. But license is clean. Find alternatives.",
+				[PersonalityType.ZEN_MASTER]:
+					"The foundation known is safer than the foundation assumed.",
+				[PersonalityType.LOVEBOMBER]:
+					"Better SAFE than SUED, bestie!! Clean dependencies ONLY!!",
+			},
+		},
+	},
 ];

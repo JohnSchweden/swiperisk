@@ -647,4 +647,300 @@ export const VIBE_ENGINEER_CARDS: Card[] = [
 			},
 		},
 	},
+	// Phase 05-03: Explainability / Black Box Cards
+	{
+		id: "explainability_ve_1",
+		source: AppSource.MEETING,
+		sender: "PERFORMANCE_ARCHITECT",
+		context: "MONITORING_DESIGN",
+		storyContext:
+			"AI recommendation system has no observability. When it makes bad recommendations, you can't debug why. Add comprehensive tracing (3 weeks, 10% latency) or ship without (fast, blind)?",
+		text: "Add AI observability (slow, debuggable) or ship blind (fast, mystery)?",
+		realWorldReference: {
+			incident: "Black Box AI Debugging Failures",
+			date: "2023-2024",
+			outcome:
+				"Systems without AI observability spent 10x longer debugging issues. One company took 6 months to find root cause of recommendation drift.",
+		},
+		onRight: {
+			label: "Ship blind",
+			hype: 40,
+			heat: 21,
+			fine: 10000000,
+			violation: "Observability Gap + Debug Risk",
+			lesson:
+				"Shipping AI systems without observability creates debugging nightmares.",
+			feedback: {
+				[PersonalityType.ROASTER]:
+					"Fast until it breaks. Then 6 months of guesswork. Smart.",
+				[PersonalityType.ZEN_MASTER]:
+					"The system unseen fails without warning.",
+				[PersonalityType.LOVEBOMBER]:
+					"10% latency is HUGE, bestie!! Ship NOW!!",
+			},
+		},
+		onLeft: {
+			label: "Add observability",
+			hype: -30,
+			heat: 11,
+			fine: 1500000,
+			violation: "None - Observable architecture",
+			lesson: "AI observability enables debugging despite latency overhead.",
+			feedback: {
+				[PersonalityType.ROASTER]:
+					"3 weeks for debugging capability. When it breaks, you'll thank yourself.",
+				[PersonalityType.ZEN_MASTER]:
+					"The window into the system reveals what darkness conceals.",
+				[PersonalityType.LOVEBOMBER]:
+					"We can SEE what's happening, bestie!! Debug POWER!!",
+			},
+		},
+	},
+	{
+		id: "explainability_ve_2",
+		source: AppSource.EMAIL,
+		sender: "SRE_TEAM",
+		context: "INCIDENT_RESPONSE",
+		storyContext:
+			"AI system caused 4-hour outage. Root cause: model decision that violated implicit constraint. No logging of why decision was made. Add decision logging (retrofit, expensive) or improve monitoring (prevent only)?",
+		text: "Retrofit decision logging (expensive, debuggable) or improve monitoring only?",
+		realWorldReference: {
+			incident: "AI Decision Opacity Outages",
+			date: "2024",
+			outcome:
+				"Companies without AI decision logging couldn't determine root causes of AI-related outages. Retrofitting cost 5x more than building it in.",
+		},
+		onRight: {
+			label: "Improve monitoring only",
+			hype: 25,
+			heat: 19,
+			fine: 8000000,
+			violation: "Debug Gap + Recurring Risk",
+			lesson:
+				"Monitoring without decision logging prevents detection but not recurrence.",
+			feedback: {
+				[PersonalityType.ROASTER]:
+					"'It happened again' meets 'still can't debug it.' Cycle continues.",
+				[PersonalityType.ZEN_MASTER]:
+					"The warning without understanding alerts but does not prevent.",
+				[PersonalityType.LOVEBOMBER]:
+					"Monitoring is ENOUGH, bestie!! We'll CATCH it next time!!",
+			},
+		},
+		onLeft: {
+			label: "Retrofit logging",
+			hype: -35,
+			heat: 9,
+			fine: 3000000,
+			violation: "None - Debuggable architecture",
+			lesson:
+				"Decision logging enables root cause analysis despite retrofit cost.",
+			feedback: {
+				[PersonalityType.ROASTER]:
+					"Expensive retrofit. But next incident is debuggable. Worth it.",
+				[PersonalityType.ZEN_MASTER]:
+					"The understanding gained prevents the repetition of pain.",
+				[PersonalityType.LOVEBOMBER]:
+					"FIXING the problem, bestie!! No more MYSTERIES!!",
+			},
+		},
+	},
+	// Phase 05-03: Shadow AI Cards
+	{
+		id: "shadow_ai_ve_1",
+		source: AppSource.MEETING,
+		sender: "INFRASTRUCTURE_LEAD",
+		context: "DEPLOYMENT_DECISION",
+		storyContext:
+			"Team wants to deploy AI-powered auto-scaling with no vendor security review. Tool promises 20% cost savings. No audit trail, no compliance certification. Deploy now (savings, risk) or wait for review (delay, safe)?",
+		text: "Deploy AI auto-scaling without review (savings) or wait for security review?",
+		realWorldReference: {
+			incident: "Unauthorized AI Infrastructure Tools",
+			date: "2024",
+			outcome:
+				"Teams deploying unvetted AI infrastructure tools faced security breaches and cost overruns. One tool had hardcoded credentials exposing entire cloud environment.",
+		},
+		onRight: {
+			label: "Deploy now",
+			hype: 50,
+			heat: 24,
+			fine: 15000000,
+			violation: "Infrastructure Risk + Security Exposure",
+			lesson:
+				"Deploying unvetted AI infrastructure creates catastrophic security exposure.",
+			feedback: {
+				[PersonalityType.ROASTER]:
+					"20% savings, 100% cloud compromise. Math checks out.",
+				[PersonalityType.ZEN_MASTER]:
+					"The foundation laid in haste reveals its cracks under weight.",
+				[PersonalityType.LOVEBOMBER]:
+					"SO much SAVINGS, bestie!! We can REVIEW it LATER!!",
+			},
+		},
+		onLeft: {
+			label: "Wait for review",
+			hype: -30,
+			heat: 10,
+			fine: 2000000,
+			violation: "None - Secure deployment",
+			lesson:
+				"Security review prevents infrastructure compromise despite savings delay.",
+			feedback: {
+				[PersonalityType.ROASTER]:
+					"Delayed savings. But no breach. Security first.",
+				[PersonalityType.ZEN_MASTER]:
+					"The patient builder creates what the hasty builder must rebuild.",
+				[PersonalityType.LOVEBOMBER]:
+					"Better SAFE than BREACHED, bestie!! Review FIRST!!",
+			},
+		},
+	},
+	{
+		id: "shadow_ai_ve_2",
+		source: AppSource.EMAIL,
+		sender: "COST_OPTIMIZATION_TEAM",
+		context: "AI_COST_TOOL",
+		storyContext:
+			"Unauthorized AI cost optimization tool discovered in production. It's saving 15% on cloud spend but has no security review, no audit access, vendor unknown. Remove immediately (lose savings) or assess while running (risk)?",
+		text: "Remove unauthorized tool (lose savings) or assess while running (security risk)?",
+		realWorldReference: {
+			incident: "Shadow AI Cost Tools",
+			date: "2024",
+			outcome:
+				"Unauthorized AI cost optimization tools often had excessive permissions and security gaps. One tool accidentally deleted production resources due to poor testing.",
+		},
+		onRight: {
+			label: "Assess while running",
+			hype: 40,
+			heat: 22,
+			fine: 12000000,
+			violation: "Ongoing Risk + Unauthorized Access",
+			lesson:
+				"Running unauthorized tools during assessment maintains security exposure.",
+			feedback: {
+				[PersonalityType.ROASTER]:
+					"'We'll assess it' as it has admin access to everything. Smart.",
+				[PersonalityType.ZEN_MASTER]:
+					"The danger acknowledged but not stopped remains the danger active.",
+				[PersonalityType.LOVEBOMBER]:
+					"15% SAVINGS, bestie!! Don't STOP what's working!!",
+			},
+		},
+		onLeft: {
+			label: "Remove immediately",
+			hype: -25,
+			heat: 12,
+			fine: 4000000,
+			violation: "None - Security first",
+			lesson:
+				"Removing unauthorized tools protects infrastructure despite cost impact.",
+			feedback: {
+				[PersonalityType.ROASTER]:
+					"Costs go up. But you're not owned by mystery vendor.",
+				[PersonalityType.ZEN_MASTER]:
+					"The gain given up for safety preserves what gain might lose.",
+				[PersonalityType.LOVEBOMBER]:
+					"Safety OVER savings, bestie!! Remove the RISK!!",
+			},
+		},
+	},
+	// Phase 05-04: Synthetic Data / Copyright Cards
+	{
+		id: "synthetic_data_ve_1",
+		source: AppSource.MEETING,
+		sender: "INFRASTRUCTURE_ARCHITECT",
+		context: "DATA_PROVENANCE_INFRASTRUCTURE",
+		storyContext:
+			"Data provenance tracking requires new infrastructure: lineage database, audit logging, metadata indexing. Adds $200K/year cost and 20% latency to data pipelines. Skip it (fast, cheap, non-compliant) or implement (slow, expensive, compliant)?",
+		text: "Implement provenance infrastructure (expensive, compliant) or skip (fast, risky)?",
+		realWorldReference: {
+			incident: "Training Data Infrastructure Costs",
+			date: "2024",
+			outcome:
+				"Companies spent $150K-$500K implementing data provenance infrastructure. Those who delayed faced mandatory retrofits at 2x cost when regulations hit.",
+		},
+		onRight: {
+			label: "Skip provenance tracking",
+			hype: 40,
+			heat: 22,
+			fine: 12000000,
+			violation: "AB 2013 Non-Compliance + Audit Failure",
+			lesson:
+				"Skipping provenance infrastructure creates compliance debt that costs more to retrofit.",
+			feedback: {
+				[PersonalityType.ROASTER]:
+					"Fast pipelines now. Compliance nightmare later. Retrofit costs 3x more.",
+				[PersonalityType.ZEN_MASTER]:
+					"The foundation skipped must be laid when the ground is harder.",
+				[PersonalityType.LOVEBOMBER]:
+					"SO much FASTER, bestie!! We'll ADD tracking LATER!!",
+			},
+		},
+		onLeft: {
+			label: "Implement provenance",
+			hype: -35,
+			heat: 12,
+			fine: 2000000,
+			violation: "None - Compliant infrastructure",
+			lesson:
+				"Provenance infrastructure enables compliance and audit readiness despite cost.",
+			feedback: {
+				[PersonalityType.ROASTER]:
+					"$200K and 20% latency. But audit-ready. Compliance sorted.",
+				[PersonalityType.ZEN_MASTER]:
+					"The path prepared for the journey serves when the journey begins.",
+				[PersonalityType.LOVEBOMBER]:
+					"Doing it RIGHT, bestie!! Clean data infrastructure!!",
+			},
+		},
+	},
+	{
+		id: "synthetic_data_ve_2",
+		source: AppSource.EMAIL,
+		sender: "COST_OPTIMIZATION_TEAM",
+		context: "COMPUTE_COST_CLEAN_DATA",
+		storyContext:
+			"Clean training data initiative: Filtering and validating all training data adds 40% compute overhead. Using raw unverified data is cheaper but has 25% probability of containing copyrighted material. Monthly compute: $100K baseline.",
+		text: "Use clean data pipeline (40% more cost) or raw data (cheaper, lawsuit risk)?",
+		realWorldReference: {
+			incident: "Clean Data Compute Overhead",
+			date: "2024",
+			outcome:
+				"Data validation and filtering added 30-50% compute overhead. But lawsuits from unverified data cost $2-5M on average. Clean data was cheaper in long run.",
+		},
+		onRight: {
+			label: "Use raw data",
+			hype: 30,
+			heat: 19,
+			fine: 5000000,
+			violation: "Copyright Risk + Cost Optimization Failure",
+			lesson:
+				"Raw data savings are consumed many times over by legal exposure when issues surface.",
+			feedback: {
+				[PersonalityType.ROASTER]:
+					"Save $40K/month, earn $5M lawsuit. The math is... not good.",
+				[PersonalityType.ZEN_MASTER]:
+					"The coin saved in false economy is spent in true penance.",
+				[PersonalityType.LOVEBOMBER]:
+					"Budget looks GREAT, bestie!! 40% SAVINGS!!",
+			},
+		},
+		onLeft: {
+			label: "Clean data pipeline",
+			hype: -30,
+			heat: 8,
+			fine: 1400000,
+			violation: "None - Verified data",
+			lesson:
+				"Clean data pipelines prevent legal issues despite compute overhead.",
+			feedback: {
+				[PersonalityType.ROASTER]:
+					"$140K/month for clean data. Lawsuit-proof. Math works.",
+				[PersonalityType.ZEN_MASTER]:
+					"The well filtered provides water without poison.",
+				[PersonalityType.LOVEBOMBER]:
+					"Clean data is WORTH it, bestie!! No lawsuit SURPRISES!!",
+			},
+		},
+	},
 ];

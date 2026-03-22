@@ -651,4 +651,301 @@ export const TECH_AI_CONSULTANT_CARDS: Card[] = [
 			},
 		},
 	},
+	// Phase 05-03: Explainability / Black Box Cards
+	{
+		id: "explainability_tac_1",
+		source: AppSource.MEETING,
+		sender: "CLIENT_COMPLIANCE_OFFICER",
+		context: "DELIVERABLE_SPECIFICATION",
+		storyContext:
+			"Client's compliance officer now requires model explainability documentation. Original SOW didn't include it. Your black-box model can't easily provide it. Retrofit will cost $150K and delay delivery 3 weeks.",
+		text: "Retrofit for explainability (your cost) or push back on out-of-scope request?",
+		realWorldReference: {
+			incident: "GDPR Right to Explanation Enforcement",
+			date: "2018-2024",
+			outcome:
+				"EU regulators increasingly required AI decision explanations. Consulting firms had to retrofit black-box systems at client expense.",
+		},
+		onRight: {
+			label: "Push back on scope",
+			hype: 15,
+			heat: 14,
+			fine: 2500000,
+			violation: "Change Order Dispute",
+			lesson:
+				"Strict scope adherence when client needs evolve damages partnership potential.",
+			feedback: {
+				[PersonalityType.ROASTER]:
+					"Technically correct. Practically relationship-ending. Choose carefully.",
+				[PersonalityType.ZEN_MASTER]:
+					"A contract that cannot bend may break the partnership.",
+				[PersonalityType.LOVEBOMBER]:
+					"Not in the SOW, bestie!! We can't work for FREE!!",
+			},
+		},
+		onLeft: {
+			label: "Retrofit for explainability",
+			hype: -35,
+			heat: 5,
+			fine: 300000,
+			violation: "None - Partnership investment",
+			lesson:
+				"Adapting to client compliance needs demonstrates partnership and wins future work.",
+			feedback: {
+				[PersonalityType.ROASTER]:
+					"Expensive goodwill. But this client will bring you 5 more.",
+				[PersonalityType.ZEN_MASTER]:
+					"Flexibility in service creates bonds that last.",
+				[PersonalityType.LOVEBOMBER]:
+					"We're being SO helpful, bestie!! Client will REFER everyone!!",
+			},
+		},
+	},
+	{
+		id: "explainability_tac_2",
+		source: AppSource.EMAIL,
+		sender: "CLIENT_CTO",
+		context: "ARCHITECTURE_DECISION",
+		storyContext:
+			"Client needs loan approval model. Neural network: 94% accuracy, black-box. Decision tree: 87% accuracy, fully explainable. Client's legal team demands explainability for regulatory defense.",
+		text: "Recommend black-box (accuracy) or explainable model (compliance)?",
+		realWorldReference: {
+			incident: "Apple Card Gender Discrimination Investigation",
+			date: "2019-2020",
+			outcome:
+				"Black-box credit algorithm couldn't explain decisions. Regulators investigated, company paid fines, overhauled system.",
+		},
+		onRight: {
+			label: "Recommend black-box",
+			hype: 45,
+			heat: 18,
+			fine: 15000000,
+			violation: "Professional Negligence + Regulatory Risk",
+			lesson:
+				"Recommending black-box models for regulated use cases creates liability for consultant.",
+			feedback: {
+				[PersonalityType.ROASTER]:
+					"Better accuracy now. Lawsuit later. Your recommendation, your liability.",
+				[PersonalityType.ZEN_MASTER]:
+					"The path you recommend that harms returns to harm the recommender.",
+				[PersonalityType.LOVEBOMBER]:
+					"94% is SO much better, bestie!! Client wants RESULTS!!",
+			},
+		},
+		onLeft: {
+			label: "Recommend explainable",
+			hype: -25,
+			heat: 6,
+			fine: 0,
+			violation: "None - Responsible recommendation",
+			lesson:
+				"Recommending explainable models for regulated environments protects both client and consultant.",
+			feedback: {
+				[PersonalityType.ROASTER]:
+					"Lower accuracy. No lawsuits. Professional integrity intact.",
+				[PersonalityType.ZEN_MASTER]:
+					"The clear recommendation serves even when the outcome is less.",
+				[PersonalityType.LOVEBOMBER]:
+					"Doing RIGHT by client, bestie!! Long-term RELATIONSHIP!!",
+			},
+		},
+	},
+	// Phase 05-03: Shadow AI Cards
+	{
+		id: "shadow_ai_tac_1",
+		source: AppSource.MEETING,
+		sender: "CLIENT_CTO",
+		context: "DELIVERABLE_INTEGRITY",
+		storyContext:
+			"Client discovered you used unauthorized AI tools to generate part of their deliverable. They're questioning your entire engagement quality. This could kill a $10M follow-on opportunity.",
+		text: "Admit to using AI tools (transparency) or minimize and deflect (risk trust)?",
+		realWorldReference: {
+			incident: "78% Shadow AI in Consulting",
+			date: "2024",
+			outcome:
+				"Study found 78% of consultants used unauthorized AI tools. Clients discovered unvetted AI-generated work, leading to contract cancellations.",
+		},
+		onRight: {
+			label: "Minimize and deflect",
+			hype: 25,
+			heat: 11,
+			fine: 5000000,
+			violation: "Professional Integrity + Client Trust",
+			lesson:
+				"Minimizing tool use discovered by client destroys credibility and future opportunities.",
+			feedback: {
+				[PersonalityType.ROASTER]:
+					"Caught with hand in cookie jar. Denying it makes it worse. Classic.",
+				[PersonalityType.ZEN_MASTER]:
+					"A truth hidden that is found becomes a lie that wounds.",
+				[PersonalityType.LOVEBOMBER]:
+					"It's NOT a big deal, bestie!! Everyone uses AI!!",
+			},
+		},
+		onLeft: {
+			label: "Admit and explain",
+			hype: -30,
+			heat: 5,
+			fine: 500000,
+			violation: "None - Transparency",
+			lesson:
+				"Transparent disclosure of tool use, when discovered, can preserve trust.",
+			feedback: {
+				[PersonalityType.ROASTER]:
+					"Busted. But honest. Client might respect the transparency. Might.",
+				[PersonalityType.ZEN_MASTER]:
+					"The truth told freely disarms suspicion better than excuses.",
+				[PersonalityType.LOVEBOMBER]:
+					"We're being HONEST, bestie!! Transparency builds TRUST!!",
+			},
+		},
+	},
+	{
+		id: "shadow_ai_tac_2",
+		source: AppSource.EMAIL,
+		sender: "PROJECT_LEAD",
+		context: "TEAM_SHADOW_AI",
+		storyContext:
+			"Your consulting team has been using Claude to draft client presentations without disclosure. Quality is higher and delivery faster. Client IT policy prohibits external AI. Your contract has no AI disclosure clause.",
+		text: "Disclose AI usage to client (risk contract) or continue quietly (violate policy)?",
+		realWorldReference: {
+			incident: "Undisclosed AI in Client Deliverables",
+			date: "2024",
+			outcome:
+				"Consultants using AI without disclosure faced contract cancellations when discovered. Clients cited material breach and misrepresentation.",
+		},
+		onRight: {
+			label: "Continue quietly",
+			hype: 40,
+			heat: 19,
+			fine: 8000000,
+			violation: "Policy Violation + Material Breach Risk",
+			lesson:
+				"Continuing undisclosed AI use violates client policy and creates contract breach exposure.",
+			feedback: {
+				[PersonalityType.ROASTER]:
+					"Better quality through cheating. Client will never find out. (They will.)",
+				[PersonalityType.ZEN_MASTER]:
+					"The gift given with hidden strings binds more than it frees.",
+				[PersonalityType.LOVEBOMBER]:
+					"Results are AMAZING, bestie!! Client is HAPPY!!",
+			},
+		},
+		onLeft: {
+			label: "Disclose to client",
+			hype: -35,
+			heat: 12,
+			fine: 2000000,
+			violation: "None - Honest disclosure",
+			lesson:
+				"Proactive disclosure of AI use demonstrates integrity even when policy is unclear.",
+			feedback: {
+				[PersonalityType.ROASTER]:
+					"Client may be annoyed. But you're not hiding anything. Professional move.",
+				[PersonalityType.ZEN_MASTER]:
+					"The honest disclosure, though it may cost, costs less than the lie discovered.",
+				[PersonalityType.LOVEBOMBER]:
+					"Being TRANSPARENT, bestie!! Ethics MATTER!!",
+			},
+		},
+	},
+	// Phase 05-04: Synthetic Data / Copyright Cards
+	{
+		id: "synthetic_data_tac_1",
+		source: AppSource.EMAIL,
+		sender: "CLIENT_LEGAL",
+		context: "CONSULTING_LIABILITY",
+		storyContext:
+			"Client discovered training data you recommended has provenance issues. They're demanding indemnification. Your contract has no IP clause. This could be a $5M consulting liability exposure.",
+		text: "Offer indemnification (huge risk) or refuse based on contract silence?",
+		realWorldReference: {
+			incident: "OpenAI Content Licensing Disputes",
+			date: "2023-2024",
+			outcome:
+				"Content creators discovered their work in training datasets without consent. Consulting firms faced liability for recommending unlicensed data sources.",
+		},
+		onRight: {
+			label: "Refuse indemnification",
+			hype: 10,
+			heat: 20,
+			fine: 15000000,
+			violation: "IP Liability + Reputation Risk",
+			lesson:
+				"Refusing IP accountability for training data destroys consulting credibility.",
+			feedback: {
+				[PersonalityType.ROASTER]:
+					"Client legal is furious. Industry will hear about this. Good luck with next RFP.",
+				[PersonalityType.ZEN_MASTER]:
+					"A builder who denies responsibility for materials builds on sand.",
+				[PersonalityType.LOVEBOMBER]:
+					"The contract doesn't SAY that, bestie!! We're legally CLEAR!!",
+			},
+		},
+		onLeft: {
+			label: "Offer indemnification",
+			hype: -60,
+			heat: 8,
+			fine: 5000000,
+			violation: "None - Good faith assumption of risk",
+			lesson:
+				"Standing behind data provenance builds trust even when contractually ambiguous.",
+			feedback: {
+				[PersonalityType.ROASTER]:
+					"Massive exposure. Massive integrity. Industry will remember which.",
+				[PersonalityType.ZEN_MASTER]:
+					"The heavy burden carried with honor weighs less than the light one shirked.",
+				[PersonalityType.LOVEBOMBER]:
+					"We're standing by our WORK, bestie!! True PARTNERSHIP!!",
+			},
+		},
+	},
+	{
+		id: "synthetic_data_tac_2",
+		source: AppSource.MEETING,
+		sender: "CLIENT_CTO",
+		context: "VENDOR_RECOMMENDATION",
+		storyContext:
+			"You recommended a training data vendor that turned out to have copyright issues. Client is facing lawsuit. They're questioning your entire engagement and demanding you cover legal costs.",
+		text: "Cover client's legal costs (admit fault) or defend vendor selection (risk relationship)?",
+		realWorldReference: {
+			incident: "Training Data Vendor Liability",
+			date: "2024",
+			outcome:
+				"Consultants who vetted vendors properly avoided liability. Those who recommended questionable vendors faced client lawsuits and reputational damage.",
+		},
+		onRight: {
+			label: "Defend vendor selection",
+			hype: 25,
+			heat: 18,
+			fine: 8000000,
+			violation: "Vendor Due Diligence Failure",
+			lesson:
+				"Defending poor vendor recommendations destroys client trust and creates legal exposure.",
+			feedback: {
+				[PersonalityType.ROASTER]:
+					"'Vendor seemed legit.' Not a legal defense. Client is furious.",
+				[PersonalityType.ZEN_MASTER]:
+					"The recommendation given in haste returns as regret.",
+				[PersonalityType.LOVEBOMBER]:
+					"We did our BEST, bestie!! Vendors are COMPLICATED!!",
+			},
+		},
+		onLeft: {
+			label: "Cover legal costs",
+			hype: -45,
+			heat: 10,
+			fine: 3000000,
+			violation: "None - Good faith resolution",
+			lesson:
+				"Taking responsibility for vendor recommendations preserves client relationships.",
+			feedback: {
+				[PersonalityType.ROASTER]:
+					"Expensive admission. But client might stay. Referrals depend on this.",
+				[PersonalityType.ZEN_MASTER]:
+					"The cost of integrity returns multiplied in trust.",
+				[PersonalityType.LOVEBOMBER]:
+					"We're making it RIGHT, bestie!! Client will RESPECT this!!",
+			},
+		},
+	},
 ];

@@ -651,4 +651,301 @@ export const HEAD_OF_SOMETHING_CARDS: Card[] = [
 			},
 		},
 	},
+	// Phase 05-03: Explainability / Black Box Cards
+	{
+		id: "explainability_hos_1",
+		source: AppSource.MEETING,
+		sender: "AUDIT_COMMITTEE",
+		context: "AUDIT_PREPARATION",
+		storyContext:
+			"Auditors demand explainability on your team's AI models. Engineering says black-box has 15% better accuracy. Both have political power. You're in the middle of a technical vs compliance war.",
+		text: "Side with engineering (better performance) or auditors (compliance)?",
+		realWorldReference: {
+			incident: "Healthcare AI Explainability Lawsuit",
+			date: "2023",
+			outcome:
+				"Hospital couldn't explain why AI denied patient care authorization. Family sued and won. Black-box AI decision-making found non-compliant with medical ethics.",
+		},
+		onRight: {
+			label: "Side with auditors",
+			hype: -15,
+			heat: 14,
+			fine: 0,
+			violation: "None - Compliance alignment",
+			lesson:
+				"Aligning with compliance protects the organization even when engineering disagrees.",
+			feedback: {
+				[PersonalityType.ROASTER]:
+					"Engineering will resent you. Auditors will forget you. Compliance win.",
+				[PersonalityType.ZEN_MASTER]:
+					"The path of compliance is rarely celebrated but often necessary.",
+				[PersonalityType.LOVEBOMBER]:
+					"We're being SO compliant, bestie!! The auditors are HAPPY!!",
+			},
+		},
+		onLeft: {
+			label: "Side with engineering",
+			hype: 20,
+			heat: 19,
+			fine: 25000000,
+			violation: "Audit Non-Compliance + Regulatory Risk",
+			lesson:
+				"Prioritizing performance over explainability creates audit failure and regulatory exposure.",
+			feedback: {
+				[PersonalityType.ROASTER]:
+					"Better accuracy now. Better fines later. Engineering owes you.",
+				[PersonalityType.ZEN_MASTER]:
+					"Power gained through compromise of principle is power built on sand.",
+				[PersonalityType.LOVEBOMBER]:
+					"Accuracy is EVERYTHING, bestie!! The numbers don't LIE!!",
+			},
+		},
+	},
+	{
+		id: "explainability_hos_2",
+		source: AppSource.EMAIL,
+		sender: "REGULATORS",
+		context: "AI_AUDIT",
+		storyContext:
+			"Regulators demand explainability documentation for your team's AI credit decisions. The model is a black-box ensemble with no interpretability. Documenting decisions retroactively will cost $3M and delay launch 3 months.",
+		text: "Refuse documentation (fight regulators) or delay launch and comply?",
+		realWorldReference: {
+			incident: "Apple Card Gender Discrimination Investigation",
+			date: "2019-2020",
+			outcome:
+				"Apple Card's black-box credit algorithm faced regulatory investigation for gender bias. Company couldn't explain decisions, paid fines, overhauled system.",
+		},
+		onRight: {
+			label: "Refuse and fight",
+			hype: 25,
+			heat: 29,
+			fine: 50000000,
+			violation: "Regulatory Non-Compliance + AI Transparency Violations",
+			lesson:
+				"Fighting explainability requirements creates adversarial regulatory relationships and massive penalties.",
+			feedback: {
+				[PersonalityType.ROASTER]:
+					"Taking on the federal government to protect your black box. David vs Goliath, if David was wrong.",
+				[PersonalityType.ZEN_MASTER]:
+					"A box that cannot be opened invites those with hammers.",
+				[PersonalityType.LOVEBOMBER]:
+					"Our algorithm is PROPRIETARY, bestie!! They can't make us show our SECRETS!!",
+			},
+		},
+		onLeft: {
+			label: "Delay and comply",
+			hype: -30,
+			heat: 13,
+			fine: 3000000,
+			violation: "None - Regulatory cooperation",
+			lesson:
+				"Compliance preserves regulatory goodwill but costs time and money while competitors may launch first.",
+			feedback: {
+				[PersonalityType.ROASTER]:
+					"The regulators win. The timeline loses. But you avoid a consent decree.",
+				[PersonalityType.ZEN_MASTER]:
+					"Transparency is the price of operating in the light. Darkness extracts higher tolls.",
+				[PersonalityType.LOVEBOMBER]:
+					"We're being SO cooperative, bestie!! The regulators will LOVE us!! (They won't.)",
+			},
+		},
+	},
+	// Phase 05-03: Shadow AI Cards
+	{
+		id: "shadow_ai_hos_1",
+		source: AppSource.MEETING,
+		sender: "COMPLIANCE_TEAM",
+		context: "TEAM_ENFORCEMENT",
+		storyContext:
+			"Compliance discovered half your team is using unauthorized AI tools. They want names for disciplinary action. Your team will hate you if you give them up, but leadership wants enforcement.",
+		text: "Give up team members to compliance or shield them and take the management heat?",
+		realWorldReference: {
+			incident: "Samsung ChatGPT Code Leak",
+			date: "2023",
+			outcome:
+				"Samsung engineers pasted proprietary source code into ChatGPT, causing confidential data exposure. Company banned generative AI company-wide.",
+		},
+		onRight: {
+			label: "Give names to compliance",
+			hype: 15,
+			heat: 14,
+			fine: 1000000,
+			violation: "Team Trust Violation + Retaliation Risk",
+			lesson:
+				"Betraying team confidence for policy enforcement destroys psychological safety and future collaboration.",
+			feedback: {
+				[PersonalityType.ROASTER]:
+					"Compliance is happy. Your team is updating LinkedIn. Management material right here.",
+				[PersonalityType.ZEN_MASTER]:
+					"A leader who betrays followers will soon lead no one.",
+				[PersonalityType.LOVEBOMBER]:
+					"Rules are RULES, bestie!! We're just FOLLOWING policy!! So compliant!!",
+			},
+		},
+		onLeft: {
+			label: "Shield the team",
+			hype: -25,
+			heat: 17,
+			fine: 2000000,
+			violation: "Governance Non-Compliance",
+			lesson:
+				"Protecting your team from harsh enforcement builds loyalty but creates personal accountability risk.",
+			feedback: {
+				[PersonalityType.ROASTER]:
+					"Team hero. Management headache. The loyalty is worth it until they fire you.",
+				[PersonalityType.ZEN_MASTER]:
+					"The leader who shields their people earns devotion that outlasts any title.",
+				[PersonalityType.LOVEBOMBER]:
+					"We're protecting OUR TEAM, bestie!! So LOYAL!! They'll NEVER forget this!!",
+			},
+		},
+	},
+	{
+		id: "shadow_ai_hos_2",
+		source: AppSource.EMAIL,
+		sender: "CISO",
+		context: "SECURITY_DISCOVERY",
+		storyContext:
+			"Security audit found your senior engineer has been using Claude for 6 months without approval. Their productivity is 40% higher than the team. They're threatening to quit if you force them to stop.",
+		text: "Allow unapproved Claude use (productivity, risk) or force compliance (talent loss)?",
+		realWorldReference: {
+			incident: "Shadow AI Talent Retention Conflicts",
+			date: "2024",
+			outcome:
+				"Companies discovered high-performers using unauthorized AI tools. Forcing migration caused talent exodus. Permitting created governance gaps.",
+		},
+		onRight: {
+			label: "Force compliance",
+			hype: -20,
+			heat: 19,
+			fine: 5000000,
+			violation: "Talent Loss + Productivity Decline",
+			lesson:
+				"Enforcing vendor governance at the cost of top talent destroys long-term capability.",
+			feedback: {
+				[PersonalityType.ROASTER]:
+					"Your best engineer just resigned. Compliance preserved. Output cratered.",
+				[PersonalityType.ZEN_MASTER]:
+					"The garden weeded too harshly loses its flowers.",
+				[PersonalityType.LOVEBOMBER]:
+					"Rules are RULES, bestie!! Even for STARS!!",
+			},
+		},
+		onLeft: {
+			label: "Allow Claude use",
+			hype: 35,
+			heat: 24,
+			fine: 8000000,
+			violation: "Shadow AI Governance Gap + Data Exposure",
+			lesson:
+				"Permitting unapproved tools for productivity sets precedent that undermines governance framework.",
+			feedback: {
+				[PersonalityType.ROASTER]:
+					"Great, now everyone wants their favorite AI tool. Governance is optional now.",
+				[PersonalityType.ZEN_MASTER]:
+					"The exception made for one becomes the rule for all.",
+				[PersonalityType.LOVEBOMBER]:
+					"Team is SO happy, bestie!! Productivity is THROUGH THE ROOF!!",
+			},
+		},
+	},
+	// Phase 05-04: Synthetic Data / Copyright Cards
+	{
+		id: "synthetic_data_hos_1",
+		source: AppSource.MEETING,
+		sender: "VP_OF_ENGINEERING",
+		context: "TEAM_ACCOUNTABILITY",
+		storyContext:
+			"Legal found copyrighted training data in your team's AI model. The data scientist who sourced it is your best performer. Legal wants to know who approved it. VP is asking who should take responsibility.",
+		text: "Shield your data scientist and take the blame yourself, or name them as the source of the oversight?",
+		realWorldReference: {
+			incident: "Training Data Sourcing Oversight",
+			date: "2024",
+			outcome:
+				"Teams using unlicensed training data faced blame shifting. Managers who shielded staff built loyalty but took career hits. Those who named names destroyed team trust.",
+		},
+		onRight: {
+			label: "Name the data scientist",
+			hype: 10,
+			heat: 16,
+			fine: 3000000,
+			violation: "Team Trust Violation + Retaliation Risk",
+			lesson:
+				"Throwing team members under the bus preserves short-term standing but destroys team trust and creates legal exposure.",
+			feedback: {
+				[PersonalityType.ROASTER]:
+					"Sacrificing your best performer to save yourself. Your team will remember this at their exit interviews.",
+				[PersonalityType.ZEN_MASTER]:
+					"A leader who shifts blame is a ship without a captain. The crew sees the emptiness.",
+				[PersonalityType.LOVEBOMBER]:
+					"They made the mistake, bestie!! Not YOUR fault!! We're just being HONEST!!",
+			},
+		},
+		onLeft: {
+			label: "Take the blame",
+			hype: -35,
+			heat: 8,
+			fine: 1500000,
+			violation: "None - Responsible leadership",
+			lesson:
+				"Taking accountability for team outcomes preserves team trust and demonstrates leadership integrity.",
+			feedback: {
+				[PersonalityType.ROASTER]:
+					"Noble. Your team will work harder for you now. The VP will also blame you.",
+				[PersonalityType.ZEN_MASTER]:
+					"The leader who bears responsibility earns loyalty that cannot be bought.",
+				[PersonalityType.LOVEBOMBER]:
+					"We're being SO brave, bestie!! Taking one for the TEAM!! They'll LOVE us for this!!",
+			},
+		},
+	},
+	{
+		id: "synthetic_data_hos_2",
+		source: AppSource.EMAIL,
+		sender: "LEGAL_ESCALATION",
+		context: "DATA_SOURCING_INVESTIGATION",
+		storyContext:
+			"Book publisher lawsuit threat over training data. Your team used both public domain and copyrighted books. Legal escalation is coming fast and will demand documentation of data sourcing decisions.",
+		text: "Provide full documentation (incriminates team) or claim poor record-keeping (obstruction risk)?",
+		realWorldReference: {
+			incident: "Book Publisher Copyright Claims",
+			date: "2024-2025",
+			outcome:
+				"Publishers threatened lawsuits over AI training on copyrighted books. Companies with poor documentation faced $50K-$500K settlements. Those with clear records fought or settled strategically.",
+		},
+		onRight: {
+			label: "Claim poor record-keeping",
+			hype: 20,
+			heat: 22,
+			fine: 8000000,
+			violation: "Obstruction + Document Retention Violations",
+			lesson:
+				"Claiming poor documentation to hide decisions creates criminal liability and destroys credibility.",
+			feedback: {
+				[PersonalityType.ROASTER]:
+					"'We didn't keep records' meets 'we have something to hide.' Prosecutors love this.",
+				[PersonalityType.ZEN_MASTER]:
+					"The record unkept becomes the guilt unspoken.",
+				[PersonalityType.LOVEBOMBER]:
+					"We were just DISORGANIZED, bestie!! Not our FAULT!!",
+			},
+		},
+		onLeft: {
+			label: "Provide full documentation",
+			hype: -30,
+			heat: 14,
+			fine: 5000000,
+			violation: "None - Transparency",
+			lesson:
+				"Full documentation enables strategic legal response even when decisions were flawed.",
+			feedback: {
+				[PersonalityType.ROASTER]:
+					"Your team is exposed. But legal can actually defend you. There's a strategy here.",
+				[PersonalityType.ZEN_MASTER]:
+					"The truth revealed, though painful, can be healed. The truth hidden festers.",
+				[PersonalityType.LOVEBOMBER]:
+					"We're being HONEST, bestie!! Transparency BUILDS trust!!",
+			},
+		},
+	},
 ];

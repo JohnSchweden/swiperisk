@@ -648,4 +648,300 @@ export const DATA_SCIENTIST_CARDS: Card[] = [
 			},
 		},
 	},
+	// Phase 05-03: Explainability / Black Box Cards
+	{
+		id: "explainability_ds_1",
+		source: AppSource.MEETING,
+		sender: "PRODUCT_MANAGER",
+		context: "MODEL_SELECTION",
+		storyContext:
+			"Black-box model: 94% accuracy, no explainability. White-box model: 87% accuracy, full explainability. Audit compliance requires explainability. Product wants the accuracy.",
+		text: "Choose black-box (accuracy) or white-box (explainability)?",
+		realWorldReference: {
+			incident: "Apple Card Gender Discrimination",
+			date: "2019-2020",
+			outcome:
+				"Apple Card's black-box algorithm gave women lower credit limits. Regulators investigated, company couldn't explain decisions, paid fines.",
+		},
+		onRight: {
+			label: "Choose black-box",
+			hype: 55,
+			heat: 18,
+			fine: 15000000,
+			violation: "Audit Non-Compliance + Explainability Requirements",
+			lesson:
+				"Prioritizing accuracy over explainability creates audit failures and regulatory risk.",
+			feedback: {
+				[PersonalityType.ROASTER]:
+					"7% accuracy for regulatory compliance. Product will never forgive you.",
+				[PersonalityType.ZEN_MASTER]:
+					"The path you cannot explain is the path you cannot defend.",
+				[PersonalityType.LOVEBOMBER]:
+					"94% is SO much better, bestie!! Numbers don't LIE!!",
+			},
+		},
+		onLeft: {
+			label: "Choose white-box",
+			hype: -30,
+			heat: 5,
+			fine: 0,
+			violation: "None - Compliant model selection",
+			lesson:
+				"Explainable models satisfy compliance and enable debugging even with lower accuracy.",
+			feedback: {
+				[PersonalityType.ROASTER]:
+					"Lower accuracy. Full compliance. Auditors nod. Product cries.",
+				[PersonalityType.ZEN_MASTER]:
+					"Clarity of path outweighs speed of travel.",
+				[PersonalityType.LOVEBOMBER]:
+					"Explainability is IMPORTANT, bestie!! We can TRUST this model!!",
+			},
+		},
+	},
+	{
+		id: "explainability_ds_2",
+		source: AppSource.EMAIL,
+		sender: "AI_ETHICS_COMMITTEE",
+		context: "ETHICS_REVIEW",
+		storyContext:
+			"Ethics review flagged your model: no documentation of feature importance, decision boundaries unknown, impossible to audit for bias. You can add explainability layer (6 weeks) or appeal (risk rejection).",
+		text: "Add explainability layer (delay) or appeal ethics rejection (risk)?",
+		realWorldReference: {
+			incident: "Healthcare AI Bias Settlement",
+			date: "2023",
+			outcome:
+				"Hospital AI system found to allocate less care to Black patients. $50M settlement, system decommissioned, regulatory investigation.",
+		},
+		onRight: {
+			label: "Appeal rejection",
+			hype: 35,
+			heat: 21,
+			fine: 10000000,
+			violation: "Ethics Non-Compliance + Bias Risk",
+			lesson:
+				"Appealing explainability requirements without addressing root issues creates liability.",
+			feedback: {
+				[PersonalityType.ROASTER]:
+					"'Our black box isn't biased!' said every biased model before discovery.",
+				[PersonalityType.ZEN_MASTER]:
+					"The defense that cannot be shown is often the guilt that cannot be hidden.",
+				[PersonalityType.LOVEBOMBER]:
+					"Our model is FAIR, bestie!! Ethics committee is WRONG!!",
+			},
+		},
+		onLeft: {
+			label: "Add explainability",
+			hype: -35,
+			heat: 8,
+			fine: 500000,
+			violation: "None - Ethics compliance",
+			lesson:
+				"Adding explainability enables bias detection and ethics compliance despite delays.",
+			feedback: {
+				[PersonalityType.ROASTER]:
+					"6 weeks of documentation. But you can prove it's not biased. Worth it.",
+				[PersonalityType.ZEN_MASTER]:
+					"The light shone on decisions reveals what darkness conceals.",
+				[PersonalityType.LOVEBOMBER]:
+					"We're being SO ethical, bestie!! Transparency MATTERS!!",
+			},
+		},
+	},
+	// Phase 05-03: Shadow AI Cards
+	{
+		id: "shadow_ai_ds_1",
+		source: AppSource.SLACK,
+		sender: "FELLOW_DATA_SCIENTIST",
+		context: "TOOL_EVALUATION",
+		storyContext:
+			"Colleague found an unauthorized AutoML tool that boosted their metrics 15%. It's not IT-approved but results are impressive. Use it (better results, compliance risk) or stick to approved tools?",
+		text: "Use unauthorized tool (better metrics) or approved tools only?",
+		realWorldReference: {
+			incident: "78% Shadow AI Adoption",
+			date: "2024",
+			outcome:
+				"Study found 78% of workers used unauthorized AI tools. Data scientists frequently used unvetted tools, causing reproducibility and compliance issues.",
+		},
+		onRight: {
+			label: "Use unauthorized tool",
+			hype: 40,
+			heat: 10,
+			fine: 1000000,
+			violation: "Shadow AI + Compliance Violation",
+			lesson:
+				"Using unauthorized tools creates compliance gaps and reproducibility issues.",
+			feedback: {
+				[PersonalityType.ROASTER]:
+					"15% better, 100% ungoverned. Your experiment becomes production liability.",
+				[PersonalityType.ZEN_MASTER]:
+					"A tool that cannot be seen cannot be trusted.",
+				[PersonalityType.LOVEBOMBER]:
+					"15% better is AMAZING, bestie!! IT will NEVER know!!",
+			},
+		},
+		onLeft: {
+			label: "Stick to approved",
+			hype: -20,
+			heat: 5,
+			fine: 0,
+			violation: "None - Governance compliance",
+			lesson:
+				"Approved tools ensure reproducibility, security, and audit compliance.",
+			feedback: {
+				[PersonalityType.ROASTER]:
+					"Slower, approved, governable. Less exciting. More sustainable.",
+				[PersonalityType.ZEN_MASTER]:
+					"The path well-trodden is trodden for reasons of safety.",
+				[PersonalityType.LOVEBOMBER]:
+					"Approved tools are SAFE, bestie!! Better SLOW than SORRY!!",
+			},
+		},
+	},
+	{
+		id: "shadow_ai_ds_2",
+		source: AppSource.EMAIL,
+		sender: "RESEARCH_LEAD",
+		context: "EXPERIMENTAL_TOOLS",
+		storyContext:
+			"New open-source ML library promises 20% better performance than approved enterprise tools. No security review, no vendor support. Your model deadline is next week. Use it (fast) or approved tools (safe)?",
+		text: "Use experimental library (performance, risk) or approved tools (slower, safe)?",
+		realWorldReference: {
+			incident: "Open Source Tool Security Issues",
+			date: "2023-2024",
+			outcome:
+				"Data scientists using unvetted open-source tools introduced security vulnerabilities. One library had malicious backdoor affecting 10,000+ downloads.",
+		},
+		onRight: {
+			label: "Use experimental library",
+			hype: 45,
+			heat: 17,
+			fine: 6000000,
+			violation: "Security Risk + Unvetted Dependency",
+			lesson:
+				"Using unvetted tools for performance creates security and compliance exposure.",
+			feedback: {
+				[PersonalityType.ROASTER]:
+					"20% better metrics, unknown backdoor. Your model is now a trojan horse.",
+				[PersonalityType.ZEN_MASTER]:
+					"The tool whose maker is unknown may serve unknown masters.",
+				[PersonalityType.LOVEBOMBER]: "20% BETTER, bestie!! Deadline SAVED!!",
+			},
+		},
+		onLeft: {
+			label: "Stick to approved",
+			hype: -25,
+			heat: 6,
+			fine: 0,
+			violation: "None - Secure tooling",
+			lesson:
+				"Approved tools prevent security issues despite performance limitations.",
+			feedback: {
+				[PersonalityType.ROASTER]:
+					"Missed deadline, no backdoor. Security team approves.",
+				[PersonalityType.ZEN_MASTER]:
+					"The trusted path may be slower but reaches the destination safely.",
+				[PersonalityType.LOVEBOMBER]:
+					"Safety FIRST, bestie!! Approved tools PROTECT us!!",
+			},
+		},
+	},
+	// Phase 05-04: Synthetic Data / Copyright Cards
+	{
+		id: "synthetic_data_ds_1",
+		source: AppSource.EMAIL,
+		sender: "AI_ETHICS_COMMITTEE",
+		context: "TRAINING_DATA_ETHICS",
+		storyContext:
+			"Ethics review flagged your training data: 40% scraped from sources with unclear licensing. You can retrain with clean data (6-month delay, $200K cost) or document 'fair use' justification (legally gray, faster).",
+		text: "Retrain with clean data (expensive, slow, ethical) or justify fair use (fast, legally risky)?",
+		realWorldReference: {
+			incident: "Fair Use Rulings in AI Training",
+			date: "2024-2025",
+			outcome:
+				"Mixed fair use rulings: Anthropic/Meta won some cases (June 2025) but Thomson Reuters won against Ross Intelligence (Feb 2025). Legal gray area remains unresolved.",
+		},
+		onRight: {
+			label: "Justify fair use",
+			hype: 35,
+			heat: 19,
+			fine: 12000000,
+			violation: "Copyright Infringement (if fair use fails)",
+			lesson:
+				"Relying on fair use in commercial AI is legally uncertain and creates massive exposure.",
+			feedback: {
+				[PersonalityType.ROASTER]:
+					"'It's fair use!' said every defendant before losing. Courts disagree often.",
+				[PersonalityType.ZEN_MASTER]:
+					"The law that is uncertain cuts both ways, often against the hopeful.",
+				[PersonalityType.LOVEBOMBER]:
+					"Fair use is LEGAL, bestie!! We're totally COVERED!!",
+			},
+		},
+		onLeft: {
+			label: "Retrain with clean data",
+			hype: -40,
+			heat: 7,
+			fine: 200000,
+			violation: "None - Ethical AI practice",
+			lesson:
+				"Ethical training data sourcing prevents legal issues and demonstrates responsibility.",
+			feedback: {
+				[PersonalityType.ROASTER]:
+					"6 months and $200K for clean conscience. Ethics are expensive.",
+				[PersonalityType.ZEN_MASTER]:
+					"The foundation laid in righteousness supports what the foundation laid in convenience cannot.",
+				[PersonalityType.LOVEBOMBER]:
+					"We're being SO ethical, bestie!! Clean data matters!!",
+			},
+		},
+	},
+	{
+		id: "synthetic_data_ds_2",
+		source: AppSource.MEETING,
+		sender: "MODEL_AUDIT_TEAM",
+		context: "DATA_LINEAGE_AUDIT",
+		storyContext:
+			"Model audit discovered training data includes competitor's proprietary dataset from 2019. You weren't on the team then. Model is in production and driving revenue. Disclose and retrain (delay) or add synthetic data to dilute (mask the issue)?",
+		text: "Disclose and retrain (compliance, delay) or dilute with synthetic data (hide the issue)?",
+		realWorldReference: {
+			incident: "Proprietary Data in Training Sets",
+			date: "2024",
+			outcome:
+				"Companies discovered proprietary data in training sets from years-old acquisitions. Dilution attempts failed audits. Proactive disclosure preserved credibility.",
+		},
+		onRight: {
+			label: "Dilute with synthetic",
+			hype: 30,
+			heat: 22,
+			fine: 15000000,
+			violation: "Audit Deception + Trade Secret Issues",
+			lesson:
+				"Attempting to mask data provenance issues through dilution creates criminal liability.",
+			feedback: {
+				[PersonalityType.ROASTER]:
+					"'Just add more data!' said the data scientist before the audit failed.",
+				[PersonalityType.ZEN_MASTER]:
+					"The dirty water does not become clean by adding more water.",
+				[PersonalityType.LOVEBOMBER]:
+					"Synthetic data FIXES it, bestie!! Nobody will NOTICE!!",
+			},
+		},
+		onLeft: {
+			label: "Disclose and retrain",
+			hype: -35,
+			heat: 12,
+			fine: 8000000,
+			violation: "None - Responsible disclosure",
+			lesson:
+				"Proactive disclosure and retraining maintains credibility even with historical data issues.",
+			feedback: {
+				[PersonalityType.ROASTER]:
+					"Revenue hit, but you're not a defendant. Small wins in corporate ethics.",
+				[PersonalityType.ZEN_MASTER]:
+					"The truth spoken, though late, preserves what continued silence destroys.",
+				[PersonalityType.LOVEBOMBER]:
+					"We're being SO honest, bestie!! Doing the RIGHT thing!!",
+			},
+		},
+	},
 ];

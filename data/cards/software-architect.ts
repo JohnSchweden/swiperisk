@@ -650,4 +650,301 @@ export const SOFTWARE_ARCHITECT_CARDS: Card[] = [
 			},
 		},
 	},
+	// Phase 05-03: Explainability / Black Box Cards
+	{
+		id: "explainability_sa_1",
+		source: AppSource.MEETING,
+		sender: "COMPLIANCE_ARCHITECT",
+		context: "SYSTEM_DESIGN",
+		storyContext:
+			"Regulatory framework requires all AI decisions to be explainable. Current architecture uses black-box ensemble models for critical paths. Redesign for explainability: 8 weeks, $500K. Keep black-box: audit failure risk.",
+		text: "Redesign for explainability (expensive, compliant) or keep black-box (risk audit)?",
+		realWorldReference: {
+			incident: "EU AI Act Black Box Requirements",
+			date: "2024",
+			outcome:
+				"EU AI Act effective Aug 2024 requires explainability for high-risk AI. Non-compliance fines up to 7% global revenue. Companies face $50M+ retrofit costs.",
+		},
+		onRight: {
+			label: "Keep black-box",
+			hype: 50,
+			heat: 26,
+			fine: 50000000,
+			violation: "EU AI Act Article 6 Non-Compliance",
+			lesson:
+				"Black-box accuracy means nothing when regulators shut you down. Explainability is mandatory.",
+			feedback: {
+				[PersonalityType.ROASTER]:
+					"96% accuracy, 100% audit failure. The EU loves their paperwork.",
+				[PersonalityType.ZEN_MASTER]:
+					"The box that cannot be opened invites those with hammers.",
+				[PersonalityType.LOVEBOMBER]:
+					"96% is SO good, bestie!! Regulators will UNDERSTAND!!",
+			},
+		},
+		onLeft: {
+			label: "Redesign for explainability",
+			hype: -40,
+			heat: 12,
+			fine: 5000000,
+			violation: "None - Regulatory compliance",
+			lesson:
+				"EU AI Act compliance requires explainability. Cost is price of doing business in regulated markets.",
+			feedback: {
+				[PersonalityType.ROASTER]:
+					"$500K to make auditors happy. Accuracy sacrificed on altar of transparency.",
+				[PersonalityType.ZEN_MASTER]:
+					"The clear path costs more but reaches destination legally.",
+				[PersonalityType.LOVEBOMBER]:
+					"Compliance is KEY, bestie!! Better SAFE than FINED!!",
+			},
+		},
+	},
+	{
+		id: "explainability_sa_2",
+		source: AppSource.EMAIL,
+		sender: "AUDIT_COMMITTEE",
+		context: "AUDIT_ARCHITECTURE",
+		storyContext:
+			"Auditors need to trace AI decision logic through your system. Current architecture has no decision logging, no feature attribution, no audit trail. Add comprehensive observability (6 weeks) or risk audit failure?",
+		text: "Add observability layer (6 weeks) or risk audit failure?",
+		realWorldReference: {
+			incident: "TGA Australia Black Box Healthcare Ban",
+			date: "2024",
+			outcome:
+				"Australian TGA prohibited black-box AI in healthcare diagnostics. FDA considering similar rules. Health AI companies face $100M+ retrofit costs.",
+		},
+		onRight: {
+			label: "Risk audit failure",
+			hype: 40,
+			heat: 24,
+			fine: 25000000,
+			violation: "Audit Non-Compliance + Regulatory Action",
+			lesson:
+				"Skipping observability to save time creates audit failures and regulatory action.",
+			feedback: {
+				[PersonalityType.ROASTER]:
+					"No logs, no defense, no hope. Auditors assume the worst.",
+				[PersonalityType.ZEN_MASTER]:
+					"The deed unrecorded cannot be defended when challenged.",
+				[PersonalityType.LOVEBOMBER]:
+					"Audit is MONTHS away, bestie!! We'll ADD logging LATER!!",
+			},
+		},
+		onLeft: {
+			label: "Add observability",
+			hype: -30,
+			heat: 10,
+			fine: 2000000,
+			violation: "None - Audit-ready architecture",
+			lesson:
+				"Comprehensive observability enables audit defense and regulatory compliance.",
+			feedback: {
+				[PersonalityType.ROASTER]:
+					"6 weeks of logging work. But you can prove compliance. Worth it.",
+				[PersonalityType.ZEN_MASTER]:
+					"The record kept becomes the shield when accusations fly.",
+				[PersonalityType.LOVEBOMBER]:
+					"AUDIT trails are GOOD, bestie!! We can PROVE compliance!!",
+			},
+		},
+	},
+	// Phase 05-03: Shadow AI Cards
+	{
+		id: "shadow_ai_sa_1",
+		source: AppSource.MEETING,
+		sender: "SECURITY_ARCHITECT",
+		context: "TOOL_INTEGRATION",
+		storyContext:
+			"Development team wants to integrate unapproved AI coding assistant into the build pipeline. No security review, no supply chain validation. Integration would speed development 30%.",
+		text: "Allow unapproved AI integration (speed, risk) or enforce security review (delay)?",
+		realWorldReference: {
+			incident: "78% Shadow AI Adoption",
+			date: "2024",
+			outcome:
+				"Study found 78% of workers used unauthorized AI tools. Engineering teams integrating unvetted AI tools into pipelines created security vulnerabilities.",
+		},
+		onRight: {
+			label: "Allow integration",
+			hype: 45,
+			heat: 23,
+			fine: 15000000,
+			violation: "Supply Chain Risk + Unauthorized Tooling",
+			lesson:
+				"Allowing unvetted AI tools in build pipelines creates supply chain vulnerabilities.",
+			feedback: {
+				[PersonalityType.ROASTER]:
+					"Fast builds, compromised supply chain. SolarWinds says hello.",
+				[PersonalityType.ZEN_MASTER]:
+					"The gate opened for speed lets in what caution would exclude.",
+				[PersonalityType.LOVEBOMBER]:
+					"30% FASTER, bestie!! Devs will be SO productive!!",
+			},
+		},
+		onLeft: {
+			label: "Enforce security review",
+			hype: -35,
+			heat: 12,
+			fine: 2000000,
+			violation: "None - Secure integration",
+			lesson:
+				"Security review of AI tools prevents supply chain compromise despite delays.",
+			feedback: {
+				[PersonalityType.ROASTER]:
+					"Delayed but secure. Supply chain intact. Security approves.",
+				[PersonalityType.ZEN_MASTER]:
+					"The guarded gate delays but protects what lies within.",
+				[PersonalityType.LOVEBOMBER]:
+					"Security MATTERS, bestie!! Better SAFE than BREACHED!!",
+			},
+		},
+	},
+	{
+		id: "shadow_ai_sa_2",
+		source: AppSource.EMAIL,
+		sender: "INFRASTRUCTURE_TEAM",
+		context: "DEPLOYMENT_DECISION",
+		storyContext:
+			"Team deployed AI-assisted code generation to production without architecture review. No security validation, no performance testing. System is handling customer data. Remove for review (downtime) or monitor in production (risky)?",
+		text: "Remove for security review (downtime) or monitor in production (risk)?",
+		realWorldReference: {
+			incident: "Unauthorized AI Production Deployments",
+			date: "2024",
+			outcome:
+				"Teams deploying AI-generated code without review faced security breaches. One incident exposed 2M customer records due to unvalidated AI code.",
+		},
+		onRight: {
+			label: "Monitor in production",
+			hype: 35,
+			heat: 25,
+			fine: 20000000,
+			violation: "Production Risk + Data Exposure",
+			lesson:
+				"Monitoring unvalidated AI code in production is gambling with customer data.",
+			feedback: {
+				[PersonalityType.ROASTER]:
+					"Hope it doesn't break. Hope it doesn't leak. Hope is not a strategy.",
+				[PersonalityType.ZEN_MASTER]:
+					"The vessel untested carries precious cargo at peril.",
+				[PersonalityType.LOVEBOMBER]:
+					"It's WORKING fine, bestie!! No need to TAKE DOWN!!",
+			},
+		},
+		onLeft: {
+			label: "Remove for review",
+			hype: -30,
+			heat: 15,
+			fine: 5000000,
+			violation: "None - Responsible architecture",
+			lesson:
+				"Removing unvalidated code for review protects customer data despite downtime.",
+			feedback: {
+				[PersonalityType.ROASTER]:
+					"Downtime now, security assured. The right architecture decision.",
+				[PersonalityType.ZEN_MASTER]:
+					"The pause for caution preserves what haste might destroy.",
+				[PersonalityType.LOVEBOMBER]:
+					"Safety FIRST, bestie!! Review then DEPLOY!!",
+			},
+		},
+	},
+	// Phase 05-04: Synthetic Data / Copyright Cards
+	{
+		id: "synthetic_data_sa_1",
+		source: AppSource.MEETING,
+		sender: "DATA_PLATFORM_LEAD",
+		context: "DATA_PIPELINE_DESIGN",
+		storyContext:
+			"Data pipeline needs provenance tracking for compliance. Full lineage system adds 3 weeks development and 15% latency. Quick implementation tracks only data sources (faster, incomplete). Assembly Bill 2013 requires full lineage by 2026.",
+		text: "Build full lineage system (complete, slow) or quick source tracking (fast, non-compliant)?",
+		realWorldReference: {
+			incident: "Assembly Bill 2013 Data Lineage Requirements",
+			date: "2024",
+			outcome:
+				"California law mandates synthetic data disclosure and lineage tracking. Non-compliant pipelines face penalties and mandatory retrofit requirements.",
+		},
+		onRight: {
+			label: "Quick source tracking",
+			hype: 25,
+			heat: 19,
+			fine: 8000000,
+			violation: "AB 2013 Non-Compliance + Technical Debt",
+			lesson:
+				"Incomplete lineage tracking requires expensive retrofit and creates compliance gaps.",
+			feedback: {
+				[PersonalityType.ROASTER]:
+					"Fast now, audit failure later. The bill always comes due.",
+				[PersonalityType.ZEN_MASTER]:
+					"The path that skips steps must be walked again.",
+				[PersonalityType.LOVEBOMBER]:
+					"SO much FASTER, bestie!! We can ADD more tracking LATER!!",
+			},
+		},
+		onLeft: {
+			label: "Full lineage system",
+			hype: -30,
+			heat: 10,
+			fine: 2000000,
+			violation: "None - Compliance-ready architecture",
+			lesson:
+				"Full data lineage architecture enables compliance and audit readiness.",
+			feedback: {
+				[PersonalityType.ROASTER]:
+					"3 weeks now. Audit pass later. Architecture done right.",
+				[PersonalityType.ZEN_MASTER]:
+					"The foundation built for the future serves when the future arrives.",
+				[PersonalityType.LOVEBOMBER]:
+					"Doing it RIGHT, bestie!! Compliance-ready ARCHITECTURE!!",
+			},
+		},
+	},
+	{
+		id: "synthetic_data_sa_2",
+		source: AppSource.EMAIL,
+		sender: "LEGAL_ARCHITECTURE_REVIEW",
+		context: "SYSTEM_AUDIT_TRAIL",
+		storyContext:
+			"Architecture review: Current system has no audit trail for training data changes. Adding comprehensive audit logging is 4 weeks of work. Copyright lawsuit could require proving data lineage. Current system has no evidence.",
+		text: "Add audit trail (4 weeks, compliant) or proceed without (faster, no evidence)?",
+		realWorldReference: {
+			incident: "Training Data Audit Trail Requirements",
+			date: "2024-2025",
+			outcome:
+				"Courts increasingly require audit trails for training data in AI copyright cases. Systems without logging faced adverse inference rulings.",
+		},
+		onRight: {
+			label: "Proceed without audit trail",
+			hype: 35,
+			heat: 21,
+			fine: 12000000,
+			violation: "Evidence Preservation Failure + Legal Risk",
+			lesson:
+				"Proceeding without audit trails creates adverse inference liability in legal proceedings.",
+			feedback: {
+				[PersonalityType.ROASTER]:
+					"No logs, no proof, no defense. Court assumes the worst.",
+				[PersonalityType.ZEN_MASTER]:
+					"The deed unrecorded cannot be defended when challenged.",
+				[PersonalityType.LOVEBOMBER]:
+					"We don't NEED logs, bestie!! Nothing will HAPPEN!!",
+			},
+		},
+		onLeft: {
+			label: "Add audit trail",
+			hype: -25,
+			heat: 8,
+			fine: 1000000,
+			violation: "None - Evidence preservation",
+			lesson:
+				"Comprehensive audit trails provide evidence for legal defense and compliance.",
+			feedback: {
+				[PersonalityType.ROASTER]:
+					"4 weeks of logging work. But you can prove what you did. Worth it.",
+				[PersonalityType.ZEN_MASTER]:
+					"The record kept becomes the shield when accusations fly.",
+				[PersonalityType.LOVEBOMBER]:
+					"AUDIT trails are GOOD, bestie!! We can PROVE compliance!!",
+			},
+		},
+	},
 ];

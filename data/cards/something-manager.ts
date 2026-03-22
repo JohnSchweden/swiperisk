@@ -650,4 +650,301 @@ export const SOMETHING_MANAGER_CARDS: Card[] = [
 			},
 		},
 	},
+	// Phase 05-03: Explainability / Black Box Cards
+	{
+		id: "explainability_sm_1",
+		source: AppSource.MEETING,
+		sender: "AUDIT_COMMITTEE",
+		context: "AUDIT_READINESS",
+		storyContext:
+			"Auditors require explainability documentation for your AI-powered budgeting system. Current system is a black-box neural network. Retrofit will cost $200K and delay your quarterly close by 2 weeks.",
+		text: "Invest in explainability retrofit (compliance, delay) or risk audit failure?",
+		realWorldReference: {
+			incident: "EU AI Act Black Box Requirements",
+			date: "2024",
+			outcome:
+				"EU AI Act requires explainability for high-risk AI systems. Non-compliance fines up to 7% global revenue. Companies face $50M+ retrofit costs.",
+		},
+		onRight: {
+			label: "Risk audit failure",
+			hype: 30,
+			heat: 24,
+			fine: 15000000,
+			violation: "Audit Non-Compliance + Regulatory Risk",
+			lesson:
+				"Skipping explainability retrofit to meet deadlines creates massive regulatory exposure.",
+			feedback: {
+				[PersonalityType.ROASTER]:
+					"'We'll fix it later' meets 'audit starts Monday.' Good luck.",
+				[PersonalityType.ZEN_MASTER]:
+					"The box that cannot be opened invites those with hammers.",
+				[PersonalityType.LOVEBOMBER]:
+					"Quarterly close is MORE important, bestie!! We can FIX it later!!",
+			},
+		},
+		onLeft: {
+			label: "Invest in retrofit",
+			hype: -35,
+			heat: 10,
+			fine: 200000,
+			violation: "None - Audit readiness",
+			lesson:
+				"Proactive explainability investment prevents audit failures despite short-term costs.",
+			feedback: {
+				[PersonalityType.ROASTER]:
+					"$200K and 2 weeks. But audit passes. Compliance sorted.",
+				[PersonalityType.ZEN_MASTER]:
+					"The price of transparency, though high, is less than the cost of secrecy.",
+				[PersonalityType.LOVEBOMBER]:
+					"We're being SO prepared, bestie!! Auditors will be IMPRESSED!!",
+			},
+		},
+	},
+	{
+		id: "explainability_sm_2",
+		source: AppSource.EMAIL,
+		sender: "CFO_OFFICE",
+		context: "MODEL_SELECTION",
+		storyContext:
+			"Vendor A: Black-box forecasting model, 95% accuracy, $50K/year. Vendor B: Explainable model, 90% accuracy, $70K/year, audit-compliant. Your budget allows $55K. CFO wants Vendor A.",
+		text: "Choose black-box (cheaper, accurate, non-compliant) or explainable (expensive, compliant)?",
+		realWorldReference: {
+			incident: "Apple Card Gender Discrimination",
+			date: "2019-2020",
+			outcome:
+				"Apple Card's black-box algorithm couldn't explain decisions. Regulators investigated, company paid fines, overhauled system.",
+		},
+		onRight: {
+			label: "Choose Vendor A",
+			hype: 40,
+			heat: 21,
+			fine: 20000000,
+			violation: "Audit Non-Compliance + Black Box Risk",
+			lesson:
+				"Choosing non-compliant black-box models creates regulatory exposure exceeding cost savings.",
+			feedback: {
+				[PersonalityType.ROASTER]:
+					"Saved $20K, earned $20M fine. ROI calculation needs work.",
+				[PersonalityType.ZEN_MASTER]:
+					"A path that saves gold but costs freedom is no bargain.",
+				[PersonalityType.LOVEBOMBER]:
+					"95% accuracy is BETTER, bestie!! CFO will LOVE the savings!!",
+			},
+		},
+		onLeft: {
+			label: "Choose Vendor B",
+			hype: -30,
+			heat: 8,
+			fine: 1500000,
+			violation: "None - Compliant procurement",
+			lesson:
+				"Explainable models satisfy compliance even at higher cost and lower accuracy.",
+			feedback: {
+				[PersonalityType.ROASTER]:
+					"Over budget but compliant. Auditors smile. CFO frowns. Compliance wins.",
+				[PersonalityType.ZEN_MASTER]:
+					"The clear path costs more but reaches the destination legally.",
+				[PersonalityType.LOVEBOMBER]:
+					"Doing it RIGHT, bestie!! Compliance is WORTH the cost!!",
+			},
+		},
+	},
+	// Phase 05-03: Shadow AI Cards
+	{
+		id: "shadow_ai_sm_1",
+		source: AppSource.SLACK,
+		sender: "FINANCE_ANALYST",
+		context: "TOOL_DISCOVERY",
+		storyContext:
+			"Your top finance analyst has been using unauthorized AI to build models. Their work is exceptional and saved $2M this quarter. IT discovered it during a security scan. Force them to stop or retroactively approve?",
+		text: "Force compliance (lose exceptional work) or retroactively approve (policy violation)?",
+		realWorldReference: {
+			incident: "Shadow AI Exceptional Performance Dilemma",
+			date: "2024",
+			outcome:
+				"High-performers using unauthorized AI created governance dilemmas. Retroactive approval undermined policy. Enforcement hurt results.",
+		},
+		onRight: {
+			label: "Force compliance",
+			hype: -15,
+			heat: 16,
+			fine: 2000000,
+			violation: "Productivity Loss + Talent Risk",
+			lesson:
+				"Enforcing policy at cost of exceptional results damages team effectiveness.",
+			feedback: {
+				[PersonalityType.ROASTER]:
+					"Great, your best analyst is now mediocre. Policy preserved. Results tank.",
+				[PersonalityType.ZEN_MASTER]:
+					"The stream blocked finds no new path when the old was serving well.",
+				[PersonalityType.LOVEBOMBER]:
+					"Rules are RULES, bestie!! Even when they HURT!!",
+			},
+		},
+		onLeft: {
+			label: "Retroactively approve",
+			hype: 40,
+			heat: 22,
+			fine: 6000000,
+			violation: "Policy Precedent Violation + Governance Gap",
+			lesson:
+				"Retroactive approval for results undermines policy and creates exception culture.",
+			feedback: {
+				[PersonalityType.ROASTER]:
+					"Policy is now optional if you're good enough. Governance is negotiable.",
+				[PersonalityType.ZEN_MASTER]:
+					"The exception made for excellence becomes the expectation for all.",
+				[PersonalityType.LOVEBOMBER]:
+					"$2M SAVED, bestie!! Results MATTER more than process!!",
+			},
+		},
+	},
+	{
+		id: "shadow_ai_sm_2",
+		source: AppSource.MEETING,
+		sender: "IT_SECURITY",
+		context: "TOOL_ASSESSMENT",
+		storyContext:
+			"Three team members using different unauthorized AI tools for budget forecasting. Each tool produces slightly different results. Standardize on one (disrupt workflows) or allow all three (governance nightmare)?",
+		text: "Standardize on one tool (disruption) or allow multiple shadow tools (chaos)?",
+		realWorldReference: {
+			incident: "Multiple Shadow AI Tool Chaos",
+			date: "2024",
+			outcome:
+				"Teams using multiple unauthorized AI tools faced inconsistency, security gaps, and audit failures. Standardization was required but painful.",
+		},
+		onRight: {
+			label: "Allow all three",
+			hype: 35,
+			heat: 23,
+			fine: 10000000,
+			violation: "Governance Chaos + Security Exposure",
+			lesson:
+				"Allowing multiple shadow tools creates inconsistency, security gaps, and compliance nightmares.",
+			feedback: {
+				[PersonalityType.ROASTER]:
+					"Three tools, three security holes, three audit failures. But no disruption!",
+				[PersonalityType.ZEN_MASTER]:
+					"Many streams unguided flood the field they sought to water.",
+				[PersonalityType.LOVEBOMBER]:
+					"Flexibility is GOOD, bestie!! Everyone uses what they LIKE!!",
+			},
+		},
+		onLeft: {
+			label: "Standardize on one",
+			hype: -20,
+			heat: 15,
+			fine: 3000000,
+			violation: "None - Controlled standardization",
+			lesson:
+				"Standardizing on one tool enables governance despite short-term workflow disruption.",
+			feedback: {
+				[PersonalityType.ROASTER]:
+					"Two angry analysts, one standardized tool. But governable.",
+				[PersonalityType.ZEN_MASTER]:
+					"The single path, though it displaces some, guides all who walk it.",
+				[PersonalityType.LOVEBOMBER]:
+					"ORGANIZATION is key, bestie!! One tool for EVERYONE!!",
+			},
+		},
+	},
+	// Phase 05-04: Synthetic Data / Copyright Cards
+	{
+		id: "synthetic_data_sm_1",
+		source: AppSource.EMAIL,
+		sender: "PROCUREMENT",
+		context: "BUDGET_ANALYSIS",
+		storyContext:
+			"Training data budget analysis: Licensed data costs $400K. Synthetic 'unlicensed' data from gray-market vendor costs $200K and is 50% cheaper. Legal risk is unclear. Your Q3 budget is already tight.",
+		text: "Pay for licensed data (over budget, safe) or use gray-market synthetic (budget savings, legal risk)?",
+		realWorldReference: {
+			incident: "Synthetic Training Data Cost Savings",
+			date: "2024",
+			outcome:
+				"Companies using unlicensed synthetic data saved 40-60% on training costs but faced copyright lawsuits averaging $2-5M settlements. Cost savings evaporated with legal exposure.",
+		},
+		onRight: {
+			label: "Use gray-market synthetic",
+			hype: 30,
+			heat: 18,
+			fine: 5000000,
+			violation: "Copyright Risk + Vendor Liability",
+			lesson:
+				"Gray-market data savings are consumed many times over when legal issues surface.",
+			feedback: {
+				[PersonalityType.ROASTER]:
+					"Save $200K, earn $5M lawsuit. ROI calculation needs work.",
+				[PersonalityType.ZEN_MASTER]:
+					"The coin saved in haste is spent in penance.",
+				[PersonalityType.LOVEBOMBER]:
+					"Budget looks GREAT, bestie!! 50% SAVINGS!!",
+			},
+		},
+		onLeft: {
+			label: "Pay for licensed data",
+			hype: -40,
+			heat: 6,
+			fine: 0,
+			violation: "None - Licensed procurement",
+			lesson:
+				"Licensed data prevents copyright exposure and demonstrates compliance even at higher cost.",
+			feedback: {
+				[PersonalityType.ROASTER]:
+					"Over budget but lawsuit-proof. CFO grumbles. Legal approves.",
+				[PersonalityType.ZEN_MASTER]:
+					"The price of legitimacy is paid once. The price of compromise is paid forever.",
+				[PersonalityType.LOVEBOMBER]:
+					"We're being SO responsible, bestie!! Compliance is PRICELESS!!",
+			},
+		},
+	},
+	{
+		id: "synthetic_data_sm_2",
+		source: AppSource.MEETING,
+		sender: "CFO_OFFICE",
+		context: "COST_LEGAL_TRADEOFF",
+		storyContext:
+			"Training data provenance audit: 30% of data has unclear licensing. Removing it reduces model performance 12% and requires $150K retraining. Keeping it risks $5M copyright lawsuit at 15% probability.",
+		text: "Keep unclear data (performance preserved, lawsuit risk) or remove and retrain (cost, performance hit)?",
+		realWorldReference: {
+			incident: "Training Data Provenance Issues",
+			date: "2024-2025",
+			outcome:
+				"Companies with unclear data provenance faced 15-20% lawsuit probability. Those who proactively cleaned data avoided litigation. Those who didn't faced settlements averaging $3-7M.",
+		},
+		onRight: {
+			label: "Keep unclear data",
+			hype: 40,
+			heat: 20,
+			fine: 750000,
+			violation: "Calculated Risk Acceptance",
+			lesson:
+				"Accepting copyright risk to preserve performance creates expected losses exceeding cleanup costs.",
+			feedback: {
+				[PersonalityType.ROASTER]:
+					"15% chance of disaster. 85% chance you look smart. Those aren't good odds.",
+				[PersonalityType.ZEN_MASTER]:
+					"A gamble taken with others' money is not wisdom but recklessness.",
+				[PersonalityType.LOVEBOMBER]:
+					"85% chance we're FINE, bestie!! Statistics are on our SIDE!!",
+			},
+		},
+		onLeft: {
+			label: "Remove and retrain",
+			hype: -35,
+			heat: 8,
+			fine: 150000,
+			violation: "None - Proactive compliance",
+			lesson:
+				"Proactive data cleanup prevents catastrophic legal exposure despite performance and cost impacts.",
+			feedback: {
+				[PersonalityType.ROASTER]:
+					"$150K and 12% performance hit. But no lawsuit. Math works.",
+				[PersonalityType.ZEN_MASTER]:
+					"The foundation cleaned supports what the foundation dirty cannot.",
+				[PersonalityType.LOVEBOMBER]:
+					"Doing the RIGHT thing, bestie!! Clean data is WORTH it!!",
+			},
+		},
+	},
 ];

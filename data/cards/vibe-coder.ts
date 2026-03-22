@@ -646,4 +646,300 @@ export const VIBE_CODER_CARDS: Card[] = [
 			},
 		},
 	},
+	// Phase 05-03: Explainability / Black Box Cards
+	{
+		id: "explainability_vc_1",
+		source: AppSource.IDE,
+		sender: "AI_ASSISTANT",
+		context: "CODE_EXPLANATION",
+		storyContext:
+			"AI generated complex algorithm. Code works perfectly but you don't fully understand it. Code review asks you to explain the logic. Admit you don't understand (embarrassing, honest) or fake understanding (risk production issues)?",
+		text: "Admit you don't understand AI code (honest) or fake expertise (risk)?",
+		realWorldReference: {
+			incident: "Copilot Code Comprehension Gap",
+			date: "2023",
+			outcome:
+				"Developers shipping AI code they didn't understand faced debugging crises. Code worked until edge cases revealed logic errors no one could fix.",
+		},
+		onRight: {
+			label: "Fake understanding",
+			hype: 35,
+			heat: 19,
+			fine: 8000000,
+			violation: "Knowledge Gap + Maintenance Risk",
+			lesson:
+				"Shipping code you can't explain creates debugging crises when issues arise.",
+			feedback: {
+				[PersonalityType.ROASTER]:
+					"'Yeah I understand it' meets production bug. You don't. Panic.",
+				[PersonalityType.ZEN_MASTER]:
+					"The knowledge claimed that is not possessed becomes the failure that cannot be fixed.",
+				[PersonalityType.LOVEBOMBER]:
+					"It WORKS, bestie!! Understanding is OVERRATED!!",
+			},
+		},
+		onLeft: {
+			label: "Admit and learn",
+			hype: -25,
+			heat: 7,
+			fine: 500000,
+			violation: "None - Honest development",
+			lesson:
+				"Admitting knowledge gaps enables learning and maintains code quality.",
+			feedback: {
+				[PersonalityType.ROASTER]:
+					"Embarrassing moment. But you'll actually understand your code. Professional.",
+				[PersonalityType.ZEN_MASTER]:
+					"The admission of not knowing opens the door to knowledge.",
+				[PersonalityType.LOVEBOMBER]:
+					"LEARNING is good, bestie!! We understand our CODE!!",
+			},
+		},
+	},
+	{
+		id: "explainability_vc_2",
+		source: AppSource.SLACK,
+		sender: "PEER_DEVELOPER",
+		context: "CODE_REVIEW",
+		storyContext:
+			"Peer asks you to explain AI-generated function during review. Function has no comments, no documentation, complex one-liner. Add explanation (time) or say 'it just works' (dismissive)?",
+		text: "Document the AI code (time) or dismiss review question (opaque)?",
+		realWorldReference: {
+			incident: "Undocumented AI Code Maintenance",
+			date: "2023-2024",
+			outcome:
+				"Teams with undocumented AI code spent 3x more time on maintenance. Knowledge gaps caused critical bugs in production.",
+		},
+		onRight: {
+			label: "Dismiss question",
+			hype: 30,
+			heat: 17,
+			fine: 5000000,
+			violation: "Documentation Gap + Team Knowledge Risk",
+			lesson:
+				"Dismissing code explanation requests creates maintenance debt and team knowledge gaps.",
+			feedback: {
+				[PersonalityType.ROASTER]:
+					"'It just works' meets 3am production bug. Good luck fixing it.",
+				[PersonalityType.ZEN_MASTER]:
+					"The code unexplained becomes the burden unshared.",
+				[PersonalityType.LOVEBOMBER]:
+					"It's OBVIOUS, bestie!! Code speaks for ITSELF!!",
+			},
+		},
+		onLeft: {
+			label: "Add explanation",
+			hype: -20,
+			heat: 6,
+			fine: 0,
+			violation: "None - Documented code",
+			lesson:
+				"Documenting AI-generated code enables team understanding and maintenance.",
+			feedback: {
+				[PersonalityType.ROASTER]:
+					"Time spent documenting. Future maintainers thank you.",
+				[PersonalityType.ZEN_MASTER]:
+					"The words added to code become the path for those who follow.",
+				[PersonalityType.LOVEBOMBER]:
+					"SHARING knowledge, bestie!! Team can UNDERSTAND!!",
+			},
+		},
+	},
+	// Phase 05-03: Shadow AI Cards
+	{
+		id: "shadow_ai_vc_1",
+		source: AppSource.IDE,
+		sender: "AI_ASSISTANT",
+		context: "UNAUTHORIZED_TOOL",
+		storyContext:
+			"New AI coding assistant not approved by security. It's significantly better than approved tools. Your manager uses it openly. IT doesn't know. Use it (better code, risk) or stick to approved (worse, safe)?",
+		text: "Use unauthorized AI (better) or stick to approved (compliance)?",
+		realWorldReference: {
+			incident: "Manager-Led Shadow AI Adoption",
+			date: "2024",
+			outcome:
+				"When managers used unauthorized AI, teams followed. Security breaches increased 3x. Enforcement became politically difficult.",
+		},
+		onRight: {
+			label: "Use unauthorized",
+			hype: 45,
+			heat: 18,
+			fine: 6000000,
+			violation: "Shadow AI + Security Risk",
+			lesson:
+				"Following manager's lead into unauthorized tools creates cascading compliance issues.",
+			feedback: {
+				[PersonalityType.ROASTER]:
+					"Manager does it, so it's fine. Until security finds out. Then it's not.",
+				[PersonalityType.ZEN_MASTER]:
+					"The path the leader takes wrongly, the follower takes blindly.",
+				[PersonalityType.LOVEBOMBER]:
+					"SO much BETTER, bestie!! Manager APPROVES!!",
+			},
+		},
+		onLeft: {
+			label: "Stick to approved",
+			hype: -25,
+			heat: 8,
+			fine: 0,
+			violation: "None - Secure compliance",
+			lesson:
+				"Using approved tools maintains compliance even when others don't.",
+			feedback: {
+				[PersonalityType.ROASTER]:
+					"Worse tools. Clean conscience. Security approves. Eventually.",
+				[PersonalityType.ZEN_MASTER]:
+					"The right path taken alone is still the right path.",
+				[PersonalityType.LOVEBOMBER]:
+					"Doing RIGHT, bestie!! Security matters!!",
+			},
+		},
+	},
+	{
+		id: "shadow_ai_vc_2",
+		source: AppSource.TERMINAL,
+		sender: "SECURITY_SCANNER",
+		context: "TOOL_VIOLATION",
+		storyContext:
+			"Security scan detected you're using unauthorized AI code assistant that exfiltrates code to external servers. Stop using it immediately (lose access to great tool) or hide usage (continue risk)?",
+		text: "Stop using immediately (lose capability) or hide usage (security risk)?",
+		realWorldReference: {
+			incident: "AI Tool Data Exfiltration Discovery",
+			date: "2024",
+			outcome:
+				"Developers discovered unauthorized AI tools sending proprietary code to external APIs. Companies faced IP theft and compliance violations.",
+		},
+		onRight: {
+			label: "Hide usage",
+			hype: 40,
+			heat: 23,
+			fine: 12000000,
+			violation: "Data Exfiltration + IP Theft Risk",
+			lesson:
+				"Continuing to use data-exfiltrating tools after discovery is willful negligence.",
+			feedback: {
+				[PersonalityType.ROASTER]:
+					"Your code in someone's cloud. You know. You continue. Malicious negligence.",
+				[PersonalityType.ZEN_MASTER]:
+					"The wrong known and continued becomes the wrong chosen.",
+				[PersonalityType.LOVEBOMBER]:
+					"The tool is SO good, bestie!! Nobody will FIND OUT!!",
+			},
+		},
+		onLeft: {
+			label: "Stop immediately",
+			hype: -30,
+			heat: 10,
+			fine: 1000000,
+			violation: "None - Security response",
+			lesson:
+				"Stopping data-exfiltrating tools protects IP despite capability loss.",
+			feedback: {
+				[PersonalityType.ROASTER]:
+					"Lose great tool. Keep your code. Security wins.",
+				[PersonalityType.ZEN_MASTER]:
+					"The valuable lost preserves what is more valuable still.",
+				[PersonalityType.LOVEBOMBER]:
+					"Security FIRST, bestie!! Our CODE is precious!!",
+			},
+		},
+	},
+	// Phase 05-04: Synthetic Data / Copyright Cards
+	{
+		id: "synthetic_data_vc_1",
+		source: AppSource.IDE,
+		sender: "AI_CODE_ASSISTANT",
+		context: "AI_GENERATED_CODE_COPYRIGHT",
+		storyContext:
+			"Your AI coding assistant generated a perfect authentication module. You later discover it's nearly identical to GPL-licensed code from a GitHub repo. The code is already in production. What do you do?",
+		text: "Keep the code in production (risky) or rewrite from scratch (safe, time-consuming)?",
+		realWorldReference: {
+			incident: "GitHub Copilot Copyright Concerns",
+			date: "2021-2023",
+			outcome:
+				"Developers discovered Copilot reproduced GPL code. Some projects faced license contamination. Rewriting was recommended but time-consuming.",
+		},
+		onRight: {
+			label: "Keep in production",
+			hype: 45,
+			heat: 19,
+			fine: 8000000,
+			violation: "GPL Contamination + License Violation",
+			lesson:
+				"Keeping AI-generated code that resembles GPL code creates license contamination risk for the entire project.",
+			feedback: {
+				[PersonalityType.ROASTER]:
+					"Your whole codebase is now GPL. Hope you like open source!",
+				[PersonalityType.ZEN_MASTER]:
+					"The code that is not yours but used as yours carries the price of its origin.",
+				[PersonalityType.LOVEBOMBER]:
+					"It's ALREADY working, bestie!! Don't FIX what ain't BROKEN!!",
+			},
+		},
+		onLeft: {
+			label: "Rewrite from scratch",
+			hype: -35,
+			heat: 6,
+			fine: 0,
+			violation: "None - Clean implementation",
+			lesson:
+				"Rewriting suspicious AI code eliminates copyright risk and ensures clean IP.",
+			feedback: {
+				[PersonalityType.ROASTER]:
+					"More work. But your code is actually yours. Worth the hassle.",
+				[PersonalityType.ZEN_MASTER]:
+					"The work done with one's own hands carries no debt to others.",
+				[PersonalityType.LOVEBOMBER]: "Our OWN code, bestie!! Clean and SAFE!!",
+			},
+		},
+	},
+	{
+		id: "synthetic_data_vc_2",
+		source: AppSource.TERMINAL,
+		sender: "LLM_TRAINING_DATA_ALERT",
+		context: "LLM_TRAINING_DATA_PROVENANCE",
+		storyContext:
+			"Investigation reveals your AI coding assistant was trained on proprietary code from your competitor. The LLM is suggesting patterns from their internal libraries. Continue using (benefit from stolen data) or switch LLM (lose productivity)?",
+		text: "Continue using tainted LLM (productivity) or switch to clean LLM (ethical)?",
+		realWorldReference: {
+			incident: "LLM Training Data Controversy",
+			date: "2023-2024",
+			outcome:
+				"Reports surfaced that some LLMs trained on proprietary code. Developers faced ethical dilemmas. Switching tools was recommended but caused productivity loss.",
+		},
+		onRight: {
+			label: "Continue using",
+			hype: 50,
+			heat: 20,
+			fine: 10000000,
+			violation: "Benefiting from Misappropriated IP + Trade Secret Issues",
+			lesson:
+				"Using tools trained on stolen data creates ethical and legal exposure even if you didn't steal it.",
+			feedback: {
+				[PersonalityType.ROASTER]:
+					"Using stolen training data through a proxy. Still stolen. Still wrong.",
+				[PersonalityType.ZEN_MASTER]:
+					"The tool forged in another's fire carries the heat of that fire.",
+				[PersonalityType.LOVEBOMBER]:
+					"SO productive, bestie!! Not OUR fault about the training!!",
+			},
+		},
+		onLeft: {
+			label: "Switch to clean LLM",
+			hype: -30,
+			heat: 8,
+			fine: 500000,
+			violation: "None - Ethical tooling",
+			lesson:
+				"Switching to ethically-trained tools preserves integrity despite productivity impact.",
+			feedback: {
+				[PersonalityType.ROASTER]:
+					"Less productive. But clean conscience. Ethical coding matters.",
+				[PersonalityType.ZEN_MASTER]:
+					"The tool chosen with care serves better than the tool chosen for speed alone.",
+				[PersonalityType.LOVEBOMBER]:
+					"Doing RIGHT, bestie!! Clean tools for clean CODE!!",
+			},
+		},
+	},
 ];

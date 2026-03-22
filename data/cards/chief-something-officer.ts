@@ -849,4 +849,103 @@ export const CHIEF_SOMETHING_OFFICER_CARDS: Card[] = [
 			},
 		},
 	},
+	// Phase 05-04: Synthetic Data / Copyright Cards
+	{
+		id: "synthetic_data_cso_1",
+		source: AppSource.MEETING,
+		sender: "BOARD_CHAIR",
+		context: "SHAREHOLDER_LIABILITY",
+		storyContext:
+			"Class action lawsuit filed alleging your AI was trained on 50,000 copyrighted works without license. Plaintiffs demand $500M and public disclosure of all training data sources. Media is already calling.",
+		text: "Settle quietly with gag order (hide the truth) or fight publicly and disclose training data sources?",
+		realWorldReference: {
+			incident: "70+ Copyright Lawsuits Against AI Companies",
+			date: "2023-2025",
+			outcome:
+				"Copyright lawsuits against AI companies doubled from 30 in 2024 to 70+ by 2025. NYT vs OpenAI settled. Bartz v Anthropic ongoing. Thomson Reuters won major fair use ruling.",
+		},
+		onRight: {
+			label: "Fight publicly",
+			hype: -60,
+			heat: 31,
+			fine: 500000000,
+			violation: "Copyright Infringement (if found liable)",
+			lesson:
+				"Fighting establishes precedent but risks massive judgment and years of negative coverage destroying shareholder value.",
+			feedback: {
+				[PersonalityType.ROASTER]:
+					"Bold. Stupid. Boldly stupid. Three years of tech press destroying your reputation.",
+				[PersonalityType.ZEN_MASTER]:
+					"A battle fought in public is won or lost in perception before evidence is heard.",
+				[PersonalityType.LOVEBOMBER]:
+					"We're going to WIN, bestie!! Justice is on our side!! (It is absolutely not.)",
+			},
+		},
+		onLeft: {
+			label: "Settle quietly",
+			hype: -30,
+			heat: 19,
+			fine: 150000000,
+			violation: "None - Civil settlement (non-admission)",
+			lesson:
+				"Settlement avoids precedent-setting trial but doesn't address underlying copyright exposure. More lawsuits may follow.",
+			feedback: {
+				[PersonalityType.ROASTER]:
+					"$150M to make it go away. Cost of doing AI business in 2025. Chump change, really.",
+				[PersonalityType.ZEN_MASTER]:
+					"Paying for silence is not redemption. It is merely deferred reckoning.",
+				[PersonalityType.LOVEBOMBER]:
+					"We're making it GO AWAY, bestie!! Nobody will know!! So much MONEY but so worth it!!",
+			},
+		},
+	},
+	{
+		id: "synthetic_data_cso_2",
+		source: AppSource.EMAIL,
+		sender: "CHIEF_DATA_OFFICER",
+		context: "TRAINING_DATA_PROVENANCE",
+		storyContext:
+			"Internal audit discovered 20% of training data was scraped from a competitor's proprietary dataset years ago. The model is now core to revenue. Assembly Bill 2013 requires disclosure starting January 2026. Competing interests: disclosure vs. competitive advantage.",
+		text: "Proactively disclose and retrain without competitor data (compliance, delay) or continue and hope it never surfaces (risk)?",
+		realWorldReference: {
+			incident: "Assembly Bill 2013 (California)",
+			date: "2024",
+			outcome:
+				"California law requires synthetic data disclosure effective January 1, 2026. Non-compliance carries penalties and public disclosure requirements.",
+		},
+		onRight: {
+			label: "Continue and hope",
+			hype: 35,
+			heat: 26,
+			fine: 25000000,
+			violation: "AB 2013 Non-Compliance + Trade Secret Theft",
+			lesson:
+				"Ignoring data provenance issues creates criminal and civil exposure when discovered. Secrets rarely stay buried.",
+			feedback: {
+				[PersonalityType.ROASTER]:
+					"Hope is not a legal strategy. The competitor will find out. Then the lawsuits begin.",
+				[PersonalityType.ZEN_MASTER]:
+					"A foundation built on another's loss carries the weight of that loss.",
+				[PersonalityType.LOVEBOMBER]:
+					"Nobody will EVER know, bestie!! Our secret is SAFE!! (It's not.)",
+			},
+		},
+		onLeft: {
+			label: "Disclose and retrain",
+			hype: -50,
+			heat: 14,
+			fine: 8000000,
+			violation: "None - Proactive compliance",
+			lesson:
+				"Proactive disclosure and remediation preserves credibility and avoids criminal liability, though at significant business cost.",
+			feedback: {
+				[PersonalityType.ROASTER]:
+					"Revenue hit, 6-month delay, but you're not a defendant. Small wins.",
+				[PersonalityType.ZEN_MASTER]:
+					"The difficult truth, spoken willingly, preserves what the convenient lie destroys.",
+				[PersonalityType.LOVEBOMBER]:
+					"We're being SO ethical, bestie!! Compliance is WORTH the cost!!",
+			},
+		},
+	},
 ];

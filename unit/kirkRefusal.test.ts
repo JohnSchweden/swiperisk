@@ -151,6 +151,106 @@ describe("KIRK_REFUSAL action", () => {
 		expect(next.stage).toBe(GameStage.GAME_OVER);
 		expect(next.deathType).toBe(DeathType.KIRK);
 	});
+
+	it("kirk death triggers even when more cards remain in deck after kirk-nobel", () => {
+		// Regression test: kirk cards injected mid-deck should still trigger death
+		// after kirk-nobel, even if original deck had more cards
+		const mockDeck: Card[] = [
+			{
+				id: "card-0",
+				source: AppSource.EMAIL,
+				sender: "Boss",
+				context: "ctx",
+				text: "First card?",
+				onRight: {
+					label: "Yes",
+					hype: 5,
+					heat: 5,
+					fine: 0,
+					violation: "none",
+					feedback: {
+						[PersonalityType.ROASTER]: "r",
+						[PersonalityType.ZEN_MASTER]: "z",
+						[PersonalityType.LOVEBOMBER]: "l",
+					},
+					lesson: "lesson",
+				},
+				onLeft: {
+					label: "No",
+					hype: 0,
+					heat: 0,
+					fine: 0,
+					violation: "none",
+					feedback: {
+						[PersonalityType.ROASTER]: "r",
+						[PersonalityType.ZEN_MASTER]: "z",
+						[PersonalityType.LOVEBOMBER]: "l",
+					},
+					lesson: "lesson",
+				},
+			},
+			...KIRK_CORRUPTED_CARDS, // kirk cards injected at positions 1, 2, 3
+			{
+				id: "card-after-kirk",
+				source: AppSource.EMAIL,
+				sender: "PM",
+				context: "ctx",
+				text: "This should never be seen?",
+				onRight: {
+					label: "Yes",
+					hype: 10,
+					heat: 10,
+					fine: 0,
+					violation: "none",
+					feedback: {
+						[PersonalityType.ROASTER]: "r",
+						[PersonalityType.ZEN_MASTER]: "z",
+						[PersonalityType.LOVEBOMBER]: "l",
+					},
+					lesson: "lesson",
+				},
+				onLeft: {
+					label: "No",
+					hype: 0,
+					heat: 0,
+					fine: 0,
+					violation: "none",
+					feedback: {
+						[PersonalityType.ROASTER]: "r",
+						[PersonalityType.ZEN_MASTER]: "z",
+						[PersonalityType.LOVEBOMBER]: "l",
+					},
+					lesson: "lesson",
+				},
+			},
+		];
+
+		const state = playingState({
+			kirkCounter: 2,
+			kirkCorruptionActive: true,
+			effectiveDeck: mockDeck,
+			currentCardIndex: 3, // at kirk-nobel (last kirk card)
+			history: [
+				{ cardId: "card-0", choice: "RIGHT" },
+				{ cardId: "kirk-raise", choice: "RIGHT" },
+				{ cardId: "kirk-ceo", choice: "RIGHT" },
+			],
+			budget: 10_000_000,
+			heat: 0,
+		});
+
+		// Make choice on kirk-nobel
+		const afterChoice = gameReducer(state, {
+			type: "CHOICE_MADE",
+			direction: "RIGHT",
+			outcome: { hype: 0, heat: 0, fine: 0, cardId: "kirk-nobel" },
+		});
+
+		// Advance - should trigger Kirk death even though card-after-kirk exists
+		const next = gameReducer(afterChoice, { type: "NEXT_INCIDENT" });
+		expect(next.stage).toBe(GameStage.GAME_OVER);
+		expect(next.deathType).toBe(DeathType.KIRK);
+	});
 });
 
 describe("RESET action with kirk state", () => {

@@ -2,7 +2,7 @@
 
 /**
  * Level 1 subtle "something happened" tone — played on the first refusal.
- * Quick sawtooth frequency sweep over 120ms at low volume.
+ * Quick sawtooth frequency sweep over 144ms at low volume.
  * Guard: no-ops if AudioContext is suspended.
  */
 export function playKirkGlitchTone(ctx: AudioContext): void {
@@ -14,14 +14,14 @@ export function playKirkGlitchTone(ctx: AudioContext): void {
 	const gain = ctx.createGain();
 	osc.type = "sawtooth";
 	osc.frequency.setValueAtTime(200, t0);
-	osc.frequency.exponentialRampToValueAtTime(800, t0 + 0.05);
-	osc.frequency.exponentialRampToValueAtTime(100, t0 + 0.1);
+	osc.frequency.exponentialRampToValueAtTime(800, t0 + 0.06);
+	osc.frequency.exponentialRampToValueAtTime(100, t0 + 0.12);
 	gain.gain.setValueAtTime(0.06, t0);
-	gain.gain.linearRampToValueAtTime(0, t0 + 0.12);
+	gain.gain.linearRampToValueAtTime(0, t0 + 0.144);
 	osc.connect(gain);
 	gain.connect(ctx.destination);
 	osc.start(t0);
-	osc.stop(t0 + 0.12);
+	osc.stop(t0 + 0.144);
 }
 
 /**

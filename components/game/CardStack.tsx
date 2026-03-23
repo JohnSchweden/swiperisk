@@ -22,12 +22,14 @@ interface CardStackProps {
 	cardRef: RefObject<HTMLDivElement>;
 	// Swipe state
 	offset: number;
+	verticalOffset?: number;
 	direction: "LEFT" | "RIGHT" | null;
 	isDragging: boolean;
 	hasDragged: boolean;
 	exitDirection: "LEFT" | "RIGHT" | null;
 	exitPosition: { x: number; rotate: number } | null;
 	isSnappingBack: boolean;
+	isSwipeUp?: boolean;
 	// Event handlers
 	onTouchStart: (e: React.TouchEvent | React.MouseEvent) => void;
 	onTouchMove: (e: React.TouchEvent | React.MouseEvent) => void;
@@ -88,12 +90,14 @@ export const CardStack: React.FC<CardStackProps> = ({
 	isFirstCard,
 	cardRef,
 	offset,
+	verticalOffset = 0,
 	direction,
 	isDragging,
 	hasDragged,
 	exitDirection,
 	exitPosition,
 	isSnappingBack,
+	isSwipeUp = false,
 	onTouchStart,
 	onTouchMove,
 	onTouchEnd,
@@ -216,7 +220,7 @@ export const CardStack: React.FC<CardStackProps> = ({
 					transform:
 						exitDirection && exitPosition
 							? `translateX(${exitPosition.x}px) rotate(${exitPosition.rotate}deg)`
-							: `translateX(${offset}px) rotate(${offset * 0.05}deg)`,
+							: `translateX(${offset}px) translateY(${verticalOffset}px) rotate(${offset * 0.05}deg)`,
 					transition: getCardTransition(isDragging, exitDirection),
 					cursor: isDragging ? "grabbing" : "grab",
 					opacity: exitDirection ? 0 : 1,

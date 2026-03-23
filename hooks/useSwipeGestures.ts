@@ -14,12 +14,14 @@ function getSwipeDirectionFromDelta(
 
 interface SwipeState {
 	offset: number;
+	verticalOffset: number;
 	direction: "LEFT" | "RIGHT" | null;
 	isDragging: boolean;
 	exitDirection: "LEFT" | "RIGHT" | null;
 	exitPosition: { x: number; rotate: number } | null;
 	isSnappingBack: boolean;
 	hasDragged: boolean;
+	isSwipeUp: boolean;
 }
 
 export type { SwipeState };
@@ -39,12 +41,14 @@ export function useSwipeGestures({
 }: UseSwipeGesturesOptions) {
 	const [state, setState] = useState<SwipeState>({
 		offset: 0,
+		verticalOffset: 0,
 		direction: null,
 		isDragging: false,
 		exitDirection: null,
 		exitPosition: null,
 		isSnappingBack: false,
 		hasDragged: false,
+		isSwipeUp: false,
 	});
 
 	const touchStartX = useRef(0);
@@ -63,12 +67,14 @@ export function useSwipeGestures({
 	const reset = useCallback(() => {
 		setState({
 			offset: 0,
+			verticalOffset: 0,
 			direction: null,
 			isDragging: false,
 			exitDirection: null,
 			exitPosition: null,
 			isSnappingBack: false,
 			hasDragged: false,
+			isSwipeUp: false,
 		});
 	}, []);
 
@@ -122,7 +128,16 @@ export function useSwipeGestures({
 					setState((prev) => ({
 						...prev,
 						offset: dx,
+						verticalOffset: 0,
 						direction: newDirection,
+					}));
+				} else if (dy < 0 && Math.abs(dy) > Math.abs(dx) * 1.5) {
+					// Vertical-dominant upward gesture - track for swipe-up preview
+					setState((prev) => ({
+						...prev,
+						offset: 0,
+						verticalOffset: dy,
+						isSwipeUp: Math.abs(dy) > SWIPE_PREVIEW_THRESHOLD,
 					}));
 				}
 
@@ -178,12 +193,36 @@ export function useSwipeGestures({
 			Math.abs(finalDeltaY) > Math.abs(finalDeltaX) * 1.5
 		) {
 			onSwipeUp?.();
-			// Snap back (same as below-threshold horizontal)
+			// Snap back with vertical animation (like incomplete left/right swipe)
 			setState((prev) => ({
 				...prev,
 				isSnappingBack: true,
 				offset: 0,
+				verticalOffset: 0,
 				direction: null,
+				isSwipeUp: false,
+			}));
+			if (animationTimeoutRef.current) {
+				clearTimeout(animationTimeoutRef.current);
+			}
+			animationTimeoutRef.current = setTimeout(() => {
+				setState((prev) => ({ ...prev, isSnappingBack: false }));
+				animationTimeoutRef.current = null;
+			}, 600);
+			return;
+		}
+
+		// Below-threshold vertical gesture: snap back like incomplete horizontal swipe
+		if (
+			!isHorizontalSwipe.current &&
+			finalDeltaY < 0 &&
+			Math.abs(finalDeltaY) > Math.abs(finalDeltaX) * 1.5
+		) {
+			setState((prev) => ({
+				...prev,
+				isSnappingBack: true,
+				verticalOffset: 0,
+				isSwipeUp: false,
 			}));
 			if (animationTimeoutRef.current) {
 				clearTimeout(animationTimeoutRef.current);
@@ -226,7 +265,9 @@ export function useSwipeGestures({
 				...prev,
 				isSnappingBack: true,
 				offset: 0,
+				verticalOffset: 0,
 				direction: null,
+				isSwipeUp: false,
 			}));
 			if (animationTimeoutRef.current) {
 				clearTimeout(animationTimeoutRef.current);

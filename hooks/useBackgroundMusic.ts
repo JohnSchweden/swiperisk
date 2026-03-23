@@ -219,13 +219,15 @@ export function useBackgroundMusic() {
 			if (audioRef.current !== el || !enabledRef.current) return;
 			syncVolumeUnlessRamping(el);
 			void el.play().catch((e2) => {
-				if (import.meta.env.DEV) {
+				// NotAllowedError = expected browser autoplay restriction, don't warn
+				if (import.meta.env.DEV && e2.name !== "NotAllowedError") {
 					console.warn("[BGM] play retry after ready failed:", e2);
 				}
 			});
 		};
 		void el.play().catch((err) => {
-			if (import.meta.env.DEV) {
+			// NotAllowedError = expected browser autoplay restriction, don't warn
+			if (import.meta.env.DEV && err.name !== "NotAllowedError") {
 				console.warn("[BGM] play failed:", err);
 			}
 			/** If media is already buffered, canplay may have fired before we subscribed. */

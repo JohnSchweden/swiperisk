@@ -57,3 +57,6 @@ Patterns to prevent repeat mistakes. Update after corrections from the user.
 
 <!-- Captured 2026-03-22 via post-commit analysis -->
 - [RULE] In Playwright tests, wait for the specific element directly with `.waitFor({ state: "visible" })` instead of using `page.waitForSelector()` for a generic selector, then asserting the specific element is visible separately — The generic wait may resolve for the wrong element, causing race conditions or masking failures. Targeting the specific element upfront ensures the test waits for the right thing.
+
+<!-- Captured 2026-03-23 via post-commit analysis -->
+- [RULE] WebMCP tools with zero parameters still require `inputSchema: { type: "object", properties: {} }` — Framework enforces schema declaration for all tools during registration, even when the handler accepts no arguments; omission silently breaks the tool

@@ -415,6 +415,46 @@ Integrate images into UI:
 - IMAGE-05: Fallback when image missing (placeholder or hide)
 - IMAGE-06: Lazy load / performance (avoid blocking render)
 
+### Phase 15: Voice Files Expanded
+
+**Goal:** Generate voice audio files for archetype reveals, death endings, and high-impact Head of Something cards
+**Depends on:** Phase 06 (debrief system), Phase 07 (Kirk audio pattern)
+**Plans:** 3 plans
+
+Plans:
+- [ ] 15-01-PLAN.md — Generate archetype reveal audio (7 archetypes × 3 personalities = 21 files)
+- [ ] 15-02-PLAN.md — Generate death ending audio (6 deaths × 3 personalities = 18 files)
+- [ ] 15-03-PLAN.md — Generate Head of Something critical card feedback (8 cards × 2 choices = 16 Roaster files)
+
+**Details:**
+Extend voice coverage beyond basic onboarding/victory/failure to create immersive audio moments:
+
+**Archetype Reveals (21 files):**
+Each of 7 archetypes needs a reveal voice line on debrief verdict page:
+- PRAGMATIST, SHADOW_ARCHITECT, DISRUPTOR, CONSERVATIVE, BALANCED, CHAOS_AGENT, KIRK
+- Generate for all 3 personalities (Roaster, ZenMaster, Lovebomber)
+
+**Death Endings (18 files):**
+Each of 6 death types needs audio on collapse page:
+- BANKRUPT, REPLACED_BY_SCRIPT, CONGRESS, FLED_COUNTRY, PRISON, AUDIT_FAILURE
+- Note: KIRK death already has synthesized glitch audio (services/kirkAudio.ts)
+- Generate for all 3 personalities
+
+**Head of Something Critical Cards (16 files):**
+Focus on 8 highest-impact cards with Roaster voice only (based on fine/heat/hype analysis):
+- Tier 1 (Game-Enders): `hos_managing_up_down`, `explainability_hos_2`
+- Tier 2 (Sacrifice Moments): `hos_copyright_team_blame`, `hos_team_burnout_deadline`, `shadow_ai_hos_2`, `hos_model_drift_team_blame`
+- Tier 3 (Major Consequences): `hos_explainability_politics`, `hos_prompt_injection_review_escape`
+
+**Total New Files:** 55 audio files (21 + 18 + 16)
+
+**Requirements:**
+- VOICE-01: Archetype reveal audio plays on DebriefPage3 verdict display
+- VOICE-02: Death ending audio plays on DebriefPage1 collapse display
+- VOICE-03: Critical card feedback audio triggers on swipe for Head of Something role
+- VOICE-04: All files follow naming convention: `{personality}/{type}_{id}.wav`
+- VOICE-05: Update voicePlayback.ts to support archetype/death triggers
+
 ---
 
 ## Progress
@@ -437,7 +477,8 @@ Integrate images into UI:
 | 12 | Gameplay Tweaks & Card Variety | v1.2 | Complete (2/2) |
 | 13 | Image Asset Pipeline | v1.2 | Not started |
 | 14 | Situational & Outcome Imagery Display | v1.2 | Not started |
+| 15 | Voice Files Expanded | v1.2 | Not started |
 
 ---
 
-*Roadmap updated: 2026-03-22 — Phase 05-06 audit complete (archetypes & death endings analyzed, 3 personality proposals documented)*
+*Roadmap updated: 2026-03-24 — Phase 15 added (archetype/death audio + Head of Something critical cards)*

@@ -2,14 +2,14 @@
 gsd_state_version: 1.0
 milestone: v1.2
 milestone_name: Kobayashi Maru — AI Governance Simulator
-current_phase: 07-kirk-easter-egg
-current_plan: 03
-status: complete
+current_phase: 15-voice-files-expanded
+current_plan: 01
+status: in_progress
 last_updated: "2026-03-24T00:00:00.000Z"
 progress:
-  total_phases: 14
+  total_phases: 15
   completed_phases: 7
-  total_plans: 69
+  total_plans: 72
   completed_plans: 53
 ---
 

@@ -53,8 +53,23 @@ export async function loadVoice(
 ): Promise<void> {
 	const basePath = "/audio/voices";
 	const personalityDir = `${basePath}/${personality.toLowerCase().replace(/_/g, "")}`;
+
+	// Determine subfolder based on trigger prefix
+	function getSubfolder(triggerName: string): string {
+		if (triggerName.startsWith("archetype_")) return "archetype";
+		if (triggerName.startsWith("death_")) return "death";
+		if (triggerName.startsWith("feedback_")) return "feedback";
+		// Core triggers: onboarding, victory, failure
+		if (["onboarding", "victory", "failure"].includes(triggerName))
+			return "core";
+		return ""; // Fallback to root (for backwards compatibility)
+	}
+
+	const subfolder = getSubfolder(trigger);
 	const filename = `${trigger}.wav`;
-	const filePath = `${personalityDir}/${filename}`;
+	const filePath = subfolder
+		? `${personalityDir}/${subfolder}/${filename}`
+		: `${personalityDir}/${filename}`;
 
 	console.log("[Voice] Loading:", filePath);
 

@@ -63,3 +63,6 @@ Patterns to prevent repeat mistakes. Update after corrections from the user.
 
 <!-- Captured 2026-03-25 via post-commit analysis -->
 - [RULE] Utility functions with hardcoded configuration (storage keys, endpoints) silently fail when reused for different purposes. Parameterize all data sources in shared utilities, even if only one use case currently exists — reuse without parameterization causes the caller to read from the wrong source at runtime.
+
+<!-- Captured 2026-03-25 via post-commit analysis -->
+- [RULE] Audio file size thresholds are codec-specific and must be recalibrated during format migrations — Different codecs compress dramatically differently (WAV uncompressed ~50KB vs Opus at 96kbps ~4KB minimum for same duration). Tests with stale thresholds fail silently or produce false positives. Always document the codec/bitrate when changing formats and recalculate minimum sizes accordingly.

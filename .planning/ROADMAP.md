@@ -463,8 +463,9 @@ Plans:
 - [x] 15-02-PLAN.md — Generate death ending audio (7 deaths × 3 personalities = 21 files, including KIRK hybrid) ✓
 - [x] 15-03-PLAN.md — Generate Head of Something critical card feedback (8 cards × 2 choices = 16 Roaster files) ✓
 - [x] 15-04-PLAN.md — Restructure voices folder with subfolders (archetype, death, feedback, core) ✓
+- [ ] 15-05-PLAN.md — Compress audio to Opus and MP3 with automatic generation pipeline
 
-**Details:**
+**Details:
 Extend voice coverage beyond basic onboarding/victory/failure to create immersive audio moments:
 
 **Archetype Reveals (21 files):**
@@ -516,6 +517,23 @@ Reuses v1.1 infrastructure: `scripts/generate-voice.ts` (Gemini TTS) → `servic
 - VOICE-04: All files follow naming convention: `{personality}/{type}/{trigger}.wav`
 - VOICE-05: Update voicePlayback.ts to support subfolder paths
 
+**Audio Compression (15-05):**
+Automated compression pipeline to reduce bandwidth while maintaining quality:
+
+| Format | Bitrate | Quality | Browser Support | Savings |
+|--------|---------|---------|-----------------|---------|
+| Opus | 96 kbps | Excellent | 92% (Chrome, Firefox, Edge, Safari 15+) | ~6x smaller |
+| MP3 | 192 kbps | Good | 100% (Universal fallback) | ~3x smaller |
+
+**Automation Features:**
+- `scripts/compress-audio.ts` - Core compression utility using FFmpeg
+- `scripts/compress-existing-audio.ts` - Batch compress all 59 existing files
+- Auto-compression after WAV generation in all generation scripts
+- Browser detection in voicePlayback.ts serves Opus to modern browsers, MP3 to legacy
+- npm scripts: `compress:existing`, `compress:verify`, `compress:file`, `compress:dir`
+
+**Impact:** 19MB → ~3MB for 92% of users (83% bandwidth reduction)
+
 ---
 
 ## Progress
@@ -538,8 +556,8 @@ Reuses v1.1 infrastructure: `scripts/generate-voice.ts` (Gemini TTS) → `servic
 | 12 | Gameplay Tweaks & Card Variety | v1.2 | Complete (2/2) |
 | 13 | Image Asset Pipeline | v1.2 | Not started |
 | 14 | Situational & Outcome Imagery Display | v1.2 | Not started |
-| 15 | 5/5 | Complete    | 2026-03-24 |
+| 15 | 4/5 | In Progress | 2026-03-24 |
 
 ---
 
-*Roadmap updated: 2026-03-24 — Phase 15 plan 04 added (Voice Files Restructure)*
+*Roadmap updated: 2026-03-24 — Phase 15 plan 05 added (Audio Compression Pipeline)*

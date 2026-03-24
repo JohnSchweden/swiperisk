@@ -13,12 +13,14 @@ interface GameScreenProps {
 	cardRef: React.RefObject<HTMLDivElement>;
 	// Swipe state
 	swipeOffset: number;
+	swipeVerticalOffset?: number;
 	swipeDirection: "LEFT" | "RIGHT" | null;
 	isDragging: boolean;
 	hasDragged: boolean;
 	cardExitDirection: "LEFT" | "RIGHT" | null;
 	exitPosition: { x: number; rotate: number } | null;
 	isSnappingBack: boolean;
+	isSwipeUp?: boolean;
 	// Swipe handlers
 	onTouchStart: (e: React.TouchEvent | React.MouseEvent) => void;
 	onTouchMove: (e: React.TouchEvent | React.MouseEvent) => void;
@@ -48,12 +50,14 @@ export const GameScreen: React.FC<GameScreenProps> = ({
 	isFirstCard,
 	cardRef,
 	swipeOffset,
+	swipeVerticalOffset = 0,
 	swipeDirection,
 	isDragging,
 	hasDragged,
 	cardExitDirection,
 	exitPosition,
 	isSnappingBack,
+	isSwipeUp = false,
 	onTouchStart,
 	onTouchMove,
 	onTouchEnd,
@@ -121,11 +125,13 @@ export const GameScreen: React.FC<GameScreenProps> = ({
 						isFirstCard={isFirstCard}
 						cardRef={cardRef}
 						offset={swipeOffset}
+						verticalOffset={swipeVerticalOffset}
 						direction={swipeDirection}
 						isDragging={isDragging}
 						exitDirection={cardExitDirection}
 						exitPosition={exitPosition}
 						isSnappingBack={isSnappingBack}
+						isSwipeUp={isSwipeUp}
 						hasDragged={hasDragged}
 						onTouchStart={onTouchStart}
 						onTouchMove={onTouchMove}

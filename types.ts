@@ -120,6 +120,10 @@ export interface GameState {
 	unlockedEndings: DeathType[];
 	bossFightAnswers: boolean[];
 	effectiveDeck: Card[] | null;
+	/** Phase 07: Kirk easter egg counter — 0, 1, or 2 refusals */
+	kirkCounter: number;
+	/** Phase 07: True after second refusal — corruption cascade active */
+	kirkCorruptionActive: boolean;
 }
 
 export enum DeathType {
@@ -129,6 +133,7 @@ export enum DeathType {
 	FLED_COUNTRY = "FLED_COUNTRY",
 	PRISON = "PRISON",
 	AUDIT_FAILURE = "AUDIT_FAILURE",
+	KIRK = "KIRK",
 }
 
 /** Phase 03-06: Role-based fine tiers for balanced gameplay */
@@ -182,7 +187,9 @@ export type ArchetypeId =
 	| "DISRUPTOR"
 	| "CONSERVATIVE"
 	| "BALANCED"
-	| "CHAOS_AGENT";
+	| "CHAOS_AGENT"
+	/** Phase 07: Kirk Easter Egg archetype */
+	| "KIRK";
 
 export interface Archetype {
 	id: ArchetypeId;

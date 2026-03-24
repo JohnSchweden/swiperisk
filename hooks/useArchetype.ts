@@ -1,6 +1,6 @@
 import { useMemo } from "react";
-import { calculateArchetype } from "../data/archetypes";
-import type { Archetype, RoleType } from "../types";
+import { ARCHETYPES, calculateArchetype } from "../data/archetypes";
+import { type Archetype, DeathType, type RoleType } from "../types";
 
 interface UseArchetypeResult {
 	archetype: Archetype | null;
@@ -16,6 +16,7 @@ interface UseArchetypeResult {
  * @param finalHeat - Final heat at game end
  * @param finalHype - Final hype at game end
  * @param role - Selected role type (null if not selected)
+ * @param deathType - Optional death type; KIRK overrides normal archetype calculation
  * @returns Object containing calculated archetype and resilience score (0-100)
  */
 export function useArchetype(
@@ -24,8 +25,12 @@ export function useArchetype(
 	finalHeat: number,
 	finalHype: number,
 	role: RoleType | null,
+	deathType?: string | null,
 ): UseArchetypeResult {
 	return useMemo(() => {
+		if (deathType === DeathType.KIRK) {
+			return { archetype: ARCHETYPES.KIRK, resilience: 0 };
+		}
 		return calculateArchetype(history, finalBudget, finalHeat, finalHype, role);
-	}, [history, finalBudget, finalHeat, finalHype, role]);
+	}, [history, finalBudget, finalHeat, finalHype, role, deathType]);
 }

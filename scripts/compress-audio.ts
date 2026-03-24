@@ -9,6 +9,8 @@ ffmpeg.setFfmpegPath(ffmpegStatic || "ffmpeg");
 export interface CompressionOptions {
 	bitrate?: number;
 	codec?: "libopus" | "libmp3lame";
+	deleteWav?: boolean; // default: true (opt-out)
+	archiveDir?: string; // default: "audio-archive"
 }
 
 const DEFAULT_OPTIONS: Record<string, CompressionOptions> = {
@@ -17,17 +19,57 @@ const DEFAULT_OPTIONS: Record<string, CompressionOptions> = {
 };
 
 /**
+ * Archive a WAV file to the archive directory maintaining subfolder structure
+ */
+async function archiveWavFile(
+	inputPath: string,
+	archiveDir: string,
+): Promise<string> {
+	// Extract relative path from public/audio/voices/
+	const voicesMatch = inputPath.match(/public\/audio\/voices\/(.*)/);
+	if (!voicesMatch) {
+		throw new Error(`Cannot determine archive path for: ${inputPath}`);
+	}
+
+	const relativePath = voicesMatch[1];
+	const archivePath = path.join(archiveDir, relativePath);
+
+	// Ensure archive directory exists
+	await fs.mkdir(path.dirname(archivePath), { recursive: true });
+
+	// Copy file to archive
+	await fs.copyFile(inputPath, archivePath);
+
+	return archivePath;
+}
+
+/**
  * Compress a single WAV file to Opus and MP3
+ * By default, archives the WAV file and deletes the original (opt-out via deleteWav: false)
  */
 export async function compressAudioFile(
 	inputPath: string,
-	options: { opus?: boolean; mp3?: boolean } = { opus: true, mp3: true },
-): Promise<{ opus?: string; mp3?: string }> {
-	const results: { opus?: string; mp3?: string } = {};
+	options: {
+		opus?: boolean;
+		mp3?: boolean;
+		deleteWav?: boolean;
+		archiveDir?: string;
+	} = { opus: true, mp3: true, deleteWav: true, archiveDir: "audio-archive" },
+): Promise<{ opus?: string; mp3?: string; archived?: string }> {
+	const results: { opus?: string; mp3?: string; archived?: string } = {};
 	const basePath = inputPath.replace(".wav", "");
+	const deleteWav = options.deleteWav !== false; // default true
+	const archiveDir = options.archiveDir || "audio-archive";
 
 	// Verify input exists
 	await fs.access(inputPath);
+
+	// Archive WAV file before compression
+	if (deleteWav) {
+		const archivedPath = await archiveWavFile(inputPath, archiveDir);
+		results.archived = archivedPath;
+		console.log(`  📦 Archived: ${path.relative(archiveDir, archivedPath)}`);
+	}
 
 	if (options.opus !== false) {
 		const opusPath = `${basePath}.opus`;
@@ -63,6 +105,12 @@ export async function compressAudioFile(
 		results.mp3 = mp3Path;
 	}
 
+	// Delete original WAV file after successful compression (if enabled)
+	if (deleteWav && (results.opus || results.mp3)) {
+		await fs.unlink(inputPath);
+		console.log(`  🗑️  Deleted: ${path.basename(inputPath)}`);
+	}
+
 	return results;
 }
 
@@ -71,7 +119,12 @@ export async function compressAudioFile(
  */
 export async function compressDirectory(
 	dirPath: string,
-	options: { opus?: boolean; mp3?: boolean } = { opus: true, mp3: true },
+	options: {
+		opus?: boolean;
+		mp3?: boolean;
+		deleteWav?: boolean;
+		archiveDir?: string;
+	} = { opus: true, mp3: true, deleteWav: true, archiveDir: "audio-archive" },
 ): Promise<{ processed: number; errors: string[] }> {
 	const errors: string[] = [];
 	let processed = 0;

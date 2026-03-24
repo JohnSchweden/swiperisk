@@ -1,9 +1,10 @@
+import "dotenv/config";
 import * as fs from "node:fs";
 import * as path from "node:path";
 import { GoogleGenAI, Modality } from "@google/genai";
 import { compressAudioFile } from "./compress-audio";
 
-const apiKey = process.env.GEMINI_API_KEY;
+const apiKey = process.env.GEMINI_API_KEY || process.env.VITE_GEMINI_API_KEY;
 if (!apiKey) {
 	console.error("GEMINI_API_KEY not set");
 	process.exit(1);

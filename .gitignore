@@ -33,3 +33,7 @@ reports/
 
 # Claude Code auto-memory
 .claude/auto-memory/dirty-files
+
+# Audio source files (archived WAVs)
+audio-archive/
+*.wav

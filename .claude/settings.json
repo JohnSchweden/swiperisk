@@ -5,7 +5,7 @@
 				"hooks": [
 					{
 						"type": "command",
-						"command": "node \".claude/hooks/lesson-session-start.js\""
+						"command": "node \".claude/hooks/lesson-session-start.cjs\""
 					}
 				]
 			}

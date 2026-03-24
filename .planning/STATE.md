@@ -4,13 +4,13 @@ milestone: v1.2
 milestone_name: Kobayashi Maru — AI Governance Simulator
 current_phase: 15-voice-files-expanded
 current_plan: 04
-status: complete
-last_updated: "2026-03-24T20:21:00Z"
+status: completed
+last_updated: "2026-03-24T20:56:35.682Z"
 progress:
   total_phases: 15
   completed_phases: 9
-  total_plans: 72
-  completed_plans: 60
+  total_plans: 75
+  completed_plans: 62
 ---
 
 # Session State
@@ -85,6 +85,8 @@ See: .planning/PROJECT.md
 - Defer THE_PARANOID (WATCHER) to Phase 08 — niche surveillance/conspiracy theme
 - Implementation recommended for Phase 13 or Phase 08 — content-heavy, requires ~6-8 hours per personality
 - Defer remaining 12 archetype audio files (ZenMaster 5 + Lovebomber 7) — Gemini API quota limit reached, can generate later without code changes
+- [Phase 15-voice-files-expanded]: Use 96kbps Opus (6x compression) and 192kbps MP3 (3x compression) for audio assets
+- [Phase 15-voice-files-expanded]: Browser capability detection via canPlayType() for format selection
 
 ## Key Metrics
 

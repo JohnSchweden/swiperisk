@@ -1,28 +1,8 @@
+import { getAudioExtension, supportsOpus } from "./audioUtils";
 import { createRadioSession } from "./radioEffect";
 
 type VoiceActivityListener = (active: boolean) => void;
 const voiceActivityListeners = new Set<VoiceActivityListener>();
-
-/**
- * Check if browser supports Opus codec
- */
-function supportsOpus(): boolean {
-	const audio = new Audio();
-	// Check Ogg Opus (most common)
-	const oggSupport = audio.canPlayType('audio/ogg; codecs="opus"');
-	// Check WebM Opus (alternative)
-	const webmSupport = audio.canPlayType('audio/webm; codecs="opus"');
-	// Safari uses CAF container for Opus
-	const cafSupport = audio.canPlayType("audio/x-caf");
-
-	return (
-		oggSupport === "probably" ||
-		webmSupport === "probably" ||
-		cafSupport === "probably" ||
-		oggSupport === "maybe" ||
-		webmSupport === "maybe"
-	);
-}
 
 /**
  * Get the appropriate audio file path based on browser support
@@ -36,13 +16,7 @@ function getAudioFilePath(
 		? `${personalityDir}/${subfolder}/${trigger}`
 		: `${personalityDir}/${trigger}`;
 
-	// Check for Opus support
-	if (supportsOpus()) {
-		return `${basePath}.opus`;
-	}
-
-	// Fallback to MP3
-	return `${basePath}.mp3`;
+	return `${basePath}${getAudioExtension()}`;
 }
 
 /** BGM ducking: subscribe to voice playback start/end (not pause glitches during teardown). */

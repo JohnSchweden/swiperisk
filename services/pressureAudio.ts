@@ -1,5 +1,7 @@
 /** Phase 04: Browser-safe stress audio engine using Web Audio API primitives */
 
+import { getAudioPath } from "./audioUtils";
+
 const STRESS_BPM = 90;
 const HEARTBEAT_BASE_FREQ = 60;
 const HEARTBEAT_DURATION = 0.08;
@@ -19,8 +21,8 @@ const HEARTBEAT_HARMONICS: readonly [number, number][] = [
 	[HEARTBEAT_BASE_FREQ * 2, HARMONIC_2_AMP],
 	[HEARTBEAT_BASE_FREQ * 3, HARMONIC_3_AMP],
 ];
-/** Android heartbeat sample — Mixkit "Human single heart beat" CC0, ~1s. */
-const HEARTBEAT_SAMPLE_URL = "/audio/stress/heartbeat.mp3";
+/** Android heartbeat sample — Mixkit "Human single heart beat" CC0, ~1s. Uses Opus for supported browsers (92%), MP3 fallback (8%). */
+const HEARTBEAT_SAMPLE_URL = getAudioPath("/audio/stress/heartbeat");
 
 let cachedHeartbeatBuffer: AudioBuffer | null = null;
 

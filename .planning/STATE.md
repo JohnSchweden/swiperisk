@@ -3,14 +3,14 @@ gsd_state_version: 1.0
 milestone: v1.2
 milestone_name: Kobayashi Maru — AI Governance Simulator
 current_phase: 15-voice-files-expanded
-current_plan: 03
-status: executing
-last_updated: "2026-03-24T19:52:00Z"
+current_plan: 04
+status: complete
+last_updated: "2026-03-24T20:21:00Z"
 progress:
   total_phases: 15
   completed_phases: 9
   total_plans: 72
-  completed_plans: 59
+  completed_plans: 60
 ---
 
 # Session State
@@ -23,8 +23,8 @@ See: .planning/PROJECT.md
 
 **Milestone:** v1.2 Kobayashi Maru — AI Governance Simulator
 **Current phase:** 15-voice-files-expanded
-**Current plan:** 02
-**Status:** In Progress
+**Current plan:** 04
+**Status:** Phase complete (5/5 plans)
 
 ## Session Log
 
@@ -75,6 +75,7 @@ See: .planning/PROJECT.md
 - 2026-03-24: Completed 15-01-PLAN.md (Archetype reveal voice audio: 9/21 files generated, playback integration, tests)
 - 2026-03-24: Completed 15-02-PLAN.md (Death ending voice audio: 21 files, playback integration, KIRK hybrid effect)
 - 2026-03-24: Completed 15-03-PLAN.md (Head of Something critical card voice audio: 16 files, playback mapping, tests)
+- 2026-03-24: Completed 15-04-PLAN.md (Voice file restructure: 71 files organized in subfolders, playback path resolution updated)
 
 ## Decisions
 

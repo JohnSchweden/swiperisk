@@ -1,5 +1,10 @@
 import type React from "react";
-import { ROLE_DESCRIPTIONS, ROLE_ICONS, ROLE_LABELS } from "../../data";
+import {
+	ROLE_DESCRIPTIONS,
+	ROLE_ICONS,
+	ROLE_LABELS,
+	VOICE_COVERAGE_HINT,
+} from "../../data";
 import { ROLE_FINE_TIERS, RoleType } from "../../types";
 
 function formatBudget(amount: number): string {
@@ -85,16 +90,16 @@ export const RoleSelect: React.FC<RoleSelectProps> = ({
 							</div>
 							{SPEECH_UI_ENABLED && role === RoleType.HEAD_OF_SOMETHING ? (
 								<div
-									className="mt-3 md:mt-4 pt-3 md:pt-4 border-t border-white/10 w-full text-center text-slate-400/90 text-[10px] md:text-xs leading-relaxed font-normal flex flex-wrap items-center justify-center gap-1.5"
+									className="mt-3 md:mt-4 pt-3 md:pt-4 border-t border-white/10 w-full text-slate-400/90 text-[10px] md:text-xs leading-relaxed font-normal flex flex-col items-center justify-center gap-1.5 md:gap-2"
 									data-testid="role-select-voice-hint"
 									role="note"
 								>
 									<i
-										className={`fa-solid fa-volume-high shrink-0 text-[0.95em] transition-colors text-slate-400/85 ${hoverEnabled ? "group-hover:text-cyan-400" : ""}`}
+										className={`fa-solid fa-volume-high text-base md:text-lg transition-colors text-slate-400/85 ${hoverEnabled ? "group-hover:text-cyan-400" : ""}`}
 										aria-hidden
 									></i>
-									<span>
-										Some swipe feedback has voice clips — not every line.
+									<span className="text-center w-full">
+										{VOICE_COVERAGE_HINT}
 									</span>
 								</div>
 							) : null}

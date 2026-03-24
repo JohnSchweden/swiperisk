@@ -31,3 +31,4 @@ export {
 	ROLE_ICONS,
 	ROLE_LABELS,
 } from "./roles";
+export { VOICE_COVERAGE_HINT } from "./voiceUiCopy";

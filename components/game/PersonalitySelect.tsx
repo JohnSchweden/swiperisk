@@ -1,5 +1,5 @@
 import type React from "react";
-import { PERSONALITIES } from "../../data";
+import { PERSONALITIES, VOICE_COVERAGE_HINT } from "../../data";
 import { PersonalityType } from "../../types";
 import LayoutShell from "../LayoutShell";
 import {
@@ -91,16 +91,16 @@ export const PersonalitySelect: React.FC<PersonalitySelectProps> = ({
 								{SPEECH_UI_ENABLED &&
 								personality === PersonalityType.ROASTER ? (
 									<div
-										className="mt-3 md:mt-4 pt-3 md:pt-4 border-t border-white/10 w-full text-center text-slate-400/90 text-[10px] md:text-xs leading-relaxed font-normal flex flex-wrap items-center justify-center gap-1.5"
+										className="mt-3 md:mt-4 pt-3 md:pt-4 border-t border-white/10 w-full text-slate-400/90 text-[10px] md:text-xs leading-relaxed font-normal flex flex-col items-center justify-center gap-1.5 md:gap-2"
 										data-testid="personality-select-voice-hint"
 										role="note"
 									>
 										<i
-											className={`fa-solid fa-volume-high shrink-0 text-[0.95em] transition-colors text-slate-400/85 ${hoverEnabled ? "group-hover:text-cyan-500" : ""}`}
+											className={`fa-solid fa-volume-high text-base md:text-lg transition-colors text-slate-400/85 ${hoverEnabled ? "group-hover:text-cyan-500" : ""}`}
 											aria-hidden
 										></i>
-										<span>
-											Most feedback voice clips in play — still not every line.
+										<span className="text-center w-full">
+											{VOICE_COVERAGE_HINT}
 										</span>
 									</div>
 								) : null}

@@ -1,6 +1,10 @@
 /** Shared layout and card styles for PersonalitySelect and RoleSelect stages. */
 
-export const LAYOUT_SHELL_CLASS = "p-4 pb-12 md:p-6 md:pb-16 !bg-transparent";
+export const LAYOUT_SHELL_CLASS =
+	"px-4 pb-[calc(3rem+env(safe-area-inset-bottom,0px))] md:px-6 md:pb-[calc(4rem+env(safe-area-inset-bottom,0px))] !bg-transparent";
+
+/** Intro, game over, summary, debrief — same horizontal/bottom inset as selection, centered */
+export const LAYOUT_SHELL_CENTERED_CLASS = `${LAYOUT_SHELL_CLASS} text-center`;
 
 export const STAGE_CONTAINER_CLASS = "w-full max-w-4xl mx-auto";
 
@@ -19,7 +23,7 @@ export const GLASS_FILL_STRONG = `bg-black/65 shadow-lg ${GLASS_BACKDROP}`;
 /** Full default glass panel — same visual weight as selection cards */
 export const GLASS_PANEL_DEFAULT = `border border-white/10 ${GLASS_FILL_STRONG}`;
 
-/** Per card, no extra grid backdrop */
-export const SELECT_CARD_BASE = `group p-6 md:p-10 rounded-lg ${GLASS_PANEL_DEFAULT} focus:outline-none flex flex-col transition-colors w-full`;
+/** Per card, no extra grid backdrop. Class `selection-stage-card` escapes unlayered `button { border-radius: 0 }` in index.html. */
+export const SELECT_CARD_BASE = `selection-stage-card group p-6 md:p-10 rounded-xl ${GLASS_PANEL_DEFAULT} focus:outline-none flex flex-col transition-colors w-full overflow-hidden`;
 
 export const SELECT_CARD_HOVER = "hover:border-cyan-500/35 hover-shadow";

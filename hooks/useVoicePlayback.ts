@@ -66,16 +66,41 @@ const FEEDBACK_INSTALL_ON_RIGHT = new Set([
 	"cln_sticky_note",
 ]);
 
+/**
+ * Critical Head of Something cards that have dedicated feedback audio.
+ * These are high-impact cards (game-enders, sacrifice moments) with
+ * specific Roaster voice lines for each choice.
+ */
+const CRITICAL_HOS_CARDS = new Set([
+	"hos_managing_up_down",
+	"explainability_hos_2",
+	"hos_copyright_team_blame",
+	"hos_team_burnout_deadline",
+	"shadow_ai_hos_2",
+	"hos_model_drift_team_blame",
+	"hos_explainability_politics",
+	"hos_prompt_injection_review_escape",
+]);
+
 function feedbackVoiceTrigger(
 	cardId: string,
 	choice: "LEFT" | "RIGHT",
 ): string {
+	// Check for critical Head of Something cards first
+	if (CRITICAL_HOS_CARDS.has(cardId)) {
+		return `feedback_${cardId}_${choice.toLowerCase()}`;
+	}
+
+	// Software Engineer specific cards
 	if (cardId === "se_security_patch_timeline") {
 		return choice === "RIGHT" ? "feedback_paste" : "feedback_debug";
 	}
+
+	// Generic install/ignore feedback for other cards
 	if (FEEDBACK_INSTALL_ON_RIGHT.has(cardId)) {
 		return choice === "RIGHT" ? "feedback_install" : "feedback_ignore";
 	}
+
 	return "feedback_ignore";
 }
 

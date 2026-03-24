@@ -97,6 +97,43 @@ Plans (REVISED FOR 10 ROLES):
 - [x] **03-06-PLAN.md** — Rebalance fines to role-appropriate tiers ✓
 - [x] **03-07-PLAN.md** — Rebalance heat penalties to match fine structure ✓
 
+### Phase 04: Voice Files Restructure
+
+**Goal:** Reorganize voice files into logical subfolders for better maintainability as file count grows
+**Depends on:** None (organizational refactor)
+**Plans:** 1 plan
+
+Plans:
+- [ ] 04-01-PLAN.md — Restructure voices folder with subfolders (archetype, death, feedback, core)
+
+**Details:**
+Current flat structure with 59 files across 3 personalities is becoming unwieldy. With plans for 100+ voice files, we need clear organization by content category:
+
+| Type | Count | Folder |
+|------|-------|--------|
+| Archetype reveals | 21 files | `archetype/` |
+| Death endings | 21 files | `death/` |
+| Card feedback | 16 files | `feedback/` |
+| Core (onboarding/victory/failure) | 9 files | `core/` |
+
+**New structure:**
+```
+public/audio/voices/
+├── {personality}/
+│   ├── archetype/
+│   ├── death/
+│   ├── feedback/
+│   └── core/
+```
+
+**Audio format research:**
+Research document created at `.planning/research/audio-optimization-research.md` comparing:
+- **Keep WAV**: 19MB, no changes needed
+- **MP3 (192kbps)**: ~3MB, universal support
+- **Opus (96kbps)**: ~2MB, best compression, Safari 15+ only
+
+**Recommendation**: Restructure first (Phase 4), consider compression later if bandwidth is a concern.
+
 **Documentation:**
 - `03-REVISION-NOTES.md` — Why plans were revised
 - `03-ROLE-MAPPING.md` — 10 role card content strategy
@@ -470,6 +507,7 @@ Reuses v1.1 infrastructure: `scripts/generate-voice.ts` (Gemini TTS) → `servic
 | 02 | New Role Set (Impact Zones) | v1.2 | Complete |
 | 03 | 9/9 | Complete    | 2026-03-17 |
 | 04 | Immersive Pressure Effects | v1.2 | Complete (9/10) |
+| 04 | Voice Files Restructure | v1.2 | Planned (1 plan) |
 | 05 | 6/6 | Complete    | 2026-03-23 |
 | 06 | 19/19 | Complete    | 2026-03-16 |
 | 07 | Kirk Easter Egg | v1.2 | Not started |
@@ -484,4 +522,4 @@ Reuses v1.1 infrastructure: `scripts/generate-voice.ts` (Gemini TTS) → `servic
 
 ---
 
-*Roadmap updated: 2026-03-24 — Phase 15 added (archetype/death audio + Head of Something critical cards)*
+*Roadmap updated: 2026-03-24 — Phase 04 added (Voice Files Restructure), Phase 15 complete*

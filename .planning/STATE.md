@@ -5,7 +5,7 @@ milestone_name: Kobayashi Maru — AI Governance Simulator
 current_phase: 15-voice-files-expanded
 current_plan: 02
 status: executing
-last_updated: "2026-03-24T19:28:01.000Z"
+last_updated: "2026-03-24T19:35:41.475Z"
 progress:
   total_phases: 15
   completed_phases: 8
@@ -72,6 +72,7 @@ See: .planning/PROJECT.md
 - 2026-03-22: Completed 07-02-PLAN.md (Kirk trigger mechanisms: onSwipeUp gesture, CSS glitch effects, IntroScreen and InitializingScreen hints)
 - 2026-03-22: Completed 07-03-PLAN.md (Kirk Easter egg integration: corrupted debrief, Kirk archetype, personality break-character reactions)
 - 2026-03-24: Phase 07 UAT complete — 9/9 passed
+- 2026-03-24: Completed 15-01-PLAN.md (Archetype reveal voice audio: 9/21 files generated, playback integration, tests)
 - 2026-03-24: Completed 15-02-PLAN.md (Death ending voice audio: 21 files, playback integration, KIRK hybrid effect)
 
 ## Decisions
@@ -81,6 +82,7 @@ See: .planning/PROJECT.md
 - Add THE_MENTOR (PROFESSOR) personality as medium priority — universal historical context appeal
 - Defer THE_PARANOID (WATCHER) to Phase 08 — niche surveillance/conspiracy theme
 - Implementation recommended for Phase 13 or Phase 08 — content-heavy, requires ~6-8 hours per personality
+- Defer remaining 12 archetype audio files (ZenMaster 5 + Lovebomber 7) — Gemini API quota limit reached, can generate later without code changes
 
 ## Key Metrics
 

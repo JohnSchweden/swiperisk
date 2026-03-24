@@ -8,6 +8,7 @@ import { expect, test } from "@playwright/test";
  * These tests verify that all critical HoS card feedback audio files exist.
  * Critical cards are high-impact (game-enders, sacrifice moments) with
  * dedicated Roaster voice lines for each choice.
+ * Files are in Opus format (.opus) with MP3 fallback (.mp3).
  *
  * @smoke @area:audio
  */
@@ -34,22 +35,22 @@ test.describe("Head of Something Critical Card Audio @smoke @area:audio", () => 
 					VOICES_DIR,
 					"roaster",
 					"feedback",
-					`feedback_${cardId}_left.wav`,
+					`feedback_${cardId}_left.opus`,
 				);
 				const rightPath = path.join(
 					VOICES_DIR,
 					"roaster",
 					"feedback",
-					`feedback_${cardId}_right.wav`,
+					`feedback_${cardId}_right.opus`,
 				);
 
 				expect(
 					fs.existsSync(leftPath),
-					`Missing LEFT feedback audio: roaster/feedback_${cardId}_left.wav`,
+					`Missing LEFT feedback audio: roaster/feedback_${cardId}_left.opus`,
 				).toBe(true);
 				expect(
 					fs.existsSync(rightPath),
-					`Missing RIGHT feedback audio: roaster/feedback_${cardId}_right.wav`,
+					`Missing RIGHT feedback audio: roaster/feedback_${cardId}_right.opus`,
 				).toBe(true);
 			});
 		}
@@ -65,12 +66,12 @@ test.describe("Head of Something Critical Card Audio @smoke @area:audio", () => 
 					VOICES_DIR,
 					"roaster",
 					"feedback",
-					`feedback_${cardId}_${choice}.wav`,
+					`feedback_${cardId}_${choice}.opus`,
 				);
 				if (!fs.existsSync(filePath)) {
 					missingCount++;
 					missingFiles.push(
-						`roaster/feedback/feedback_${cardId}_${choice}.wav`,
+						`roaster/feedback/feedback_${cardId}_${choice}.opus`,
 					);
 				}
 			}
@@ -82,15 +83,15 @@ test.describe("Head of Something Critical Card Audio @smoke @area:audio", () => 
 		).toBe(0);
 	});
 
-	test.describe("Critical HoS audio files are WAV format", () => {
+	test.describe("Critical HoS audio files are Opus format", () => {
 		for (const cardId of CRITICAL_HOS_CARDS) {
 			for (const choice of ["left", "right"] as const) {
-				test(`feedback/feedback_${cardId}_${choice}.wav is valid WAV`, () => {
+				test(`feedback/feedback_${cardId}_${choice}.opus is valid Opus`, () => {
 					const filePath = path.join(
 						VOICES_DIR,
 						"roaster",
 						"feedback",
-						`feedback_${cardId}_${choice}.wav`,
+						`feedback_${cardId}_${choice}.opus`,
 					);
 
 					expect(
@@ -98,14 +99,10 @@ test.describe("Head of Something Critical Card Audio @smoke @area:audio", () => 
 						`File does not exist: ${filePath}`,
 					).toBe(true);
 
-					// Read first 4 bytes - should be "RIFF" for WAV
+					// Read first 4 bytes - should be "OggS" for Opus-in-OGG container
 					const buffer = fs.readFileSync(filePath);
 					const header = buffer.slice(0, 4).toString("ascii");
-					expect(header).toBe("RIFF");
-
-					// Check WAVE marker at bytes 8-12
-					const waveMarker = buffer.slice(8, 12).toString("ascii");
-					expect(waveMarker).toBe("WAVE");
+					expect(header).toBe("OggS");
 				});
 			}
 		}
@@ -122,11 +119,11 @@ test.describe("Head of Something Critical Card Audio @smoke @area:audio", () => 
 							VOICES_DIR,
 							personality,
 							"feedback",
-							`feedback_${cardId}_${choice}.wav`,
+							`feedback_${cardId}_${choice}.opus`,
 						);
 						expect(
 							fs.existsSync(filePath),
-							`${personality} should NOT have feedback/feedback_${cardId}_${choice}.wav (per design)`,
+							`${personality} should NOT have feedback/feedback_${cardId}_${choice}.opus (per design)`,
 						).toBe(false);
 					}
 				}

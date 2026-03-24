@@ -18,17 +18,17 @@ const PERSONALITIES = ["roaster", "zenmaster", "lovebomber"] as const;
 
 // All personalities have these files (now in core/ subfolder)
 const COMMON_VOICE_FILES = [
-	"core/onboarding.wav",
-	"core/victory.wav",
-	"core/failure.wav",
+	"core/onboarding.opus",
+	"core/victory.opus",
+	"core/failure.opus",
 ];
 
 // Only roaster has feedback files (per design decision) - now in feedback/ subfolder
 const ROASTER_FEEDBACK_FILES = [
-	"feedback/feedback_debug.wav",
-	"feedback/feedback_paste.wav",
-	"feedback/feedback_install.wav",
-	"feedback/feedback_ignore.wav",
+	"feedback/feedback_debug.opus",
+	"feedback/feedback_paste.opus",
+	"feedback/feedback_install.opus",
+	"feedback/feedback_ignore.opus",
 ];
 
 test.describe("Voice Audio Files @smoke @area:audio", () => {

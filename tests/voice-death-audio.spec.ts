@@ -7,6 +7,7 @@ import { expect, test } from "@playwright/test";
  *
  * These tests verify that all death ending audio files exist on disk.
  * Validates the 21 death audio files (7 deaths × 3 personalities).
+ * Files are in Opus format (.opus) with MP3 fallback (.mp3).
  */
 
 const VOICES_DIR = path.join(process.cwd(), "public/audio/voices");
@@ -14,25 +15,30 @@ const VOICES_DIR = path.join(process.cwd(), "public/audio/voices");
 const PERSONALITIES = ["roaster", "zenmaster", "lovebomber"] as const;
 
 // All 7 death types (including KIRK)
-const DEATH_FILES = [
-	"death_bankrupt.wav",
-	"death_replaced_by_script.wav",
-	"death_congress.wav",
-	"death_fled_country.wav",
-	"death_prison.wav",
-	"death_audit_failure.wav",
-	"death_kirk.wav",
+const DEATH_STEMS = [
+	"death_bankrupt",
+	"death_replaced_by_script",
+	"death_congress",
+	"death_fled_country",
+	"death_prison",
+	"death_audit_failure",
+	"death_kirk",
 ];
 
 test.describe("Death ending audio files @smoke @area:audio", () => {
 	test.describe("All personalities have all 7 death ending files", () => {
 		for (const personality of PERSONALITIES) {
-			for (const file of DEATH_FILES) {
-				test(`${personality}/death/${file} exists`, () => {
-					const filePath = path.join(VOICES_DIR, personality, "death", file);
+			for (const stem of DEATH_STEMS) {
+				test(`${personality}/death/${stem}.opus exists`, () => {
+					const filePath = path.join(
+						VOICES_DIR,
+						personality,
+						"death",
+						`${stem}.opus`,
+					);
 					expect(
 						fs.existsSync(filePath),
-						`Missing required death audio file: ${personality}/death/${file}`,
+						`Missing required death audio file: ${personality}/death/${stem}.opus`,
 					).toBe(true);
 				});
 			}
@@ -41,38 +47,43 @@ test.describe("Death ending audio files @smoke @area:audio", () => {
 
 	test.describe("KIRK death has voice files (not just synthesized glitch)", () => {
 		for (const personality of PERSONALITIES) {
-			test(`${personality}/death/death_kirk.wav exists as voice file`, () => {
+			test(`${personality}/death/death_kirk.opus exists as voice file`, () => {
 				const filePath = path.join(
 					VOICES_DIR,
 					personality,
 					"death",
-					"death_kirk.wav",
+					"death_kirk.opus",
 				);
 				expect(
 					fs.existsSync(filePath),
-					`${personality} should have death/death_kirk.wav voice file`,
+					`${personality} should have death/death_kirk.opus voice file`,
 				).toBe(true);
 
-				// Verify it's not empty (should be > 50KB for valid audio)
+				// Verify it's not empty (Opus at 96kbps: ~12KB/s, expect > 4KB minimum)
 				const stats = fs.statSync(filePath);
 				expect(
 					stats.size,
-					`${personality}/death/death_kirk.wav appears to be empty or corrupt`,
-				).toBeGreaterThan(50000);
+					`${personality}/death/death_kirk.opus appears to be empty or corrupt`,
+				).toBeGreaterThan(4096);
 			});
 		}
 	});
 
 	test.describe("All death files have valid audio content", () => {
 		for (const personality of PERSONALITIES) {
-			for (const file of DEATH_FILES) {
-				test(`${personality}/death/${file} has valid file size`, () => {
-					const filePath = path.join(VOICES_DIR, personality, "death", file);
+			for (const stem of DEATH_STEMS) {
+				test(`${personality}/death/${stem}.opus has valid file size`, () => {
+					const filePath = path.join(
+						VOICES_DIR,
+						personality,
+						"death",
+						`${stem}.opus`,
+					);
 					const stats = fs.statSync(filePath);
 					expect(
 						stats.size,
-						`${personality}/death/${file} appears to be empty or corrupt`,
-					).toBeGreaterThan(50000);
+						`${personality}/death/${stem}.opus appears to be empty or corrupt`,
+					).toBeGreaterThan(4096);
 				});
 			}
 		}
@@ -81,8 +92,13 @@ test.describe("Death ending audio files @smoke @area:audio", () => {
 	test("Total death ending file count is 21 (7 × 3)", () => {
 		let count = 0;
 		for (const personality of PERSONALITIES) {
-			for (const file of DEATH_FILES) {
-				const filePath = path.join(VOICES_DIR, personality, "death", file);
+			for (const stem of DEATH_STEMS) {
+				const filePath = path.join(
+					VOICES_DIR,
+					personality,
+					"death",
+					`${stem}.opus`,
+				);
 				if (fs.existsSync(filePath)) {
 					count++;
 				}

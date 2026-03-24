@@ -17,6 +17,14 @@ describe("RoleSelect", () => {
 			expect(screen.getByText("Select your impact zone")).toBeInTheDocument();
 		});
 
+		it("should show voice hint only on Head of Something when speech UI is enabled", () => {
+			render(<RoleSelect {...defaultProps} />);
+
+			const headCard = screen.getByTestId("role-head_of_something");
+			const hint = screen.getByTestId("role-select-voice-hint");
+			expect(headCard).toContainElement(hint);
+		});
+
 		it("should render all role buttons", () => {
 			render(<RoleSelect {...defaultProps} />);
 

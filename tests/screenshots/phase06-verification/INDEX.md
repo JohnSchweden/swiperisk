@@ -23,13 +23,13 @@ This screenshot collection documents the complete K-Maru game flow, with special
 ### 02. Personality Selection
 | File | Viewport | Description |
 |------|----------|-------------|
-| `02-personality-select-desktop.png` | Desktop | Personality selection showing V.E.R.A (Roaster), BAMBOO (Zen Master), and HYPE-BRO (Lovebomber) |
+| `02-personality-select-desktop.png` | Desktop | Personality selection (left-to-right: BAMBOO, V.E.R.A., HYPE-BRO) with Roaster voice-coverage hint on V.E.R.A. |
 | `02-personality-select-mobile.png` | Mobile | Mobile personality selection |
 
 ### 03. Role Selection
 | File | Viewport | Description |
 |------|----------|-------------|
-| `03-role-select-desktop.png` | Desktop | Role selection with impact-zone titles (Chief Something Officer, Agentic Engineer, etc.) |
+| `03-role-select-desktop.png` | Desktop | Role selection with impact-zone titles; Head of Something card includes a muted voice-hint strip when speech is enabled |
 | `03-role-select-mobile.png` | Mobile | Mobile role selection |
 
 ### 04. Initializing Screen

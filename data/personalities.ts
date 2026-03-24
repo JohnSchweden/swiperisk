@@ -1,18 +1,6 @@
 import { PersonalityType } from "../types";
 
 export const PERSONALITIES = {
-	[PersonalityType.ROASTER]: {
-		name: "V.E.R.A.",
-		title: "The Roaster",
-		description: "British sarcasm, burned-out IT director, cynical.",
-		voice: "Kore",
-		onboarding:
-			"Oh, look. Another 'Visionary' hired to save the company. Try not to destroy us in the first 5 minutes, yeah?",
-		victory:
-			"I... don't hate it. Adequate performance. Here's a badge. Now leave.",
-		failure:
-			"Well, you managed to violate basic common sense. The legal team is crying. Pathetic.",
-	},
 	[PersonalityType.ZEN_MASTER]: {
 		name: "BAMBOO",
 		title: "The Zen Master",
@@ -25,6 +13,18 @@ export const PERSONALITIES = {
 			"Balance is achieved. The spreadsheets are at peace. You are one with compliance.",
 		failure:
 			"Breathe in... and breathe out the lawsuits. Your karma is now a major liability.",
+	},
+	[PersonalityType.ROASTER]: {
+		name: "V.E.R.A.",
+		title: "The Roaster",
+		description: "British sarcasm, burned-out IT director, cynical.",
+		voice: "Kore",
+		onboarding:
+			"Oh, look. Another 'Visionary' hired to save the company. Try not to destroy us in the first 5 minutes, yeah?",
+		victory:
+			"I... don't hate it. Adequate performance. Here's a badge. Now leave.",
+		failure:
+			"Well, you managed to violate basic common sense. The legal team is crying. Pathetic.",
 	},
 	[PersonalityType.LOVEBOMBER]: {
 		name: "HYPE-BRO",

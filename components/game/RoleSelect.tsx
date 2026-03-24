@@ -19,6 +19,8 @@ import {
 	STAGE_HEADER_CLASS,
 } from "./selectionStageStyles";
 
+const SPEECH_UI_ENABLED = import.meta.env.VITE_ENABLE_SPEECH !== "false";
+
 interface RoleSelectProps {
 	isReady: boolean;
 	hoverEnabled: boolean;
@@ -81,6 +83,21 @@ export const RoleSelect: React.FC<RoleSelectProps> = ({
 									Your budget: {formatBudget(ROLE_FINE_TIERS[role].budget)}
 								</span>
 							</div>
+							{SPEECH_UI_ENABLED && role === RoleType.HEAD_OF_SOMETHING ? (
+								<div
+									className="mt-3 md:mt-4 pt-3 md:pt-4 border-t border-white/10 w-full text-center text-slate-400/90 text-[10px] md:text-xs leading-relaxed font-normal flex flex-wrap items-center justify-center gap-1.5"
+									data-testid="role-select-voice-hint"
+									role="note"
+								>
+									<i
+										className={`fa-solid fa-volume-high shrink-0 text-[0.95em] transition-colors text-slate-400/85 ${hoverEnabled ? "group-hover:text-cyan-400" : ""}`}
+										aria-hidden
+									></i>
+									<span>
+										Some swipe feedback has voice clips — not every line.
+									</span>
+								</div>
+							) : null}
 						</button>
 					))}
 				</div>

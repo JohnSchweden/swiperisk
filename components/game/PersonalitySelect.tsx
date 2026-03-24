@@ -11,6 +11,8 @@ import {
 	STAGE_HEADER_CLASS,
 } from "./selectionStageStyles";
 
+const SPEECH_UI_ENABLED = import.meta.env.VITE_ENABLE_SPEECH !== "false";
+
 interface PersonalitySelectProps {
 	isReady: boolean;
 	hoverEnabled: boolean;
@@ -55,37 +57,56 @@ export const PersonalitySelect: React.FC<PersonalitySelectProps> = ({
 				</div>
 
 				<div className={STAGE_GRID_CLASS}>
-					{Object.entries(PERSONALITIES).map(([type, p], index) => (
-						<button
-							key={type}
-							type="button"
-							onClick={() => isReady && onSelect(type as PersonalityType)}
-							data-testid={`personality-${type.toLowerCase()}`}
-							className={`${SELECT_CARD_BASE} text-left ${hoverEnabled ? SELECT_CARD_HOVER : ""}`}
-							style={{
-								animationDelay: `${index * 0.1}s`,
-								pointerEvents: isReady ? "auto" : "none",
-							}}
-						>
-							<div className="flex flex-col items-center text-center mb-4 md:mb-6">
-								<div
-									className={`text-slate-400 transition-colors mb-2 md:mb-3 ${hoverEnabled ? "group-hover:text-cyan-500" : ""}`}
-								>
-									<i
-										className={`fa-solid ${getPersonalityIcon(type as PersonalityType)} text-2xl md:text-4xl`}
-										aria-hidden
-									></i>
+					{Object.entries(PERSONALITIES).map(([type, p], index) => {
+						const personality = type as PersonalityType;
+						return (
+							<button
+								key={type}
+								type="button"
+								onClick={() => isReady && onSelect(personality)}
+								data-testid={`personality-${type.toLowerCase()}`}
+								className={`${SELECT_CARD_BASE} text-left ${hoverEnabled ? SELECT_CARD_HOVER : ""}`}
+								style={{
+									animationDelay: `${index * 0.1}s`,
+									pointerEvents: isReady ? "auto" : "none",
+								}}
+							>
+								<div className="flex flex-col items-center text-center mb-4 md:mb-6">
+									<div
+										className={`text-slate-400 transition-colors mb-2 md:mb-3 ${hoverEnabled ? "group-hover:text-cyan-500" : ""}`}
+									>
+										<i
+											className={`fa-solid ${getPersonalityIcon(personality)} text-2xl md:text-4xl`}
+											aria-hidden
+										></i>
+									</div>
+									<div className="text-xl md:text-2xl font-black">{p.name}</div>
+									<div className="text-cyan-400 text-xs font-black tracking-wide">
+										{p.title}
+									</div>
 								</div>
-								<div className="text-xl md:text-2xl font-black">{p.name}</div>
-								<div className="text-cyan-400 text-xs font-black tracking-wide">
-									{p.title}
-								</div>
-							</div>
-							<p className="text-slate-400 text-xs md:text-sm leading-relaxed w-full text-center">
-								{p.description}
-							</p>
-						</button>
-					))}
+								<p className="text-slate-400 text-xs md:text-sm leading-relaxed w-full text-center">
+									{p.description}
+								</p>
+								{SPEECH_UI_ENABLED &&
+								personality === PersonalityType.ROASTER ? (
+									<div
+										className="mt-3 md:mt-4 pt-3 md:pt-4 border-t border-white/10 w-full text-center text-slate-400/90 text-[10px] md:text-xs leading-relaxed font-normal flex flex-wrap items-center justify-center gap-1.5"
+										data-testid="personality-select-voice-hint"
+										role="note"
+									>
+										<i
+											className={`fa-solid fa-volume-high shrink-0 text-[0.95em] transition-colors text-slate-400/85 ${hoverEnabled ? "group-hover:text-cyan-500" : ""}`}
+											aria-hidden
+										></i>
+										<span>
+											Most feedback voice clips in play — still not every line.
+										</span>
+									</div>
+								) : null}
+							</button>
+						);
+					})}
 				</div>
 			</div>
 		</LayoutShell>

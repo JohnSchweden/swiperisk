@@ -1,6 +1,11 @@
 import { useEffect, useRef } from "react";
 import { loadVoice, playVoice, stopVoice } from "../services/voicePlayback";
-import { type DeathType, GameStage, PersonalityType } from "../types";
+import {
+	type ArchetypeId,
+	type DeathType,
+	GameStage,
+	PersonalityType,
+} from "../types";
 
 interface UseVoicePlaybackOptions {
 	stage: GameStage;
@@ -8,6 +13,7 @@ interface UseVoicePlaybackOptions {
 	feedbackCardId?: string | null;
 	feedbackChoice?: "LEFT" | "RIGHT" | null;
 	deathType?: DeathType | null;
+	archetypeId?: ArchetypeId | null;
 }
 
 function voiceKey(personality: PersonalityType): string {
@@ -82,15 +88,27 @@ function deathTrigger(deathType: DeathType): string {
 	return `death_${suffix}`;
 }
 
+/**
+ * Maps ArchetypeId to audio file trigger name.
+ * Converts: PRAGMATIST → archetype_pragmatist, SHADOW_ARCHITECT → archetype_shadow_architect
+ */
+function archetypeTrigger(archetypeId: ArchetypeId): string {
+	const suffix = archetypeId.toLowerCase();
+	return `archetype_${suffix}`;
+}
+
 export function useVoicePlayback({
 	stage,
 	personality,
 	feedbackCardId,
 	feedbackChoice,
 	deathType,
+	archetypeId,
 }: UseVoicePlaybackOptions) {
 	// Track if death audio has already played (prevents re-renders from triggering again)
 	const hasPlayedDeathAudio = useRef(false);
+	// Track if archetype audio has already played (prevents re-renders from triggering again)
+	const hasPlayedArchetypeAudio = useRef(false);
 
 	useEffect(() => {
 		return () => {
@@ -98,10 +116,13 @@ export function useVoicePlayback({
 		};
 	}, []);
 
-	// Reset death audio flag when leaving debrief page
+	// Reset audio flags when leaving debrief pages
 	useEffect(() => {
 		if (stage !== GameStage.DEBRIEF_PAGE_1) {
 			hasPlayedDeathAudio.current = false;
+		}
+		if (stage !== GameStage.DEBRIEF_PAGE_3) {
+			hasPlayedArchetypeAudio.current = false;
 		}
 	}, [stage]);
 
@@ -144,4 +165,22 @@ export function useVoicePlayback({
 		hasPlayedDeathAudio.current = true;
 		runVoiceCue(key, trigger, `death ending: ${deathType}`, false);
 	}, [stage, personality, deathType]);
+
+	// Archetype reveal audio - plays on debrief page 3 when archetype is available
+	useEffect(() => {
+		if (!personality || !archetypeId) return;
+		if (stage !== GameStage.DEBRIEF_PAGE_3) return;
+		// Only play once per archetype reveal
+		if (hasPlayedArchetypeAudio.current) return;
+
+		const trigger = archetypeTrigger(archetypeId);
+		const key = voiceKey(personality);
+
+		console.log(
+			`[Archetype] Playing voice: ${trigger} for archetype: ${archetypeId}`,
+		);
+
+		hasPlayedArchetypeAudio.current = true;
+		runVoiceCue(key, trigger, `archetype reveal: ${archetypeId}`, false);
+	}, [stage, personality, archetypeId]);
 }

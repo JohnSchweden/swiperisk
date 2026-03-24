@@ -97,6 +97,43 @@ Plans (REVISED FOR 10 ROLES):
 - [x] **03-06-PLAN.md** — Rebalance fines to role-appropriate tiers ✓
 - [x] **03-07-PLAN.md** — Rebalance heat penalties to match fine structure ✓
 
+### Phase 04: Voice Files Restructure
+
+**Goal:** Reorganize voice files into logical subfolders for better maintainability as file count grows
+**Depends on:** None (organizational refactor)
+**Plans:** 1 plan
+
+Plans:
+- [ ] 04-01-PLAN.md — Restructure voices folder with subfolders (archetype, death, feedback, core)
+
+**Details:**
+Current flat structure with 59 files across 3 personalities is becoming unwieldy. With plans for 100+ voice files, we need clear organization by content category:
+
+| Type | Count | Folder |
+|------|-------|--------|
+| Archetype reveals | 21 files | `archetype/` |
+| Death endings | 21 files | `death/` |
+| Card feedback | 16 files | `feedback/` |
+| Core (onboarding/victory/failure) | 9 files | `core/` |
+
+**New structure:**
+```
+public/audio/voices/
+├── {personality}/
+│   ├── archetype/
+│   ├── death/
+│   ├── feedback/
+│   └── core/
+```
+
+**Audio format research:**
+Research document created at `.planning/research/audio-optimization-research.md` comparing:
+- **Keep WAV**: 19MB, no changes needed
+- **MP3 (192kbps)**: ~3MB, universal support
+- **Opus (96kbps)**: ~2MB, best compression, Safari 15+ only
+
+**Recommendation**: Restructure first (Phase 4), consider compression later if bandwidth is a concern.
+
 **Documentation:**
 - `03-REVISION-NOTES.md` — Why plans were revised
 - `03-ROLE-MAPPING.md` — 10 role card content strategy
@@ -449,9 +486,6 @@ Focus on 8 highest-impact cards with Roaster voice only (based on fine/heat/hype
 
 **Total New Files:** 58 audio files (21 + 21 + 16)
 
-**Audio Generation Pipeline:**
-Reuses v1.1 infrastructure: `scripts/generate-voice.ts` (Gemini TTS) → `services/radioEffect.ts` (post-processing) → `public/audio/voices/{personality}/{trigger}.wav`
-
 **Voice Files Restructure (15-04):**
 Current flat structure with 59 files across 3 personalities is becoming unwieldy. Plan 04 reorganizes files into logical subfolders:
 
@@ -472,8 +506,8 @@ public/audio/voices/
 │   └── core/
 ```
 
-**Audio format research:**
-Research document created at `.planning/research/audio-optimization-research.md` comparing WAV vs MP3 vs Opus formats. Recommendation: Keep WAV for now, evaluate compression in future phase if bandwidth is a concern.
+**Audio Generation Pipeline:**
+Reuses v1.1 infrastructure: `scripts/generate-voice.ts` (Gemini TTS) → `services/radioEffect.ts` (post-processing) → `public/audio/voices/{personality}/{type}/{trigger}.wav`
 
 **Requirements:**
 - VOICE-01: Archetype reveal audio plays on DebriefPage3 verdict display

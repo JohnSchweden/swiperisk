@@ -101,11 +101,12 @@ async function verifyCompressedAudio(): Promise<void> {
 	const totalSize = await getDirectorySize(VOICES_DIR);
 	console.log(`Total audio directory size: ${formatBytes(totalSize)}`);
 	console.log("\nPer-format estimates:");
-	console.log(
-		`  WAV only:  ${formatBytes(wavCount * 0.32)} (assuming 320KB avg)`,
-	);
-	console.log(`  Opus only: ${formatBytes(wavCount * 0.054)} (~17% of WAV)`);
-	console.log(`  MP3 only:  ${formatBytes(wavCount * 0.106)} (~33% of WAV)`);
+	const wavOnlyMB = wavCount * 0.32;
+	const opusOnlyMB = wavCount * 0.054;
+	const mp3OnlyMB = wavCount * 0.106;
+	console.log(`  WAV only:  ${wavOnlyMB.toFixed(2)} MB (assuming 320KB avg)`);
+	console.log(`  Opus only: ${opusOnlyMB.toFixed(2)} MB (~17% of WAV)`);
+	console.log(`  MP3 only:  ${mp3OnlyMB.toFixed(2)} MB (~33% of WAV)`);
 
 	// Report bandwidth savings
 	const wavSize = wavCount * 0.32; // ~320KB avg per file
@@ -115,8 +116,8 @@ async function verifyCompressedAudio(): Promise<void> {
 	const savings = ((wavSize - avgUserSize) / wavSize) * 100;
 
 	console.log("\n📊 Bandwidth savings:");
-	console.log(`  Original (WAV): ${formatBytes(wavSize * 1024 * 1024)}`);
-	console.log(`  Average user:   ${formatBytes(avgUserSize * 1024 * 1024)}`);
+	console.log(`  Original (WAV): ${wavSize.toFixed(2)} MB`);
+	console.log(`  Average user:   ${avgUserSize.toFixed(2)} MB`);
 	console.log(`  Savings:        ${savings.toFixed(1)}%`);
 }
 

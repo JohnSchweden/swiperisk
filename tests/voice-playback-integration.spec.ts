@@ -37,7 +37,8 @@ test.describe("Voice Playback Integration @integration @area:audio", () => {
 			const voiceLoad = consoleMessages.find(
 				(msg) =>
 					msg.includes("[Voice] Loading:") &&
-					msg.includes("roaster/onboarding"),
+					(msg.includes("roaster/core/onboarding.opus") ||
+						msg.includes("roaster/core/onboarding.mp3")),
 			);
 			expect(voiceLoad).toBeDefined();
 		});
@@ -66,7 +67,8 @@ test.describe("Voice Playback Integration @integration @area:audio", () => {
 			const voiceLoad = consoleMessages.find(
 				(msg) =>
 					msg.includes("[Voice] Loading:") &&
-					msg.includes("zenmaster/onboarding"),
+					(msg.includes("zenmaster/core/onboarding.opus") ||
+						msg.includes("zenmaster/core/onboarding.mp3")),
 			);
 			expect(voiceLoad).toBeDefined();
 		});
@@ -95,7 +97,8 @@ test.describe("Voice Playback Integration @integration @area:audio", () => {
 			const voiceLoad = consoleMessages.find(
 				(msg) =>
 					msg.includes("[Voice] Loading:") &&
-					msg.includes("lovebomber/onboarding"),
+					(msg.includes("lovebomber/core/onboarding.opus") ||
+						msg.includes("lovebomber/core/onboarding.mp3")),
 			);
 			expect(voiceLoad).toBeDefined();
 		});
@@ -139,7 +142,8 @@ test.describe("Voice Playback Integration @integration @area:audio", () => {
 						consoleMessages.some(
 							(msg) =>
 								msg.includes("[Voice] Loading:") &&
-								msg.includes("roaster/feedback_debug"),
+								(msg.includes("roaster/feedback/feedback_debug.opus") ||
+									msg.includes("roaster/feedback/feedback_debug.mp3")),
 						),
 					).toBe(true);
 				});
@@ -179,7 +183,8 @@ test.describe("Voice Playback Integration @integration @area:audio", () => {
 						consoleMessages.some(
 							(msg) =>
 								msg.includes("[Voice] Loading:") &&
-								msg.includes("roaster/feedback_paste"),
+								(msg.includes("roaster/feedback/feedback_paste.opus") ||
+									msg.includes("roaster/feedback/feedback_paste.mp3")),
 						),
 					).toBe(true);
 				});

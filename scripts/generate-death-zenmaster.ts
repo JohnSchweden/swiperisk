@@ -1,6 +1,7 @@
 import * as fs from "node:fs";
 import * as path from "node:path";
 import { GoogleGenAI, Modality } from "@google/genai";
+import { compressAudioFile } from "./compress-audio";
 
 const apiKey = process.env.GEMINI_API_KEY;
 if (!apiKey) {
@@ -131,6 +132,14 @@ async function main() {
 		const outputPath = path.join(outputDir, v.filename);
 		fs.writeFileSync(outputPath, wav);
 		console.log(`  Saved ${outputPath} (${wav.length} bytes)`);
+
+		// Automatically compress to Opus and MP3
+		try {
+			await compressAudioFile(outputPath);
+		} catch (error) {
+			console.warn(`  Warning: Compression failed for ${v.filename}:`, error);
+			// Don't fail the entire generation if compression fails
+		}
 	}
 
 	console.log("All 7 ZenMaster death files generated!");

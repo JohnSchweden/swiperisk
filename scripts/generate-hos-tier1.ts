@@ -1,6 +1,7 @@
 import * as fs from "node:fs";
 import * as path from "node:path";
 import { GoogleGenAI, Modality } from "@google/genai";
+import { compressAudioFile } from "./compress-audio";
 
 const apiKey = process.env.GEMINI_API_KEY;
 if (!apiKey) {
@@ -96,6 +97,14 @@ async function generateVoiceFile(
 	fs.writeFileSync(outputPath, wavBuffer);
 
 	console.log(`✓ Saved: ${filename} (${wavBuffer.length} bytes)`);
+
+	// Automatically compress to Opus and MP3
+	try {
+		await compressAudioFile(outputPath);
+	} catch (error) {
+		console.warn(`Warning: Compression failed for ${filename}:`, error);
+		// Don't fail the entire generation if compression fails
+	}
 }
 
 async function generateTier1() {

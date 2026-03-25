@@ -23,6 +23,11 @@ export {
 	ROLE_CARDS,
 } from "./cards";
 export { DEATH_ENDINGS } from "./deathEndings";
+export {
+	ARCHETYPE_DEATH_AFFINITY,
+	accumulateDeathVectors,
+	determineDeathTypeFromVectors,
+} from "./deathVectors";
 export { PERSONALITIES } from "./personalities";
 export { PRESSURE_SCENARIOS } from "./pressureScenarios";
 export {

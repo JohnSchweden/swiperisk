@@ -78,6 +78,8 @@ export interface Card {
 			[key in PersonalityType]: string;
 		};
 		lesson: string;
+		/** Optional death vector hint for this choice outcome */
+		deathVector?: DeathType;
 	};
 	onLeft: {
 		label: string;
@@ -89,6 +91,8 @@ export interface Card {
 			[key in PersonalityType]: string;
 		};
 		lesson: string;
+		/** Optional death vector hint for this choice outcome */
+		deathVector?: DeathType;
 	};
 }
 
@@ -135,6 +139,9 @@ export enum DeathType {
 	AUDIT_FAILURE = "AUDIT_FAILURE",
 	KIRK = "KIRK",
 }
+
+/** Frequency map of death vectors accumulated from player choices */
+export type DeathVectorMap = Partial<Record<DeathType, number>>;
 
 /** Phase 03-06: Role-based fine tiers for balanced gameplay */
 export const ROLE_FINE_TIERS = {

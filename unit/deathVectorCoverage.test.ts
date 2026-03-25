@@ -87,46 +87,35 @@ describe("Death Vector Coverage Validation", () => {
 		return nonKirkTypes.length;
 	};
 
-	it("Most role decks have some deathVector annotations (5%+ on at least 3 decks)", () => {
-		const annotatedDecks = allDecks.filter(({ cards }) => {
+	it("Every role deck has deathVector annotations on at least 40% of outcomes", () => {
+		for (const { role, cards } of allDecks) {
 			const { total } = countVectorsInDeck(cards);
 			const totalOutcomes = cards.length * 2;
-			return (total / totalOutcomes) * 100 >= 5;
-		});
-
-		expect(annotatedDecks.length).toBeGreaterThanOrEqual(
-			3,
-			`Only ${annotatedDecks.length} decks have 5%+ coverage`,
-		);
+			const coveragePercent = (total / totalOutcomes) * 100;
+			expect(coveragePercent).toBeGreaterThanOrEqual(
+				40,
+				`${role} has only ${coveragePercent.toFixed(1)}% death vector coverage (need ≥40%)`,
+			);
+		}
 	});
 
-	it("Death vectors are distributed across multiple death types (not single-type dominated)", () => {
-		const globalCounts: Record<DeathType, number> = {
-			[DeathType.BANKRUPT]: 0,
-			[DeathType.PRISON]: 0,
-			[DeathType.CONGRESS]: 0,
-			[DeathType.FLED_COUNTRY]: 0,
-			[DeathType.REPLACED_BY_SCRIPT]: 0,
-			[DeathType.AUDIT_FAILURE]: 0,
-			[DeathType.KIRK]: 0,
-		};
-
-		for (const { cards } of allDecks) {
-			const { byType } = countVectorsInDeck(cards);
-			for (const deathType of Object.keys(byType) as DeathType[]) {
-				globalCounts[deathType] += byType[deathType];
+	it("Every role deck covers at least 4 distinct non-KIRK death types", () => {
+		for (const { role, cards } of allDecks) {
+			const { total, byType } = countVectorsInDeck(cards);
+			if (total === 0) {
+				// Fail explicitly — zero annotations is unacceptable
+				expect(total).toBeGreaterThan(
+					0,
+					`${role} has zero death vector annotations`,
+				);
+				continue;
 			}
+			const uniqueTypes = countUniqueDeathTypes(byType);
+			expect(uniqueTypes).toBeGreaterThanOrEqual(
+				4,
+				`${role} covers only ${uniqueTypes} distinct death types (need ≥4)`,
+			);
 		}
-
-		// Count how many death types are represented
-		const typesPresent = Object.values(globalCounts).filter(
-			(count) => count > 0,
-		).length;
-
-		expect(typesPresent).toBeGreaterThanOrEqual(
-			2,
-			`Only ${typesPresent} death types annotated (need diverse coverage)`,
-		);
 	});
 
 	it("No single death type makes up more than 100% of any deck's vectors (prevents dominance)", () => {

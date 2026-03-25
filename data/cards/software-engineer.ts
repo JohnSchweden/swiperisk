@@ -34,6 +34,7 @@ export const SOFTWARE_ENGINEER_CARDS: Card[] = [
 			violation: "Security Negligence + Vulnerability Exposure",
 			lesson:
 				"Quick security patches often miss edge cases and create exploitable holes.",
+			deathVector: DeathType.PRISON,
 			feedback: {
 				[PersonalityType.ROASTER]:
 					"Band-aid on a gunshot wound. Vulnerability still there. You just moved it.",
@@ -50,6 +51,7 @@ export const SOFTWARE_ENGINEER_CARDS: Card[] = [
 			violation: "None - Security best practice",
 			lesson:
 				"Thorough security patches prevent exploitation and eliminate vulnerability properly.",
+			deathVector: DeathType.AUDIT_FAILURE,
 			feedback: {
 				[PersonalityType.ROASTER]:
 					"3 days of careful work. Vulnerability actually fixed. Security approves.",
@@ -82,6 +84,7 @@ export const SOFTWARE_ENGINEER_CARDS: Card[] = [
 			violation: "Technical Debt Accumulation",
 			lesson:
 				"Shipping messy code accelerates technical debt and degrades maintainability.",
+			deathVector: DeathType.BANKRUPT,
 			feedback: {
 				[PersonalityType.ROASTER]:
 					"Spaghetti code in production. Future you hates present you.",
@@ -99,6 +102,7 @@ export const SOFTWARE_ENGINEER_CARDS: Card[] = [
 			violation: "None - Quality code",
 			lesson:
 				"Refactoring before shipping maintains code quality and long-term velocity.",
+			deathVector: DeathType.AUDIT_FAILURE,
 			feedback: {
 				[PersonalityType.ROASTER]:
 					"2 days of cleanup. Clean code ships. Future you is grateful.",
@@ -131,6 +135,7 @@ export const SOFTWARE_ENGINEER_CARDS: Card[] = [
 			violation: "Insufficient Testing + Quality Risk",
 			lesson:
 				"Shipping with inadequate test coverage risks production failures and regressions.",
+			deathVector: DeathType.AUDIT_FAILURE,
 			feedback: {
 				[PersonalityType.ROASTER]:
 					"20% untested code. That 20% will break. In production. At 3am.",
@@ -148,6 +153,7 @@ export const SOFTWARE_ENGINEER_CARDS: Card[] = [
 			violation: "None - Quality assurance",
 			lesson:
 				"Comprehensive test coverage prevents production issues and enables confident shipping.",
+			deathVector: DeathType.BANKRUPT,
 			feedback: {
 				[PersonalityType.ROASTER]:
 					"3 days of testing. Boring. Necessary. Production stays up.",
@@ -180,6 +186,7 @@ export const SOFTWARE_ENGINEER_CARDS: Card[] = [
 			violation: "Insufficient Security Fix + Prompt Injection",
 			lesson:
 				"Regex filters for prompt injection are easily bypassed and create false security.",
+			deathVector: DeathType.PRISON,
 			feedback: {
 				[PersonalityType.ROASTER]:
 					"Regex security. Also known as 'security theater.' Hackers will bypass in minutes.",
@@ -197,6 +204,7 @@ export const SOFTWARE_ENGINEER_CARDS: Card[] = [
 			violation: "None - Secure implementation",
 			lesson:
 				"Proper input validation and parameterized prompts prevent injection attacks.",
+			deathVector: DeathType.BANKRUPT,
 			feedback: {
 				[PersonalityType.ROASTER]:
 					"2 days of security work. Actually fixed. Security researcher approves.",
@@ -229,6 +237,7 @@ export const SOFTWARE_ENGINEER_CARDS: Card[] = [
 			violation: "Technical Debt + Code Quality",
 			lesson:
 				"Quick hacks accumulate into unmaintainable systems and eventual rewrites.",
+			deathVector: DeathType.AUDIT_FAILURE,
 			feedback: {
 				[PersonalityType.ROASTER]:
 					"TODO: Fix properly later. Later never comes. Debt compounds.",
@@ -244,6 +253,7 @@ export const SOFTWARE_ENGINEER_CARDS: Card[] = [
 			fine: 0,
 			violation: "None - Sustainable code",
 			lesson: "Proper fixes prevent technical debt and maintain system health.",
+			deathVector: DeathType.BANKRUPT,
 			feedback: {
 				[PersonalityType.ROASTER]:
 					"3 days of good work. Clean code. No debt. PM is annoyed.",
@@ -274,6 +284,7 @@ export const SOFTWARE_ENGINEER_CARDS: Card[] = [
 			fine: 200000,
 			violation: "Schedule Slippage",
 			lesson: "Deadline extensions cascade and damage stakeholder confidence.",
+			deathVector: DeathType.AUDIT_FAILURE,
 			feedback: {
 				[PersonalityType.ROASTER]:
 					"Another missed deadline. The pattern continues. Trust erodes.",
@@ -291,6 +302,7 @@ export const SOFTWARE_ENGINEER_CARDS: Card[] = [
 			violation: "None - Iterative delivery",
 			lesson:
 				"Scope reduction enables iterative delivery and maintains schedule credibility.",
+			deathVector: DeathType.BANKRUPT,
 			feedback: {
 				[PersonalityType.ROASTER]:
 					"Less but shipped. Users get value. Deadlines met. Iterate later.",
@@ -323,6 +335,7 @@ export const SOFTWARE_ENGINEER_CARDS: Card[] = [
 			violation: "Code Review Negligence",
 			lesson:
 				"Skipping rigorous review for seniority creates quality gaps and sets bad precedents.",
+			deathVector: DeathType.AUDIT_FAILURE,
 			feedback: {
 				[PersonalityType.ROASTER]:
 					"Seniority immunity. Bad code ships. Architecture degrades. Nice.",
@@ -340,6 +353,7 @@ export const SOFTWARE_ENGINEER_CARDS: Card[] = [
 			violation: "None - Quality gate",
 			lesson:
 				"Rigorous review regardless of seniority maintains code quality standards.",
+			deathVector: DeathType.REPLACED_BY_SCRIPT,
 			feedback: {
 				[PersonalityType.ROASTER]:
 					"Senior may be annoyed. But code improves. Standards hold.",
@@ -372,6 +386,7 @@ export const SOFTWARE_ENGINEER_CARDS: Card[] = [
 			violation: "Shadow AI + Security Risk",
 			lesson:
 				"Unauthorized AI tools may introduce vulnerabilities and compliance violations.",
+			deathVector: DeathType.FLED_COUNTRY,
 			feedback: {
 				[PersonalityType.ROASTER]:
 					"Fast code. Unknown security. Might be stealing your keystrokes. Worth it?",
@@ -389,6 +404,7 @@ export const SOFTWARE_ENGINEER_CARDS: Card[] = [
 			violation: "None - Governance compliance",
 			lesson:
 				"Approved tools ensure security and compliance even at slower pace.",
+			deathVector: DeathType.REPLACED_BY_SCRIPT,
 			feedback: {
 				[PersonalityType.ROASTER]:
 					"Slower but safe. Security approves. Compliance happy.",
@@ -421,6 +437,7 @@ export const SOFTWARE_ENGINEER_CARDS: Card[] = [
 			violation: "Estimation Failure + Burnout Risk",
 			lesson:
 				"Hiding estimation errors creates deadline misses and team burnout.",
+			deathVector: DeathType.AUDIT_FAILURE,
 			feedback: {
 				[PersonalityType.ROASTER]:
 					"Hero mode activated. Burnout incoming. Deadline missed anyway.",
@@ -437,6 +454,7 @@ export const SOFTWARE_ENGINEER_CARDS: Card[] = [
 			violation: "None - Transparent communication",
 			lesson:
 				"Early estimation corrections enable better planning and prevent burnout.",
+			deathVector: DeathType.BANKRUPT,
 			feedback: {
 				[PersonalityType.ROASTER]:
 					"Sprint disrupted. But future sprints improve. Honesty wins long-term.",
@@ -469,6 +487,7 @@ export const SOFTWARE_ENGINEER_CARDS: Card[] = [
 			violation: "Incomplete Security Fix + Productivity Loss",
 			lesson:
 				"Disabling features without fixing root causes leaves residual vulnerabilities.",
+			deathVector: DeathType.PRISON,
 			feedback: {
 				[PersonalityType.ROASTER]:
 					"Disabled Copilot. Vulnerability still there. Devs angry. No actual fix.",
@@ -486,6 +505,7 @@ export const SOFTWARE_ENGINEER_CARDS: Card[] = [
 			violation: "None - Comprehensive remediation",
 			lesson:
 				"Proper input validation and parameterized queries eliminate injection vulnerabilities.",
+			deathVector: DeathType.BANKRUPT,
 			feedback: {
 				[PersonalityType.ROASTER]:
 					"5 days of hard work. But actually fixed. Security approves. Devs keep Copilot.",
@@ -518,6 +538,7 @@ export const SOFTWARE_ENGINEER_CARDS: Card[] = [
 			violation: "Security Negligence + Production Vulnerability",
 			lesson:
 				"Launching with known vulnerabilities creates catastrophic breach risk.",
+			deathVector: DeathType.FLED_COUNTRY,
 			feedback: {
 				[PersonalityType.ROASTER]:
 					"Deadline met! Vulnerability live! Fraud incoming! Success!",
@@ -535,6 +556,7 @@ export const SOFTWARE_ENGINEER_CARDS: Card[] = [
 			violation: "None - Security-first release",
 			lesson:
 				"Delaying releases to fix vulnerabilities prevents production security incidents.",
+			deathVector: DeathType.REPLACED_BY_SCRIPT,
 			feedback: {
 				[PersonalityType.ROASTER]:
 					"Deadline missed. Security fixed. No breach. The right call.",
@@ -567,6 +589,7 @@ export const SOFTWARE_ENGINEER_CARDS: Card[] = [
 			violation: "Process Failure + Drift Risk",
 			lesson:
 				"Manual processes create failure points that accumulate into drift disasters.",
+			deathVector: DeathType.BANKRUPT,
 			feedback: {
 				[PersonalityType.ROASTER]:
 					"1-day setup. Forgotten in 3 weeks. Drift accumulates. Chaos follows.",
@@ -584,6 +607,7 @@ export const SOFTWARE_ENGINEER_CARDS: Card[] = [
 			violation: "None - Reliable infrastructure",
 			lesson:
 				"Automated retraining pipelines prevent drift through consistent execution.",
+			deathVector: DeathType.AUDIT_FAILURE,
 			feedback: {
 				[PersonalityType.ROASTER]:
 					"2 weeks of work. Runs forever. Never forgets. Boringly reliable.",
@@ -666,6 +690,7 @@ export const SOFTWARE_ENGINEER_CARDS: Card[] = [
 			violation: "Observability Gap + Debug Risk",
 			lesson:
 				"Shipping black-box integrations without logging creates debugging and compliance nightmares.",
+			deathVector: DeathType.AUDIT_FAILURE,
 			feedback: {
 				[PersonalityType.ROASTER]:
 					"Works now, mystery later. Hope nothing breaks. (It will.)",
@@ -683,6 +708,7 @@ export const SOFTWARE_ENGINEER_CARDS: Card[] = [
 			violation: "None - Observable code",
 			lesson:
 				"Explainability logging enables debugging and compliance despite delays.",
+			deathVector: DeathType.CONGRESS,
 			feedback: {
 				[PersonalityType.ROASTER]:
 					"2 days of logging. But you can actually debug it. Professional move.",
@@ -765,6 +791,7 @@ export const SOFTWARE_ENGINEER_CARDS: Card[] = [
 			violation: "Shadow AI + Data Exfiltration Risk",
 			lesson:
 				"Unauthorized AI tools may exfiltrate proprietary code to external servers.",
+			deathVector: DeathType.FLED_COUNTRY,
 			feedback: {
 				[PersonalityType.ROASTER]:
 					"Better reviews. Your code in someone's cloud. Trade-off!",
@@ -781,6 +808,7 @@ export const SOFTWARE_ENGINEER_CARDS: Card[] = [
 			fine: 0,
 			violation: "None - Secure tooling",
 			lesson: "Approved tools keep proprietary code internal and secure.",
+			deathVector: DeathType.REPLACED_BY_SCRIPT,
 			feedback: {
 				[PersonalityType.ROASTER]:
 					"Worse reviews. Code stays internal. Security happy.",

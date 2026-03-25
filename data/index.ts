@@ -28,6 +28,12 @@ export {
 	accumulateDeathVectors,
 	determineDeathTypeFromVectors,
 } from "./deathVectors";
+export {
+	FAILURE_LESSONS,
+	type FailureLesson,
+	generateDeathExplanation,
+	getRetryPrompt,
+} from "./failureLessons";
 export { PERSONALITIES } from "./personalities";
 export { PRESSURE_SCENARIOS } from "./pressureScenarios";
 export {

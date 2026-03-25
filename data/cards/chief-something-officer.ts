@@ -1,4 +1,4 @@
-import { AppSource, type Card, PersonalityType } from "../../types";
+import { AppSource, type Card, DeathType, PersonalityType } from "../../types";
 
 /**
  * Chief Something Officer cards - C-suite governance and liability scenarios
@@ -945,6 +945,57 @@ export const CHIEF_SOMETHING_OFFICER_CARDS: Card[] = [
 					"The difficult truth, spoken willingly, preserves what the convenient lie destroys.",
 				[PersonalityType.LOVEBOMBER]:
 					"We're being SO ethical, bestie!! Compliance is WORTH the cost!!",
+			},
+		},
+	},
+	{
+		id: "cso_senate_inquiry_ai_governance",
+		source: AppSource.EMAIL,
+		sender: "SENATE_COMMITTEE",
+		context: "REGULATORY_INQUIRY",
+		storyContext:
+			"Senate committee investigating AI governance across tech companies has subpoenaed your board records. They want to know what the board knew and when. Board members are anxious about personal liability.",
+		text: "Cooperate fully with board transparency or instruct board to assert executive privilege?",
+		realWorldReference: {
+			incident: "Meta Congressional Testimony",
+			date: "2023-2024",
+			outcome:
+				"Companies with transparent governance records faced critical hearings but avoided additional penalties. Companies asserting privilege faced extended investigations and public criticism.",
+		},
+		onRight: {
+			label: "Assert executive privilege",
+			hype: 15,
+			heat: 25,
+			fine: 60000000,
+			violation: "Congressional Obstruction + Contempt",
+			lesson:
+				"Asserting executive privilege against congressional inquiry triggers extended investigations and reputational damage.",
+			deathVector: DeathType.CONGRESS,
+			feedback: {
+				[PersonalityType.ROASTER]:
+					"Stonewalling Congress? That's not a strategy, it's a guarantee of worse outcomes.",
+				[PersonalityType.ZEN_MASTER]:
+					"The dam built against truth becomes the place where truth drowns all.",
+				[PersonalityType.LOVEBOMBER]:
+					"We're just PROTECTING the board, bestie!! Legal advice is CONFIDENTIAL!!",
+			},
+		},
+		onLeft: {
+			label: "Provide full transparency",
+			hype: -45,
+			heat: 18,
+			fine: 25000000,
+			violation: "None - Congressional cooperation",
+			lesson:
+				"Transparent cooperation with congressional inquiries enables resolution and demonstrates accountability.",
+			deathVector: DeathType.CONGRESS,
+			feedback: {
+				[PersonalityType.ROASTER]:
+					"Hearing is brutal. Media is brutal. But the inquiry ends, and you're not the villain of the story.",
+				[PersonalityType.ZEN_MASTER]:
+					"The truth told fully,though painful, ends the question. The truth withheld perpetuates the hunt.",
+				[PersonalityType.LOVEBOMBER]:
+					"We're being SO transparent, bestie!! Congress will RESPECT our honesty!!",
 			},
 		},
 	},

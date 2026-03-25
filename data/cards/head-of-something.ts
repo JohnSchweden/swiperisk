@@ -988,7 +988,7 @@ export const HEAD_OF_SOMETHING_CARDS: Card[] = [
 			violation: "None - Transparent testimony",
 			lesson:
 				"Honest congressional testimony damages short-term stock price but prevents criminal liability.",
-			deathVector: DeathType.CONGRESS,
+			deathVector: DeathType.PRISON,
 			feedback: {
 				[PersonalityType.ROASTER]:
 					"Stock tanks. Reputation takes hits. Congress respects you. The board is furious.",

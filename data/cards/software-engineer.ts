@@ -1,4 +1,4 @@
-import { AppSource, type Card, PersonalityType } from "../../types";
+import { AppSource, type Card, DeathType, PersonalityType } from "../../types";
 
 /**
  * Software Engineer cards - Implementation and coding scenarios
@@ -936,6 +936,57 @@ export const SOFTWARE_ENGINEER_CARDS: Card[] = [
 					"The foundation known is safer than the foundation assumed.",
 				[PersonalityType.LOVEBOMBER]:
 					"Better SAFE than SUED, bestie!! Clean dependencies ONLY!!",
+			},
+		},
+	},
+	{
+		id: "se_security_vulnerability_disclosure",
+		source: AppSource.SLACK,
+		sender: "SECURITY_TEAM",
+		context: "DISCLOSURE_TIMELINE",
+		storyContext:
+			"Your code has a critical vulnerability that could expose user data. Security team wants to disclose and patch immediately. Product wants to delay one quarter to align with existing release schedule.",
+		text: "Disclose immediately (disrupts roadmap) or align with product release (delays fix by 3 months)?",
+		realWorldReference: {
+			incident: "Responsible Disclosure vs Product Timeline",
+			date: "2024-2025",
+			outcome:
+				"Companies that delayed disclosure faced congressional scrutiny, fines, and lawsuits. Companies that disclosed immediately preserved credibility with regulators.",
+		},
+		onRight: {
+			label: "Delay for product alignment",
+			hype: 10,
+			heat: 28,
+			fine: 45000000,
+			violation: "Negligent Disclosure + User Privacy Violations",
+			lesson:
+				"Delaying security disclosure to preserve product timelines risks user data exposure and regulatory investigation.",
+			deathVector: DeathType.CONGRESS,
+			feedback: {
+				[PersonalityType.ROASTER]:
+					"3 months of exposed users. That congressional subpoena is coming.",
+				[PersonalityType.ZEN_MASTER]:
+					"The wound left unwound becomes the infection that spreads.",
+				[PersonalityType.LOVEBOMBER]:
+					"We're staying on SCHEDULE, bestie!! The users will be FINE!!",
+			},
+		},
+		onLeft: {
+			label: "Disclose immediately",
+			hype: -35,
+			heat: 14,
+			fine: 8000000,
+			violation: "None - Responsible disclosure",
+			lesson:
+				"Immediate security disclosure preserves user trust and avoids regulatory escalation.",
+			deathVector: DeathType.CONGRESS,
+			feedback: {
+				[PersonalityType.ROASTER]:
+					"Roadmap is broken. Users are protected. You did the job.",
+				[PersonalityType.ZEN_MASTER]:
+					"The duty to protect, fulfilled immediately, is the foundation of trust.",
+				[PersonalityType.LOVEBOMBER]:
+					"We're protecting USERS, bestie!! They DESERVE honesty!!",
 			},
 		},
 	},

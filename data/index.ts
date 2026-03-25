@@ -35,6 +35,20 @@ export {
 	generateDeathExplanation,
 	getRetryPrompt,
 } from "./failureLessons";
+export type { IncidentSlug, OutcomeImageKey } from "./imageMap";
+export {
+	ARCHETYPE_IMAGES,
+	DEATH_IMAGES,
+	getArchetypeImagePath,
+	getDeathImagePath,
+	getIncidentImagePath,
+	getOutcomeImagePath,
+	INCIDENT_IMAGES,
+	OUTCOME_IMAGES,
+	slugify,
+	slugifyIncident,
+	slugifyLabel,
+} from "./imageMap";
 export { PERSONALITIES } from "./personalities";
 export { PRESSURE_SCENARIOS } from "./pressureScenarios";
 export {

@@ -1,7 +1,7 @@
 # Phase 14: Situational & Outcome Imagery Display - Context
 
 **Gathered:** 2026-03-16
-**Updated:** 2026-03-25 (outcome image model: per-direction per-HOS-card, not 8 consequence types)
+**Updated:** 2026-03-26 (outcome keys: incident slug + direction; HOS pilot; aligned with `13-CONTRACT.md`)
 **Status:** Ready for execution
 
 <domain>
@@ -31,8 +31,8 @@ Display images at correct locations across 4 UI surfaces with mobile/web respons
 
 ### Outcome overlay images
 - **Large hero image** at the top of the overlay, 16:9
-- **Images keyed by HOS card slug + swipe direction** (e.g., `hos-model-drift-team-blame-left`, `hos-model-drift-team-blame-right`)
-- Image lookup: `getOutcomeImagePath(slugifyIncident(card.realWorldReference.incident), swipeDirection)` — returns `undefined` for non-HOS roles (fallback: no image shown)
+- **Images keyed by reference-case incident slug + swipe direction** — filenames `{incidentSlug}-left.webp` / `{incidentSlug}-right.webp` (same incident string across roles shares one pair)
+- Image lookup: `getOutcomeImagePath(slugifyIncident(card.realWorldReference.incident), swipeDirection)` — returns `undefined` when no asset (e.g. role outside pilot, or missing file)
 - **Overlay width matches ticket card width** on all breakpoints (mobile + desktop) — currently narrower, needs adjustment
 - Image **fades in** (~300ms) when overlay opens — subtle reveal effect
 - Personality feedback text, fines, and governance alerts flow below the image
@@ -59,8 +59,8 @@ Display images at correct locations across 4 UI surfaces with mobile/web respons
 - **CLS test kept**, fps/memory tests dropped (unreliable in CI)
 
 ### Test scope
-- **CSO pilot role** for initial image assertions — CSO cards have populated `realWorldReference.incident`
-- **Other roles test "placeholder shown when missing"** path
+- **HOS pilot** for initial image assertions — Head of Something cards drive Phase 13 pilot assets (`realWorldReference.incident`)
+- **Other roles** test **placeholder / missing asset** path until expansion adds their reference cases
 - **Kirk coverage** in debrief tests (both collapse and verdict pages)
 - **7 test files total** (not 8 — no image-performance.spec.ts)
 
@@ -69,7 +69,7 @@ Display images at correct locations across 4 UI surfaces with mobile/web respons
 - Mobile-specific image height constraints to avoid excessive scrolling
 - Transition timing details beyond the ~300ms fade-in direction
 - Glitch placeholder CSS implementation details
-- How consequence type is derived from outcome stats in FeedbackOverlay parent
+- *(Legacy)* Any old “consequence type from stats” idea is **superseded** by **incident slug + swipe direction** lookup per **13-CONTRACT.md**
 
 </decisions>
 
@@ -111,10 +111,10 @@ Display images at correct locations across 4 UI surfaces with mobile/web respons
 - `@/` alias for root-relative imports
 
 ### Integration Points
-- `data/imageMap.ts` provides all path resolution (Phase 13)
+- `data/imageMap.ts` provides all path resolution (Phase 13); normative keys in **`.planning/.../13-CONTRACT.md`**
 - `Archetype` interface needs `image?: string` field
 - Card/ChoiceOutcome interfaces NOT modified
-- 8 outcome types for consequence-based images
+- Outcome overlay images: **incident slug × LEFT/RIGHT**, not eight generic consequence-type files
 
 </code_context>
 
@@ -125,7 +125,6 @@ Display images at correct locations across 4 UI surfaces with mobile/web respons
 - **Parallax swipe effect** on card images — mentioned as option, decided against for simplicity
 - **Blur-up progressive loading** — requires generating thumbnail variants per image, decided against in favor of glitch placeholder
 - **IntersectionObserver lazy loading** — decided against, native loading="lazy" is sufficient and simpler
-- **Per-direction outcome images** — decided against, outcome images are per-consequence-type (8 types) not per-card-direction
 
 </deferred>
 

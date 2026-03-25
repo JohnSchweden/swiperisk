@@ -7,7 +7,8 @@ dependencies:
   requires:
     - 13-01 (image mapping config)
   provides:
-    - 170 WebP images (118 incidents + 8 outcomes + 7 archetypes + 7 deaths)
+    - "Current target spec (2026-03-26): 13-CONTRACT.md + 13-02-PLAN.md — HOS pilot ~68 WebP, incident-keyed -left/-right outcomes"
+    - "As-built snapshot (when this summary was written): 170 WebP dry-run scope (118 incidents + 8 outcomes + 7 archetypes + 7 deaths)"
     - Reusable image generation script with CLI interface
     - Rate-limited Gemini API integration pattern
   affects:
@@ -43,6 +44,8 @@ metrics:
   commits: 1
   prompt_generation_test: 170 images (118 incidents + 8 outcomes + 7 archetypes + 7 deaths)
 ---
+
+> **Do not treat this file as the only source of truth.** **Normative direction:** **`13-CONTRACT.md`**, **`13-CONTEXT.md`**, **`13-02-PLAN.md`**. Everything below (objective, completed tasks, metrics, CSO/`--scope cso`, eight outcome images, ~170 prompts) is a **preserved execution log** — what was implemented and verified at the time — not deleted when the spec moved to HOS + per-incident outcome pairs.
 
 # Phase 13 Plan 02: Image Asset Generation Pipeline
 

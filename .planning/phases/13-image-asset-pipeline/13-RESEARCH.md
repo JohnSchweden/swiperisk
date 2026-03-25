@@ -16,26 +16,24 @@ Groq does NOT offer image generation -- it is an inference-only platform. The CO
 
 ## User Constraints (from CONTEXT.md)
 
-### Locked Decisions
-- Per-category images for incidents (~6 images): prompt injection, model drift, explainability, shadow AI, copyright, general dilemmas
-- Per-consequence-type images for outcomes (~8-10 images): budget crater, PR disaster, legal hammer, team revolt, audit doom, etc.
-- 6 archetype character portraits (one per archetype: Pragmatist, Shadow Architect, Disruptor, Conservative, Balanced, Chaos Agent)
-- 6 death/collapse images (one per death type: Bankrupt, Replaced by Script, Congress, Fled Country, Prison, Audit Failure)
-- Total scope: ~26-28 images
-- Photorealistic with AI tells for incidents (uncanny valley)
-- Meme-adjacent humor for outcomes (exaggerated, absurd, funny)
-- Character portraits for archetypes (LinkedIn-shareable quality)
-- Dramatic + darkly comedic for deaths ("This is Fine" energy)
-- Script-first automated pipeline using Gemini image APIs (NOT Midjourney)
-- Structured prompt library (JSON/MD with all ~28 prompts) + Node/TS pipeline script
-- Directory: public/images/{incidents,outcomes,archetypes,deaths}/
-- Format: WebP for all images
-- Separate data/imageMap.ts config with Record<category, imagePath> pattern
-- No changes to Card interface or existing types
+> **Superseded 2026-03-26:** The **current** product decisions live in **`13-CONTEXT.md`** and **`13-CONTRACT.md`**: HOS-first pilot (~68 WebP), **incident-keyed** images, outcome files **`{incidentSlug}-left.webp` / `-right.webp`**, **7** archetypes + **7** deaths (incl. KIRK), **runtime prompt generation** (no static prompt library file). The list below is **historical** research capture only.
+
+### Locked Decisions *(historical — see note above)*
+- Early idea: per-category incidents (~6) and per-consequence outcomes (~8) — **replaced** by per-reference-case incidents + per-incident outcome pairs
+- 6 archetypes / 6 deaths in old brief — **now 7 / 7** including KIRK
+- Old total ~26–28 — **pilot ~68**, expansion toward larger incident catalog
+- Photorealistic with AI tells for incidents (uncanny valley) — **still applies**
+- Outcomes: “Task Failed Successfully” / meme-adjacent — **still applies**, keyed by incident + direction
+- Character portraits / death art direction — **still applies**
+- Script-first Gemini pipeline — **still applies**
+- ~~Structured prompt library file~~ — **replaced** by templates inside `generate-images.ts` + `--export-prompts` markdown
+- Directory: `public/images/{incidents,outcomes,archetypes,deaths}/` — **still applies**
+- `data/imageMap.ts` — **still applies**; shape per **13-CONTRACT.md**
+- No `Card` image field — **still applies**
 
 ### Claude's Discretion
 - Exact prompt wording for each of the ~28 images
-- Consequence type taxonomy (which ~8-10 consequence categories for outcomes)
+- ~~Consequence type taxonomy~~ — **superseded** by incident slug + direction (13-CONTRACT.md)
 - Image dimensions and aspect ratios per entity type
 - Gemini vs Groq selection (whichever produces better results) -- NOTE: Groq has no image generation, so Gemini is the only option
 - Post-processing details (resize, optimize, compression level)
@@ -55,7 +53,7 @@ Groq does NOT offer image generation -- it is an inference-only platform. The CO
 
 | ID | Description | Research Support |
 |----|-------------|-----------------|
-| PIPELINE-01 | Image prompt library (incidents, outcomes, collapse, archetypes) | Prompt library as TypeScript file with typed prompt objects; art direction per category |
+| PIPELINE-01 | Image prompts (incidents, outcomes, archetypes, deaths) | **Runtime** templates in `generate-images.ts` (+ optional `--export-prompts`); art direction per **13-CONTEXT** |
 | PIPELINE-02 | Script or process to generate + save images locally | `scripts/generate-images.ts` using `@google/genai` SDK + `sharp` for WebP conversion |
 | PIPELINE-03 | File naming convention + directory structure | `public/images/{incidents,outcomes,archetypes,deaths}/{entity-id}.webp` |
 | PIPELINE-04 | Mapping config (card -> image, outcome -> image, archetype -> image, deathType -> collapse image) | `data/imageMap.ts` with typed Records keyed by existing enums/types |
@@ -479,12 +477,11 @@ const response = await ai.models.generateContent({
    - What's unclear: What Phase 14 will need for each placement (card images, overlays, full-width, badges).
    - Recommendation: Generate at 16:9 for incidents/deaths (dramatic, cinematic), 1:1 for archetypes (portrait/badge), 4:3 for outcomes (versatile). Can regenerate if Phase 14 needs different ratios.
 
-3. **Consequence type taxonomy for outcomes**
-   - What we know: CONTEXT.md says "~8-10 consequence types" with examples like "budget crater, PR disaster, legal hammer, team revolt, audit doom"
-   - What's unclear: The exact taxonomy -- cards use `violation` string field, not a typed consequence enum
-   - Recommendation: Define a `OutcomeConsequenceType` union type with 8 values. Map them based on the violation/lesson patterns in existing cards.
+3. **~~Consequence type taxonomy~~** — **Superseded (2026-03-26):** Outcomes are **`{incidentSlug}-left` / `-right`** files per **13-CONTRACT.md**, not an eight-type enum.
 
 ## Validation Architecture
+
+> **Updated 2026-03-26:** Align with **`13-VALIDATION.md`**. There is **no** `image-prompts.test.ts` or static prompt library gate.
 
 ### Test Framework
 | Property | Value |
@@ -494,23 +491,22 @@ const response = await ai.models.generateContent({
 | Quick run command | `bun run test:unit` |
 | Full suite command | `bun run test:data` |
 
-### Phase Requirements -> Test Map
-| Req ID | Behavior | Test Type | Automated Command | File Exists? |
-|--------|----------|-----------|-------------------|-------------|
-| PIPELINE-01 | Prompt library has entries for all categories | unit | `bun vitest run tests/data/image-prompts.test.ts -x` | Wave 0 |
-| PIPELINE-02 | Pipeline script generates and saves images | manual-only | Manual: run script, verify images exist | N/A (dev script) |
-| PIPELINE-03 | Files exist at expected paths with correct names | unit | `bun vitest run tests/data/image-assets.test.ts -x` | Wave 0 |
-| PIPELINE-04 | Image map has entries for all enums/types with valid paths | unit | `bun vitest run tests/data/image-map.test.ts -x` | Wave 0 |
+### Phase requirements → test map
+| Req ID | Behavior | Test type | Automated command | Notes |
+|--------|----------|-----------|-------------------|--------|
+| PIPELINE-01 | imageMap + pilot key contracts (HOS incidents, `-left`/`-right` keys, invariants) | unit | `bun vitest run tests/data/image-map.test.ts -x` | Matches **13-CONTRACT.md** |
+| PIPELINE-02 | Script generates and saves images | manual / opt-in | Local `bun scripts/generate-images.ts` + key | **Never** in CI |
+| PIPELINE-03 | Files exist at mapped paths | unit | `bun vitest run tests/data/image-assets.test.ts -x` | Read-only `existsSync` |
+| PIPELINE-04 | Same as map/path integrity | unit | `image-map` + `image-assets` | Optional pure `buildImageTasks` tests later |
 
 ### Sampling Rate
 - **Per task commit:** `bun run test:unit`
 - **Per wave merge:** `bun run test:data`
 - **Phase gate:** Full suite green before `/gsd:verify-work`
 
-### Wave 0 Gaps
-- [ ] `tests/data/image-prompts.test.ts` -- validates prompt library completeness (all categories, all entity keys)
-- [ ] `tests/data/image-map.test.ts` -- validates imageMap exports have entries for all DeathType, ArchetypeId values
-- [ ] `tests/data/image-assets.test.ts` -- validates referenced image files exist in public/images/
+### Wave 0 gaps
+- [ ] `tests/data/image-map.test.ts` — pilot HOS contracts + archetype/death enums + optional slug-collision
+- [ ] `tests/data/image-assets.test.ts` — on-disk files for all mapped paths
 
 ## Sources
 

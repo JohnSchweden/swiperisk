@@ -25,6 +25,19 @@ created: 2026-03-16
 
 ---
 
+## Automated test constraints (CI)
+
+Phase 13 **unit / data tests** (`tests/data/*`, Vitest, `bun run test:data`) **must not**:
+
+- Call **Gemini**, **Imagen**, or any **remote image API** (e.g. `@google/genai`, `GoogleGenAI`, HTTP to model endpoints).
+- **Generate or overwrite** images under `public/images/` (no pipeline runs that invoke `generateContent` / image modalities; no test code that writes WebP/PNG via `sharp` into `public/`).
+
+**Allowed:** Import **`data/imageMap.ts`** and **`data/cards`**; **read-only** `existsSync` / `statSync` (and similar) against committed files under `public/images/`; tests against **pure, exported** pipeline helpers that build task lists or prompts **without** constructing a live client (e.g. same logic path as `--dry-run` / `--export-prompts`, no API key required).
+
+**PIPELINE-02** (real generated pixels) stays **manual or an opt-in local command** with `GEMINI_API_KEY` — **not** a gate for CI.
+
+---
+
 ## Sampling Rate
 
 - **After every task commit:** Run `bun run test:unit`
@@ -38,13 +51,13 @@ created: 2026-03-16
 
 | Task ID | Plan | Wave | Requirement | Test Type | Automated Command | File Exists | Status |
 |---------|------|------|-------------|-----------|-------------------|-------------|--------|
-| 13-00-01 | 00 | 0 | PIPELINE-01 | unit | `bun vitest run tests/data/image-prompts.test.ts -x` | ❌ W0 | ⬜ pending |
+| 13-00-01 | 00 | 0 | PIPELINE-01 | unit | `bun vitest run tests/data/image-map.test.ts -x` | ❌ W0 | ⬜ pending |
 | 13-00-02 | 00 | 0 | PIPELINE-03 | unit | `bun vitest run tests/data/image-assets.test.ts -x` | ❌ W0 | ⬜ pending |
 | 13-00-03 | 00 | 0 | PIPELINE-04 | unit | `bun vitest run tests/data/image-map.test.ts -x` | ❌ W0 | ⬜ pending |
-| 13-01-01 | 01 | 1 | PIPELINE-01 | unit | `bun vitest run tests/data/image-prompts.test.ts -x` | ❌ W0 | ⬜ pending |
+| 13-01-01 | 01 | 1 | PIPELINE-01 | unit | `bun vitest run tests/data/image-map.test.ts -x` | ❌ W0 | ⬜ pending |
 | 13-02-01 | 02 | 1 | PIPELINE-02 | manual-only | Manual: run script, verify images exist | N/A | ⬜ pending |
-| 13-03-01 | 03 | 1 | PIPELINE-03 | unit | `bun vitest run tests/data/image-assets.test.ts -x` | ❌ W0 | ⬜ pending |
-| 13-03-02 | 03 | 1 | PIPELINE-04 | unit | `bun vitest run tests/data/image-map.test.ts -x` | ❌ W0 | ⬜ pending |
+
+*There is no Plan 03 in Phase 13; PIPELINE-03/04 for maps are covered by **13-00** / **13-01** rows above.*
 
 *Status: ⬜ pending · ✅ green · ❌ red · ⚠️ flaky*
 
@@ -52,11 +65,12 @@ created: 2026-03-16
 
 ## Wave 0 Requirements
 
-- [ ] `tests/data/image-prompts.test.ts` — validates prompt library completeness (all categories, all entity keys)
-- [ ] `tests/data/image-map.test.ts` — validates imageMap exports have entries for all DeathType, ArchetypeId values
-- [ ] `tests/data/image-assets.test.ts` — validates referenced image files exist in public/images/
+- [ ] `tests/data/image-map.test.ts` — HOS pilot incident + outcome key contracts, shared-incident lesson invariant, DeathType / ArchetypeId coverage (see **13-CONTRACT.md**)
+- [ ] `tests/data/image-assets.test.ts` — every mapped path has a committed file under `public/images/` (read-only; no generation in CI)
+- [ ] *(Optional)* Pure **`buildImageTasks`** (or equivalent) unit tests — same module path as pipeline, **no** `GoogleGenAI`, **no** writes to `public/` (add when exported from `generate-images.ts`)
+- [ ] *(Optional)* **Slug-collision:** test that distinct `realWorldReference.incident` strings on the pilot deck do not slugify to the same key
 
-*Existing Vitest infrastructure covers framework needs. Only test files need creation.*
+*Prompts are generated at runtime by the pipeline — there is no static “prompt library” file to validate.*
 
 ---
 
@@ -64,7 +78,7 @@ created: 2026-03-16
 
 | Behavior | Requirement | Why Manual | Test Instructions |
 |----------|-------------|------------|-------------------|
-| Pipeline script generates images | PIPELINE-02 | Requires Gemini API key + network | Run `bun scripts/generate-images.ts`, verify images appear in `public/images/` |
+| Pipeline script generates images | PIPELINE-02 | Requires Gemini API key + network; **never** run from Vitest / CI (see **Automated test constraints** above) | Run `bun scripts/generate-images.ts` locally, verify images appear in `public/images/` |
 
 ---
 

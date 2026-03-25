@@ -1,7 +1,7 @@
 # Phase 13: Image Asset Pipeline - Context
 
 **Gathered:** 2026-03-16
-**Updated:** 2026-03-25 (scoped to HOS-first: incidents + per-direction outcomes + deaths + archetypes)
+**Updated:** 2026-03-26 (aligned plans with HOS pilot + incident-keyed outcome pairs; see `13-CONTRACT.md`)
 **Status:** Ready for planning
 
 <domain>
@@ -9,18 +9,22 @@
 
 Create an automated pipeline to generate AI images for the game, save them locally, and define mapping from game entities to image paths. This phase produces the images and mapping config. Displaying images in the UI is Phase 14.
 
-Key shift from original plan: incident images are **per-incident** (~118 unique real-world incidents extracted from card data), not per-category (6). The pipeline auto-generates prompts from card data rather than using a hardcoded prompt library.
+**Normative API & keys:** `.planning/phases/13-image-asset-pipeline/13-CONTRACT.md` — single source for outcome filenames, helpers, and data invariants. Narrative below must not contradict it.
+
+**Full catalog vs pilot:** Incident images are **per reference case** (`realWorldReference.incident`), deduped by slug. **~118** unique incidents = **expansion** target across all roles. **Phase 13 ship** is **HOS-first** (~18 unique incidents + ~36 outcome files + 7 archetypes + 7 deaths ≈ **68** assets). The pipeline auto-generates prompts from card data (no static prompt library file).
 
 </domain>
 
 <decisions>
 ## Implementation Decisions
 
+**Normative keys and helpers:** `.planning/phases/13-image-asset-pipeline/13-CONTRACT.md` — read before editing `imageMap.ts`, `generate-images.ts`, or Phase 14 lookup code.
+
 ### Image Coverage Scope
 **Phase 13 is HOS-first.** Images are generated for the Head of Something role (whose card scenarios already have audio coverage), all 7 death types, and all 7 archetypes. Other roles use the fallback placeholder until a future expansion phase.
 
 - **HOS incident images** (~18 images): One image per unique `realWorldReference.incident` from HOS card decks. Keyed by slugified incident name (e.g., `hos-model-drift-team-blame` → `/images/incidents/hos-model-drift-team-blame.webp`). Scope anchored to the audio file scenarios: `explainability_hos_1/2`, `shadow_ai_hos_1/2`, `synthetic_data_hos_1/2`, `hos_copyright_team_blame`, `hos_delegation_gone_wrong`, `hos_explainability_politics`, `hos_managing_up_down`, `hos_model_drift_budget_conflict`, `hos_model_drift_retrain_delay`, `hos_model_drift_team_blame`, `hos_promotion_politics`, `hos_prompt_injection_blame`, `hos_prompt_injection_copilot_team`, `hos_prompt_injection_review_escape`, `hos_shadow_ai_team_discovery`.
-- **HOS outcome images** (~36 images): One image per swipe direction per HOS card (left + right). Keyed by `{hosCardSlug}-left` and `{hosCardSlug}-right`. Each depicts the specific consequence of that outcome — not a generic category.
+- **HOS outcome images** (~36 images): One image per swipe **direction per distinct reference-case incident** on the HOS deck (left + right). Files: `{incidentSlug}-left.webp` and `{incidentSlug}-right.webp` where `incidentSlug = slugifyIncident(realWorldReference.incident)`. Same pair **reuses** if multiple HOS cards share the same incident string. Prompts use the canonical **`onLeft.lesson` / `onRight.lesson`** for that reference case — not legacy eight “consequence types.”
 - **Archetype images** (7 images): One per ArchetypeId (Pragmatist, Shadow Architect, Disruptor, Conservative, Balanced, Chaos Agent, **Kirk**)
 - **Death/collapse images** (7 images): One per DeathType (Bankrupt, Replaced by Script, Congress, Fled Country, Prison, Audit Failure, **Kirk**)
 - **Total scope: ~68 images** (~18 HOS incidents + ~36 HOS outcomes + 7 archetypes + 7 deaths)
@@ -32,17 +36,17 @@ Key shift from original plan: incident images are **per-incident** (~118 unique 
 - Archetype portrait for Kirk: mysterious, glitched-out figure embodying the rogue AI personality
 
 ### Per-Incident Images (NOT Per-Category)
-- Instead of 6 generic per-category incident images, generate ~118 per-incident images keyed by `realWorldReference.incident` from card data
-- Cards sharing the same real incident share one image (deduplication is automatic via slugify)
-- Example: "Samsung ChatGPT Code Leak" referenced by both CSO and Software Engineer cards → one image at `/images/incidents/samsung-chatgpt-code-leak.webp`
+- **Expansion:** up to ~118 unique incident images keyed by `realWorldReference.incident` across all role decks.
+- **Pilot:** generate only incidents that appear on **HOS** cards with `realWorldReference` (~18).
+- Cards sharing the same incident string share one incident image (dedupe via `slugifyIncident`).
+- **Invariant:** all cards sharing an incident must share the same `(onLeft.lesson, onRight.lesson)` pair, or outcome art cannot be canonical — enforce in data tests (see `13-CONTRACT.md`).
 
 ### imageMap.ts as Single Source of Truth
-- `data/imageMap.ts` exports `INCIDENT_IMAGES: Record<string, string>` keyed by slugified incident name (HOS scope)
-- Exports `OUTCOME_IMAGES: Record<string, string>` keyed by `{cardSlug}-left` and `{cardSlug}-right` (per-direction, HOS scope)
-- Exports `ARCHETYPE_IMAGES: Record<ArchetypeId, string>` and `DEATH_IMAGES: Record<DeathType, string>` (all 7 entries each)
-- Exports helper functions: `getIncidentImagePath()`, `getOutcomeImagePath(slug, direction)`, `getArchetypeImagePath()`, `getDeathImagePath()`
-- Exports `slugifyIncident()` for consistent slug generation
-- Phase 14 will NOT create a separate imagePaths.ts — imageMap.ts is the single source of truth
+- `data/imageMap.ts` exports `INCIDENT_IMAGES: Record<string, string>` keyed by slugified incident (pilot: HOS incidents only; grows toward full deck).
+- Exports `OUTCOME_IMAGES: Record<string, string>` keyed by **`${incidentSlug}-left`** and **`${incidentSlug}-right`** for each pilot incident with swipe outcomes (see `13-CONTRACT.md`).
+- Exports `ARCHETYPE_IMAGES: Record<ArchetypeId, string>` and `DEATH_IMAGES: Record<DeathType, string>` (all 7 entries each).
+- Exports helpers: `getIncidentImagePath()`, **`getOutcomeImagePath(incidentSlug, direction)`** (returns `string | undefined` when no asset), `getArchetypeImagePath()`, `getDeathImagePath()`, `slugifyIncident()`.
+- Phase 14 does **not** add `utils/imagePaths.ts`.
 
 ### Auto-Generated Prompts from Card Data
 - No hardcoded prompt library. The pipeline script reads HOS card decks, extracts unique `realWorldReference.incident` values + context (date, outcome), and generates image prompts using art direction templates
@@ -77,7 +81,7 @@ Key shift from original plan: incident images are **per-incident** (~118 unique 
 - "Task Failed Successfully" — polished corporate stock photo aesthetic, subject matter is the actual disaster outcome
 - Each image depicts the specific consequence of that HOS swipe choice (left vs right are visually distinct)
 - Ironic, sarcastic tone matching the game's personality feedback
-- Per-direction per-HOS-card — outcome prompt derived from `left.lesson` / `right.lesson` content
+- Per-direction per **reference-case incident** on the HOS pilot deck — prompts from canonical `onLeft.lesson` / `onRight.lesson` for that incident
 
 ### Art Style — Archetypes
 - Character portraits — AI-generated portraits embodying each archetype personality
@@ -91,12 +95,11 @@ Key shift from original plan: incident images are **per-incident** (~118 unique 
 - Kirk death: AI corruption/system takeover aesthetic
 
 ### Dynamic Contract Tests (13-00)
-- Tests validate "every HOS card with realWorldReference has a corresponding incident image entry" — HOS-scoped, dynamic (reads card data)
-- Tests validate "every HOS card has left + right outcome image entries" — per-direction completeness
-- Archetype count: all 7 ArchetypeId values have entries (including Kirk)
-- Death count: all 7 DeathType values have entries (including Kirk)
-- Dedup test: "no duplicate incident slugs"
-- Other roles: no image coverage assertion — they use fallback placeholder
+- Every **pilot** (HOS) card with `realWorldReference` has a matching **incident** map entry and **`-left` / `-right` outcome** keys (derived from incident slug).
+- **Invariant test:** for each incident string, all referencing cards share one `(onLeft.lesson, onRight.lesson)` pair.
+- Archetype / death: all 7 `ArchetypeId` and all 7 `DeathType` entries (including KIRK).
+- Dedup: no duplicate incident slugs in map construction.
+- Non-pilot roles: no coverage requirement in Phase 13 ship — placeholder in UI (Phase 14).
 
 ### Generation Tooling
 - Script-first automated pipeline using Gemini image API (`gemini-2.5-flash-image` or `gemini-3.1-flash-image-preview`)
@@ -105,19 +108,14 @@ Key shift from original plan: incident images are **per-incident** (~118 unique 
 - User checkpoint after first incident image: readline prompt before batch continues
 
 ### File Structure
-- Directory layout by entity type:
-  - `public/images/incidents/` (~118 files, keyed by incident slug)
-  - `public/images/outcomes/` (8 files)
-  - `public/images/archetypes/` (7 files, including kirk.webp)
-  - `public/images/deaths/` (7 files, including kirk.webp)
-- Format: WebP for all images (800px width, quality 75)
+- **Pilot (HOS):** `public/images/incidents/` **~18** WebP (unique incident slugs on HOS deck); `public/images/outcomes/` **~36** WebP (`{slug}-left.webp`, `{slug}-right.webp` per pilot incident); `public/images/archetypes/` **7**; `public/images/deaths/` **7**.
+- **Expansion:** incidents directory grows toward **~118** files; outcomes grow with **2 ×** each new incident slug that gets outcome art.
+- Format: WebP (800px max width, quality 75).
 
 ### Entity-to-Image Mapping
-- `data/imageMap.ts` config file with typed Record mappings
-- INCIDENT_IMAGES auto-generated from card data at module load time
-- No changes to Card interface or existing types
-- Clean separation: mapping lives outside entity types
-- Type aliases (IncidentSlug, OutcomeConsequenceType) defined in imageMap.ts, not types.ts
+- `data/imageMap.ts` — typed Record mappings; incidents/outcomes built from card data (pilot-scoped first).
+- No `Card` image field — lookup by `realWorldReference` + helpers.
+- Type aliases in `imageMap.ts` (e.g. `IncidentSlug`, optional `OutcomeImageKey`) — **do not** use legacy `OutcomeConsequenceType` for filenames.
 
 ### Claude's Discretion
 - Exact art direction template wording for auto-prompt generation
@@ -134,12 +132,12 @@ Key shift from original plan: incident images are **per-incident** (~118 unique 
 
 - Incidents should feel like AI-generated corporate stock photos that are *almost* right — uncanny valley as a feature, not a bug
 - Each incident image is unique to its real-world event (Samsung leak vs GitHub Copilot RCE should look visually distinct)
-- Outcomes lean into internet meme culture — exaggerated, absurd, funny (stays per-consequence-type, not per-incident)
+- Outcomes: Lean into internet meme culture — exaggerated, absurd, funny  — **per reference-case incident + direction**, visually distinct left vs right
 - Archetype portraits should be compelling enough to share on LinkedIn from the debrief page
 - Death images channel "This is Fine" energy — dramatic disasters played for dark comedy
 - Kirk archetype: glitched, corrupted, AI-gone-wrong aesthetic
-- Pipeline script should be re-runnable: start with CSO pilot, expand incrementally
-- Cross-role incident sharing means generating CSO images covers a significant portion of other roles
+- Pipeline re-runnable: **`--scope hos`** pilot first, then expand scope as maps grow
+- Cross-role incident sharing: generating a reference-case incident once benefits every role that references it
 
 </specifics>
 
@@ -181,4 +179,4 @@ Key shift from original plan: incident images are **per-incident** (~118 unique 
 *Phase: 13-image-asset-pipeline*
 *Context gathered: 2026-03-16*
 *Architecture decisions applied: 2026-03-24*
-*Scope revised: 2026-03-25 — HOS-first (incidents + per-direction outcomes + deaths + archetypes, ~68 images); Gemini only; user checkpoint after first image*
+*Scope revised: 2026-03-25 — HOS-first; 2026-03-26 — plans + `13-CONTRACT.md` aligned to incident-keyed outcome pairs (retired eight-type outcome files)*

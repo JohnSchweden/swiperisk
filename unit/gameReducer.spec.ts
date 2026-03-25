@@ -1,5 +1,10 @@
 import { describe, expect, it } from "vitest";
+import { calculateArchetype } from "../data/archetypes";
 import { ROLE_CARDS } from "../data/cards";
+import {
+	accumulateDeathVectors,
+	determineDeathTypeFromVectors,
+} from "../data/deathVectors";
 import {
 	determineDeathType,
 	gameReducer,
@@ -225,5 +230,302 @@ describe("determineDeathType", () => {
 
 	it("returns AUDIT_FAILURE when heat < 100", () => {
 		expect(determineDeathType(1e6, 50, 50, null)).toBe(DeathType.AUDIT_FAILURE);
+	});
+});
+
+describe("Vector-aware death type resolution in gameReducer", () => {
+	it("NEXT_INCIDENT with death vectors uses vector-based death type", () => {
+		// Create mock cards with deathVector on outcomes
+		const mockCards = [
+			{
+				id: "vector-test-1",
+				title: "Test Card 1",
+				source: "TEST" as any,
+				onLeft: {
+					text: "Left outcome",
+					hype: 5,
+					heat: 10,
+					fine: 100000,
+					deathVector: DeathType.CONGRESS,
+				},
+				onRight: {
+					text: "Right outcome",
+					hype: -5,
+					heat: 5,
+					fine: 50000,
+				},
+			},
+			{
+				id: "vector-test-2",
+				title: "Test Card 2",
+				source: "TEST" as any,
+				onLeft: {
+					text: "Left outcome",
+					hype: 10,
+					heat: 15,
+					fine: 150000,
+					deathVector: DeathType.CONGRESS,
+				},
+				onRight: {
+					text: "Right outcome",
+					hype: 0,
+					heat: 5,
+					fine: 0,
+				},
+			},
+		];
+
+		const state = {
+			...initialGameState,
+			stage: GameStage.PLAYING,
+			role: RoleType.CHIEF_SOMETHING_OFFICER,
+			budget: 1_000_000,
+			heat: 100,
+			hype: 50,
+			history: [
+				{ cardId: "vector-test-1", choice: "LEFT" as const },
+				{ cardId: "vector-test-2", choice: "LEFT" as const },
+			],
+			effectiveDeck: mockCards as any,
+		};
+
+		const next = gameReducer(state, { type: "NEXT_INCIDENT" });
+		expect(next.stage).toBe(GameStage.GAME_OVER);
+		// Should resolve to CONGRESS (vector frequency = 2) not AUDIT_FAILURE (default for MANAGEMENT)
+		expect(next.deathType).toBe(DeathType.CONGRESS);
+	});
+
+	it("NEXT_INCIDENT without deathVectors falls back to legacy role-based logic", () => {
+		// Cards with no deathVector fields
+		const mockCards = [
+			{
+				id: "no-vector-1",
+				title: "Test Card",
+				source: "TEST" as any,
+				onLeft: { text: "Left", hype: 5, heat: 10, fine: 100000 },
+				onRight: { text: "Right", hype: -5, heat: 5, fine: 50000 },
+			},
+		];
+
+		const state = {
+			...initialGameState,
+			stage: GameStage.PLAYING,
+			role: RoleType.CHIEF_SOMETHING_OFFICER,
+			budget: 1_000_000,
+			heat: 100,
+			hype: 50,
+			history: [{ cardId: "no-vector-1", choice: "LEFT" as const }],
+			effectiveDeck: mockCards as any,
+		};
+
+		const next = gameReducer(state, { type: "NEXT_INCIDENT" });
+		expect(next.deathType).toBe(DeathType.AUDIT_FAILURE); // Fallback for MANAGEMENT
+	});
+
+	it("BOSS_COMPLETE failure uses vector-based death type", () => {
+		const mockCards = [
+			{
+				id: "boss-vector-1",
+				title: "Test Card",
+				source: "TEST" as any,
+				onLeft: {
+					text: "Left",
+					hype: 5,
+					heat: 10,
+					fine: 100000,
+					deathVector: DeathType.PRISON,
+				},
+				onRight: { text: "Right", hype: -5, heat: 5, fine: 50000 },
+			},
+			{
+				id: "boss-vector-2",
+				title: "Test Card 2",
+				source: "TEST" as any,
+				onLeft: {
+					text: "Left",
+					hype: 5,
+					heat: 10,
+					fine: 100000,
+					deathVector: DeathType.PRISON,
+				},
+				onRight: { text: "Right", hype: -5, heat: 5, fine: 50000 },
+			},
+		];
+
+		const state = {
+			...initialGameState,
+			stage: GameStage.BOSS_FIGHT,
+			role: RoleType.CHIEF_SOMETHING_OFFICER,
+			budget: 1_000_000,
+			heat: 50,
+			hype: 50,
+			history: [
+				{ cardId: "boss-vector-1", choice: "LEFT" as const },
+				{ cardId: "boss-vector-2", choice: "LEFT" as const },
+			],
+			effectiveDeck: mockCards as any,
+		};
+
+		const next = gameReducer(state, { type: "BOSS_COMPLETE", success: false });
+		expect(next.stage).toBe(GameStage.GAME_OVER);
+		// Should resolve to PRISON (vector frequency = 2) not hardcoded AUDIT_FAILURE
+		expect(next.deathType).toBe(DeathType.PRISON);
+	});
+
+	it("BOSS_COMPLETE failure with no vectors uses role-based fallback", () => {
+		const mockCards = [
+			{
+				id: "no-vec-1",
+				title: "Test Card",
+				source: "TEST" as any,
+				onLeft: { text: "Left", hype: 5, heat: 10, fine: 100000 },
+				onRight: { text: "Right", hype: -5, heat: 5, fine: 50000 },
+			},
+		];
+
+		const state = {
+			...initialGameState,
+			stage: GameStage.BOSS_FIGHT,
+			role: RoleType.CHIEF_SOMETHING_OFFICER,
+			budget: 1_000_000,
+			heat: 50,
+			hype: 50,
+			history: [{ cardId: "no-vec-1", choice: "LEFT" as const }],
+			effectiveDeck: mockCards as any,
+		};
+
+		const next = gameReducer(state, { type: "BOSS_COMPLETE", success: false });
+		expect(next.deathType).toBe(DeathType.AUDIT_FAILURE); // Fallback for MANAGEMENT
+	});
+
+	it("BANKRUPT override still works with vectors", () => {
+		const mockCards = [
+			{
+				id: "vec-1",
+				title: "Test Card",
+				source: "TEST" as any,
+				onLeft: {
+					text: "Left",
+					hype: 5,
+					heat: 10,
+					fine: 100000,
+					deathVector: DeathType.CONGRESS,
+				},
+				onRight: { text: "Right", hype: -5, heat: 5, fine: 50000 },
+			},
+			{
+				id: "vec-2",
+				title: "Test Card 2",
+				source: "TEST" as any,
+				onLeft: {
+					text: "Left",
+					hype: 5,
+					heat: 10,
+					fine: 100000,
+					deathVector: DeathType.CONGRESS,
+				},
+				onRight: { text: "Right", hype: -5, heat: 5, fine: 50000 },
+			},
+		];
+
+		const state = {
+			...initialGameState,
+			stage: GameStage.PLAYING,
+			role: RoleType.CHIEF_SOMETHING_OFFICER,
+			budget: 0, // BANKRUPT
+			heat: 50,
+			hype: 50,
+			history: [
+				{ cardId: "vec-1", choice: "LEFT" as const },
+				{ cardId: "vec-2", choice: "LEFT" as const },
+			],
+			effectiveDeck: mockCards as any,
+		};
+
+		const next = gameReducer(state, { type: "NEXT_INCIDENT" });
+		// BANKRUPT override should win
+		expect(next.deathType).toBe(DeathType.BANKRUPT);
+	});
+
+	it("KIRK corruption override still works with vectors", () => {
+		const mockCards = [
+			{
+				id: "vec-1",
+				title: "Test Card",
+				source: "TEST" as any,
+				onLeft: {
+					text: "Left",
+					hype: 5,
+					heat: 10,
+					fine: 100000,
+					deathVector: DeathType.CONGRESS,
+				},
+				onRight: { text: "Right", hype: -5, heat: 5, fine: 50000 },
+			},
+		];
+
+		const state = {
+			...initialGameState,
+			stage: GameStage.PLAYING,
+			role: RoleType.CHIEF_SOMETHING_OFFICER,
+			budget: 0, // Would trigger BANKRUPT
+			heat: 50,
+			hype: 50,
+			kirkCorruptionActive: true, // But KIRK should win
+			history: [{ cardId: "vec-1", choice: "LEFT" as const }],
+			effectiveDeck: mockCards as any,
+		};
+
+		const next = gameReducer(state, { type: "NEXT_INCIDENT" });
+		expect(next.deathType).toBe(DeathType.KIRK);
+	});
+
+	it("REPLACED_BY_SCRIPT override still works with vectors", () => {
+		const mockCards = [
+			{
+				id: "vec-1",
+				title: "Test Card",
+				source: "TEST" as any,
+				onLeft: {
+					text: "Left",
+					hype: 5,
+					heat: 10,
+					fine: 100000,
+					deathVector: DeathType.CONGRESS,
+				},
+				onRight: { text: "Right", hype: -5, heat: 5, fine: 50000 },
+			},
+			{
+				id: "vec-2",
+				title: "Test Card 2",
+				source: "TEST" as any,
+				onLeft: {
+					text: "Left",
+					hype: 5,
+					heat: 10,
+					fine: 100000,
+					deathVector: DeathType.CONGRESS,
+				},
+				onRight: { text: "Right", hype: -5, heat: 5, fine: 50000 },
+			},
+		];
+
+		const state = {
+			...initialGameState,
+			stage: GameStage.PLAYING,
+			role: RoleType.CHIEF_SOMETHING_OFFICER,
+			budget: 1_000_000,
+			heat: 100, // REPLACED_BY_SCRIPT threshold
+			hype: 5, // REPLACED_BY_SCRIPT threshold
+			history: [
+				{ cardId: "vec-1", choice: "LEFT" as const },
+				{ cardId: "vec-2", choice: "LEFT" as const },
+			],
+			effectiveDeck: mockCards as any,
+		};
+
+		const next = gameReducer(state, { type: "NEXT_INCIDENT" });
+		// REPLACED_BY_SCRIPT override should win
+		expect(next.deathType).toBe(DeathType.REPLACED_BY_SCRIPT);
 	});
 });

@@ -6,6 +6,11 @@ import {
 	getRoleDeck,
 	ROLE_CARDS,
 } from "../data";
+import { calculateArchetype } from "../data/archetypes";
+import {
+	accumulateDeathVectors,
+	determineDeathTypeFromVectors,
+} from "../data/deathVectors";
 import { KIRK_CORRUPTED_CARDS } from "../data/kirkCards";
 import { resolveDeckWithBranching } from "../lib/deck";
 import {
@@ -64,6 +69,12 @@ export type GameAction =
 	| { type: "RESET" }
 	| { type: "KIRK_REFUSAL" };
 
+/**
+ * Legacy death type determination based on role and stats.
+ * @deprecated Use `resolveDeathType(state)` in the game reducer instead.
+ * This function is preserved for backward compatibility but death determination
+ * should now use vector-aware logic via `resolveDeathType`.
+ */
 export function determineDeathType(
 	budget: number,
 	heat: number,
@@ -82,6 +93,42 @@ export function determineDeathType(
 		return DeathType.FLED_COUNTRY;
 	}
 	return DeathType.AUDIT_FAILURE;
+}
+
+/**
+ * Vector-aware death type resolution for the game state machine.
+ * Accumulates death vectors from player choices and resolves to the most
+ * significant death type, with archetype tiebreaking.
+ *
+ * @param state - Current game state
+ * @returns Resolved DeathType based on vectors and stats
+ */
+function resolveDeathType(state: GameState): DeathType {
+	// Get effective deck (shuffled deck or role default)
+	const effectiveDeck =
+		state.effectiveDeck ?? (state.role ? ROLE_CARDS[state.role] : []);
+
+	// Accumulate death vectors from history
+	const vectorMap = accumulateDeathVectors(state.history, effectiveDeck);
+
+	// Calculate dominant archetype for tiebreaking
+	const archetypeResult = calculateArchetype(
+		state.history,
+		state.budget,
+		state.heat,
+		state.hype,
+		state.role,
+	);
+
+	// Use vector-aware death determination with archetype tiebreaker
+	return determineDeathTypeFromVectors(
+		vectorMap,
+		state.budget,
+		state.heat,
+		state.hype,
+		state.role,
+		archetypeResult.archetype?.id,
+	);
 }
 
 const VALID_PERSONALITIES = new Set(
@@ -309,12 +356,8 @@ export function gameReducer(state: GameState, action: GameAction): GameState {
 				if (state.kirkCorruptionActive) {
 					return createGameOverState(state, DeathType.KIRK);
 				}
-				const deathType = determineDeathType(
-					state.budget,
-					state.heat,
-					state.hype,
-					state.role,
-				);
+				// Use vector-aware death type resolution
+				const deathType = resolveDeathType(state);
 				return createGameOverState(state, deathType);
 			}
 			if (!state.role) return state;
@@ -357,7 +400,9 @@ export function gameReducer(state: GameState, action: GameAction): GameState {
 			if (action.success) {
 				return { ...state, stage: GameStage.SUMMARY };
 			}
-			return createGameOverState(state, DeathType.AUDIT_FAILURE);
+			// Use vector-aware death type resolution instead of hardcoded AUDIT_FAILURE
+			const deathType = resolveDeathType(state);
+			return createGameOverState(state, deathType);
 		}
 		case "KIRK_REFUSAL": {
 			// No-op if already at max refusals

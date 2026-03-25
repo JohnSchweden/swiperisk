@@ -69,10 +69,9 @@ function determineLegacyDeathType(
 		if (hype <= 10) return DeathType.REPLACED_BY_SCRIPT;
 		if (role) {
 			const deck = getRoleDeck(role);
-			if (deck === "DEVELOPMENT" || deck === "FINANCE") return DeathType.PRISON;
+			if (deck === "FINANCE") return DeathType.PRISON;
 			if (deck === "MARKETING") return DeathType.CONGRESS;
 			if (deck === "MANAGEMENT") return DeathType.AUDIT_FAILURE;
-			if (deck === "HR") return DeathType.FLED_COUNTRY;
 		}
 		return DeathType.FLED_COUNTRY;
 	}

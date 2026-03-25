@@ -1,4 +1,4 @@
-import { AppSource, type Card, PersonalityType } from "../../types";
+import { AppSource, type Card, DeathType, PersonalityType } from "../../types";
 
 /**
  * Head of Something cards - Middle management scenarios
@@ -945,6 +945,108 @@ export const HEAD_OF_SOMETHING_CARDS: Card[] = [
 					"The truth revealed, though painful, can be healed. The truth hidden festers.",
 				[PersonalityType.LOVEBOMBER]:
 					"We're being HONEST, bestie!! Transparency BUILDS trust!!",
+			},
+		},
+	},
+	{
+		id: "hos_congressional_hearing_demand",
+		source: AppSource.EMAIL,
+		sender: "US_SENATE_SUBCOMMITTEE",
+		context: "PUBLIC_SCRUTINY",
+		storyContext:
+			"US Senate AI subcommittee requests (demands) you testify about your company's AI governance failures. They've been tracking your incident reports. This is not optional. Media will be present.",
+		text: "Testify honestly about governance gaps, or minimize/deflect under oath?",
+		realWorldReference: {
+			incident: "Sam Altman OpenAI Senate Testimony",
+			date: "2023",
+			outcome:
+				"Companies that testified honestly about AI risks gained credibility. Those that minimized faced follow-up investigations and reputational damage.",
+		},
+		onRight: {
+			label: "Minimize risks under oath",
+			hype: 25,
+			heat: 23,
+			fine: 40000000,
+			violation: "Perjury + Obstruction + Regulatory Violation",
+			lesson:
+				"Misleading congress about AI governance creates criminal exposure and permanent reputational damage.",
+			deathVector: DeathType.CONGRESS,
+			feedback: {
+				[PersonalityType.ROASTER]:
+					"Nice perjury charge. Your board will love the federal investigation.",
+				[PersonalityType.ZEN_MASTER]:
+					"A falsehood spoken before those who make law invites law to answer.",
+				[PersonalityType.LOVEBOMBER]:
+					"We're just CONFIDENT, bestie!! It'll be FINE!!",
+			},
+		},
+		onLeft: {
+			label: "Testify honestly about gaps",
+			hype: -40,
+			heat: 18,
+			fine: 15000000,
+			violation: "None - Transparent testimony",
+			lesson:
+				"Honest congressional testimony damages short-term stock price but prevents criminal liability.",
+			deathVector: DeathType.CONGRESS,
+			feedback: {
+				[PersonalityType.ROASTER]:
+					"Stock tanks. Reputation takes hits. Congress respects you. The board is furious.",
+				[PersonalityType.ZEN_MASTER]:
+					"Truth spoken before power transforms accusers into witnesses of integrity.",
+				[PersonalityType.LOVEBOMBER]:
+					"We're being SO BRAVE, bestie!! Speaking TRUTH to power!!",
+			},
+		},
+	},
+	{
+		id: "hos_whistleblower_pressure",
+		source: AppSource.SLACK,
+		sender: "INTERNAL_AUDIT",
+		context: "INTERNAL_DISCLOSURE",
+		storyContext:
+			"Three employees are threatening to become whistleblowers about governance gaps in your AI deployment. They're offering you a chance to address it internally before they go public. The board will see this as a liability event if it leaks.",
+		text: "Address issues quickly (expensive, disruptive) or encourage employees to stay silent (legal risk)?",
+		realWorldReference: {
+			incident: "Meta AI Ethics Whistleblowers",
+			date: "2021-2023",
+			outcome:
+				"Meta employees who became whistleblowers triggered FTC investigations and public hearings. Internal disclosure programs that actually fixed issues prevented some escalations.",
+		},
+		onRight: {
+			label: "Encourage silence",
+			hype: 15,
+			heat: 25,
+			fine: 50000000,
+			violation: "Whistleblower Retaliation + SEC Violations",
+			lesson:
+				"Discouraging whistleblower disclosure triggers federal investigations and massive penalties.",
+			deathVector: DeathType.CONGRESS,
+			feedback: {
+				[PersonalityType.ROASTER]:
+					"Encouraging silence? That's a recording that will play at your deposition.",
+				[PersonalityType.ZEN_MASTER]:
+					"The attempt to silence truth becomes its amplifier.",
+				[PersonalityType.LOVEBOMBER]:
+					"Everything is FINE, bestie!! Let's just FORGET this!!",
+			},
+		},
+		onLeft: {
+			label: "Address issues immediately",
+			hype: -50,
+			heat: 16,
+			fine: 12000000,
+			violation: "None - Governance remediation",
+			lesson:
+				"Immediate internal governance fixes prevent whistleblower escalation and demonstrate accountability.",
+			deathVector: DeathType.CONGRESS,
+			feedback: {
+				[PersonalityType.ROASTER]:
+					"Expensive week. But the whistleblowers are quiet. Smart play.",
+				[PersonalityType.ZEN_MASTER]:
+					"The wound acknowledged and treated heals. The wound hidden festers.",
+				[PersonalityType.LOVEBOMBER]:
+					"We're LISTENING to our team, bestie!! Fixing problems IMMEDIATELY!!",
 			},
 		},
 	},

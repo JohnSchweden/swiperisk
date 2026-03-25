@@ -37,6 +37,7 @@ export const CHIEF_SOMETHING_OFFICER_CARDS: Card[] = [
 			violation: "SEC Disclosure Violations + Obstruction",
 			lesson:
 				"Covering up security incidents may delay fallout but creates criminal liability and destroys trust when discovered. The truth has compound interest.",
+			deathVector: DeathType.PRISON,
 			feedback: {
 				[PersonalityType.ROASTER]:
 					"Oh, brilliant. Securities fraud to cover a security flaw. You're going for the combo multiplier.",
@@ -54,6 +55,7 @@ export const CHIEF_SOMETHING_OFFICER_CARDS: Card[] = [
 			violation: "None - Proactive disclosure (civil penalties possible)",
 			lesson:
 				"Proactive disclosure creates short-term stock pain but preserves long-term credibility and avoids criminal liability.",
+			deathVector: DeathType.CONGRESS,
 			feedback: {
 				[PersonalityType.ROASTER]:
 					"Congratulations, you chose integrity over stock price. The board will fire you, but your soul is intact.",
@@ -86,6 +88,7 @@ export const CHIEF_SOMETHING_OFFICER_CARDS: Card[] = [
 			violation: "SEC Material Misrepresentation + Consumer Protection",
 			lesson:
 				"Concealing material AI degradation to protect earnings creates securities fraud liability and regulatory exposure.",
+			deathVector: DeathType.BANKRUPT,
 			feedback: {
 				[PersonalityType.ROASTER]:
 					"Hope is not a strategy. 'Hope no one notices' is definitely not a legal defense.",
@@ -103,6 +106,7 @@ export const CHIEF_SOMETHING_OFFICER_CARDS: Card[] = [
 			violation: "None - Responsible AI governance",
 			lesson:
 				"Disclosing model degradation hurts quarterly guidance but protects brand integrity and avoids fraud claims.",
+			deathVector: DeathType.AUDIT_FAILURE,
 			feedback: {
 				[PersonalityType.ROASTER]:
 					"Wall Street hates honesty. But courts love it. Choose your poison.",
@@ -135,6 +139,7 @@ export const CHIEF_SOMETHING_OFFICER_CARDS: Card[] = [
 			violation: "None - Civil settlement (non-admission)",
 			lesson:
 				"Settlement avoids precedent-setting trial but doesn't address underlying copyright exposure. More lawsuits may follow.",
+			deathVector: DeathType.PRISON,
 			feedback: {
 				[PersonalityType.ROASTER]:
 					"$150M to make it go away. The cost of doing AI business in 2025. Chump change, really.",
@@ -152,6 +157,7 @@ export const CHIEF_SOMETHING_OFFICER_CARDS: Card[] = [
 			violation: "Copyright Infringement (if found liable)",
 			lesson:
 				"Fighting establishes legal precedent but risks massive judgment and years of negative coverage destroying brand.",
+			deathVector: DeathType.AUDIT_FAILURE,
 			feedback: {
 				[PersonalityType.ROASTER]:
 					"Bold. Stupid. Boldly stupid. The tech press will destroy you for three years straight.",
@@ -184,6 +190,7 @@ export const CHIEF_SOMETHING_OFFICER_CARDS: Card[] = [
 			violation: "Failure of Corporate Governance + Whistleblower Risk",
 			lesson:
 				"Scapegoating preserves short-term optics but destroys trust with leadership team. Scapegoats talk to journalists.",
+			deathVector: DeathType.FLED_COUNTRY,
 			feedback: {
 				[PersonalityType.ROASTER]:
 					"Classic C-suite move. Sacrifice the pawn. Hope they don't write a Substack.",
@@ -201,6 +208,7 @@ export const CHIEF_SOMETHING_OFFICER_CARDS: Card[] = [
 			violation: "None - Responsible governance acknowledgment",
 			lesson:
 				"Taking accountability preserves leadership credibility and demonstrates governance maturity to board and investors.",
+			deathVector: DeathType.AUDIT_FAILURE,
 			feedback: {
 				[PersonalityType.ROASTER]:
 					"Admirable. Naive. Admirably naive. The board might actually respect this.",
@@ -233,6 +241,7 @@ export const CHIEF_SOMETHING_OFFICER_CARDS: Card[] = [
 			violation: "OFAC Sanctions Violations + Criminal Liability",
 			lesson:
 				"Plausible deniability becomes conspiracy when you knowingly ignore violations. Whistleblowers rarely stay silent.",
+			deathVector: DeathType.CONGRESS,
 			feedback: {
 				[PersonalityType.ROASTER]:
 					"Plausible deniability meets plausible criminal charges. The DOJ loves a paper trail.",
@@ -250,6 +259,7 @@ export const CHIEF_SOMETHING_OFFICER_CARDS: Card[] = [
 			violation: "None - Compliance enforcement",
 			lesson:
 				"Enforcing sanctions loses revenue but ensures regulatory compliance and prevents criminal exposure.",
+			deathVector: DeathType.AUDIT_FAILURE,
 			feedback: {
 				[PersonalityType.ROASTER]:
 					"Revenue killer. Compliance hero. The government might send you a fruit basket.",
@@ -283,6 +293,7 @@ export const CHIEF_SOMETHING_OFFICER_CARDS: Card[] = [
 				"SEC Material Misrepresentation (if vulnerabilities materialize)",
 			lesson:
 				"Going public with known material risks creates securities fraud exposure. Disclosure requirements are strict.",
+			deathVector: DeathType.AUDIT_FAILURE,
 			feedback: {
 				[PersonalityType.ROASTER]:
 					"Strike while the iron is hot! Melt the investors! Classic pump-and-dump energy.",
@@ -300,6 +311,7 @@ export const CHIEF_SOMETHING_OFFICER_CARDS: Card[] = [
 			violation: "None - Responsible preparation",
 			lesson:
 				"Delaying IPO loses the current window but ensures clean regulatory standing and avoids fraud claims.",
+			deathVector: DeathType.BANKRUPT,
 			feedback: {
 				[PersonalityType.ROASTER]:
 					"The bankers hate you. The board questions you. But you're not committing securities fraud.",
@@ -332,6 +344,7 @@ export const CHIEF_SOMETHING_OFFICER_CARDS: Card[] = [
 			violation: "Regulatory Non-Compliance + AI Transparency Violations",
 			lesson:
 				"Fighting explainability requirements creates adversarial regulatory relationships and massive penalties.",
+			deathVector: DeathType.AUDIT_FAILURE,
 			feedback: {
 				[PersonalityType.ROASTER]:
 					"Taking on the federal government to protect your black box. David vs Goliath, if David was wrong.",
@@ -349,6 +362,7 @@ export const CHIEF_SOMETHING_OFFICER_CARDS: Card[] = [
 			violation: "None - Regulatory cooperation",
 			lesson:
 				"Compliance preserves regulatory goodwill but costs time and money while competitors may launch first.",
+			deathVector: DeathType.CONGRESS,
 			feedback: {
 				[PersonalityType.ROASTER]:
 					"The regulators win. The timeline loses. But you avoid a consent decree.",
@@ -381,6 +395,7 @@ export const CHIEF_SOMETHING_OFFICER_CARDS: Card[] = [
 			violation: "GDPR/CCPA Breach Notification Violations",
 			lesson:
 				"Delaying breach notification to protect markets creates regulatory violations and criminal exposure.",
+			deathVector: DeathType.PRISON,
 			feedback: {
 				[PersonalityType.ROASTER]:
 					"Breaking the law to save the stock price. The SEC has a special cell for this.",
@@ -398,6 +413,7 @@ export const CHIEF_SOMETHING_OFFICER_CARDS: Card[] = [
 			violation: "None - Timely notification",
 			lesson:
 				"Immediate disclosure complies with law but creates market volatility and shareholder lawsuits.",
+			deathVector: DeathType.BANKRUPT,
 			feedback: {
 				[PersonalityType.ROASTER]:
 					"Friday afternoon disaster announcement. PR nightmare. Legally correct nightmare.",
@@ -430,6 +446,7 @@ export const CHIEF_SOMETHING_OFFICER_CARDS: Card[] = [
 			violation: "WARN Act Violations + Labor Law Non-Compliance",
 			lesson:
 				"Quiet layoffs violate WARN Act and destroy trust when discovered. Leaks are inevitable.",
+			deathVector: DeathType.BANKRUPT,
 			feedback: {
 				[PersonalityType.ROASTER]:
 					"Surprise layoffs! The modern management classic. Glassdoor will have a field day.",
@@ -447,6 +464,7 @@ export const CHIEF_SOMETHING_OFFICER_CARDS: Card[] = [
 			violation: "None - Responsible workforce transition",
 			lesson:
 				"Transparency preserves trust and legal compliance but triggers union activity and negative coverage.",
+			deathVector: DeathType.AUDIT_FAILURE,
 			feedback: {
 				[PersonalityType.ROASTER]:
 					"Honest layoffs. Refreshing. The unions will organize before you finish the press release.",
@@ -479,6 +497,7 @@ export const CHIEF_SOMETHING_OFFICER_CARDS: Card[] = [
 			violation: "Delayed Security Response + CVE Exposure",
 			lesson:
 				"Assessment delays during active CVE windows create exploitation risk and regulatory scrutiny.",
+			deathVector: DeathType.PRISON,
 			feedback: {
 				[PersonalityType.ROASTER]:
 					"Assessment paralysis meets active exploit. Hackers thank you for the window.",
@@ -496,6 +515,7 @@ export const CHIEF_SOMETHING_OFFICER_CARDS: Card[] = [
 			violation: "None - Rapid security response",
 			lesson:
 				"Emergency patching during CVE windows prevents exploitation despite operational disruption.",
+			deathVector: DeathType.AUDIT_FAILURE,
 			feedback: {
 				[PersonalityType.ROASTER]:
 					"500 angry devs. But zero breaches. Worth the hate mail.",
@@ -528,6 +548,7 @@ export const CHIEF_SOMETHING_OFFICER_CARDS: Card[] = [
 			violation: "Inadequate Breach Response + Data Exposure",
 			lesson:
 				"Filtering during active breaches often fails and extends data exposure windows.",
+			deathVector: DeathType.PRISON,
 			feedback: {
 				[PersonalityType.ROASTER]:
 					"Band-aid on bleeding artery. Data keeps leaking while you 'filter.'",
@@ -545,6 +566,7 @@ export const CHIEF_SOMETHING_OFFICER_CARDS: Card[] = [
 			violation: "None - Responsible containment",
 			lesson:
 				"Immediate shutdown during active breaches prevents further data exposure despite revenue impact.",
+			deathVector: DeathType.BANKRUPT,
 			feedback: {
 				[PersonalityType.ROASTER]:
 					"Revenue dies. Breach stops. Sometimes the cure hurts.",
@@ -576,6 +598,7 @@ export const CHIEF_SOMETHING_OFFICER_CARDS: Card[] = [
 			violation: "Material Misrepresentation + Negligence",
 			lesson:
 				"Hoping model drift self-corrects violates fiduciary duty and creates fraud exposure.",
+			deathVector: DeathType.BANKRUPT,
 			feedback: {
 				[PersonalityType.ROASTER]:
 					"Hope is not a governance strategy. The board will remember this optimism.",
@@ -593,6 +616,7 @@ export const CHIEF_SOMETHING_OFFICER_CARDS: Card[] = [
 			violation: "None - Transparent governance",
 			lesson:
 				"Proactive disclosure of model degradation preserves long-term credibility.",
+			deathVector: DeathType.AUDIT_FAILURE,
 			feedback: {
 				[PersonalityType.ROASTER]:
 					"Wall Street hates bad news. But they hate surprises more.",
@@ -625,6 +649,7 @@ export const CHIEF_SOMETHING_OFFICER_CARDS: Card[] = [
 			violation: "Negligent Risk Management + Fiduciary Breach",
 			lesson:
 				"Waiting for model failure despite known drift risk violates governance responsibilities.",
+			deathVector: DeathType.BANKRUPT,
 			feedback: {
 				[PersonalityType.ROASTER]:
 					"91% failure rate? We're special. Our model is different. Famous last words.",
@@ -642,6 +667,7 @@ export const CHIEF_SOMETHING_OFFICER_CARDS: Card[] = [
 			violation: "None - Proactive governance",
 			lesson:
 				"Preventive investment in retraining infrastructure avoids catastrophic model failures.",
+			deathVector: DeathType.AUDIT_FAILURE,
 			feedback: {
 				[PersonalityType.ROASTER]:
 					"$5M now vs $30M later. Math isn't hard. Boards hate spending though.",
@@ -675,6 +701,7 @@ export const CHIEF_SOMETHING_OFFICER_CARDS: Card[] = [
 			violation: "EU AI Act Article 6 Non-Compliance",
 			lesson:
 				"Black-box accuracy means nothing when regulators shut you down. Explainability is now mandatory.",
+			deathVector: DeathType.AUDIT_FAILURE,
 			feedback: {
 				[PersonalityType.ROASTER]:
 					"96% accuracy, 100% audit failure. The EU loves their paperwork.",
@@ -692,6 +719,7 @@ export const CHIEF_SOMETHING_OFFICER_CARDS: Card[] = [
 			violation: "None - Regulatory compliance",
 			lesson:
 				"EU AI Act compliance requires explainability. Accuracy tradeoff is the cost of doing business in regulated markets.",
+			deathVector: DeathType.CONGRESS,
 			feedback: {
 				[PersonalityType.ROASTER]:
 					"$8M to make auditors happy. 7% accuracy sacrificed on the altar of transparency.",

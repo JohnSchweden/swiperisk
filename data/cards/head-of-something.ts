@@ -36,6 +36,7 @@ export const HEAD_OF_SOMETHING_CARDS: Card[] = [
 			violation: "Hostile Workplace + Retaliation Risk",
 			lesson:
 				"Throwing team members under the bus preserves short-term standing but destroys team trust and creates legal exposure.",
+			deathVector: DeathType.PRISON,
 			feedback: {
 				[PersonalityType.ROASTER]:
 					"Sacrificing your engineer to save yourself. Your team will remember this at their exit interviews.",
@@ -53,6 +54,7 @@ export const HEAD_OF_SOMETHING_CARDS: Card[] = [
 			violation: "None - Responsible leadership",
 			lesson:
 				"Taking accountability for team outcomes preserves team trust and demonstrates leadership integrity.",
+			deathVector: DeathType.AUDIT_FAILURE,
 			feedback: {
 				[PersonalityType.ROASTER]:
 					"Noble. Your team will work harder for you now. The VP will also blame you.",
@@ -85,6 +87,7 @@ export const HEAD_OF_SOMETHING_CARDS: Card[] = [
 			violation: "Product Liability + Negligence",
 			lesson:
 				"Compromising quality for budget constraints creates technical debt and liability exposure that compounds over time.",
+			deathVector: DeathType.BANKRUPT,
 			feedback: {
 				[PersonalityType.ROASTER]:
 					"Your team knows you sold them out. The CFO owes you. Everyone loses.",
@@ -102,6 +105,7 @@ export const HEAD_OF_SOMETHING_CARDS: Card[] = [
 			violation: "None - Responsible escalation",
 			lesson:
 				"Escalating quality concerns demonstrates leadership integrity even when politically costly.",
+			deathVector: DeathType.AUDIT_FAILURE,
 			feedback: {
 				[PersonalityType.ROASTER]:
 					"Fighting the CFO. Brave. Possibly career-limiting. But brave.",
@@ -134,6 +138,7 @@ export const HEAD_OF_SOMETHING_CARDS: Card[] = [
 			violation: "Team Trust Violation + Retaliation Risk",
 			lesson:
 				"Betraying team confidence for policy enforcement destroys psychological safety and future collaboration.",
+			deathVector: DeathType.FLED_COUNTRY,
 			feedback: {
 				[PersonalityType.ROASTER]:
 					"Compliance is happy. Your team is updating LinkedIn. Management material right here.",
@@ -151,6 +156,7 @@ export const HEAD_OF_SOMETHING_CARDS: Card[] = [
 			violation: "Governance Non-Compliance",
 			lesson:
 				"Protecting your team from harsh enforcement builds loyalty but creates personal accountability risk.",
+			deathVector: DeathType.AUDIT_FAILURE,
 			feedback: {
 				[PersonalityType.ROASTER]:
 					"Team hero. Management headache. The loyalty is worth it until they fire you.",
@@ -183,6 +189,7 @@ export const HEAD_OF_SOMETHING_CARDS: Card[] = [
 			violation: "Labor Law Violations + Burnout Liability",
 			lesson:
 				"Pushing teams to burnout delivers short-term output at the cost of long-term retention and quality.",
+			deathVector: DeathType.BANKRUPT,
 			feedback: {
 				[PersonalityType.ROASTER]:
 					"Crunch time! Watch those resignations roll in. Fresh talent is cheap anyway.",
@@ -200,6 +207,7 @@ export const HEAD_OF_SOMETHING_CARDS: Card[] = [
 			violation: "None - Sustainable pace advocacy",
 			lesson:
 				"Advocating for sustainable pace preserves team health and long-term productivity.",
+			deathVector: DeathType.REPLACED_BY_SCRIPT,
 			feedback: {
 				[PersonalityType.ROASTER]:
 					"Product will hate you. Your team will stay. Sometimes that's the win.",
@@ -232,6 +240,7 @@ export const HEAD_OF_SOMETHING_CARDS: Card[] = [
 			violation: "None - Compliance alignment",
 			lesson:
 				"Aligning with compliance protects the organization even when engineering disagrees.",
+			deathVector: DeathType.AUDIT_FAILURE,
 			feedback: {
 				[PersonalityType.ROASTER]:
 					"Engineering will resent you. Auditors will forget you. Compliance win.",
@@ -249,6 +258,7 @@ export const HEAD_OF_SOMETHING_CARDS: Card[] = [
 			violation: "Audit Non-Compliance + Regulatory Risk",
 			lesson:
 				"Prioritizing performance over explainability creates audit failure and regulatory exposure.",
+			deathVector: DeathType.CONGRESS,
 			feedback: {
 				[PersonalityType.ROASTER]:
 					"Better accuracy now. Better fines later. Engineering owes you.",
@@ -281,6 +291,7 @@ export const HEAD_OF_SOMETHING_CARDS: Card[] = [
 			violation: "Team Trust Violation",
 			lesson:
 				"Cooperating with investigations at team expense creates short-term legal protection but destroys team trust.",
+			deathVector: DeathType.PRISON,
 			feedback: {
 				[PersonalityType.ROASTER]:
 					"Legal is happy. Your team is polishing resumes. Management approved.",
@@ -298,6 +309,7 @@ export const HEAD_OF_SOMETHING_CARDS: Card[] = [
 			violation: "Obstruction Risk",
 			lesson:
 				"Shielding your team from accountability protects them legally but creates personal liability.",
+			deathVector: DeathType.AUDIT_FAILURE,
 			feedback: {
 				[PersonalityType.ROASTER]:
 					"Team loves you. Legal is suspicious. Career roulette.",
@@ -330,6 +342,7 @@ export const HEAD_OF_SOMETHING_CARDS: Card[] = [
 			violation: "None - Accountability acknowledgment",
 			lesson:
 				"Acknowledging oversight gaps preserves leadership credibility and enables process improvement.",
+			deathVector: DeathType.BANKRUPT,
 			feedback: {
 				[PersonalityType.ROASTER]:
 					"Taking the L. Your delegation authority will shrink. But you're honest.",
@@ -347,6 +360,7 @@ export const HEAD_OF_SOMETHING_CARDS: Card[] = [
 			violation: "Negligent Supervision",
 			lesson:
 				"Defending flawed delegation to protect ego creates recurring oversight failures.",
+			deathVector: DeathType.AUDIT_FAILURE,
 			feedback: {
 				[PersonalityType.ROASTER]:
 					"Denial is a strategy. Not a good one. But a strategy.",
@@ -379,6 +393,7 @@ export const HEAD_OF_SOMETHING_CARDS: Card[] = [
 			violation: "Negligent Management + Burnout Liability",
 			lesson:
 				"Overpromising to leadership at team expense creates inevitable failure and destroys credibility.",
+			deathVector: DeathType.CONGRESS,
 			feedback: {
 				[PersonalityType.ROASTER]:
 					"Leadership loves you now. Your team hates you now. The crash comes later.",
@@ -396,6 +411,7 @@ export const HEAD_OF_SOMETHING_CARDS: Card[] = [
 			violation: "None - Realistic expectation setting",
 			lesson:
 				"Setting realistic boundaries with leadership protects team wellbeing and long-term delivery.",
+			deathVector: DeathType.AUDIT_FAILURE,
 			feedback: {
 				[PersonalityType.ROASTER]:
 					"Leadership is disappointed. Your team is relieved. You live to fight another day.",
@@ -428,6 +444,7 @@ export const HEAD_OF_SOMETHING_CARDS: Card[] = [
 			violation: "Discrimination Risk",
 			lesson:
 				"Political promotions preserve leadership relationships but signal that performance doesn't matter.",
+			deathVector: DeathType.AUDIT_FAILURE,
 			feedback: {
 				[PersonalityType.ROASTER]:
 					"Your best performer just learned meritocracy is a myth. The VP owes you.",
@@ -445,6 +462,7 @@ export const HEAD_OF_SOMETHING_CARDS: Card[] = [
 			violation: "None - Merit-based decision",
 			lesson:
 				"Merit-based promotions maintain team fairness but may create political friction with leadership.",
+			deathVector: DeathType.BANKRUPT,
 			feedback: {
 				[PersonalityType.ROASTER]:
 					"Merit wins. Politics loses. Your VP is taking notes.",
@@ -477,6 +495,7 @@ export const HEAD_OF_SOMETHING_CARDS: Card[] = [
 			violation: "Security Negligence + Team Exposure",
 			lesson:
 				"Prioritizing deadlines over CVE patching exposes the team to compromise and liability.",
+			deathVector: DeathType.PRISON,
 			feedback: {
 				[PersonalityType.ROASTER]:
 					"Friday release with vulnerable tools. What could go wrong? (Everything.)",
@@ -494,6 +513,7 @@ export const HEAD_OF_SOMETHING_CARDS: Card[] = [
 			violation: "None - Security-first approach",
 			lesson:
 				"Team safety outweighs deadline pressure during active CVE exposures.",
+			deathVector: DeathType.BANKRUPT,
 			feedback: {
 				[PersonalityType.ROASTER]:
 					"Deadline missed. Team secure. Product is angry. You sleep better.",
@@ -526,6 +546,7 @@ export const HEAD_OF_SOMETHING_CARDS: Card[] = [
 			violation: "Security Avoidance + Political Cover-up",
 			lesson:
 				"Avoiding security fixes for political comfort creates catastrophic exposure.",
+			deathVector: DeathType.PRISON,
 			feedback: {
 				[PersonalityType.ROASTER]:
 					"Senior owes you. Breach later will blame you. Lose-lose. Nice.",
@@ -543,6 +564,7 @@ export const HEAD_OF_SOMETHING_CARDS: Card[] = [
 			violation: "None - Security advocacy",
 			lesson:
 				"Security concerns override political comfort. Vulnerabilities must be fixed.",
+			deathVector: DeathType.AUDIT_FAILURE,
 			feedback: {
 				[PersonalityType.ROASTER]:
 					"VP annoyed. Senior resentful. But code is secure. Pick your pain.",
@@ -575,6 +597,7 @@ export const HEAD_OF_SOMETHING_CARDS: Card[] = [
 			violation: "Retaliation + Team Trust Destruction",
 			lesson:
 				"Scapegoating team members for systemic failures destroys trust and morale.",
+			deathVector: DeathType.AUDIT_FAILURE,
 			feedback: {
 				[PersonalityType.ROASTER]:
 					"They warned you. You ignored it. Now you blame them. Classic management.",
@@ -592,6 +615,7 @@ export const HEAD_OF_SOMETHING_CARDS: Card[] = [
 			violation: "None - Leadership integrity",
 			lesson:
 				"Defending your team when warnings were ignored builds loyalty and trust.",
+			deathVector: DeathType.BANKRUPT,
 			feedback: {
 				[PersonalityType.ROASTER]:
 					"Career-limiting. Noble. Your team will follow you anywhere. VP less so.",
@@ -674,6 +698,7 @@ export const HEAD_OF_SOMETHING_CARDS: Card[] = [
 			violation: "None - Compliance alignment",
 			lesson:
 				"Aligning with compliance protects the organization even when engineering disagrees.",
+			deathVector: DeathType.AUDIT_FAILURE,
 			feedback: {
 				[PersonalityType.ROASTER]:
 					"Engineering will resent you. Auditors will forget you. Compliance win.",
@@ -691,6 +716,7 @@ export const HEAD_OF_SOMETHING_CARDS: Card[] = [
 			violation: "Audit Non-Compliance + Regulatory Risk",
 			lesson:
 				"Prioritizing performance over explainability creates audit failure and regulatory exposure.",
+			deathVector: DeathType.CONGRESS,
 			feedback: {
 				[PersonalityType.ROASTER]:
 					"Better accuracy now. Better fines later. Engineering owes you.",
@@ -773,6 +799,7 @@ export const HEAD_OF_SOMETHING_CARDS: Card[] = [
 			violation: "Team Trust Violation + Retaliation Risk",
 			lesson:
 				"Betraying team confidence for policy enforcement destroys psychological safety and future collaboration.",
+			deathVector: DeathType.FLED_COUNTRY,
 			feedback: {
 				[PersonalityType.ROASTER]:
 					"Compliance is happy. Your team is updating LinkedIn. Management material right here.",
@@ -790,6 +817,7 @@ export const HEAD_OF_SOMETHING_CARDS: Card[] = [
 			violation: "Governance Non-Compliance",
 			lesson:
 				"Protecting your team from harsh enforcement builds loyalty but creates personal accountability risk.",
+			deathVector: DeathType.AUDIT_FAILURE,
 			feedback: {
 				[PersonalityType.ROASTER]:
 					"Team hero. Management headache. The loyalty is worth it until they fire you.",
@@ -822,6 +850,7 @@ export const HEAD_OF_SOMETHING_CARDS: Card[] = [
 			violation: "Talent Loss + Productivity Decline",
 			lesson:
 				"Enforcing vendor governance at the cost of top talent destroys long-term capability.",
+			deathVector: DeathType.FLED_COUNTRY,
 			feedback: {
 				[PersonalityType.ROASTER]:
 					"Your best engineer just resigned. Compliance preserved. Output cratered.",
@@ -839,6 +868,7 @@ export const HEAD_OF_SOMETHING_CARDS: Card[] = [
 			violation: "Shadow AI Governance Gap + Data Exposure",
 			lesson:
 				"Permitting unapproved tools for productivity sets precedent that undermines governance framework.",
+			deathVector: DeathType.AUDIT_FAILURE,
 			feedback: {
 				[PersonalityType.ROASTER]:
 					"Great, now everyone wants their favorite AI tool. Governance is optional now.",
@@ -872,6 +902,7 @@ export const HEAD_OF_SOMETHING_CARDS: Card[] = [
 			violation: "Team Trust Violation + Retaliation Risk",
 			lesson:
 				"Throwing team members under the bus preserves short-term standing but destroys team trust and creates legal exposure.",
+			deathVector: DeathType.PRISON,
 			feedback: {
 				[PersonalityType.ROASTER]:
 					"Sacrificing your best performer to save yourself. Your team will remember this at their exit interviews.",
@@ -889,6 +920,7 @@ export const HEAD_OF_SOMETHING_CARDS: Card[] = [
 			violation: "None - Responsible leadership",
 			lesson:
 				"Taking accountability for team outcomes preserves team trust and demonstrates leadership integrity.",
+			deathVector: DeathType.AUDIT_FAILURE,
 			feedback: {
 				[PersonalityType.ROASTER]:
 					"Noble. Your team will work harder for you now. The VP will also blame you.",
@@ -921,6 +953,7 @@ export const HEAD_OF_SOMETHING_CARDS: Card[] = [
 			violation: "Obstruction + Document Retention Violations",
 			lesson:
 				"Claiming poor documentation to hide decisions creates criminal liability and destroys credibility.",
+			deathVector: DeathType.PRISON,
 			feedback: {
 				[PersonalityType.ROASTER]:
 					"'We didn't keep records' meets 'we have something to hide.' Prosecutors love this.",
@@ -938,6 +971,7 @@ export const HEAD_OF_SOMETHING_CARDS: Card[] = [
 			violation: "None - Transparency",
 			lesson:
 				"Full documentation enables strategic legal response even when decisions were flawed.",
+			deathVector: DeathType.AUDIT_FAILURE,
 			feedback: {
 				[PersonalityType.ROASTER]:
 					"Your team is exposed. But legal can actually defend you. There's a strategy here.",

@@ -105,6 +105,10 @@ const DEATH_SCRIPTS = {
 	],
 };
 
+function sleep(ms: number): Promise<void> {
+	return new Promise((resolve) => setTimeout(resolve, ms));
+}
+
 function createWavFile(pcmData: Buffer): Buffer {
 	const dataSize = pcmData.length;
 	const buffer = Buffer.alloc(44 + dataSize);
@@ -125,12 +129,7 @@ function createWavFile(pcmData: Buffer): Buffer {
 	return buffer;
 }
 
-async function generateVoiceFile(
-	folder: string,
-	filename: string,
-	text: string,
-): Promise<void> {
-	console.log(`Generating: ${folder}/death/${filename}`);
+async function ttsToWav(text: string, filename: string): Promise<Buffer> {
 	const response = await ai.models.generateContent({
 		model: "gemini-2.5-flash-preview-tts",
 		contents: [{ parts: [{ text }] }],
@@ -146,8 +145,16 @@ async function generateVoiceFile(
 	const base64Audio =
 		response.candidates?.[0]?.content?.parts?.[0]?.inlineData?.data;
 	if (!base64Audio) throw new Error(`No audio data for ${filename}`);
-	const pcmBuffer = Buffer.from(base64Audio, "base64");
-	const wavBuffer = createWavFile(pcmBuffer);
+	return createWavFile(Buffer.from(base64Audio, "base64"));
+}
+
+async function generateVoiceFile(
+	folder: string,
+	filename: string,
+	text: string,
+): Promise<void> {
+	console.log(`Generating: ${folder}/death/${filename}`);
+	const wavBuffer = await ttsToWav(text, filename);
 	const outputDir = path.join(
 		process.cwd(),
 		"public/audio/voices",
@@ -163,27 +170,22 @@ async function generateVoiceFile(
 	await compressAudioFile(outputPath);
 }
 
-async function main() {
+async function main(): Promise<void> {
 	console.log("=== Generating Death Ending Audio Files ===\n");
-	let totalSuccess = 0;
-	let totalFailed = 0;
-	const allFiles: Array<{ folder: string; filename: string; text: string }> =
-		[];
 
-	// Collect all files to generate
-	for (const [folder, scripts] of Object.entries(DEATH_SCRIPTS)) {
-		for (const script of scripts) {
-			allFiles.push({ folder, filename: script.filename, text: script.text });
-		}
-	}
+	const allFiles = Object.entries(DEATH_SCRIPTS).flatMap(([folder, scripts]) =>
+		scripts.map((s) => ({ folder, filename: s.filename, text: s.text })),
+	);
 
 	console.log(`Total files to generate: ${allFiles.length}\n`);
+
+	let totalSuccess = 0;
+	let totalFailed = 0;
 
 	for (let i = 0; i < allFiles.length; i++) {
 		const file = allFiles[i];
 		try {
-			// Rate limiting: 1 second delay between API calls
-			if (i > 0) await new Promise((r) => setTimeout(r, 1000));
+			if (i > 0) await sleep(1000);
 			await generateVoiceFile(file.folder, file.filename, file.text);
 			totalSuccess++;
 		} catch (e) {
@@ -192,7 +194,7 @@ async function main() {
 		}
 	}
 
-	console.log(`\n=== Generation Complete ===`);
+	console.log("\n=== Generation Complete ===");
 	console.log(`Success: ${totalSuccess}/${allFiles.length}`);
 	console.log(`Failed: ${totalFailed}/${allFiles.length}`);
 

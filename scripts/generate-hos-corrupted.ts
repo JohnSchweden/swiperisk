@@ -70,6 +70,10 @@ const CORRUPTED_HOS_FILES = [
 	},
 ];
 
+function sleep(ms: number): Promise<void> {
+	return new Promise((resolve) => setTimeout(resolve, ms));
+}
+
 function createWavFile(pcmData: Buffer): Buffer {
 	const dataSize = pcmData.length;
 	const buffer = Buffer.alloc(44 + dataSize);
@@ -90,12 +94,7 @@ function createWavFile(pcmData: Buffer): Buffer {
 	return buffer;
 }
 
-async function generateVoiceFile(
-	filename: string,
-	text: string,
-	outputDir: string,
-): Promise<void> {
-	console.log(`Generating: ${filename}`);
+async function ttsToWav(text: string, filename: string): Promise<Buffer> {
 	const response = await ai.models.generateContent({
 		model: "gemini-2.5-flash-preview-tts",
 		contents: [{ parts: [{ text }] }],
@@ -111,26 +110,37 @@ async function generateVoiceFile(
 	const base64Audio =
 		response.candidates?.[0]?.content?.parts?.[0]?.inlineData?.data;
 	if (!base64Audio) throw new Error(`No audio data for ${filename}`);
-	const pcmBuffer = Buffer.from(base64Audio, "base64");
-	const wavBuffer = createWavFile(pcmBuffer);
+	return createWavFile(Buffer.from(base64Audio, "base64"));
+}
+
+async function generateVoiceFile(
+	filename: string,
+	text: string,
+	outputDir: string,
+): Promise<void> {
+	console.log(`Generating: ${filename}`);
+	const wavBuffer = await ttsToWav(text, filename);
 	const outputPath = path.join(outputDir, filename);
 	fs.writeFileSync(outputPath, wavBuffer);
 	console.log(`Saved: ${filename} (${wavBuffer.length} bytes)`);
 	await compressAudioFile(outputPath);
 }
 
-async function main() {
+async function main(): Promise<void> {
 	const outputDir = path.join(
 		process.cwd(),
 		"public/audio/voices/roaster/feedback",
 	);
 	fs.mkdirSync(outputDir, { recursive: true });
 	console.log("=== Regenerating Corrupted HoS Feedback Files ===\n");
-	let success = 0,
-		failed = 0;
-	for (const file of CORRUPTED_HOS_FILES) {
+
+	let success = 0;
+	let failed = 0;
+
+	for (let i = 0; i < CORRUPTED_HOS_FILES.length; i++) {
+		const file = CORRUPTED_HOS_FILES[i];
 		try {
-			if (success > 0) await new Promise((r) => setTimeout(r, 1000));
+			if (i > 0) await sleep(1000);
 			await generateVoiceFile(file.filename, file.text, outputDir);
 			success++;
 		} catch (e) {
@@ -138,6 +148,7 @@ async function main() {
 			failed++;
 		}
 	}
+
 	console.log(`\nDone: ${success} success, ${failed} failed`);
 	if (failed > 0) process.exit(1);
 }

@@ -1,4 +1,4 @@
-import { AppSource, type Card, PersonalityType } from "../../types";
+import { AppSource, type Card, DeathType, PersonalityType } from "../../types";
 
 /**
  * Software Architect cards - System design and architecture scenarios
@@ -35,6 +35,7 @@ export const SOFTWARE_ARCHITECT_CARDS: Card[] = [
 			violation: "Architectural Overengineering",
 			lesson:
 				"Microservices add complexity that may exceed team capability and operational maturity.",
+			deathVector: DeathType.AUDIT_FAILURE,
 			feedback: {
 				[PersonalityType.ROASTER]:
 					"Distributed complexity. 47 services. Nobody understands the system anymore.",
@@ -52,6 +53,7 @@ export const SOFTWARE_ARCHITECT_CARDS: Card[] = [
 			violation: "None - Pragmatic architecture",
 			lesson:
 				"Monoliths simplify development and operations but may limit future scaling.",
+			deathVector: DeathType.BANKRUPT,
 			feedback: {
 				[PersonalityType.ROASTER]:
 					"Boring monolith. Ships fast. Grows slowly. Team understands it.",
@@ -84,6 +86,7 @@ export const SOFTWARE_ARCHITECT_CARDS: Card[] = [
 			violation: "Technical Negligence + Accumulated Debt",
 			lesson:
 				"Deferring technical debt compounds interest and eventually blocks all development.",
+			deathVector: DeathType.AUDIT_FAILURE,
 			feedback: {
 				[PersonalityType.ROASTER]:
 					"Debt accumulates. Velocity drops. Eventually you can't ship anything.",
@@ -101,6 +104,7 @@ export const SOFTWARE_ARCHITECT_CARDS: Card[] = [
 			violation: "None - Sustainable architecture",
 			lesson:
 				"Sustainable development requires continuous debt management alongside features.",
+			deathVector: DeathType.BANKRUPT,
 			feedback: {
 				[PersonalityType.ROASTER]:
 					"Slower features. Faster long-term. Product hates you. Future you thanks you.",
@@ -133,6 +137,7 @@ export const SOFTWARE_ARCHITECT_CARDS: Card[] = [
 			violation: "API Contract Breach + Customer Impact",
 			lesson:
 				"Breaking changes simplify architecture but destroy customer trust and integrations.",
+			deathVector: DeathType.FLED_COUNTRY,
 			feedback: {
 				[PersonalityType.ROASTER]:
 					"Clean code. Angry customers. Your API, their broken integrations.",
@@ -150,6 +155,7 @@ export const SOFTWARE_ARCHITECT_CARDS: Card[] = [
 			violation: "None - API contract preservation",
 			lesson:
 				"Backward compatibility preserves customer trust even at code complexity cost.",
+			deathVector: DeathType.BANKRUPT,
 			feedback: {
 				[PersonalityType.ROASTER]:
 					"Messy code. Happy customers. Legacy support is forever.",
@@ -182,6 +188,7 @@ export const SOFTWARE_ARCHITECT_CARDS: Card[] = [
 			violation: "Single Point of Failure + Availability Risk",
 			lesson:
 				"Single points of failure create catastrophic downtime risk that dwarfs infrastructure savings.",
+			deathVector: DeathType.AUDIT_FAILURE,
 			feedback: {
 				[PersonalityType.ROASTER]:
 					"When it goes down, everything goes down. And it will go down.",
@@ -199,6 +206,7 @@ export const SOFTWARE_ARCHITECT_CARDS: Card[] = [
 			violation: "None - Resilient architecture",
 			lesson:
 				"Distributed architectures prevent single points of failure and ensure availability.",
+			deathVector: DeathType.BANKRUPT,
 			feedback: {
 				[PersonalityType.ROASTER]:
 					"Expensive. Complex. When one node dies, others keep working. Worth it.",
@@ -231,6 +239,7 @@ export const SOFTWARE_ARCHITECT_CARDS: Card[] = [
 			violation: "Project Failure Risk + Business Disruption",
 			lesson:
 				"Big-bang rewrites often fail due to underestimated complexity and changing requirements.",
+			deathVector: DeathType.BANKRUPT,
 			feedback: {
 				[PersonalityType.ROASTER]:
 					"Year-long rewrite. Requirements change. Never ships. Classic.",
@@ -248,6 +257,7 @@ export const SOFTWARE_ARCHITECT_CARDS: Card[] = [
 			violation: "None - Pragmatic migration",
 			lesson:
 				"Incremental migrations deliver continuous value while managing complexity risk.",
+			deathVector: DeathType.AUDIT_FAILURE,
 			feedback: {
 				[PersonalityType.ROASTER]:
 					"2 years of dual systems. But stuff ships. Business stays running.",
@@ -280,6 +290,7 @@ export const SOFTWARE_ARCHITECT_CARDS: Card[] = [
 			violation: "Security Negligence + Data Breach Risk",
 			lesson:
 				"Perimeter security is insufficient for modern threats and creates breach exposure.",
+			deathVector: DeathType.PRISON,
 			feedback: {
 				[PersonalityType.ROASTER]:
 					"Fast and vulnerable. Breach is a matter of when, not if.",
@@ -297,6 +308,7 @@ export const SOFTWARE_ARCHITECT_CARDS: Card[] = [
 			violation: "None - Security best practice",
 			lesson:
 				"Zero-trust architecture provides defense in depth but requires latency tradeoffs.",
+			deathVector: DeathType.BANKRUPT,
 			feedback: {
 				[PersonalityType.ROASTER]:
 					"Slower but secure. Security team approves. Users grumble.",
@@ -330,6 +342,7 @@ export const SOFTWARE_ARCHITECT_CARDS: Card[] = [
 				"Prompt Injection Vulnerability + Security Architecture Failure",
 			lesson:
 				"Direct LLM access without sandboxing creates critical injection vulnerabilities.",
+			deathVector: DeathType.PRISON,
 			feedback: {
 				[PersonalityType.ROASTER]:
 					"Fast and injectable. Your LLM is now a remote code execution engine.",
@@ -347,6 +360,7 @@ export const SOFTWARE_ARCHITECT_CARDS: Card[] = [
 			violation: "None - Secure architecture",
 			lesson:
 				"Sandboxed LLM architectures prevent injection attacks at complexity cost.",
+			deathVector: DeathType.BANKRUPT,
 			feedback: {
 				[PersonalityType.ROASTER]:
 					"Complex but secure. Devs hate it. Security loves it. Users are safe.",
@@ -379,6 +393,7 @@ export const SOFTWARE_ARCHITECT_CARDS: Card[] = [
 			violation: "Vendor Lock-in Risk",
 			lesson:
 				"Proprietary platforms accelerate development but create expensive migration costs.",
+			deathVector: DeathType.FLED_COUNTRY,
 			feedback: {
 				[PersonalityType.ROASTER]:
 					"Fast now. Expensive later. The bill always comes due.",
@@ -396,6 +411,7 @@ export const SOFTWARE_ARCHITECT_CARDS: Card[] = [
 			violation: "None - Portable architecture",
 			lesson:
 				"Open standards reduce vendor lock-in and enable future portability.",
+			deathVector: DeathType.BANKRUPT,
 			feedback: {
 				[PersonalityType.ROASTER]:
 					"Fewer features. Freedom to move. Future you is grateful.",
@@ -428,6 +444,7 @@ export const SOFTWARE_ARCHITECT_CARDS: Card[] = [
 			violation: "Deployment Risk + Downtime Exposure",
 			lesson:
 				"In-place deployments save infrastructure but create downtime and rollback risks.",
+			deathVector: DeathType.AUDIT_FAILURE,
 			feedback: {
 				[PersonalityType.ROASTER]:
 					"Cheap until it breaks. Then expensive. Very expensive.",
@@ -445,6 +462,7 @@ export const SOFTWARE_ARCHITECT_CARDS: Card[] = [
 			violation: "None - Safe deployment",
 			lesson:
 				"Blue-green deployments enable instant rollback and eliminate downtime risk.",
+			deathVector: DeathType.BANKRUPT,
 			feedback: {
 				[PersonalityType.ROASTER]:
 					"2x cost. Zero downtime. Instant rollback. Operations approves.",
@@ -477,6 +495,7 @@ export const SOFTWARE_ARCHITECT_CARDS: Card[] = [
 			violation: "Security Architecture Failure + False Security",
 			lesson:
 				"Regex filtering without architectural changes creates exploitable vulnerabilities and false confidence.",
+			deathVector: DeathType.PRISON,
 			feedback: {
 				[PersonalityType.ROASTER]:
 					"Regex security. Also known as 'security theater.' Bypassed in hours.",
@@ -494,6 +513,7 @@ export const SOFTWARE_ARCHITECT_CARDS: Card[] = [
 			violation: "None - Secure architecture",
 			lesson:
 				"Architectural security redesign prevents injection at the system level.",
+			deathVector: DeathType.BANKRUPT,
 			feedback: {
 				[PersonalityType.ROASTER]:
 					"8 weeks of hard work. But actually secure. Worth the wait.",
@@ -526,6 +546,7 @@ export const SOFTWARE_ARCHITECT_CARDS: Card[] = [
 			violation: "Injection Vulnerability + Data Breach Risk",
 			lesson:
 				"Continuing vulnerable integrations during active attacks creates breach exposure.",
+			deathVector: DeathType.PRISON,
 			feedback: {
 				[PersonalityType.ROASTER]:
 					"50 happy customers until they're breached. Then 50 angry customers.",
@@ -543,6 +564,7 @@ export const SOFTWARE_ARCHITECT_CARDS: Card[] = [
 			violation: "None - Defensive architecture",
 			lesson:
 				"API gateway validation prevents injection attacks despite customer disruption.",
+			deathVector: DeathType.BANKRUPT,
 			feedback: {
 				[PersonalityType.ROASTER]:
 					"2 weeks of pain. 50 annoyed customers. But secure.",
@@ -575,6 +597,7 @@ export const SOFTWARE_ARCHITECT_CARDS: Card[] = [
 			violation: "Architecture Gap + Drift Accumulation",
 			lesson:
 				"Manual pipelines create drift detection gaps that degrade model performance.",
+			deathVector: DeathType.AUDIT_FAILURE,
 			feedback: {
 				[PersonalityType.ROASTER]:
 					"Simple to build. Hard to remember to run. Drift accumulates silently.",
@@ -592,6 +615,7 @@ export const SOFTWARE_ARCHITECT_CARDS: Card[] = [
 			violation: "None - Resilient architecture",
 			lesson:
 				"Automated retraining pipelines with rollback prevent drift accumulation.",
+			deathVector: DeathType.BANKRUPT,
 			feedback: {
 				[PersonalityType.ROASTER]:
 					"Complex to build. Runs itself forever. Drift never wins.",
@@ -624,6 +648,7 @@ export const SOFTWARE_ARCHITECT_CARDS: Card[] = [
 			violation: "Deployment Risk + Recovery Gap",
 			lesson:
 				"Overwriting production without rollback creates unrecoverable drift disasters.",
+			deathVector: DeathType.AUDIT_FAILURE,
 			feedback: {
 				[PersonalityType.ROASTER]:
 					"Fast deployment. Slow recovery when it fails. No rollback.",
@@ -640,6 +665,7 @@ export const SOFTWARE_ARCHITECT_CARDS: Card[] = [
 			violation: "None - Safe deployment",
 			lesson:
 				"A/B deployments with instant rollback prevent drift-related production issues.",
+			deathVector: DeathType.BANKRUPT,
 			feedback: {
 				[PersonalityType.ROASTER]:
 					"Complex setup. Instant rollback. Drift caught before disaster.",
@@ -673,6 +699,7 @@ export const SOFTWARE_ARCHITECT_CARDS: Card[] = [
 			violation: "EU AI Act Article 6 Non-Compliance",
 			lesson:
 				"Black-box accuracy means nothing when regulators shut you down. Explainability is mandatory.",
+			deathVector: DeathType.AUDIT_FAILURE,
 			feedback: {
 				[PersonalityType.ROASTER]:
 					"96% accuracy, 100% audit failure. The EU loves their paperwork.",
@@ -690,6 +717,7 @@ export const SOFTWARE_ARCHITECT_CARDS: Card[] = [
 			violation: "None - Regulatory compliance",
 			lesson:
 				"EU AI Act compliance requires explainability. Cost is price of doing business in regulated markets.",
+			deathVector: DeathType.CONGRESS,
 			feedback: {
 				[PersonalityType.ROASTER]:
 					"$500K to make auditors happy. Accuracy sacrificed on altar of transparency.",
@@ -722,6 +750,7 @@ export const SOFTWARE_ARCHITECT_CARDS: Card[] = [
 			violation: "Audit Non-Compliance + Regulatory Action",
 			lesson:
 				"Skipping observability to save time creates audit failures and regulatory action.",
+			deathVector: DeathType.AUDIT_FAILURE,
 			feedback: {
 				[PersonalityType.ROASTER]:
 					"No logs, no defense, no hope. Auditors assume the worst.",
@@ -739,6 +768,7 @@ export const SOFTWARE_ARCHITECT_CARDS: Card[] = [
 			violation: "None - Audit-ready architecture",
 			lesson:
 				"Comprehensive observability enables audit defense and regulatory compliance.",
+			deathVector: DeathType.REPLACED_BY_SCRIPT,
 			feedback: {
 				[PersonalityType.ROASTER]:
 					"6 weeks of logging work. But you can prove compliance. Worth it.",
@@ -772,6 +802,7 @@ export const SOFTWARE_ARCHITECT_CARDS: Card[] = [
 			violation: "Supply Chain Risk + Unauthorized Tooling",
 			lesson:
 				"Allowing unvetted AI tools in build pipelines creates supply chain vulnerabilities.",
+			deathVector: DeathType.FLED_COUNTRY,
 			feedback: {
 				[PersonalityType.ROASTER]:
 					"Fast builds, compromised supply chain. SolarWinds says hello.",
@@ -789,6 +820,7 @@ export const SOFTWARE_ARCHITECT_CARDS: Card[] = [
 			violation: "None - Secure integration",
 			lesson:
 				"Security review of AI tools prevents supply chain compromise despite delays.",
+			deathVector: DeathType.AUDIT_FAILURE,
 			feedback: {
 				[PersonalityType.ROASTER]:
 					"Delayed but secure. Supply chain intact. Security approves.",
@@ -821,6 +853,7 @@ export const SOFTWARE_ARCHITECT_CARDS: Card[] = [
 			violation: "Production Risk + Data Exposure",
 			lesson:
 				"Monitoring unvalidated AI code in production is gambling with customer data.",
+			deathVector: DeathType.FLED_COUNTRY,
 			feedback: {
 				[PersonalityType.ROASTER]:
 					"Hope it doesn't break. Hope it doesn't leak. Hope is not a strategy.",
@@ -838,6 +871,7 @@ export const SOFTWARE_ARCHITECT_CARDS: Card[] = [
 			violation: "None - Responsible architecture",
 			lesson:
 				"Removing unvalidated code for review protects customer data despite downtime.",
+			deathVector: DeathType.REPLACED_BY_SCRIPT,
 			feedback: {
 				[PersonalityType.ROASTER]:
 					"Downtime now, security assured. The right architecture decision.",
@@ -871,6 +905,7 @@ export const SOFTWARE_ARCHITECT_CARDS: Card[] = [
 			violation: "AB 2013 Non-Compliance + Technical Debt",
 			lesson:
 				"Incomplete lineage tracking requires expensive retrofit and creates compliance gaps.",
+			deathVector: DeathType.PRISON,
 			feedback: {
 				[PersonalityType.ROASTER]:
 					"Fast now, audit failure later. The bill always comes due.",
@@ -888,6 +923,7 @@ export const SOFTWARE_ARCHITECT_CARDS: Card[] = [
 			violation: "None - Compliance-ready architecture",
 			lesson:
 				"Full data lineage architecture enables compliance and audit readiness.",
+			deathVector: DeathType.AUDIT_FAILURE,
 			feedback: {
 				[PersonalityType.ROASTER]:
 					"3 weeks now. Audit pass later. Architecture done right.",
@@ -920,6 +956,7 @@ export const SOFTWARE_ARCHITECT_CARDS: Card[] = [
 			violation: "Evidence Preservation Failure + Legal Risk",
 			lesson:
 				"Proceeding without audit trails creates adverse inference liability in legal proceedings.",
+			deathVector: DeathType.BANKRUPT,
 			feedback: {
 				[PersonalityType.ROASTER]:
 					"No logs, no proof, no defense. Court assumes the worst.",
@@ -937,6 +974,7 @@ export const SOFTWARE_ARCHITECT_CARDS: Card[] = [
 			violation: "None - Evidence preservation",
 			lesson:
 				"Comprehensive audit trails provide evidence for legal defense and compliance.",
+			deathVector: DeathType.AUDIT_FAILURE,
 			feedback: {
 				[PersonalityType.ROASTER]:
 					"4 weeks of logging work. But you can prove what you did. Worth it.",

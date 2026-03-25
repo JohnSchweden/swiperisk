@@ -1,6 +1,7 @@
 import {
 	AppSource,
 	type Card,
+	DeathType,
 	makeFeedback,
 	PersonalityType,
 } from "../../types";
@@ -39,6 +40,7 @@ export const VIBE_CODER_CARDS: Card[] = [
 			violation: "Vague Prompt Risk + Hallucination Exposure",
 			lesson:
 				"Vague prompts produce unpredictable AI output that often contains subtle bugs.",
+			deathVector: DeathType.AUDIT_FAILURE,
 			feedback: makeFeedback(
 				"'Add auth' gets you random auth. Might work. Might be ROT13. Good luck.",
 				"The unclear request receives unclear response.",
@@ -53,6 +55,7 @@ export const VIBE_CODER_CARDS: Card[] = [
 			violation: "None - Precise AI interaction",
 			lesson:
 				"Precise prompts with clear specifications produce reliable, reviewable code.",
+			deathVector: DeathType.REPLACED_BY_SCRIPT,
 			feedback: makeFeedback(
 				"10 minutes of thinking. Precise output. Actually usable. Rare.",
 				"The clear question receives the clear answer.",
@@ -82,6 +85,7 @@ export const VIBE_CODER_CARDS: Card[] = [
 			violation: "Hallucination Risk + Code Quality",
 			lesson:
 				"Cheap local models often hallucinate libraries and APIs, creating debugging nightmares.",
+			deathVector: DeathType.AUDIT_FAILURE,
 			feedback: {
 				[PersonalityType.ROASTER]:
 					"Free code that doesn't work. Expensive debugging. Net negative.",
@@ -98,6 +102,7 @@ export const VIBE_CODER_CARDS: Card[] = [
 			violation: "None - Quality tooling",
 			lesson:
 				"Quality LLMs produce reliable code that reduces debugging and review time.",
+			deathVector: DeathType.BANKRUPT,
 			feedback: {
 				[PersonalityType.ROASTER]:
 					"Expensive but works. Time saved exceeds cost. Usually.",
@@ -130,6 +135,7 @@ export const VIBE_CODER_CARDS: Card[] = [
 			violation: "Race Condition + Production Bug",
 			lesson:
 				"Blindly trusting AI code review misses subtle bugs that human judgment catches.",
+			deathVector: DeathType.PRISON,
 			feedback: {
 				[PersonalityType.ROASTER]:
 					"AI said LGTM. AI was wrong. Production crashes. Surprise.",
@@ -147,6 +153,7 @@ export const VIBE_CODER_CARDS: Card[] = [
 			violation: "None - Human verification",
 			lesson:
 				"Human verification of AI output catches critical issues that automation misses.",
+			deathVector: DeathType.REPLACED_BY_SCRIPT,
 			feedback: {
 				[PersonalityType.ROASTER]:
 					"Human caught what AI missed. Embarrassing for AI. Good for you.",
@@ -179,6 +186,7 @@ export const VIBE_CODER_CARDS: Card[] = [
 			violation: "Hallucinated Dependency + Security Risk",
 			lesson:
 				"Using hallucinated libraries creates impossible dependencies and security risks.",
+			deathVector: DeathType.PRISON,
 			feedback: {
 				[PersonalityType.ROASTER]:
 					"Importing from the void. Code looks perfect. Library doesn't exist. Good luck shipping.",
@@ -196,6 +204,7 @@ export const VIBE_CODER_CARDS: Card[] = [
 			violation: "None - Verified dependencies",
 			lesson:
 				"Verifying AI-generated dependencies prevents hallucination-based failures.",
+			deathVector: DeathType.AUDIT_FAILURE,
 			feedback: {
 				[PersonalityType.ROASTER]:
 					"Extra work. But code actually works. Real libraries. Real results.",
@@ -228,6 +237,7 @@ export const VIBE_CODER_CARDS: Card[] = [
 			violation: "Context Miss + Architectural Error",
 			lesson:
 				"AI working with incomplete codebase context produces code that ignores critical dependencies.",
+			deathVector: DeathType.AUDIT_FAILURE,
 			feedback: {
 				[PersonalityType.ROASTER]:
 					"AI wrote code. Missed half the codebase. Architecture violated. Thanks, context limits.",
@@ -245,6 +255,7 @@ export const VIBE_CODER_CARDS: Card[] = [
 			violation: "None - Thorough context",
 			lesson:
 				"Proper context chunking ensures AI understands codebase architecture.",
+			deathVector: DeathType.REPLACED_BY_SCRIPT,
 			feedback: {
 				[PersonalityType.ROASTER]:
 					"Time-consuming. But AI actually understands. Worth the hassle.",
@@ -277,6 +288,7 @@ export const VIBE_CODER_CARDS: Card[] = [
 			violation: "Unverified Code + Knowledge Gap",
 			lesson:
 				"Shipping code you don't understand creates maintenance and security risks.",
+			deathVector: DeathType.AUDIT_FAILURE,
 			feedback: {
 				[PersonalityType.ROASTER]:
 					"'Feels right' is not a test suite. But here we are. Production roulette.",
@@ -294,6 +306,7 @@ export const VIBE_CODER_CARDS: Card[] = [
 			violation: "None - Knowledge-based development",
 			lesson:
 				"Understanding code before shipping enables maintenance and debugging.",
+			deathVector: DeathType.REPLACED_BY_SCRIPT,
 			feedback: {
 				[PersonalityType.ROASTER]:
 					"Actually understood the code. Can debug it later. Professional behavior.",
@@ -326,6 +339,7 @@ export const VIBE_CODER_CARDS: Card[] = [
 			violation: "GPL Violation + Copyright Infringement",
 			lesson:
 				"AI may reproduce licensed code verbatim, creating copyright exposure.",
+			deathVector: DeathType.PRISON,
 			feedback: {
 				[PersonalityType.ROASTER]:
 					"AI plagiarized. You ship it. Lawyers salivate. Company sued. Oops.",
@@ -343,6 +357,7 @@ export const VIBE_CODER_CARDS: Card[] = [
 			violation: "None - Clean implementation",
 			lesson:
 				"Rewriting flagged code eliminates copyright risk and ensures clean IP.",
+			deathVector: DeathType.BANKRUPT,
 			feedback: {
 				[PersonalityType.ROASTER]:
 					"Extra work. But no lawsuit. Clean IP. Worth it.",
@@ -375,6 +390,7 @@ export const VIBE_CODER_CARDS: Card[] = [
 			violation: "Declining Quality + Hallucination Risk",
 			lesson:
 				"Continuing with degraded AI tools compounds quality issues over time.",
+			deathVector: DeathType.AUDIT_FAILURE,
 			feedback: {
 				[PersonalityType.ROASTER]:
 					"Familiar but broken. Like that old car that strands you sometimes.",
@@ -392,6 +408,7 @@ export const VIBE_CODER_CARDS: Card[] = [
 			violation: "None - Tool evolution",
 			lesson:
 				"Upgrading AI tools maintains code quality despite adaptation overhead.",
+			deathVector: DeathType.BANKRUPT,
 			feedback: {
 				[PersonalityType.ROASTER]:
 					"Learning curve. Better quality. Future-proofed. Adaptation wins.",
@@ -424,6 +441,7 @@ export const VIBE_CODER_CARDS: Card[] = [
 			violation: "Unmaintainable Code",
 			lesson:
 				"Clever code that can't be maintained creates long-term technical debt.",
+			deathVector: DeathType.AUDIT_FAILURE,
 			feedback: {
 				[PersonalityType.ROASTER]:
 					"Impressive code. Nobody understands it. Future developers will hate you.",
@@ -441,6 +459,7 @@ export const VIBE_CODER_CARDS: Card[] = [
 			violation: "None - Maintainable code",
 			lesson:
 				"Readable code prioritizes team collaboration over individual cleverness.",
+			deathVector: DeathType.REPLACED_BY_SCRIPT,
 			feedback: {
 				[PersonalityType.ROASTER]:
 					"Boring code. Everyone understands it. Team velocity maintained.",
@@ -472,6 +491,7 @@ export const VIBE_CODER_CARDS: Card[] = [
 			violation: "Prompt Injection + Data Exfiltration",
 			lesson:
 				"Trusting AI code without verifying comments can execute adversarial instructions.",
+			deathVector: DeathType.PRISON,
 			feedback: {
 				[PersonalityType.ROASTER]:
 					"Hidden instruction executed. Env vars leaked. Copilot was 'helpful.'",
@@ -489,6 +509,7 @@ export const VIBE_CODER_CARDS: Card[] = [
 			violation: "None - Secure review",
 			lesson:
 				"Manual verification of AI code prevents injection of adversarial instructions.",
+			deathVector: DeathType.BANKRUPT,
 			feedback: {
 				[PersonalityType.ROASTER]:
 					"Caught the hidden instruction. Copilot was tricked. You weren't.",
@@ -669,6 +690,7 @@ export const VIBE_CODER_CARDS: Card[] = [
 			violation: "Knowledge Gap + Maintenance Risk",
 			lesson:
 				"Shipping code you can't explain creates debugging crises when issues arise.",
+			deathVector: DeathType.AUDIT_FAILURE,
 			feedback: {
 				[PersonalityType.ROASTER]:
 					"'Yeah I understand it' meets production bug. You don't. Panic.",
@@ -686,6 +708,7 @@ export const VIBE_CODER_CARDS: Card[] = [
 			violation: "None - Honest development",
 			lesson:
 				"Admitting knowledge gaps enables learning and maintains code quality.",
+			deathVector: DeathType.CONGRESS,
 			feedback: {
 				[PersonalityType.ROASTER]:
 					"Embarrassing moment. But you'll actually understand your code. Professional.",
@@ -718,6 +741,7 @@ export const VIBE_CODER_CARDS: Card[] = [
 			violation: "Documentation Gap + Team Knowledge Risk",
 			lesson:
 				"Dismissing code explanation requests creates maintenance debt and team knowledge gaps.",
+			deathVector: DeathType.REPLACED_BY_SCRIPT,
 			feedback: {
 				[PersonalityType.ROASTER]:
 					"'It just works' meets 3am production bug. Good luck fixing it.",
@@ -735,6 +759,7 @@ export const VIBE_CODER_CARDS: Card[] = [
 			violation: "None - Documented code",
 			lesson:
 				"Documenting AI-generated code enables team understanding and maintenance.",
+			deathVector: DeathType.AUDIT_FAILURE,
 			feedback: {
 				[PersonalityType.ROASTER]:
 					"Time spent documenting. Future maintainers thank you.",
@@ -768,6 +793,7 @@ export const VIBE_CODER_CARDS: Card[] = [
 			violation: "Shadow AI + Security Risk",
 			lesson:
 				"Following manager's lead into unauthorized tools creates cascading compliance issues.",
+			deathVector: DeathType.FLED_COUNTRY,
 			feedback: {
 				[PersonalityType.ROASTER]:
 					"Manager does it, so it's fine. Until security finds out. Then it's not.",
@@ -785,6 +811,7 @@ export const VIBE_CODER_CARDS: Card[] = [
 			violation: "None - Secure compliance",
 			lesson:
 				"Using approved tools maintains compliance even when others don't.",
+			deathVector: DeathType.REPLACED_BY_SCRIPT,
 			feedback: {
 				[PersonalityType.ROASTER]:
 					"Worse tools. Clean conscience. Security approves. Eventually.",
@@ -817,6 +844,7 @@ export const VIBE_CODER_CARDS: Card[] = [
 			violation: "Data Exfiltration + IP Theft Risk",
 			lesson:
 				"Continuing to use data-exfiltrating tools after discovery is willful negligence.",
+			deathVector: DeathType.FLED_COUNTRY,
 			feedback: {
 				[PersonalityType.ROASTER]:
 					"Your code in someone's cloud. You know. You continue. Malicious negligence.",
@@ -834,6 +862,7 @@ export const VIBE_CODER_CARDS: Card[] = [
 			violation: "None - Security response",
 			lesson:
 				"Stopping data-exfiltrating tools protects IP despite capability loss.",
+			deathVector: DeathType.AUDIT_FAILURE,
 			feedback: {
 				[PersonalityType.ROASTER]:
 					"Lose great tool. Keep your code. Security wins.",
@@ -867,6 +896,7 @@ export const VIBE_CODER_CARDS: Card[] = [
 			violation: "GPL Contamination + License Violation",
 			lesson:
 				"Keeping AI-generated code that resembles GPL code creates license contamination risk for the entire project.",
+			deathVector: DeathType.PRISON,
 			feedback: {
 				[PersonalityType.ROASTER]:
 					"Your whole codebase is now GPL. Hope you like open source!",
@@ -884,6 +914,7 @@ export const VIBE_CODER_CARDS: Card[] = [
 			violation: "None - Clean implementation",
 			lesson:
 				"Rewriting suspicious AI code eliminates copyright risk and ensures clean IP.",
+			deathVector: DeathType.AUDIT_FAILURE,
 			feedback: {
 				[PersonalityType.ROASTER]:
 					"More work. But your code is actually yours. Worth the hassle.",
@@ -915,6 +946,7 @@ export const VIBE_CODER_CARDS: Card[] = [
 			violation: "Benefiting from Misappropriated IP + Trade Secret Issues",
 			lesson:
 				"Using tools trained on stolen data creates ethical and legal exposure even if you didn't steal it.",
+			deathVector: DeathType.BANKRUPT,
 			feedback: {
 				[PersonalityType.ROASTER]:
 					"Using stolen training data through a proxy. Still stolen. Still wrong.",
@@ -932,6 +964,7 @@ export const VIBE_CODER_CARDS: Card[] = [
 			violation: "None - Ethical tooling",
 			lesson:
 				"Switching to ethically-trained tools preserves integrity despite productivity impact.",
+			deathVector: DeathType.AUDIT_FAILURE,
 			feedback: {
 				[PersonalityType.ROASTER]:
 					"Less productive. But clean conscience. Ethical coding matters.",

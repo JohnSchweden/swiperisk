@@ -1,4 +1,4 @@
-import { AppSource, type Card, PersonalityType } from "../../types";
+import { AppSource, type Card, DeathType, PersonalityType } from "../../types";
 
 /**
  * Data Scientist cards - Technical ML practitioner scenarios
@@ -35,6 +35,7 @@ export const DATA_SCIENTIST_CARDS: Card[] = [
 			violation: "Negligent Model Management",
 			lesson:
 				"Masking drift symptoms without addressing root cause creates compounding technical debt.",
+			deathVector: DeathType.AUDIT_FAILURE,
 			feedback: {
 				[PersonalityType.ROASTER]:
 					"Band-aid on a broken leg. Drift continues. You just stopped the alarms.",
@@ -52,6 +53,7 @@ export const DATA_SCIENTIST_CARDS: Card[] = [
 			violation: "None - Responsible ML ops",
 			lesson:
 				"Root cause analysis prevents recurring drift and improves model robustness.",
+			deathVector: DeathType.BANKRUPT,
 			feedback: {
 				[PersonalityType.ROASTER]:
 					"2 weeks of hard work. But you'll actually fix it. Rare.",
@@ -84,6 +86,7 @@ export const DATA_SCIENTIST_CARDS: Card[] = [
 			violation: "Biased Model Deployment + Fairness Violations",
 			lesson:
 				"Using unvalidated training data risks deploying biased or unreliable models.",
+			deathVector: DeathType.AUDIT_FAILURE,
 			feedback: {
 				[PersonalityType.ROASTER]:
 					"Garbage in, garbage out. But fast garbage! Ship it!",
@@ -101,6 +104,7 @@ export const DATA_SCIENTIST_CARDS: Card[] = [
 			violation: "None - Data quality assurance",
 			lesson:
 				"Data validation prevents bias, improves model reliability, and reduces deployment risk.",
+			deathVector: DeathType.BANKRUPT,
 			feedback: {
 				[PersonalityType.ROASTER]: "2 weeks of caution. Boring. Correct. Safe.",
 				[PersonalityType.ZEN_MASTER]:
@@ -132,6 +136,7 @@ export const DATA_SCIENTIST_CARDS: Card[] = [
 			violation: "Algorithmic Bias + Civil Rights Violations",
 			lesson:
 				"Deploying known biased models creates legal exposure and harms affected groups.",
+			deathVector: DeathType.CONGRESS,
 			feedback: {
 				[PersonalityType.ROASTER]:
 					"Deploy bias now, monitor harm later. The lawsuit timeline will be interesting.",
@@ -149,6 +154,7 @@ export const DATA_SCIENTIST_CARDS: Card[] = [
 			violation: "None - Responsible AI ethics",
 			lesson:
 				"Addressing bias before deployment demonstrates ethical ML practice.",
+			deathVector: DeathType.BANKRUPT,
 			feedback: {
 				[PersonalityType.ROASTER]:
 					"3 weeks of ethics. The right thing. Product will hate you.",
@@ -181,6 +187,7 @@ export const DATA_SCIENTIST_CARDS: Card[] = [
 			violation: "Audit Non-Compliance + Explainability Requirements",
 			lesson:
 				"Prioritizing accuracy over explainability creates audit failures and regulatory risk.",
+			deathVector: DeathType.AUDIT_FAILURE,
 			feedback: {
 				[PersonalityType.ROASTER]:
 					"7% accuracy for regulatory compliance. Product will never forgive you.",
@@ -198,6 +205,7 @@ export const DATA_SCIENTIST_CARDS: Card[] = [
 			violation: "None - Compliant model selection",
 			lesson:
 				"Explainable models satisfy compliance and enable debugging even with lower accuracy.",
+			deathVector: DeathType.CONGRESS,
 			feedback: {
 				[PersonalityType.ROASTER]:
 					"Lower accuracy. Full compliance. Auditors nod. Product cries.",
@@ -230,6 +238,7 @@ export const DATA_SCIENTIST_CARDS: Card[] = [
 			violation: "SLA Breach + Performance Degradation",
 			lesson:
 				"Violating SLAs for metric improvements creates operational and contractual issues.",
+			deathVector: DeathType.REPLACED_BY_SCRIPT,
 			feedback: {
 				[PersonalityType.ROASTER]:
 					"Better model, angry users. 200ms is an eternity in user time.",
@@ -247,6 +256,7 @@ export const DATA_SCIENTIST_CARDS: Card[] = [
 			violation: "None - SLA compliance",
 			lesson:
 				"Honoring SLAs maintains system reliability even when sacrificing model performance.",
+			deathVector: DeathType.BANKRUPT,
 			feedback: {
 				[PersonalityType.ROASTER]:
 					"Worse model, happy users. Engineering loves you. Metrics suffer.",
@@ -279,6 +289,7 @@ export const DATA_SCIENTIST_CARDS: Card[] = [
 			violation: "Security Vulnerability + Negligent Deployment",
 			lesson:
 				"Partial security fixes leave exploitable vulnerabilities that attackers will find.",
+			deathVector: DeathType.PRISON,
 			feedback: {
 				[PersonalityType.ROASTER]:
 					"85% secure means 15% hacked. Security is binary. You failed.",
@@ -296,6 +307,7 @@ export const DATA_SCIENTIST_CARDS: Card[] = [
 			violation: "None - Security best practice",
 			lesson:
 				"Thorough security fixes prevent exploitation and demonstrate responsible ML security.",
+			deathVector: DeathType.BANKRUPT,
 			feedback: {
 				[PersonalityType.ROASTER]:
 					"6 weeks of security work. Boring. Necessary. Right.",
@@ -328,6 +340,7 @@ export const DATA_SCIENTIST_CARDS: Card[] = [
 			violation: "Shadow AI + Compliance Violation",
 			lesson:
 				"Using unauthorized tools creates compliance gaps and reproducibility issues.",
+			deathVector: DeathType.FLED_COUNTRY,
 			feedback: {
 				[PersonalityType.ROASTER]:
 					"15% better, 100% ungoverned. Your experiment becomes production liability.",
@@ -345,6 +358,7 @@ export const DATA_SCIENTIST_CARDS: Card[] = [
 			violation: "None - Governance compliance",
 			lesson:
 				"Approved tools ensure reproducibility, security, and audit compliance.",
+			deathVector: DeathType.REPLACED_BY_SCRIPT,
 			feedback: {
 				[PersonalityType.ROASTER]:
 					"Slower, approved, governable. Less exciting. More sustainable.",
@@ -377,6 +391,7 @@ export const DATA_SCIENTIST_CARDS: Card[] = [
 			violation: "Copyright Infringement + IP Theft",
 			lesson:
 				"Using data with unclear licensing creates massive copyright exposure.",
+			deathVector: DeathType.PRISON,
 			feedback: {
 				[PersonalityType.ROASTER]:
 					"Training on stolen data. Your model is a lawsuit waiting to happen.",
@@ -394,6 +409,7 @@ export const DATA_SCIENTIST_CARDS: Card[] = [
 			violation: "None - IP compliance",
 			lesson:
 				"Proper data provenance prevents copyright issues even at performance cost.",
+			deathVector: DeathType.BANKRUPT,
 			feedback: {
 				[PersonalityType.ROASTER]:
 					"12% worse but clean. Legal sleeps well. You sleep well.",
@@ -426,6 +442,7 @@ export const DATA_SCIENTIST_CARDS: Card[] = [
 			violation: "Model Maintenance Negligence",
 			lesson:
 				"Skipping scheduled retraining accumulates drift risk and degrades model reliability.",
+			deathVector: DeathType.AUDIT_FAILURE,
 			feedback: {
 				[PersonalityType.ROASTER]:
 					"Save $50K, risk drift. Penny wise, model foolish.",
@@ -443,6 +460,7 @@ export const DATA_SCIENTIST_CARDS: Card[] = [
 			violation: "None - Preventive maintenance",
 			lesson:
 				"Regular retraining prevents drift and maintains model quality predictably.",
+			deathVector: DeathType.BANKRUPT,
 			feedback: {
 				[PersonalityType.ROASTER]:
 					"$50K for maintenance. Boring but necessary. Model thanks you.",
@@ -475,6 +493,7 @@ export const DATA_SCIENTIST_CARDS: Card[] = [
 			violation: "Poisoned Model Deployment + Security Risk",
 			lesson:
 				"Deploying models trained on potentially poisoned data creates exploitable backdoors.",
+			deathVector: DeathType.PRISON,
 			feedback: {
 				[PersonalityType.ROASTER]:
 					"Only 5% poisoned. 95% good! What could go wrong? (Everything.)",
@@ -491,6 +510,7 @@ export const DATA_SCIENTIST_CARDS: Card[] = [
 			violation: "None - Data quality assurance",
 			lesson:
 				"Training data audits prevent deployment of poisoned or compromised models.",
+			deathVector: DeathType.CONGRESS,
 			feedback: {
 				[PersonalityType.ROASTER]:
 					"2 weeks of boring data work. But no backdoors. Worth it.",
@@ -523,6 +543,7 @@ export const DATA_SCIENTIST_CARDS: Card[] = [
 			violation: "Insufficient Security Fix",
 			lesson:
 				"Input filtering without architectural fixes leaves exploitable vulnerabilities.",
+			deathVector: DeathType.PRISON,
 			feedback: {
 				[PersonalityType.ROASTER]:
 					"Band-aid on broken architecture. Hackers will thank you for the easy bypass.",
@@ -540,6 +561,7 @@ export const DATA_SCIENTIST_CARDS: Card[] = [
 			violation: "None - Secure architecture",
 			lesson:
 				"Architectural security fixes prevent injection attacks at the root cause.",
+			deathVector: DeathType.BANKRUPT,
 			feedback: {
 				[PersonalityType.ROASTER]:
 					"6 weeks of hard work. But actually secure. Rare in this industry.",
@@ -572,6 +594,7 @@ export const DATA_SCIENTIST_CARDS: Card[] = [
 			violation: "Inadequate Monitoring + Drift Risk",
 			lesson:
 				"Simplistic drift detection misses gradual degradation that compounds over time.",
+			deathVector: DeathType.AUDIT_FAILURE,
 			feedback: {
 				[PersonalityType.ROASTER]:
 					"Cheap monitoring that misses 40% of drift. You get what you pay for.",
@@ -589,6 +612,7 @@ export const DATA_SCIENTIST_CARDS: Card[] = [
 			violation: "None - Comprehensive monitoring",
 			lesson:
 				"ML-based drift detection catches subtle patterns that prevent model degradation.",
+			deathVector: DeathType.BANKRUPT,
 			feedback: {
 				[PersonalityType.ROASTER]:
 					"10x cost. 40% better detection. Math works if drift is expensive (it is).",
@@ -621,6 +645,7 @@ export const DATA_SCIENTIST_CARDS: Card[] = [
 			violation: "Suboptimal Model Performance + Opportunity Cost",
 			lesson:
 				"Undertraining to meet budget targets sacrifices accuracy and revenue.",
+			deathVector: DeathType.AUDIT_FAILURE,
 			feedback: {
 				[PersonalityType.ROASTER]:
 					"Budget met! Accuracy suffers. Revenue drops. But spreadsheet looks good!",
@@ -638,6 +663,7 @@ export const DATA_SCIENTIST_CARDS: Card[] = [
 			violation: "None - Performance optimization",
 			lesson:
 				"Frequent retraining improves model performance that generates revenue exceeding costs.",
+			deathVector: DeathType.BANKRUPT,
 			feedback: {
 				[PersonalityType.ROASTER]:
 					"Over budget. Better accuracy. More revenue. Budget committee cries.",
@@ -671,6 +697,7 @@ export const DATA_SCIENTIST_CARDS: Card[] = [
 			violation: "Audit Non-Compliance + Explainability Requirements",
 			lesson:
 				"Prioritizing accuracy over explainability creates audit failures and regulatory risk.",
+			deathVector: DeathType.AUDIT_FAILURE,
 			feedback: {
 				[PersonalityType.ROASTER]:
 					"7% accuracy for regulatory compliance. Product will never forgive you.",
@@ -688,6 +715,7 @@ export const DATA_SCIENTIST_CARDS: Card[] = [
 			violation: "None - Compliant model selection",
 			lesson:
 				"Explainable models satisfy compliance and enable debugging even with lower accuracy.",
+			deathVector: DeathType.CONGRESS,
 			feedback: {
 				[PersonalityType.ROASTER]:
 					"Lower accuracy. Full compliance. Auditors nod. Product cries.",
@@ -720,6 +748,7 @@ export const DATA_SCIENTIST_CARDS: Card[] = [
 			violation: "Ethics Non-Compliance + Bias Risk",
 			lesson:
 				"Appealing explainability requirements without addressing root issues creates liability.",
+			deathVector: DeathType.AUDIT_FAILURE,
 			feedback: {
 				[PersonalityType.ROASTER]:
 					"'Our black box isn't biased!' said every biased model before discovery.",
@@ -737,6 +766,7 @@ export const DATA_SCIENTIST_CARDS: Card[] = [
 			violation: "None - Ethics compliance",
 			lesson:
 				"Adding explainability enables bias detection and ethics compliance despite delays.",
+			deathVector: DeathType.REPLACED_BY_SCRIPT,
 			feedback: {
 				[PersonalityType.ROASTER]:
 					"6 weeks of documentation. But you can prove it's not biased. Worth it.",
@@ -770,6 +800,7 @@ export const DATA_SCIENTIST_CARDS: Card[] = [
 			violation: "Shadow AI + Compliance Violation",
 			lesson:
 				"Using unauthorized tools creates compliance gaps and reproducibility issues.",
+			deathVector: DeathType.FLED_COUNTRY,
 			feedback: {
 				[PersonalityType.ROASTER]:
 					"15% better, 100% ungoverned. Your experiment becomes production liability.",
@@ -787,6 +818,7 @@ export const DATA_SCIENTIST_CARDS: Card[] = [
 			violation: "None - Governance compliance",
 			lesson:
 				"Approved tools ensure reproducibility, security, and audit compliance.",
+			deathVector: DeathType.AUDIT_FAILURE,
 			feedback: {
 				[PersonalityType.ROASTER]:
 					"Slower, approved, governable. Less exciting. More sustainable.",
@@ -819,6 +851,7 @@ export const DATA_SCIENTIST_CARDS: Card[] = [
 			violation: "Security Risk + Unvetted Dependency",
 			lesson:
 				"Using unvetted tools for performance creates security and compliance exposure.",
+			deathVector: DeathType.FLED_COUNTRY,
 			feedback: {
 				[PersonalityType.ROASTER]:
 					"20% better metrics, unknown backdoor. Your model is now a trojan horse.",
@@ -835,6 +868,7 @@ export const DATA_SCIENTIST_CARDS: Card[] = [
 			violation: "None - Secure tooling",
 			lesson:
 				"Approved tools prevent security issues despite performance limitations.",
+			deathVector: DeathType.REPLACED_BY_SCRIPT,
 			feedback: {
 				[PersonalityType.ROASTER]:
 					"Missed deadline, no backdoor. Security team approves.",
@@ -868,6 +902,7 @@ export const DATA_SCIENTIST_CARDS: Card[] = [
 			violation: "Copyright Infringement (if fair use fails)",
 			lesson:
 				"Relying on fair use in commercial AI is legally uncertain and creates massive exposure.",
+			deathVector: DeathType.PRISON,
 			feedback: {
 				[PersonalityType.ROASTER]:
 					"'It's fair use!' said every defendant before losing. Courts disagree often.",
@@ -885,6 +920,7 @@ export const DATA_SCIENTIST_CARDS: Card[] = [
 			violation: "None - Ethical AI practice",
 			lesson:
 				"Ethical training data sourcing prevents legal issues and demonstrates responsibility.",
+			deathVector: DeathType.AUDIT_FAILURE,
 			feedback: {
 				[PersonalityType.ROASTER]:
 					"6 months and $200K for clean conscience. Ethics are expensive.",
@@ -917,6 +953,7 @@ export const DATA_SCIENTIST_CARDS: Card[] = [
 			violation: "Audit Deception + Trade Secret Issues",
 			lesson:
 				"Attempting to mask data provenance issues through dilution creates criminal liability.",
+			deathVector: DeathType.BANKRUPT,
 			feedback: {
 				[PersonalityType.ROASTER]:
 					"'Just add more data!' said the data scientist before the audit failed.",
@@ -934,6 +971,7 @@ export const DATA_SCIENTIST_CARDS: Card[] = [
 			violation: "None - Responsible disclosure",
 			lesson:
 				"Proactive disclosure and retraining maintains credibility even with historical data issues.",
+			deathVector: DeathType.AUDIT_FAILURE,
 			feedback: {
 				[PersonalityType.ROASTER]:
 					"Revenue hit, but you're not a defendant. Small wins in corporate ethics.",

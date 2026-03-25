@@ -402,61 +402,75 @@ Plans:
 
 ### Phase 13: Image Asset Pipeline
 
-**Goal:** Create pipeline + image prompts to generate assets, save locally, and map to correct locations
-**Depends on:** Phase 06 (archetype system for mapping)
-**Plans:** 0 plans
+**Goal:** Generate AI images for HOS incidents, HOS per-direction outcomes, death endings, and archetypes via automated Gemini pipeline
+**Depends on:** Phase 06 (archetype system for mapping), Phase 15 (HOS audio coverage defines scope)
+**Plans:** 3 plans (ready for execution)
 
 Plans:
-- [ ] TBD (run /gsd-plan-phase 13 to break down)
+- [ ] 13-00-PLAN.md — TDD Wave 0: failing test scaffolding (image map contract + asset existence)
+- [ ] 13-01-PLAN.md — `data/imageMap.ts` data layer + slugify helpers
+- [ ] 13-02-PLAN.md — Gemini generation script (`scripts/generate-images.ts`) with user checkpoint
 
 **Details:**
-Generate AI images (Midjourney v6 / DALL-E 3 / Stable Diffusion) for:
-- **Incident images** — Glitched Corporate Surrealism (uncanny valley, visible AI artifacts)
-- **Outcome images** — Sarcastic Stock Photos (polished corporate + disaster subject)
-- **Collapse image** — Dramatic failure (e.g. yacht sinking, drone with audit report)
-- **Archetype images** — Tactical patch / futuristic tarot card style (LinkedIn shareable)
+Generate AI images via Gemini image generation (automated pipeline — no Midjourney, no DALL-E):
 
-**Pipeline:** Write prompts → generate → save to `public/images/` or asset folder → define mapping (cardId/outcomeId/archetypeId → image path).
+| Category | Count | Key |
+|----------|-------|-----|
+| HOS incident images | ~18 | `slugify(realWorldReference.incident)` — aligned to HOS audio scenarios |
+| HOS outcome images | ~36 | `{cardSlug}-left` / `{cardSlug}-right` — depicts actual consequence per swipe direction |
+| Death/collapse images | 7 | One per `DeathType` (including KIRK) |
+| Archetype images | 7 | One per `ArchetypeId` (including KIRK) |
+| **Total** | **~68** | |
+
+**Art direction:**
+- Incidents: Glitched Corporate Surrealism — photorealistic corporate scene with visible AI artifact
+- Outcomes: "Task Failed Successfully" — polished corporate photo, subject matter is the specific disaster
+- Deaths: "This is Fine" energy — dramatic failure, darkly comedic
+- Archetypes: Tactical patch / futuristic tarot card (LinkedIn shareable)
+
+**User checkpoint:** Script pauses after first incident image is generated and saved. File path printed to terminal — inspect quality before batch continues (Ctrl+C to abort, Enter to proceed).
 
 **Requirements:**
-- PIPELINE-01: Image prompt library (incidents, outcomes, collapse, archetypes)
-- PIPELINE-02: Script or process to generate + save images locally
-- PIPELINE-03: File naming convention + directory structure
-- PIPELINE-04: Mapping config (card → image, outcome → image, archetype → image, deathType → collapse image)
+- PIPELINE-01: Image prompt library (HOS incidents, HOS per-direction outcomes, deaths, archetypes)
+- PIPELINE-02: Gemini generation script (`scripts/generate-images.ts`) with readline checkpoint after first image
+- PIPELINE-03: File naming convention + directory structure (`public/images/{incidents,outcomes,archetypes,deaths}/`)
+- PIPELINE-04: `data/imageMap.ts` — HOS incident slug → path, HOS `{slug}-{direction}` → path, archetype → path, deathType → path
 
 ### Phase 14: Situational & Outcome Imagery Display
 
-**Goal:** Display images at correct locations with mobile/web responsive sizing
+**Goal:** Display images at correct UI locations with responsive sizing; HOS role gets full coverage, other roles graceful fallback
 **Depends on:** Phase 13
-**Plans:** 0 plans
+**Plans:** 4 plans (ready for execution)
 
 Plans:
-- [ ] TBD (run /gsd-plan-phase 14 to break down)
+- [ ] 14-01-PLAN.md — Incident card image (above card text, 16:9, moves with swipe)
+- [ ] 14-02-PLAN.md — Outcome overlay image (per-direction HOS lookup, fade-in, overlay width fix)
+- [ ] 14-03-PLAN.md — Collapse page (debrief page 1) death image
+- [ ] 14-04-PLAN.md — Archetype verdict (debrief page 3) badge image + fallback glitch placeholder
 
 **Details:**
-Integrate images into UI:
-- **Incident cards** — Image above/below text, appropriate aspect ratio (e.g. 16:9 or 4:3)
-- **Outcome feedback overlay** — Image alongside sarcastic reveal
-- **Page 1 (Collapse)** — Full-width or hero-style collapse image
-- **Page 3 (Archetype)** — Archetype avatar/badge for LinkedIn share
+Integrate images from Phase 13 into 4 UI surfaces:
 
-**Responsive sizing:**
-- **Mobile:** Constrained width, adequate touch targets, avoid excessive scroll
-- **Web:** Max dimensions, preserve aspect ratio, lazy load where appropriate
+| Surface | Image type | Placement | HOS | Other roles |
+|---------|-----------|-----------|-----|-------------|
+| Incident card | `getIncidentImagePath(slug)` | Hero above card text, 16:9 | ✓ full | Glitch placeholder |
+| Outcome overlay | `getOutcomeImagePath(slug, direction)` | Hero at overlay top, 16:9 | ✓ full | No image (hidden) |
+| Game Over (page 1) | `getDeathImagePath(deathType)` | Full-width hero | ✓ (all roles) | ✓ (all roles) |
+| Verdict (page 3) | `getArchetypeImagePath(archetypeId)` | Centered 1:1 badge | ✓ (all roles) | ✓ (all roles) |
 
 **Requirements:**
-- IMAGE-01: Incident card image placement + sizing (mobile + web)
-- IMAGE-02: Outcome overlay image placement + sizing
-- IMAGE-03: Collapse page (Game Over) image placement + sizing
-- IMAGE-04: Archetype verdict image (tactical patch style) + share card sizing
-- IMAGE-05: Fallback when image missing (placeholder or hide)
-- IMAGE-06: Lazy load / performance (avoid blocking render)
+- IMAGE-01: Incident card image placement + sizing (mobile + web); 16:9, moves with swipe gesture
+- IMAGE-02: Outcome overlay image — `{slug}-{direction}` lookup; hidden (not placeholder) for non-HOS roles
+- IMAGE-03: Collapse page (Game Over) death image — full-width hero, one per DeathType
+- IMAGE-04: Archetype verdict badge — 1:1 centered, all 7 archetypes including KIRK
+- IMAGE-05: Fallback — glitch placeholder for missing incident images; no image for missing outcomes
+- IMAGE-06: Lazy load via native `loading="lazy"` + `img.decode()` for jank prevention
 
 ### Phase 15: Voice Files Expanded
 
 **Goal:** Generate voice audio files for archetype reveals, death endings, and high-impact Head of Something cards; restructure voice files for scalability
 **Depends on:** Phase 06 (debrief system), Phase 07 (Kirk audio pattern)
-**Plans:** 7/7 plans complete
+**Plans:** 8/9 plans complete
 
 Plans:
 - [x] 15-01-PLAN.md — Generate archetype reveal audio (7 archetypes × 3 personalities = 21 files) ✓
@@ -554,10 +568,10 @@ Automated compression pipeline to reduce bandwidth while maintaining quality:
 | 10 | Background Audio | v1.2 | Planned (4 plans) |
 | 11 | Settings Integration (deferred) | v1.2 | Deferred |
 | 12 | Gameplay Tweaks & Card Variety | v1.2 | Complete (2/2) |
-| 13 | Image Asset Pipeline | v1.2 | Not started |
-| 14 | Situational & Outcome Imagery Display | v1.2 | Not started |
-| 15 | 7/7 | Complete   | 2026-03-24 |
+| 13 | Image Asset Pipeline (HOS-first, Gemini, ~68 images) | v1.2 | Planned (3 plans) |
+| 14 | Situational & Outcome Imagery Display | v1.2 | Planned (4 plans) |
+| 15 | 8/9 | Complete    | 2026-03-25 |
 
 ---
 
-*Roadmap updated: 2026-03-24 — Phase 15 plan 05 added (Audio Compression Pipeline)*
+*Roadmap updated: 2026-03-25 — Phase 13 scoped to HOS-first Gemini pipeline (~68 images); Phase 14 plans referenced; Midjourney/DALL-E removed*

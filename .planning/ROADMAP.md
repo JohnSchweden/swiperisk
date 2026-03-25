@@ -571,19 +571,21 @@ Automated compression pipeline to reduce bandwidth while maintaining quality:
 | 13 | Image Asset Pipeline (HOS-first, Gemini, ~68 images) | v1.2 | Planned (3 plans) |
 | 14 | Situational & Outcome Imagery Display | v1.2 | Planned (4 plans) |
 | 15 | 8/9 | Complete    | 2026-03-25 |
-| 16 | Ending Variety System | v1.2 | Planned (4 plans) |
+| 16 | Ending Variety System | v1.2 | In progress (6 plans) |
 
 ### Phase 16: Kobayashi Maru Ending Variety System
 
 **Goal:** Transform endings from role-based random death types to consequence-driven educational failure. Add death vector metadata to card outcomes, fix boss fight hardcoded AUDIT_FAILURE, fill CONGRESS content gap, and add failure lessons that teach AI governance.
 **Depends on:** Phase 15
-**Plans:** 4 plans
+**Plans:** 6 plans
 
 Plans:
 - [x] 16-01-PLAN.md — Death vector types, accumulator utility, and vector-aware death resolution (TDD)
 - [x] 16-02-PLAN.md — Wire death vectors into game reducer, fix boss fight death type
-- [ ] 16-03-PLAN.md — Annotate all 10 card decks with death vectors, add CONGRESS cards
-- [ ] 16-04-PLAN.md — Failure lessons, death explanations, and retry prompts in debrief
+- [x] 16-03-PLAN.md — Annotate all 10 card decks with death vectors, add CONGRESS cards
+- [x] 16-04-PLAN.md — Failure lessons, death explanations, and retry prompts in debrief
+- [ ] 16-05-PLAN.md — Gap closure: annotate 7 unannotated decks with deathVector (DV-05)
+- [ ] 16-06-PLAN.md — Gap closure: broaden 3 partial decks + restore coverage test thresholds
 
 **Requirements:**
 - DV-01: DeathVector type on Card outcomes (optional field, backward compatible)

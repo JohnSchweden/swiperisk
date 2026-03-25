@@ -1,7 +1,7 @@
 # Phase 14: Situational & Outcome Imagery Display - Context
 
 **Gathered:** 2026-03-16
-**Updated:** 2026-03-24 (architecture decisions applied)
+**Updated:** 2026-03-25 (outcome image model: per-direction per-HOS-card, not 8 consequence types)
 **Status:** Ready for execution
 
 <domain>
@@ -31,8 +31,8 @@ Display images at correct locations across 4 UI surfaces with mobile/web respons
 
 ### Outcome overlay images
 - **Large hero image** at the top of the overlay, 16:9
-- **Images keyed by consequence type** (8 types), NOT per card or per direction:
-  - BUDGET_CRATER, PR_DISASTER, LEGAL_HAMMER, TEAM_REVOLT, AUDIT_DOOM, CAREER_OVER, REGULATORY_NUKE, DATA_BREACH
+- **Images keyed by HOS card slug + swipe direction** (e.g., `hos-model-drift-team-blame-left`, `hos-model-drift-team-blame-right`)
+- Image lookup: `getOutcomeImagePath(slugifyIncident(card.realWorldReference.incident), swipeDirection)` — returns `undefined` for non-HOS roles (fallback: no image shown)
 - **Overlay width matches ticket card width** on all breakpoints (mobile + desktop) — currently narrower, needs adjustment
 - Image **fades in** (~300ms) when overlay opens — subtle reveal effect
 - Personality feedback text, fines, and governance alerts flow below the image

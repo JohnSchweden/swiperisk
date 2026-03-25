@@ -11,7 +11,7 @@ Display images at correct UI locations with responsive sizing for mobile and web
 | Location | Image Type | Placement |
 |----------|------------|-----------|
 | **Incident card** | Incident (uncanny) | Above or below card text |
-| **Outcome feedback overlay** | Outcome (sarcastic) | Alongside feedback text |
+| **Outcome feedback overlay** | Outcome (per-direction, HOS only) | Above feedback text |
 | **Game Over (Page 1 — Collapse)** | Collapse (dramatic) | Full-width or hero |
 | **Archetype verdict (Page 3)** | Archetype (badge) | Primary share asset |
 
@@ -45,7 +45,7 @@ Display images at correct UI locations with responsive sizing for mobile and web
 ## Requirements (Phase 14)
 
 - IMAGE-01: Incident card image placement + sizing (mobile + web)
-- IMAGE-02: Outcome overlay image placement + sizing
+- IMAGE-02: Outcome overlay image placement + sizing (keyed by HOS card slug + direction; fallback: no image for non-HOS roles)
 - IMAGE-03: Collapse page (Game Over) image placement + sizing
 - IMAGE-04: Archetype verdict image (tactical patch style) + share card sizing
 - IMAGE-05: Fallback when image missing (placeholder or hide)

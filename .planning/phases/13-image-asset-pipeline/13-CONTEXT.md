@@ -221,18 +221,37 @@ Create an automated pipeline to generate AI images for the game, save them local
 └─────────────────────────────────────────────────────────────┘
 ```
 
-### Imgflip API Capabilities
+### Imgflip API Capabilities (Researched 2026-03-26)
 
 | Feature | Free Tier | Premium ($9.99/mo) |
 |---------|-----------|-------------------|
 | Get static meme templates | ✅ | ✅ |
-| Caption static images | ✅ | ✅ |
-| Get GIF templates | ✅ | ✅ |
+| Get GIF templates | ✅ (`/get_memes?type=gif`) | ✅ |
+| Caption static images | ✅ (`/caption_image`) | ✅ |
 | **Caption GIFs** | ❌ | ✅ ($0.02/GIF after 50 free) |
+| Search 1M+ templates | ❌ | ✅ ($0.005/search) |
+| Auto-meme generation | ❌ | ✅ ($0.02/creation) |
+| Remove watermark | ❌ | ✅ |
 
-**Free Tier Works:**
-- `/get_memes?type=gif` — Fetch GIF template list
-- `/caption_image` — Add captions to static images
+**Free Tier Works for Our Use Case:**
+- `/get_memes?type=gif` — Fetch GIF template list (limited to top 100)
+- `/caption_image` — Add captions to static memes with text
+- Our approach: Pre-fetch template URLs from our database → fetch image → add text locally with `text-on-gif` package (free!)
+
+**API Endpoints:**
+```
+FREE:
+  GET  /get_memes?type=gif          → Fetch GIF template list
+  POST /caption_image               → Create static meme (text0, text1)
+
+PREMIUM:
+  POST /caption_gif                 → Create animated GIF meme
+  POST /search_memes               → Search 1M+ templates
+  POST /automeme                   → Auto-caption by text
+  POST /ai_meme                    → AI-generated meme
+```
+
+**Conclusion:** Free tier is sufficient for our meme template system. Animated GIFs handled locally with `text-on-gif` package.
 - Just fetch GIF URLs for overlay processing
 
 ### Template List (Top GIFs to Pre-Cache)

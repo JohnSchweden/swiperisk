@@ -7,7 +7,7 @@ import { ARCHETYPES } from "../data/archetypes";
 import { ROLE_CARDS } from "../data/cards";
 import { HEAD_OF_SOMETHING_CARDS } from "../data/cards/head-of-something";
 import { DEATH_ENDINGS } from "../data/deathEndings";
-import { slugifyIncident, slugifyLabel } from "../data/imageMap";
+import { slugify, slugifyIncident, slugifyLabel } from "../data/imageMap";
 import type { ArchetypeId, DeathType } from "../types";
 
 const apiKey = process.env.GEMINI_API_KEY;
@@ -145,22 +145,19 @@ function getDeaths(): Array<{ id: DeathType; entry: IncidentEntry }> {
 	}));
 }
 
-// Meme-world aesthetic: deadpan disaster narration with meme references
+// Visually-grounded meme formats — each maps to a clear, recognizable layout
+// Only formats the model can execute without adding explanatory text
 const INCIDENT_MEME_FORMATS = [
-	'Matrix "there is no spoon" but budget',
-	'"I am once again asking" format but for governance',
-	"Surprised Pikachu but for AI failures",
-	'Woman pointing at screen "they did surgery on a grape" but corporate',
-	"Drake Hotline Bling meme format but tech disasters",
-	'"This is Fine" dog but in corporate server room',
-	'"Task Failed Successfully" Windows dialog energy',
-	"Loss.jpg crude stick figures but make it tech incident",
-	"Philosoraptor questioning AI ethics",
-	'"And then I took an arrow to the knee" but for tech debt',
-	"Jurassic Park raptors in kitchen but data breach",
-	"Matrix code rain but corporate emails",
-	"Inception dream collapse but quarterly targets",
-	'"You shall not pass" but for security audit',
+	"Distracted Boyfriend (3-person meme)",
+	"Expanding Brain (4-panel escalation meme)",
+	'"This is Fine" dog sitting in burning room',
+	"Surprised Pikachu face (close-up reaction shot)",
+	"Drake approving and disapproving (2-panel vertical)",
+	"Two Buttons (sweating man choosing between two red buttons)",
+	"Gru's Plan (4-panel: plan goes wrong at step 3)",
+	"Is This a Pigeon? (person misidentifying something obvious)",
+	"Woman Yelling at Cat (2-panel: person yelling, cat unimpressed at dinner table)",
+	"Change My Mind (Steven Crowder desk in park setup)",
 ];
 
 function getRandomMemeFormat(formats: readonly string[]): string {
@@ -176,14 +173,14 @@ function generateIncidentPrompt(entry: IncidentEntry): {
 } {
 	const memeFormat = getRandomMemeFormat(INCIDENT_MEME_FORMATS);
 	const prompt =
-		`Meme-world incident illustration. ` +
-		`Real-world event: "${entry.incident}" (${entry.date}). ` +
-		`Outcome: ${entry.outcome}. ` +
-		`Meme format reference: ${memeFormat}. ` +
-		`Style: Loss.jpg energy meets corporate slide deck meets internet meme. ` +
-		`Tone: Serious presentation of absurd corporate reality. ` +
-		`Deadpan narration of disaster. Roast energy. Like a LinkedIn post about failure. ` +
-		`Absurd, memorable, shareable. No corporate photography language.`;
+		`[CONTEXT FOR ILLUSTRATION — do not render this as text: ` +
+		`Incident: "${entry.incident}" (${entry.date}). What happened: ${entry.outcome}] ` +
+		`Draw a single-panel meme using the "${memeFormat}" format. ` +
+		`The visual should capture the core irony of the incident — what went wrong and why it was absurd. ` +
+		`Style: flat cartoon, bold colors, clean internet meme aesthetic. ` +
+		`Text rule: 6 words maximum total in the entire image. Short labels on characters or objects only. ` +
+		`Do NOT draw: infographic boxes, stat callouts, slide deck layouts, LinkedIn post frames, charts, percentage labels. ` +
+		`The joke must be visible in the image — not explained in text.`;
 	return {
 		prompt,
 		source: {
@@ -568,9 +565,8 @@ async function generateAndSaveImage(
 		`${task.slug}.webp`,
 	);
 
-	// Skip if exists (never auto-regenerate, use --replace for that)
-	// --replace handles the regeneration explicitly
-	if (fs.existsSync(outputPath)) {
+	// Skip if exists — unless this is a --replace run targeting this exact slug
+	if (fs.existsSync(outputPath) && args.replace !== task.slug) {
 		return {
 			status: "skipped",
 			message: `Skipped (exists): ${task.slug}`,
@@ -700,123 +696,69 @@ async function main() {
 
 	const tasks: ImageGenTask[] = [];
 
-	// Handle --replace: regenerate specific image with approval
+	// Handle --replace: regenerate a specific image by slug.
+	// Approval is handled by the caller (Claude) before invoking this flag —
+	// no stdin dialog here.
 	if (args.replace) {
 		const replaceSlug = args.replace;
 
-		// Determine category and prompt based on slug pattern
-		const isOutcome =
-			replaceSlug.includes("-") &&
-			!replaceSlug.startsWith("pragmatist") &&
-			!replaceSlug.startsWith("shadow") &&
-			!replaceSlug.startsWith("disruptor") &&
-			!replaceSlug.startsWith("conservative") &&
-			!replaceSlug.startsWith("balanced") &&
-			!replaceSlug.startsWith("chaos") &&
-			!replaceSlug.startsWith("kirk") &&
-			!replaceSlug.startsWith("bankrupt") &&
-			!replaceSlug.startsWith("replaced") &&
-			!replaceSlug.startsWith("congress") &&
-			!replaceSlug.startsWith("fled") &&
-			!replaceSlug.startsWith("prison") &&
-			!replaceSlug.startsWith("audit");
+		// Resolve category by looking up slug in actual data — no heuristics
+		const incidents = extractIncidents();
+		const hosOutcomes = extractHosOutcomesByLabel();
+		const archetypeEntries = getArchetypes();
+		const deathEntries = getDeaths();
 
-		const rl = readline.createInterface({
-			input: process.stdin,
-			output: process.stdout,
-		});
-		const answer = await rl.question(
-			`\n⚠️  Replace image "${replaceSlug}"? This will regenerate it. (yes/no): `,
-		);
-		rl.close();
-
-		if (answer.toLowerCase() !== "yes") {
-			console.log("Cancelled.");
-			process.exit(0);
-		}
-
-		// Generate replacement task
-		if (isOutcome) {
-			// It's an outcome - extract from HOS cards
-			const [_incidentSlug, labelSlug] = replaceSlug.split("-").slice(-2);
-			const fullIncidentSlug = replaceSlug.replace(`-${labelSlug}`, "");
-			const incidents = extractIncidents("hos");
-			const incident = incidents.get(fullIncidentSlug);
-			if (incident) {
-				// Find the card with this label
-				for (const card of HEAD_OF_SOMETHING_CARDS) {
-					if (!card.realWorldReference?.incident) continue;
-					const cardSlug = slugifyIncident(card.realWorldReference.incident);
-					if (cardSlug === fullIncidentSlug) {
-						const cardLabelSlug = slugifyLabel(card.onLeft.label);
-						if (cardLabelSlug === labelSlug) {
-							const { prompt, source } = generateOutcomePrompt(
-								card.onLeft.label,
-								card.onLeft.lesson,
-								card.realWorldReference.incident,
-							);
-							tasks.push({
-								category: "outcome",
-								slug: replaceSlug,
-								prompt,
-								source,
-							});
-							break;
-						}
-						const cardLabelSlugRight = slugifyLabel(card.onRight.label);
-						if (cardLabelSlugRight === labelSlug) {
-							const { prompt, source } = generateOutcomePrompt(
-								card.onRight.label,
-								card.onRight.lesson,
-								card.realWorldReference.incident,
-							);
-							tasks.push({
-								category: "outcome",
-								slug: replaceSlug,
-								prompt,
-								source,
-							});
-							break;
-						}
-					}
-				}
-			}
+		if (incidents.has(replaceSlug)) {
+			const incident = incidents.get(replaceSlug)!;
+			const { prompt, source } = generateIncidentPrompt(incident);
+			tasks.push({ category: "incident", slug: replaceSlug, prompt, source });
+		} else if (hosOutcomes.has(replaceSlug)) {
+			const outcome = hosOutcomes.get(replaceSlug)!;
+			const { prompt, source } = generateOutcomePrompt(
+				outcome.label,
+				outcome.lesson,
+				outcome.incident,
+			);
+			tasks.push({ category: "outcome", slug: replaceSlug, prompt, source });
 		} else {
-			// It's an incident or archetype/death
-			const incidents = extractIncidents();
-			const incident = incidents.get(replaceSlug);
-			if (incident) {
-				const { prompt, source } = generateIncidentPrompt(incident);
-				tasks.push({ category: "incident", slug: replaceSlug, prompt, source });
-			} else if (
-				replaceSlug.startsWith("pragmatist") ||
-				replaceSlug.startsWith("shadow") ||
-				replaceSlug.startsWith("disruptor") ||
-				replaceSlug.startsWith("conservative") ||
-				replaceSlug.startsWith("balanced") ||
-				replaceSlug.startsWith("chaos") ||
-				replaceSlug.startsWith("kirk")
-			) {
-				for (const { id, entry } of getArchetypes()) {
-					if (id.toLowerCase().replace("_", "-") === replaceSlug) {
-						const { prompt, source } = generateArchetypePrompt(
-							entry.incident,
-							entry.outcome,
-						);
-						tasks.push({
-							category: "archetype",
-							slug: id.toLowerCase().replace("_", "-"),
-							prompt,
-							source,
-						});
-						break;
-					}
+			const archetypeMatch = archetypeEntries.find(
+				({ id }) => slugify(id) === replaceSlug,
+			);
+			if (archetypeMatch) {
+				const { prompt, source } = generateArchetypePrompt(
+					archetypeMatch.entry.incident,
+					archetypeMatch.entry.outcome,
+				);
+				tasks.push({
+					category: "archetype",
+					slug: replaceSlug,
+					prompt,
+					source,
+				});
+			} else {
+				const deathMatch = deathEntries.find(
+					({ id }) => id.toLowerCase() === replaceSlug,
+				);
+				if (deathMatch) {
+					const { prompt, source } = generateDeathPrompt(
+						deathMatch.entry.incident,
+						deathMatch.entry.outcome,
+					);
+					tasks.push({
+						category: "death",
+						slug: replaceSlug,
+						prompt,
+						source,
+					});
 				}
 			}
 		}
 
 		if (tasks.length === 0) {
-			console.error(`Could not find prompt for: ${replaceSlug}`);
+			console.error(`Could not find slug in any category: ${replaceSlug}`);
+			console.error(
+				`Available incident slugs: ${Array.from(incidents.keys()).slice(0, 5).join(", ")}...`,
+			);
 			process.exit(1);
 		}
 	} else if (args.slug) {
@@ -872,9 +814,9 @@ async function main() {
 		}
 	}
 
-	// Single --slug: only that incident (do not also run full "all" categories)
+	// Single --slug/--replace: only that image (do not also run full "all" categories)
 	// But handle --incidentsOnly and --outcomesOnly for general scope
-	if (!args.slug) {
+	if (!args.slug && !args.replace) {
 		// Incidents: Generate only incident images (if --incidents or no --outcomes)
 		if (
 			!args.outcomesOnly &&

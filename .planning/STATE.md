@@ -3,14 +3,14 @@ gsd_state_version: 1.0
 milestone: v1.2
 milestone_name: Kobayashi Maru — AI Governance Simulator
 current_phase: 16-kobayashi-maru-ending-variety-system
-current_plan: 06 (COMPLETE)
+current_plan: 09 (COMPLETE)
 status: planning
-last_updated: "2026-03-25T15:04:00.551Z"
+last_updated: "2026-03-26T14:02:52Z"
 progress:
-  total_phases: 17
+  total_phases: 20
   completed_phases: 10
-  total_plans: 86
-  completed_plans: 71
+  total_plans: 101
+  completed_plans: 78
 ---
 
 # Session State
@@ -23,7 +23,7 @@ See: .planning/PROJECT.md
 
 **Milestone:** v1.2 Kobayashi Maru — AI Governance Simulator
 **Current phase:** 16-kobayashi-maru-ending-variety-system
-**Current plan:** 06 (COMPLETE)
+**Current plan:** 09 (COMPLETE)
 **Status:** Ready to plan
 
 ## Session Log
@@ -84,6 +84,7 @@ See: .planning/PROJECT.md
 - 2026-03-25: Completed 16-05-PLAN.md (Death vector annotation for 7 unannotated card decks: 256 outcomes annotated across SOMETHING_MANAGER, TECH_AI_CONSULTANT, DATA_SCIENTIST, SOFTWARE_ARCHITECT, VIBE_CODER, VIBE_ENGINEER, AGENTIC_ENGINEER decks)
 - 2026-03-25: Completed 16-06-PLAN.md (Death vector annotation for 3 partial decks: 86 outcomes annotated across HEAD_OF_SOMETHING, CHIEF_SOMETHING_OFFICER, SOFTWARE_ENGINEER; test thresholds restored for DV-05 enforcement)
 - 2026-03-25: Executing 13-02-PLAN.md (Image Asset Generation Pipeline) — Task 1 complete, awaiting human action for Tasks 2-3
+- 2026-03-26: Completed 16-09-PLAN.md (Narrative copy precision: FLED_COUNTRY/REPLACED_BY_SCRIPT explanation broadening, 4 agentic-engineer outcomes reclassified from FLED_COUNTRY to PRISON/CONGRESS/AUDIT_FAILURE)
 
 ## Accumulated Context
 
@@ -102,6 +103,7 @@ See: .planning/PROJECT.md
 - [Phase 15-voice-files-expanded]: Use 96kbps Opus (6x compression) and 192kbps MP3 (3x compression) for audio assets
 - [Phase 15-voice-files-expanded]: Browser capability detection via canPlayType() for format selection
 - [Phase 15]: HoS audio gap closure: Script created with resumable generation pattern; 2 of 22 audio files generated due to API quota; CRITICAL_HOS_CARDS updated with all 19 card IDs
+- [Phase 16-09]: Death vector semantic matching — deathVector should map to narrative consequence type, not generic failure bucket (e.g., "lost control of agent" → PRISON/CONGRESS, not FLED_COUNTRY)
 
 ## Key Metrics
 

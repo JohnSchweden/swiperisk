@@ -604,7 +604,7 @@ Plans:
 
 **Goal:** Fix Roaster feedback audio desync when `shuffleDeck` swaps card sides; align incident pressure with `effectiveDeck`; remove duplicate HoS shadow-AI card and orphan audio; vary roast LLM cadence in prompts.
 **Depends on:** Phase 15 (voice/feedback pipeline)
-**Plans:** 3 plans
+**Plans:** 1/3 plans executed
 
 **Requirements:**
 - FA-01: `choiceSidesSwapped` on shuffled cards + `authoringFeedbackStem` maps chosen visible choice → authoring file suffix (`left`|`right`) for that outcome
@@ -613,7 +613,7 @@ Plans:
 - FA-04: `geminiLive` + `api/roast` prompts allow varied length/rhythm
 
 Plans:
-- [ ] [17-01-PLAN.md](phases/17-shuffle-aware-feedback-tts-fixes/17-01-PLAN.md) — Card flag, shuffleDeck, `authoringFeedbackStem` helper (TDD)
+- [x] [17-01-PLAN.md](phases/17-shuffle-aware-feedback-tts-fixes/17-01-PLAN.md) — Card flag, shuffleDeck, `authoringFeedbackStem` helper (TDD) ✓
 - [ ] [17-02-PLAN.md](phases/17-shuffle-aware-feedback-tts-fixes/17-02-PLAN.md) — App `currentCard`, overlay authoring stem, `useVoicePlayback` wiring
 - [ ] [17-03-PLAN.md](phases/17-shuffle-aware-feedback-tts-fixes/17-03-PLAN.md) — HoS dedupe, critical lists + orphan audio, roast prompts
 

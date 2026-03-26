@@ -2,15 +2,15 @@
 gsd_state_version: 1.0
 milestone: v1.2
 milestone_name: Kobayashi Maru — AI Governance Simulator
-current_phase: 16-kobayashi-maru-ending-variety-system
-current_plan: 08 (COMPLETE)
-status: planning
-last_updated: "2026-03-26T14:25:46.944Z"
+current_phase: 17-shuffle-aware-feedback-tts-fixes
+current_plan: 01 (COMPLETE)
+status: executing
+last_updated: "2026-03-26T22:46:00.000Z"
 progress:
   total_phases: 20
   completed_phases: 11
   total_plans: 101
-  completed_plans: 81
+  completed_plans: 82
 ---
 
 # Session State
@@ -22,9 +22,9 @@ See: .planning/PROJECT.md
 ## Position
 
 **Milestone:** v1.2 Kobayashi Maru — AI Governance Simulator
-**Current phase:** 16-kobayashi-maru-ending-variety-system
-**Current plan:** 08 (COMPLETE)
-**Status:** Ready to plan
+**Current phase:** 17-shuffle-aware-feedback-tts-fixes
+**Current plan:** 01 (COMPLETE); next 17-02
+**Status:** Ready to execute plan 17-02
 
 ## Session Log
 
@@ -88,6 +88,7 @@ See: .planning/PROJECT.md
 - 2026-03-26: Completed 16-08-PLAN.md (Death vector expansion: 5 new cards across 2 decks, BANKRUPT/PRISON for consultant, CONGRESS for manager)
 - 2026-03-26: Completed 16-09-PLAN.md (Narrative copy precision: FLED_COUNTRY/REPLACED_BY_SCRIPT explanation broadening, 4 agentic-engineer outcomes reclassified from FLED_COUNTRY to PRISON/CONGRESS/AUDIT_FAILURE)
 - 2026-03-26: Completed 14-01-PLAN.md (Image infrastructure foundation: ImageWithFallback component with glitch placeholder, Archetype.image field, test scaffolding for HOS pilot)
+- 2026-03-26: Completed 17-01-PLAN.md (choiceSidesSwapped on shuffled cards, authoringFeedbackStem for feedback_* file suffixes, TDD)
 
 ## Accumulated Context
 
@@ -109,6 +110,7 @@ See: .planning/PROJECT.md
 - [Phase 15]: HoS audio gap closure: Script created with resumable generation pattern; 2 of 22 audio files generated due to API quota; CRITICAL_HOS_CARDS updated with all 19 card IDs
 - [Phase 16-09]: Death vector semantic matching — deathVector should map to narrative consequence type, not generic failure bucket (e.g., "lost control of agent" → PRISON/CONGRESS, not FLED_COUNTRY)
 - [Phase 16-07]: Role-scoped death vector differentiation — C-suite gets CONGRESS/BANKRUPT (executive accountability), middle management gets REPLACED_BY_SCRIPT (organizational displacement by AI)
+- [Phase 17-01]: Post-shuffle cards always carry boolean choiceSidesSwapped; authoringFeedbackStem maps visible LEFT/RIGHT to authoring left/right only when sides were swapped at shuffle time
 
 ## Key Metrics
 

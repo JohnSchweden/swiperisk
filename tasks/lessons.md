@@ -69,3 +69,12 @@ Patterns to prevent repeat mistakes. Update after corrections from the user.
 
 <!-- Captured 2026-03-26 via post-commit analysis -->
 - [RULE] In card decks with narrative violations, verify each card's deathVector semantically matches its violation/lesson. Reuse of the same death ending across multiple semantically different violations indicates incomplete content needing review — Narrative coherence breaks when outcomes don't match the failure mode (e.g., optimization loophole → CONGRESS/governance vs singularity risk → PRISON/legal consequences). Repeated generic values suggest placeholder data left in.
+
+<!-- Captured 2026-03-26 via post-commit analysis -->
+- [RULE] When state lookups reference a computed override value, use the same fallback sequence everywhere to prevent divergence — Different patterns (one using direct lookup, one using computed ?? default) reference different data when the override differs, causing state sync bugs between components. Enforce consistency across all paths and document the synchronization requirement ("same instance as X") in comments.
+
+<!-- Captured 2026-03-26 via post-commit analysis -->
+- [RULE] When selecting pre-baked side-specific assets (audio, graphics, text), resolve through a helper that accounts for card variants (choiceSidesSwapped), not the raw screen choice — Screen position diverges from authoring intent when cards are flipped, causing wrong assets to play or display.
+
+<!-- Captured 2026-03-26 via post-commit analysis -->
+- [RULE] When exposing state objects with side-specific fields through tool APIs, include semantic metadata (like feedbackAuthoringStem) alongside presence flags — Tools need both "does feedback exist?" and "which side was it authored for?" to make correct decisions. Exposing only boolean presence is incomplete and forces consumers to guess intent.

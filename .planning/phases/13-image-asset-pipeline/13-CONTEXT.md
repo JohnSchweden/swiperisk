@@ -1,8 +1,8 @@
 # Phase 13: Image Asset Pipeline - Context
 
 **Gathered:** 2026-03-16
-**Updated:** 2026-03-26 (aligned plans with HOS pilot + incident-keyed outcome pairs; see `13-CONTRACT.md`)
-**Status:** Ready for planning
+**Updated:** 2026-03-26 (GIF/meme system extracted to Phase 18)
+**Status:** Complete (plans 00-06 done)
 
 <domain>
 ## Phase Boundary
@@ -174,7 +174,9 @@ Create an automated pipeline to generate AI images for the game, save them local
 
 </deferred>
 
-## GIF Text Overlay System (NEW - Gap Closure)
+## GIF Text Overlay System
+
+> Moved to Phase 18. See `.planning/phases/18-meme-template-system/18-CONTEXT.md`
 
 ### Option 2: Local GIF Text Overlay Research
 
@@ -324,4 +326,4 @@ PREMIUM:
 *Context gathered: 2026-03-16*
 *Architecture decisions applied: 2026-03-24*
 *Scope revised: 2026-03-25 — HOS-first; 2026-03-26 — plans + `13-CONTRACT.md` aligned to incident-keyed outcome pairs*
-*GIF overlay addition: 2026-03-26*
+*GIF/meme system extracted to Phase 18: 2026-03-26*

@@ -401,25 +401,17 @@ Plans:
 
 ### Phase 13: Image Asset Pipeline
 
-**Goal:** Generate AI images for HOS incidents, HOS per-direction outcomes, death endings, and archetypes via automated Gemini pipeline + GIF/meme template overlay system (70+ templates)
+**Goal:** Generate AI images for HOS incidents, HOS per-direction outcomes, death endings, and archetypes via automated Gemini pipeline
 **Depends on:** Phase 06 (archetype system for mapping), Phase 15 (HOS audio coverage defines scope)
-**Plans:** 9 plans (3 original + 6 new for GIF/meme system)
+**Plans:** 7 plans
 
-**Original Plans:**
-- [ ] 13-00-PLAN.md — TDD Wave 0: failing test scaffolding (image map contract + asset existence)
-- [ ] 13-01-PLAN.md — `data/imageMap.ts` data layer + slugify helpers
-- [ ] 13-02-PLAN.md — Gemini generation script (`scripts/generate-images.ts`) with user checkpoint
-
-**Gap Closure Plans (GIF/Meme System):**
-- [ ] 13-07-PLAN.md — Template database (`data/templates/gif-templates.json`)
-- [ ] 13-08-PLAN.md — GIF overlay service (`lib/gif-overlay.ts`)
-- [ ] 13-09-PLAN.md — Integrate meme mode into generation pipeline
-
-**Additional Completed Plans (from previous execution):**
-- [ ] 13-03-PLAN.md — Contract compliance verification
-- [ ] 13-04-PLAN.md — Label-based outcome architecture
-- [ ] 13-05-PLAN.md — Single slug label-based generation
-- [ ] 13-06-PLAN.md — Meme-world aesthetic prompt redesign
+- [x] 13-00-PLAN.md — TDD Wave 0: failing test scaffolding (image map contract + asset existence)
+- [x] 13-01-PLAN.md — `data/imageMap.ts` data layer + slugify helpers
+- [x] 13-02-PLAN.md — Gemini generation script (`scripts/generate-images.ts`) with user checkpoint
+- [x] 13-03-PLAN.md — Contract compliance verification
+- [x] 13-04-PLAN.md — Label-based outcome architecture
+- [x] 13-05-PLAN.md — Single slug label-based generation
+- [x] 13-06-PLAN.md — Meme-world aesthetic prompt redesign
 
 **Details:**
 Generate AI images via Gemini image generation (automated pipeline — no Midjourney, no DALL-E):
@@ -615,15 +607,25 @@ Plans:
 **Plans:** 3 plans
 
 **Requirements:**
-- FA-01: `choiceSidesSwapped` on shuffled cards + `canonicalFeedbackAudioSide` maps UI swipe → filename side
-- FA-02: `App` uses `effectiveDeck` for `currentCard`; overlay + `useVoicePlayback` use canonical audio side
+- FA-01: `choiceSidesSwapped` on shuffled cards + `authoringFeedbackStem` maps chosen visible choice → authoring file suffix (`left`|`right`) for that outcome
+- FA-02: `App` uses `effectiveDeck` for `currentCard`; overlay + `useVoicePlayback` use authoring stem for card feedback clips (choice/outcome keyed, not naive direction)
 - FA-03: Single HoS shadow-enforcement card; `CRITICAL_HOS_CARDS` / scripts / tests / assets synced
 - FA-04: `geminiLive` + `api/roast` prompts allow varied length/rhythm
 
 Plans:
-- [ ] [17-01-PLAN.md](phases/17-shuffle-aware-feedback-tts-fixes/17-01-PLAN.md) — Card flag, shuffleDeck, canonical audio side helper (TDD)
-- [ ] [17-02-PLAN.md](phases/17-shuffle-aware-feedback-tts-fixes/17-02-PLAN.md) — App `currentCard`, overlay `voiceAudioSide`, `useVoicePlayback` wiring
+- [ ] [17-01-PLAN.md](phases/17-shuffle-aware-feedback-tts-fixes/17-01-PLAN.md) — Card flag, shuffleDeck, `authoringFeedbackStem` helper (TDD)
+- [ ] [17-02-PLAN.md](phases/17-shuffle-aware-feedback-tts-fixes/17-02-PLAN.md) — App `currentCard`, overlay authoring stem, `useVoicePlayback` wiring
 - [ ] [17-03-PLAN.md](phases/17-shuffle-aware-feedback-tts-fixes/17-03-PLAN.md) — HoS dedupe, critical lists + orphan audio, roast prompts
+
+### Phase 18: Meme Template System
+
+**Goal:** [To be planned]
+**Requirements**: TBD
+**Depends on:** Phase 17
+**Plans:** 0 plans
+
+Plans:
+- [ ] TBD (run /gsd:plan-phase 18 to break down)
 
 ---
 

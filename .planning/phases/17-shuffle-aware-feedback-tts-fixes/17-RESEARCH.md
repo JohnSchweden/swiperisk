@@ -5,7 +5,7 @@
 
 ## Problem statement
 
-1. **`shuffleDeck`** ([`lib/deck.ts`](../../../lib/deck.ts)) may swap `onLeft`/`onRight` per card. [`useVoicePlayback`](../../../hooks/useVoicePlayback.ts) builds triggers as `feedback_${cardId}_${uiSwipeLower}` — filenames were generated from **canonical** left/right text. After swap, UI swipe and canonical side diverge → **wrong clip**.
+1. **`shuffleDeck`** ([`lib/deck.ts`](../../../lib/deck.ts)) may swap `onLeft`/`onRight` per card. Each side is a full **`ChoiceOutcome`**. [`useVoicePlayback`](../../../hooks/useVoicePlayback.ts) builds triggers as `feedback_${cardId}_${suffix}`. Files were generated with suffix **`left`/`right` meaning authoring arm** (which branch the VO was recorded for), not “whatever was on the left of the screen that day.” After swap, the **visible left choice** may be the **authoring-right** outcome — the trigger must follow **which outcome’s arm** was chosen, not a naive “user went left → play `_left`” rule.
 
 2. **`App.tsx`** derives `currentCard` from `ROLE_CARDS[role][index]` while [`GameScreen`](../../../components/game/GameScreen.tsx) uses `effectiveDeck` → **pressure / countdown / team impact** can target the wrong card or ignore swap state.
 
@@ -17,15 +17,16 @@
 
 | Dimension | Approach |
 |-----------|----------|
-| **Unit** | Vitest: `shuffleDeck` sets `choiceSidesSwapped`; `canonicalFeedbackAudioSide` inverts when swapped; pure trigger string matches expected file stem. |
+| **Unit** | Vitest: `shuffleDeck` sets `choiceSidesSwapped`; `authoringFeedbackStem` maps chosen presentation slot → correct `'left'|'right'` suffix; optional pure trigger string `feedback_${id}_${stem}`. |
 | **Integration** | Existing Playwright `@smoke` / `@area:audio` after wiring; optional assert console `[Voice] Loading` path includes correct trigger. |
-| **Manual** | Spot-check HoS + Roaster: swipe after forced swap (debug seed or repeated runs) — audio matches overlay text. |
-| **Regression** | No change to `history` choice semantics (still UI LEFT/RIGHT); debrief and archetype logic unchanged. |
+| **Manual** | Spot-check HoS + Roaster: after swap, audio matches **the line for the outcome text** shown in the slot you picked. |
+| **Regression** | `history` / branching still store **presentation slot** `LEFT`/`RIGHT` (which choice); debrief and archetype logic unchanged. Audio layer adds **authoring stem** for file lookup only. |
 
 ## Key files
 
-- [`types.ts`](../../../types.ts) — `Card`
+- [`types.ts`](../../../types.ts) — `Card`, `ChoiceOutcome`
 - [`lib/deck.ts`](../../../lib/deck.ts) — shuffle + swap
+- [`lib/feedbackAudioChoice.ts`](../../../lib/feedbackAudioChoice.ts) — (planned) `authoringFeedbackStem`
 - [`App.tsx`](../../../App.tsx) — `applyChoice`, `FeedbackOverlayState`, `currentCard`
 - [`hooks/useVoicePlayback.ts`](../../../hooks/useVoicePlayback.ts) — `feedbackVoiceTrigger`
 - [`hooks/useIncidentPressure.ts`](../../../hooks/useIncidentPressure.ts) — consumes `currentCard`

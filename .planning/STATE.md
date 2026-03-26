@@ -93,6 +93,7 @@ See: .planning/PROJECT.md
 ### Roadmap Evolution
 - Phase 16 added: Kobayashi Maru ending variety system
 - Phase 17 planned: Shuffle-aware feedback TTS & content integrity (3 executable plans; CONTEXT + RESEARCH + VALIDATION)
+- Phase 18 added: Meme Template System (extracted from Phase 13 scope; plans 13-07/08/09 become 18-01/02/03)
 
 ## Decisions
 

@@ -33,7 +33,7 @@ created: "2026-03-25"
 | Task ID | Plan | Wave | Requirement | Test type | Command | Status |
 |---------|------|------|---------------|-----------|---------|--------|
 | 17-01 T1 | 01 | 1 | FA-01 | unit | `bun run vitest:run -- lib/deck.test.ts` | pending |
-| 17-01 T2 | 01 | 1 | FA-01 | unit | `bun run vitest:run -- unit/feedbackAudioDirection.test.ts` | pending |
+| 17-01 T2 | 01 | 1 | FA-01 | unit | `bun run vitest:run -- unit/feedbackAudioChoice.test.ts` | pending |
 | 17-02 T1 | 02 | 2 | FA-02 | types | `bun run typecheck` | pending |
 | 17-02 T2 | 02 | 2 | FA-02 | smoke+audio | `test:smoke` + `test:area:audio` | pending |
 | 17-02 T3 | 02 | 2 | FA-02 | unit | `bun run vitest:run -- unit/feedbackOverlay.spec.tsx` | pending |

@@ -1,11 +1,10 @@
 # Prompt Preview Index
 
-Generated: 2026-03-25 19:39:26 | Scope: all
+Generated: 2026-03-26 13:55:48 | Scope: all
 
 | File | Count |
 |------|-------|
-| [incidents.md](./incidents.md) | 148 |
-| [outcomes.md](./outcomes.md) | 34 |
+| [incidents.md](./incidents.md) | 296 |
 | [archetypes.md](./archetypes.md) | 7 |
 | [deaths.md](./deaths.md) | 7 |
 

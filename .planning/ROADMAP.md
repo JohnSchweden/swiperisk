@@ -113,7 +113,7 @@ Current flat structure with 59 files across 3 personalities is becoming unwieldy
 |------|-------|--------|
 | Archetype reveals | 21 files | `archetype/` |
 | Death endings | 21 files | `death/` |
-| Card feedback | 16 files | 7/9 | In Progress|  | 9 files | `core/` |
+| Card feedback | 16 files | 9/9 | Complete   | 2026-03-26 | 9 files | `core/` |
 
 **New structure:**
 ```
@@ -576,7 +576,7 @@ Automated compression pipeline to reduce bandwidth while maintaining quality:
 
 **Goal:** Transform endings from role-based random death types to consequence-driven educational failure. Add death vector metadata to card outcomes, fix boss fight hardcoded AUDIT_FAILURE, fill CONGRESS content gap, and add failure lessons that teach AI governance.
 **Depends on:** Phase 15
-**Plans:** 7/9 plans executed
+**Plans:** 9/9 plans complete
 
 Plans:
 - [x] 16-01-PLAN.md — Death vector types, accumulator utility, and vector-aware death resolution (TDD)

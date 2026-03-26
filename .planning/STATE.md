@@ -5,12 +5,12 @@ milestone_name: Kobayashi Maru — AI Governance Simulator
 current_phase: 16-kobayashi-maru-ending-variety-system
 current_plan: 09 (COMPLETE)
 status: planning
-last_updated: "2026-03-26T14:02:52Z"
+last_updated: "2026-03-26T14:13:40.321Z"
 progress:
   total_phases: 20
-  completed_phases: 10
+  completed_phases: 11
   total_plans: 101
-  completed_plans: 78
+  completed_plans: 80
 ---
 
 # Session State
@@ -23,7 +23,7 @@ See: .planning/PROJECT.md
 
 **Milestone:** v1.2 Kobayashi Maru — AI Governance Simulator
 **Current phase:** 16-kobayashi-maru-ending-variety-system
-**Current plan:** 09 (COMPLETE)
+**Current plan:** 08 (COMPLETE)
 **Status:** Ready to plan
 
 ## Session Log
@@ -84,6 +84,7 @@ See: .planning/PROJECT.md
 - 2026-03-25: Completed 16-05-PLAN.md (Death vector annotation for 7 unannotated card decks: 256 outcomes annotated across SOMETHING_MANAGER, TECH_AI_CONSULTANT, DATA_SCIENTIST, SOFTWARE_ARCHITECT, VIBE_CODER, VIBE_ENGINEER, AGENTIC_ENGINEER decks)
 - 2026-03-25: Completed 16-06-PLAN.md (Death vector annotation for 3 partial decks: 86 outcomes annotated across HEAD_OF_SOMETHING, CHIEF_SOMETHING_OFFICER, SOFTWARE_ENGINEER; test thresholds restored for DV-05 enforcement)
 - 2026-03-25: Executing 13-02-PLAN.md (Image Asset Generation Pipeline) — Task 1 complete, awaiting human action for Tasks 2-3
+- 2026-03-26: Completed 16-08-PLAN.md (Death vector expansion: 5 new cards across 2 decks, BANKRUPT/PRISON for consultant, CONGRESS for manager)
 - 2026-03-26: Completed 16-09-PLAN.md (Narrative copy precision: FLED_COUNTRY/REPLACED_BY_SCRIPT explanation broadening, 4 agentic-engineer outcomes reclassified from FLED_COUNTRY to PRISON/CONGRESS/AUDIT_FAILURE)
 
 ## Accumulated Context

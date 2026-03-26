@@ -114,6 +114,7 @@ type FeedbackOverlayState = {
 		date: string;
 		outcome: string;
 	} | null;
+	outcomeLabel?: string;
 };
 
 const App: React.FC = () => {
@@ -201,6 +202,7 @@ const App: React.FC = () => {
 				cardId: card.id,
 				teamImpact: teamImpact ?? null,
 				realWorldReference: card.realWorldReference ?? null,
+				outcomeLabel: outcome.label,
 			});
 
 			makeChoice(direction, {
@@ -623,6 +625,7 @@ const App: React.FC = () => {
 						budget={state.budget}
 						heat={state.heat}
 						realWorldReference={feedbackOverlay.realWorldReference}
+						outcomeLabel={feedbackOverlay.outcomeLabel}
 						onNext={handleNextIncident}
 					/>
 				)}

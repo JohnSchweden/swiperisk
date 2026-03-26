@@ -35,13 +35,6 @@ const REMAINING_HOS_CARDS: Array<{
 			"Your team knows you sold them out. The CFO owes you. Everyone loses.",
 	},
 	{
-		id: "hos_shadow_ai_team_discovery",
-		leftText:
-			"Team hero. Management headache. The loyalty is worth it until they fire you.",
-		rightText:
-			"Compliance is happy. Your team is updating LinkedIn. Management material right here.",
-	},
-	{
 		id: "hos_delegation_gone_wrong",
 		leftText:
 			"Taking the L. Your delegation authority will shrink. But you're honest.",

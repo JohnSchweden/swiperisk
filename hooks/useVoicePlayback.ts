@@ -68,8 +68,7 @@ const FEEDBACK_INSTALL_ON_RIGHT = new Set([
 ]);
 
 /**
- * All 19 Head of Something cards that have dedicated feedback audio.
- * Each card has specific Roaster voice lines for LEFT and RIGHT choices.
+ * Head of Something cards with dedicated per-choice Roaster feedback audio.
  */
 const CRITICAL_HOS_CARDS = new Set([
 	// Original 8 critical cards
@@ -84,7 +83,6 @@ const CRITICAL_HOS_CARDS = new Set([
 	// Additional 11 HoS cards (Phase 15-06)
 	"hos_prompt_injection_blame",
 	"hos_model_drift_budget_conflict",
-	"hos_shadow_ai_team_discovery",
 	"hos_delegation_gone_wrong",
 	"hos_promotion_politics",
 	"hos_prompt_injection_copilot_team",

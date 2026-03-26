@@ -42,7 +42,7 @@ A user has described their current AI workflow: "${workflow}".
 *   If **Public**: Call out leaking IP and data breach risk.
 *   If **Private/In-house**: Call out blindly trusting AI code, "secure" garbage, or believing a firewall fixes bad engineering.
 
-${tone} Keep it under 50 words.
+${tone} Aim for punchy variety: typically under ~80 words, but vary pacing and structure so replies do not sound identical.
 `;
 
 		for (const model of ROAST_MODELS) {

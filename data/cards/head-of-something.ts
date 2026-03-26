@@ -92,7 +92,7 @@ export const HEAD_OF_SOMETHING_CARDS: Card[] = [
 		},
 	),
 	makeCard(
-		"hos_shadow_ai_team_discovery",
+		"shadow_ai_hos_1",
 		AppSource.MEETING,
 		"COMPLIANCE_TEAM",
 		"TEAM_ENFORCEMENT",

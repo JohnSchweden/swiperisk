@@ -604,7 +604,7 @@ Plans:
 
 **Goal:** Fix Roaster feedback audio desync when `shuffleDeck` swaps card sides; align incident pressure with `effectiveDeck`; remove duplicate HoS shadow-AI card and orphan audio; vary roast LLM cadence in prompts.
 **Depends on:** Phase 15 (voice/feedback pipeline)
-**Plans:** 2/3 plans complete (17-03 pending)
+**Plans:** 3/3 plans complete ✓
 
 **Requirements:**
 - FA-01: `choiceSidesSwapped` on shuffled cards + `authoringFeedbackStem` maps chosen visible choice → authoring file suffix (`left`|`right`) for that outcome
@@ -615,7 +615,7 @@ Plans:
 Plans:
 - [x] [17-01-PLAN.md](phases/17-shuffle-aware-feedback-tts-fixes/17-01-PLAN.md) — Card flag, shuffleDeck, `authoringFeedbackStem` helper (TDD) ✓
 - [x] [17-02-PLAN.md](phases/17-shuffle-aware-feedback-tts-fixes/17-02-PLAN.md) — App `currentCard`, overlay authoring stem, `useVoicePlayback` wiring ✓
-- [ ] [17-03-PLAN.md](phases/17-shuffle-aware-feedback-tts-fixes/17-03-PLAN.md) — HoS dedupe, critical lists + orphan audio, roast prompts
+- [x] [17-03-PLAN.md](phases/17-shuffle-aware-feedback-tts-fixes/17-03-PLAN.md) — HoS dedupe, critical lists + orphan audio, roast prompts ✓
 
 ### Phase 18: Meme Template System
 
@@ -629,4 +629,4 @@ Plans:
 
 ---
 
-*Roadmap updated: 2026-03-26 — Phase 17: 17-01/17-02 complete on branch; 17-03 not done (see 17-VERIFICATION.md `pending`)*
+*Roadmap updated: 2026-03-26 — Phase 17 complete: shuffle-aware TTS, HoS id consolidation, roast cadence*

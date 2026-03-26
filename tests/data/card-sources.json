@@ -139,7 +139,7 @@
 			"reason": "Budget conflict between retraining and revenue protection"
 		},
 		{
-			"cardId": "hos_shadow_ai_team_discovery",
+			"cardId": "shadow_ai_hos_1",
 			"incidentName": "78% shadow AI adoption (2024)",
 			"date": "2024",
 			"category": "SHADOW_AI",

@@ -2,60 +2,93 @@ import { describe, expect, it } from "vitest";
 import {
 	authoringFeedbackStem,
 	type PresentationChoiceSlot,
+	slugify,
 } from "../lib/feedbackAudioChoice";
 
-/** Minimal card shape for stem mapping */
-function card(swapped: boolean | undefined): { choiceSidesSwapped?: boolean } {
-	return swapped === undefined ? {} : { choiceSidesSwapped: swapped };
+/** Minimal card shape for stem mapping with labels */
+function card(
+	swapped: boolean | undefined,
+	leftLabel = "Left Option",
+	rightLabel = "Right Option",
+): {
+	choiceSidesSwapped?: boolean;
+	onLeft: { label: string };
+	onRight: { label: string };
+} {
+	return {
+		...(swapped !== undefined ? { choiceSidesSwapped: swapped } : {}),
+		onLeft: { label: leftLabel },
+		onRight: { label: rightLabel },
+	};
 }
 
+describe("slugify", () => {
+	it("takes 'Take the blame' → 'take-the-blame'", () => {
+		expect(slugify("Take the blame")).toBe("take-the-blame");
+	});
+
+	it("takes 'Promise the impossible' → 'promise-the-impossible'", () => {
+		expect(slugify("Promise the impossible")).toBe("promise-the-impossible");
+	});
+
+	it("takes 'Side with auditors' → 'side-with-auditors'", () => {
+		expect(slugify("Side with auditors")).toBe("side-with-auditors");
+	});
+});
+
 describe("authoringFeedbackStem", () => {
-	// (choiceSidesSwapped, selectedPresentationSlot) -> authoring suffix for feedback_${id}_${suffix}
+	// Real fixture: shadow_ai_hos_1 card
+	const SHIELD = "Shield the team";
+	const GIVE_NAMES = "Give names to compliance";
+
+	// (choiceSidesSwapped, selectedPresentationSlot) -> expected slug
 	const cases: Array<{
 		swapped: boolean | undefined;
 		slot: PresentationChoiceSlot;
-		expected: "left" | "right";
+		expected: string;
 		note: string;
 	}> = [
 		{
 			swapped: undefined,
 			slot: "LEFT",
-			expected: "left",
-			note: "undefined: visible left = authoring left",
+			expected: "shield-the-team",
+			note: "undefined: visible left = authoring left label slug",
 		},
 		{
 			swapped: undefined,
 			slot: "RIGHT",
-			expected: "right",
-			note: "undefined: visible right = authoring right",
+			expected: "give-names-to-compliance",
+			note: "undefined: visible right = authoring right label slug",
 		},
 		{
 			swapped: false,
 			slot: "LEFT",
-			expected: "left",
-			note: "not swapped: LEFT -> authoring left",
+			expected: "shield-the-team",
+			note: "not swapped: LEFT → authoring left label slug",
 		},
 		{
 			swapped: false,
 			slot: "RIGHT",
-			expected: "right",
-			note: "not swapped: RIGHT -> authoring right",
+			expected: "give-names-to-compliance",
+			note: "not swapped: RIGHT → authoring right label slug",
 		},
 		{
 			swapped: true,
 			slot: "LEFT",
-			expected: "right",
-			note: "swapped: left slot shows authoring-right outcome",
+			expected: "give-names-to-compliance",
+			note: "swapped: LEFT slot shows authoring-right label slug",
 		},
 		{
 			swapped: true,
 			slot: "RIGHT",
-			expected: "left",
-			note: "swapped: right slot shows authoring-left outcome",
+			expected: "shield-the-team",
+			note: "swapped: RIGHT slot shows authoring-left label slug",
 		},
 	];
 
 	it.each(cases)("$note", ({ swapped, slot, expected }) => {
-		expect(authoringFeedbackStem(card(swapped), slot)).toBe(expected);
+		expect(authoringFeedbackStem(card(swapped, SHIELD, GIVE_NAMES), slot)).toBe(
+			expected,
+		);
 	});
 });

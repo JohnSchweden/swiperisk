@@ -133,6 +133,11 @@ export interface Card {
 	realWorldReference?: RealWorldReference;
 	onRight: ChoiceOutcome;
 	onLeft: ChoiceOutcome;
+	/**
+	 * When true, visible left/right slots were swapped vs authoring (shuffleDeck).
+	 * Used to map player slot choice → feedback audio file suffix (left|right).
+	 */
+	choiceSidesSwapped?: boolean;
 }
 
 export enum GameStage {
@@ -244,6 +249,8 @@ export interface Archetype {
 	icon: string;
 	color: string;
 	traits: string[];
+	/** Optional image path for archetype badge (verdict page) */
+	image?: string;
 }
 
 export enum DebrieRStage {

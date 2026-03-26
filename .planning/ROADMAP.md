@@ -604,10 +604,10 @@ Plans:
 
 **Goal:** Fix Roaster feedback audio desync when `shuffleDeck` swaps card sides; align incident pressure with `effectiveDeck`; remove duplicate HoS shadow-AI card and orphan audio; vary roast LLM cadence in prompts.
 **Depends on:** Phase 15 (voice/feedback pipeline)
-**Plans:** 3/3 plans complete ✓
+**Plans:** 5 plans (3 complete + 2 gap closure pending)
 
 **Requirements:**
-- FA-01: `choiceSidesSwapped` on shuffled cards + `authoringFeedbackStem` maps chosen visible choice → authoring file suffix (`left`|`right`) for that outcome
+- FA-01: `choiceSidesSwapped` on shuffled cards + `authoringFeedbackStem` maps chosen visible choice → authoring file suffix (label slug) for that outcome
 - FA-02: `App` uses `effectiveDeck` for `currentCard`; overlay + `useVoicePlayback` use authoring stem for card feedback clips (choice/outcome keyed, not naive direction)
 - FA-03: Single HoS shadow-enforcement card; `CRITICAL_HOS_CARDS` / scripts / tests / assets synced
 - FA-04: `geminiLive` + `api/roast` prompts allow varied length/rhythm
@@ -616,6 +616,8 @@ Plans:
 - [x] [17-01-PLAN.md](phases/17-shuffle-aware-feedback-tts-fixes/17-01-PLAN.md) — Card flag, shuffleDeck, `authoringFeedbackStem` helper (TDD) ✓
 - [x] [17-02-PLAN.md](phases/17-shuffle-aware-feedback-tts-fixes/17-02-PLAN.md) — App `currentCard`, overlay authoring stem, `useVoicePlayback` wiring ✓
 - [x] [17-03-PLAN.md](phases/17-shuffle-aware-feedback-tts-fixes/17-03-PLAN.md) — HoS dedupe, critical lists + orphan audio, roast prompts ✓
+- [ ] [17-04-PLAN.md](phases/17-shuffle-aware-feedback-tts-fixes/17-04-PLAN.md) — Code: authoringFeedbackStem returns label slug, type widening
+- [ ] [17-05-PLAN.md](phases/17-shuffle-aware-feedback-tts-fixes/17-05-PLAN.md) — Assets: rename 76 audio files + update tests + generation scripts
 
 ### Phase 18: Meme Template System
 
@@ -629,4 +631,4 @@ Plans:
 
 ---
 
-*Roadmap updated: 2026-03-26 — Phase 17 complete: shuffle-aware TTS, HoS id consolidation, roast cadence*
+*Roadmap updated: 2026-03-27 — Phase 17 gap closure: 2 plans to rename audio assets from _left/_right to label slugs*

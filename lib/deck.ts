@@ -16,9 +16,16 @@ export function shuffleDeck(cards: Card[]): Card[] {
 	// After Fisher-Yates shuffle, randomly swap left/right choices per card
 	// This ensures no directional bias in the no-win simulation
 	for (let i = 0; i < shuffled.length; i++) {
+		const card = shuffled[i];
 		if (Math.random() < 0.5) {
-			const card = shuffled[i];
-			shuffled[i] = { ...card, onLeft: card.onRight, onRight: card.onLeft };
+			shuffled[i] = {
+				...card,
+				onLeft: card.onRight,
+				onRight: card.onLeft,
+				choiceSidesSwapped: true,
+			};
+		} else {
+			shuffled[i] = { ...card, choiceSidesSwapped: false };
 		}
 	}
 

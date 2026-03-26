@@ -18,13 +18,20 @@ type BossFightControls = {
 	question: BossQuestion | undefined;
 };
 
+/** Overlay fields used by dev MCP tools (matches App feedback overlay shape). */
+export type WebMCPFeedbackOverlay = {
+	cardId: string;
+	choice: "LEFT" | "RIGHT";
+	feedbackAuthoringStem: "left" | "right";
+} | null;
+
 export interface UseWebMCPToolsDeps {
 	state: GameState;
 	startGame: () => void;
 	selectPersonality: (personality: PersonalityType) => void;
 	handleSelectRole: (role: RoleType) => void;
 	swipe: SwipeControls;
-	feedbackOverlay: unknown | null;
+	feedbackOverlay: WebMCPFeedbackOverlay;
 	handleNextIncident: () => void;
 	bossFight: BossFightControls;
 	handleRestart: () => void;
@@ -77,6 +84,7 @@ export function useWebMCPTools(deps: UseWebMCPToolsDeps) {
 				deathType: state.deathType,
 				bossFightAnswers: state.bossFightAnswers,
 				hasFeedbackOverlay: feedbackOverlay !== null,
+				feedbackAuthoringStem: feedbackOverlay?.feedbackAuthoringStem ?? null,
 			}),
 		},
 		[state, feedbackOverlay],

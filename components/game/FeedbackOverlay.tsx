@@ -1,7 +1,9 @@
 import type React from "react";
 import { useEffect } from "react";
 import { PERSONALITIES } from "../../data";
+import { getOutcomeImagePath, slugify } from "../../data/imageMap";
 import type { PersonalityType } from "../../types";
+import { ImageWithFallback } from "../ImageWithFallback";
 
 const BUDGET_CRITICAL = 2_000_000;
 const HEAT_CRITICAL = 85;
@@ -25,6 +27,8 @@ interface FeedbackOverlayProps {
 		date: string;
 		outcome: string;
 	} | null;
+	/** Label of the chosen outcome for image lookup */
+	outcomeLabel?: string;
 	onNext: () => void;
 }
 
@@ -46,6 +50,7 @@ export const FeedbackOverlay: React.FC<FeedbackOverlayProps> = ({
 	budget,
 	heat,
 	realWorldReference,
+	outcomeLabel,
 	onNext,
 }) => {
 	const budgetCritical = budget != null && budget < BUDGET_CRITICAL;
@@ -99,6 +104,26 @@ export const FeedbackOverlay: React.FC<FeedbackOverlayProps> = ({
 						)}
 					</div>
 				)}
+
+				{/* Outcome image */}
+				{realWorldReference?.incident &&
+					outcomeLabel &&
+					(() => {
+						const incidentSlug = slugify(realWorldReference.incident);
+						const labelSlug = slugify(outcomeLabel);
+						const imagePath = getOutcomeImagePath(incidentSlug, labelSlug);
+						return imagePath ? (
+							<div className="mb-4 md:mb-6 shrink-0">
+								<ImageWithFallback
+									src={imagePath}
+									alt={`Outcome: ${outcomeLabel}`}
+									aspectRatio="video"
+									containerClassName="max-h-[200px] md:max-h-none"
+								/>
+							</div>
+						) : null;
+					})()}
+
 				<h2 id="feedback-overlay-title" className="sr-only">
 					Governance feedback
 				</h2>

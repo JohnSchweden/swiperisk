@@ -1,4 +1,5 @@
 import { useEffect, useRef } from "react";
+import type { PresentationChoiceSlot } from "../lib/feedbackAudioChoice";
 import { loadVoice, playVoice, stopVoice } from "../services/voicePlayback";
 import {
 	type ArchetypeId,
@@ -11,8 +12,10 @@ interface UseVoicePlaybackOptions {
 	stage: GameStage;
 	personality: PersonalityType | null;
 	feedbackCardId?: string | null;
-	/** Authoring left/right arm for card feedback clips (not raw screen slot). */
-	feedbackAuthoringStem?: "left" | "right" | null;
+	/** Authoring label slug for card feedback clips (not raw screen slot). */
+	feedbackAuthoringStem?: string | null;
+	/** Raw presentation slot for non-critical card fallback clips. */
+	feedbackSelectedSlot?: PresentationChoiceSlot | null;
 	deathType?: DeathType | null;
 	archetypeId?: ArchetypeId | null;
 }
@@ -95,21 +98,22 @@ const CRITICAL_HOS_CARDS = new Set([
 
 function feedbackVoiceTrigger(
 	cardId: string,
-	authoringStem: "left" | "right",
+	authoringStem: string,
+	selectedSlot: PresentationChoiceSlot,
 ): string {
-	// Check for critical Head of Something cards first
+	// Check for critical Head of Something cards first — uses label slug
 	if (CRITICAL_HOS_CARDS.has(cardId)) {
 		return `feedback_${cardId}_${authoringStem}`;
 	}
 
 	// Software Engineer specific cards (arms match original onRight/onLeft semantics)
 	if (cardId === "se_security_patch_timeline") {
-		return authoringStem === "right" ? "feedback_paste" : "feedback_debug";
+		return selectedSlot === "RIGHT" ? "feedback_paste" : "feedback_debug";
 	}
 
 	// Generic install/ignore feedback for other cards
 	if (FEEDBACK_INSTALL_ON_RIGHT.has(cardId)) {
-		return authoringStem === "right" ? "feedback_install" : "feedback_ignore";
+		return selectedSlot === "RIGHT" ? "feedback_install" : "feedback_ignore";
 	}
 
 	return "feedback_ignore";
@@ -138,6 +142,7 @@ export function useVoicePlayback({
 	personality,
 	feedbackCardId,
 	feedbackAuthoringStem,
+	feedbackSelectedSlot,
 	deathType,
 	archetypeId,
 }: UseVoicePlaybackOptions) {
@@ -171,10 +176,20 @@ export function useVoicePlayback({
 	}, [stage, personality]);
 
 	useEffect(() => {
-		if (!feedbackCardId || !feedbackAuthoringStem || !personality) return;
+		if (
+			!feedbackCardId ||
+			!feedbackAuthoringStem ||
+			!personality ||
+			!feedbackSelectedSlot
+		)
+			return;
 		if (personality !== PersonalityType.ROASTER) return;
 
-		const trigger = feedbackVoiceTrigger(feedbackCardId, feedbackAuthoringStem);
+		const trigger = feedbackVoiceTrigger(
+			feedbackCardId,
+			feedbackAuthoringStem,
+			feedbackSelectedSlot,
+		);
 		const key = voiceKey(personality);
 
 		console.log(
@@ -182,7 +197,12 @@ export function useVoicePlayback({
 		);
 
 		runVoiceCue(key, trigger, "feedback", true);
-	}, [feedbackCardId, feedbackAuthoringStem, personality]);
+	}, [
+		feedbackCardId,
+		feedbackAuthoringStem,
+		feedbackSelectedSlot,
+		personality,
+	]);
 
 	// Death ending audio - plays on debrief page 1 when death type is available
 	useEffect(() => {

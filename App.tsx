@@ -46,7 +46,10 @@ import {
 	useVoicePlayback,
 } from "./hooks";
 import { shuffleDeck } from "./lib/deck";
-import { authoringFeedbackStem } from "./lib/feedbackAudioChoice";
+import {
+	authoringFeedbackStem,
+	type PresentationChoiceSlot,
+} from "./lib/feedbackAudioChoice";
 import { playKirkCrashSound, playKirkGlitchTone } from "./services/kirkAudio";
 import {
 	getCountdownContext,
@@ -106,8 +109,10 @@ type FeedbackOverlayState = {
 	text: string;
 	lesson: string;
 	choice: "LEFT" | "RIGHT";
-	/** Authoring arm for pre-baked feedback audio (accounts for choiceSidesSwapped). */
-	feedbackAuthoringStem: "left" | "right";
+	/** Authoring label slug for pre-baked feedback audio (accounts for choiceSidesSwapped). */
+	feedbackAuthoringStem: string;
+	/** Raw presentation slot for non-critical card fallback clips. */
+	selectedSlot: PresentationChoiceSlot;
 	fine: number;
 	violation: string;
 	cardId: string;
@@ -203,6 +208,7 @@ const App: React.FC = () => {
 				lesson: outcome.lesson,
 				choice: direction,
 				feedbackAuthoringStem: authoringFeedbackStem(card, direction),
+				selectedSlot: direction,
 				fine: outcome.fine,
 				violation: outcome.violation,
 				cardId: card.id,
@@ -339,6 +345,7 @@ const App: React.FC = () => {
 		personality: state.personality,
 		feedbackCardId: feedbackOverlay?.cardId,
 		feedbackAuthoringStem: feedbackOverlay?.feedbackAuthoringStem ?? null,
+		feedbackSelectedSlot: feedbackOverlay?.selectedSlot ?? null,
 	});
 
 	// Handle choice (called by swipe or button click) — final, no undo

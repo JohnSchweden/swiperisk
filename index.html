@@ -608,6 +608,63 @@
             .kirk-flicker { animation: none; opacity: 0.7; }
             .kirk-glitch-text { animation: none; text-shadow: 1px 0 #ff0000, -1px 0 #00ffff; }
         }
+
+        /* Phase 14: Glitch placeholder aesthetic */
+        .glitch-placeholder {
+            background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .glitch-placeholder::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: repeating-linear-gradient(
+                0deg,
+                transparent,
+                transparent 2px,
+                rgba(34, 211, 238, 0.03) 2px,
+                rgba(34, 211, 238, 0.03) 4px
+            );
+            animation: glitch-scan 2s linear infinite;
+            pointer-events: none;
+        }
+
+        .glitch-placeholder::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(
+                90deg,
+                transparent 0%,
+                rgba(34, 211, 238, 0.05) 50%,
+                transparent 100%
+            );
+            animation: glitch-flicker 3s ease-in-out infinite;
+            pointer-events: none;
+        }
+
+        @keyframes glitch-scan {
+            0% { transform: translateY(-100%); }
+            100% { transform: translateY(100%); }
+        }
+
+        @keyframes glitch-flicker {
+            0%, 100% { opacity: 0; }
+            50% { opacity: 1; }
+            52% { opacity: 0; }
+            54% { opacity: 1; }
+            56% { opacity: 0; }
+        }
+
+        /* Reduced motion support */
+        @media (prefers-reduced-motion: reduce) {
+            .glitch-placeholder::before,
+            .glitch-placeholder::after {
+                animation: none;
+            }
+        }
     </style>
 <script type="importmap">
 {

@@ -1,4 +1,5 @@
-import { useState } from "react";
+import type React from "react";
+import { useRef, useState } from "react";
 
 export interface ImageWithFallbackProps {
 	/** Image source path (e.g., from imageMap.ts helpers) */
@@ -18,6 +19,7 @@ export interface ImageWithFallbackProps {
  *
  * Features:
  * - Native lazy loading (loading="lazy") for performance
+ * - img.decode() API to prevent jank on large images
  * - Glitch placeholder with scanline effect while loading
  * - Smooth fade-in transition over 300ms
  * - Fallback placeholder on load error
@@ -40,8 +42,24 @@ export function ImageWithFallback({
 	className = "",
 	containerClassName = "",
 }: ImageWithFallbackProps) {
+	const imgRef = useRef<HTMLImageElement>(null);
 	const [isLoaded, setIsLoaded] = useState(false);
 	const [hasError, setHasError] = useState(false);
+
+	const handleLoad = async (e: React.SyntheticEvent<HTMLImageElement>) => {
+		const img = e.currentTarget;
+
+		// Use decode() API to prevent jank before showing image
+		if ("decode" in img) {
+			try {
+				await img.decode();
+			} catch {
+				// Decode failed but image may still be renderable
+			}
+		}
+
+		setIsLoaded(true);
+	};
 
 	const shouldShowPlaceholder = !isLoaded || hasError;
 
@@ -93,6 +111,7 @@ export function ImageWithFallback({
 
 			{/* Image Element */}
 			<img
+				ref={imgRef}
 				src={src}
 				alt={alt}
 				loading="lazy"
@@ -103,7 +122,7 @@ export function ImageWithFallback({
           ${isLoaded && !hasError ? "opacity-100" : "opacity-0"}
           ${className}
         `.trim()}
-				onLoad={() => setIsLoaded(true)}
+				onLoad={handleLoad}
 				onError={() => setHasError(true)}
 			/>
 

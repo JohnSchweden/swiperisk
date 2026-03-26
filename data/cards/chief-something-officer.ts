@@ -837,4 +837,90 @@ export const CHIEF_SOMETHING_OFFICER_CARDS: Card[] = [
 				"We're just PROTECTING the board, bestie!! Legal advice is CONFIDENTIAL!!",
 		},
 	),
+	makeCard(
+		"cso_senate_ai_testimony",
+		AppSource.EMAIL,
+		"SENATE_AI_SUBCOMMITTEE",
+		"CONGRESSIONAL_INQUIRY",
+		"Testify transparently about the decision chain or limit testimony to what counsel approves?",
+		"You've been subpoenaed to testify before the Senate AI Subcommittee about the $200M AI deployment your company rolled out across 3 federal agencies. The Chairman wants to know who approved the decision to deploy without independent safety validation.",
+		"Senate AI Subcommittee Hearings",
+		"2024-2025",
+		"Multiple tech executives testified before Senate committees about AI deployment decisions in federal systems, facing pointed questions about oversight failures and safety validation gaps.",
+		{
+			label: "Testify fully",
+			hype: -40,
+			heat: 8,
+			fine: 2000000,
+			deathVector: DeathType.CONGRESS,
+			violation: "None - Voluntary Disclosure",
+			lesson:
+				"Full testimony limits liability and preserves institutional credibility, even when the content is damaging.",
+			roaster:
+				"Testifying before Congress. At least you get C-SPAN coverage. The senators will ask questions you can't answer without perjuring yourself.",
+			zenMaster:
+				"Truth spoken before power transforms accusers into witnesses of integrity.",
+			lovebomber:
+				"We're being SO transparent, bestie!! Congress will RESPECT our honesty!! (They absolutely won't.)",
+		},
+		{
+			label: "Limit to legal advice",
+			hype: 10,
+			heat: 22,
+			fine: 25000000,
+			deathVector: DeathType.AUDIT_FAILURE,
+			violation: "Congressional Obstruction + Contempt Risk",
+			lesson:
+				"Restricting testimony to pre-approved answers inflames congressional investigators and broadens the scope of investigation.",
+			roaster:
+				"Stonewalling a Senate subcommittee. The Chairman will remember this when drafting the subpoena for your personal devices.",
+			zenMaster:
+				"The wall built against inquiry becomes the target of investigation.",
+			lovebomber:
+				"We're being STRATEGIC, bestie!! Legal said this is the SMART play!! (It isn't.)",
+		},
+	),
+	makeCard(
+		"cso_ai_initiative_writedown",
+		AppSource.SLACK,
+		"BOARD_OF_DIRECTORS",
+		"FINANCIAL_REVIEW",
+		"Write down the failed initiative or defend the long-term thesis one more quarter?",
+		"The board's emergency audit shows the AI transformation program you championed burned $180M in 18 months with zero measurable ROI. Shareholders are filing a derivative lawsuit. You can admit the initiative failed and write it down, or argue the long-term investment thesis and buy another quarter.",
+		"Fortune 500 AI Write-Downs",
+		"2024-2025",
+		"Several major enterprises took significant AI initiative write-downs after multi-year investments failed to deliver promised productivity gains, triggering shareholder scrutiny and executive departures.",
+		{
+			label: "Write it down",
+			hype: -50,
+			heat: 12,
+			fine: 5000000,
+			deathVector: DeathType.BANKRUPT,
+			violation: "None - Financial Transparency",
+			lesson:
+				"Acknowledging failed initiatives limits further capital destruction and demonstrates accountability to shareholders.",
+			roaster:
+				"$180M bonfire. The write-down is the only honest thing left. Your career is also getting written down.",
+			zenMaster:
+				"The tree that drops its dead branches grows stronger for the next season.",
+			lovebomber:
+				"We're being ACCOUNTABLE, bestie!! Honesty is the BEST policy!! The shareholders will FORGIVE us!!",
+		},
+		{
+			label: "Defend one more quarter",
+			hype: 15,
+			heat: 20,
+			fine: 35000000,
+			deathVector: DeathType.CONGRESS,
+			violation: "Securities Fraud + Misleading Investors",
+			lesson:
+				"Defending a clearly failed initiative with optimistic projections crosses into securities fraud territory when shareholders lose further value.",
+			roaster:
+				"One more quarter of denial. The derivative lawsuit is already filed. The SEC is reading along.",
+			zenMaster:
+				"Hope sustained against evidence becomes delusion. Delusion sustained against evidence becomes fraud.",
+			lovebomber:
+				"The thesis is SOUND, bestie!! We just need MORE time!! Investors will SEE the vision!!",
+		},
+	),
 ];

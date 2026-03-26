@@ -10,7 +10,7 @@ progress:
   total_phases: 21
   completed_phases: 12
   total_plans: 105
-  completed_plans: 87
+  completed_plans: 88
 ---
 
 # Session State
@@ -96,6 +96,7 @@ See: .planning/PROJECT.md
 - 2026-03-26: Audit: removed erroneous log entries — 17-03 was never merged; planning artifacts reset to `pending` / `not_completed` (superseded by execution below)
 - 2026-03-26: Completed 17-03-PLAN.md (HoS id `shadow_ai_hos_1`, orphan `feedback_hos_shadow_ai_team_discovery_*` removed, critical sets + scripts + exports synced, `geminiLive` + `api/roast` cadence, `unit/roastPromptCopy.test.ts`)
 - 2026-03-26: Phase 17 complete — [17-VERIFICATION.md](phases/17-shuffle-aware-feedback-tts-fixes/17-VERIFICATION.md) `passed` 4/4
+- 2026-03-26: Completed 17-04-PLAN.md (gap closure: authoringFeedbackStem returns slugified labels, string widening, selectedSlot for fallback clips)
 
 ## Accumulated Context
 
@@ -120,6 +121,7 @@ See: .planning/PROJECT.md
 - [Phase 17-01]: Post-shuffle cards always carry boolean choiceSidesSwapped; authoringFeedbackStem maps visible LEFT/RIGHT to authoring left/right only when sides were swapped at shuffle time
 - [Phase 17-03]: HoS Samsung/shadow-compliance card id `shadow_ai_hos_1` (removed duplicate `hos_shadow_ai_team_discovery`); orphan feedback audio pruned; roast/Live prompts use varied rhythm guidance; see [17-03-SUMMARY.md](phases/17-shuffle-aware-feedback-tts-fixes/17-03-SUMMARY.md)
 - [Phase 17-02]: Roaster pre-baked feedback clips use overlay feedbackAuthoringStem; playing currentCard indexes effectiveDeck for pressure parity with CardStack
+- [Phase 17-04]: authoringFeedbackStem returns slugified label strings (e.g., "shield-the-team") instead of "left"|"right"; feedbackAuthoringStem widened to string throughout; selectedSlot preserves non-critical card fallback clip routing; slugify duplicated in lib/feedbackAudioChoice.ts (not imported from data/imageMap.ts layer)
 
 ## Key Metrics
 

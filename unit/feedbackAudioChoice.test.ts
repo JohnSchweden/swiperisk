@@ -10,16 +10,12 @@ function card(
 	swapped: boolean | undefined,
 	leftLabel = "Left Option",
 	rightLabel = "Right Option",
-): {
-	choiceSidesSwapped?: boolean;
-	onLeft: { label: string };
-	onRight: { label: string };
-} {
+) {
 	return {
 		...(swapped !== undefined ? { choiceSidesSwapped: swapped } : {}),
 		onLeft: { label: leftLabel },
 		onRight: { label: rightLabel },
-	};
+	} as any;
 }
 
 describe("slugify", () => {

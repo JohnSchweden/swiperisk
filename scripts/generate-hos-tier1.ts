@@ -14,19 +14,19 @@ const ai = new GoogleGenAI({ apiKey });
 // Tier 1: Game-ending catastrophes
 const TIER_1_FILES = [
 	{
-		filename: "feedback_hos_managing_up_down_right.wav",
+		filename: "feedback_hos_managing_up_down_promise-the-impossible.wav",
 		text: "Leadership loves you now. Your team hates you now. The crash comes later. Classic Theranos energy.",
 	},
 	{
-		filename: "feedback_hos_managing_up_down_left.wav",
+		filename: "feedback_hos_managing_up_down_tell-leadership-no.wav",
 		text: "Leadership is disappointed. Your team is relieved. You live to fight another day. You hope.",
 	},
 	{
-		filename: "feedback_explainability_hos_2_right.wav",
+		filename: "feedback_explainability_hos_2_refuse-and-fight.wav",
 		text: "Taking on the federal government to protect your black box. David versus Goliath, if David was completely wrong.",
 	},
 	{
-		filename: "feedback_explainability_hos_2_left.wav",
+		filename: "feedback_explainability_hos_2_delay-and-comply.wav",
 		text: "The regulators win. The timeline loses. But you avoid a consent decree. Small victories.",
 	},
 ];

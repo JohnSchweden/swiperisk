@@ -14,19 +14,20 @@ const ai = new GoogleGenAI({ apiKey });
 // Tier 3: Major consequences
 const TIER_3_FILES = [
 	{
-		filename: "feedback_hos_explainability_politics_right.wav",
+		filename: "feedback_hos_explainability_politics_side-with-auditors.wav",
 		text: "Engineering will resent you. Auditors will forget you. Compliance win.",
 	},
 	{
-		filename: "feedback_hos_explainability_politics_left.wav",
+		filename: "feedback_hos_explainability_politics_side-with-engineering.wav",
 		text: "Better accuracy now. Better fines later. Engineering owes you.",
 	},
 	{
-		filename: "feedback_hos_prompt_injection_review_escape_right.wav",
+		filename: "feedback_hos_prompt_injection_review_escape_let-it-slide.wav",
 		text: "Senior owes you. Breach later will blame you. Lose-lose. Nice.",
 	},
 	{
-		filename: "feedback_hos_prompt_injection_review_escape_left.wav",
+		filename:
+			"feedback_hos_prompt_injection_review_escape_force-security-fix.wav",
 		text: "VP annoyed. Senior resentful. But code is secure. Pick your pain.",
 	},
 ];

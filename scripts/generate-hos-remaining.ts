@@ -13,16 +13,20 @@ if (!apiKey) {
 const ai = new GoogleGenAI({ apiKey });
 
 /**
- * The 11 remaining Head of Something cards that need voice feedback audio.
- * Each card has LEFT and RIGHT feedback text.
+ * The 10 remaining Head of Something cards that need voice feedback audio.
+ * Each card has LEFT and RIGHT feedback text with label-slug filenames.
  */
 const REMAINING_HOS_CARDS: Array<{
 	id: string;
+	leftSlug: string;
+	rightSlug: string;
 	leftText: string;
 	rightText: string;
 }> = [
 	{
 		id: "hos_prompt_injection_blame",
+		leftSlug: "take-the-blame",
+		rightSlug: "name-the-engineer",
 		leftText:
 			"Noble. Your team will work harder for you now. The VP will also blame you.",
 		rightText:
@@ -30,24 +34,32 @@ const REMAINING_HOS_CARDS: Array<{
 	},
 	{
 		id: "hos_model_drift_budget_conflict",
+		leftSlug: "fight-for-budget",
+		rightSlug: "ship-without-retraining",
 		leftText: "Fighting the CFO. Brave. Possibly career-limiting. But brave.",
 		rightText:
 			"Your team knows you sold them out. The CFO owes you. Everyone loses.",
 	},
 	{
 		id: "hos_delegation_gone_wrong",
+		leftSlug: "defend-delegation",
+		rightSlug: "admit-oversight-failure",
 		leftText:
 			"Taking the L. Your delegation authority will shrink. But you're honest.",
 		rightText: "Denial is a strategy. Not a good one. But a strategy.",
 	},
 	{
 		id: "hos_promotion_politics",
+		leftSlug: "promote-best-performer",
+		rightSlug: "promote-politically-connected",
 		leftText: "Merit wins. Politics loses. Your VP is taking notes.",
 		rightText:
 			"Your best performer just learned meritocracy is a myth. The VP owes you.",
 	},
 	{
 		id: "hos_prompt_injection_copilot_team",
+		leftSlug: "pull-for-patching",
+		rightSlug: "continue-development",
 		leftText:
 			"Deadline missed. Team secure. Product is angry. You sleep better.",
 		rightText:
@@ -55,6 +67,8 @@ const REMAINING_HOS_CARDS: Array<{
 	},
 	{
 		id: "hos_model_drift_retrain_delay",
+		leftSlug: "start-immediately",
+		rightSlug: "delay-until-next-quarter",
 		leftText:
 			"Over budget now. Review at risk. But problem solved. Long-term thinking.",
 		rightText:
@@ -62,12 +76,16 @@ const REMAINING_HOS_CARDS: Array<{
 	},
 	{
 		id: "explainability_hos_1",
+		leftSlug: "side-with-auditors",
+		rightSlug: "side-with-engineering",
 		leftText:
 			"Engineering will resent you. Auditors will forget you. Compliance win.",
 		rightText: "Better accuracy now. Better fines later. Engineering owes you.",
 	},
 	{
 		id: "shadow_ai_hos_1",
+		leftSlug: "shield-the-team",
+		rightSlug: "give-names-to-compliance",
 		leftText:
 			"Team hero. Management headache. The loyalty is worth it until they fire you.",
 		rightText:
@@ -75,6 +93,8 @@ const REMAINING_HOS_CARDS: Array<{
 	},
 	{
 		id: "synthetic_data_hos_1",
+		leftSlug: "take-the-blame",
+		rightSlug: "name-the-data-scientist",
 		leftText:
 			"Noble. Your team will work harder for you now. The VP will also blame you.",
 		rightText:
@@ -82,6 +102,8 @@ const REMAINING_HOS_CARDS: Array<{
 	},
 	{
 		id: "synthetic_data_hos_2",
+		leftSlug: "provide-full-documentation",
+		rightSlug: "claim-poor-record-keeping",
 		leftText:
 			"Your team is exposed. But legal can actually defend you. There's a strategy here.",
 		rightText:
@@ -195,7 +217,7 @@ async function delay(ms: number): Promise<void> {
 
 async function generateAll() {
 	console.log("=".repeat(60));
-	console.log("Generating voice audio for 11 remaining HoS cards");
+	console.log("Generating voice audio for 10 remaining HoS cards");
 	console.log("=".repeat(60));
 	console.log(`\nOutput directory: ${OUTPUT_DIR}`);
 	console.log(`Cards to process: ${REMAINING_HOS_CARDS.length}`);
@@ -215,7 +237,7 @@ async function generateAll() {
 
 		try {
 			// Generate LEFT feedback
-			const leftFilename = `feedback_${card.id}_left`;
+			const leftFilename = `feedback_${card.id}_${card.leftSlug}`;
 			const leftExists = fs.existsSync(
 				path.join(OUTPUT_DIR, `${leftFilename}.wav`),
 			);
@@ -229,7 +251,7 @@ async function generateAll() {
 			}
 
 			// Generate RIGHT feedback
-			const rightFilename = `feedback_${card.id}_right`;
+			const rightFilename = `feedback_${card.id}_${card.rightSlug}`;
 			const rightExists = fs.existsSync(
 				path.join(OUTPUT_DIR, `${rightFilename}.wav`),
 			);

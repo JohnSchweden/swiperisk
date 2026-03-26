@@ -14,35 +14,36 @@ const ai = new GoogleGenAI({ apiKey });
 // Tier 2: Massive sacrifice moments
 const TIER_2_FILES = [
 	{
-		filename: "feedback_hos_copyright_team_blame_right.wav",
+		filename:
+			"feedback_hos_copyright_team_blame_cooperate-with-investigation.wav",
 		text: "Legal is happy. Your team is polishing resumes. Management approved.",
 	},
 	{
-		filename: "feedback_hos_copyright_team_blame_left.wav",
+		filename: "feedback_hos_copyright_team_blame_protect-the-team.wav",
 		text: "Taking a thirty-five million dollar bullet for your team. Noble. Expensive. Probably career-limiting.",
 	},
 	{
-		filename: "feedback_hos_team_burnout_deadline_right.wav",
+		filename: "feedback_hos_team_burnout_deadline_push-team-harder.wav",
 		text: "Crunch time! Watch those resignations roll in. Fresh talent is cheap anyway.",
 	},
 	{
-		filename: "feedback_hos_team_burnout_deadline_left.wav",
+		filename: "feedback_hos_team_burnout_deadline_push-back-on-deadline.wav",
 		text: "Product will hate you. Your team will stay. Sometimes that's the win.",
 	},
 	{
-		filename: "feedback_shadow_ai_hos_2_right.wav",
+		filename: "feedback_shadow_ai_hos_2_force-compliance.wav",
 		text: "Your best engineer just resigned. Compliance preserved. Output cratered.",
 	},
 	{
-		filename: "feedback_shadow_ai_hos_2_left.wav",
+		filename: "feedback_shadow_ai_hos_2_allow-claude-use.wav",
 		text: "Great, now everyone wants their favorite AI tool. Governance is optional now.",
 	},
 	{
-		filename: "feedback_hos_model_drift_team_blame_right.wav",
+		filename: "feedback_hos_model_drift_team_blame_blame-data-scientist.wav",
 		text: "They warned you. You ignored it. Now you blame them. Classic management.",
 	},
 	{
-		filename: "feedback_hos_model_drift_team_blame_left.wav",
+		filename: "feedback_hos_model_drift_team_blame_defend-and-take-heat.wav",
 		text: "Career-limiting. Noble. Your team will follow you anywhere. The VP less so.",
 	},
 ];

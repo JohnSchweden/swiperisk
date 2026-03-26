@@ -17,61 +17,143 @@ const VOICES_DIR = path.join(process.cwd(), "public/audio/voices");
 
 // Critical Head of Something cards with dedicated feedback audio
 const CRITICAL_HOS_CARDS = [
-	"hos_managing_up_down",
-	"explainability_hos_2",
-	"hos_copyright_team_blame",
-	"hos_team_burnout_deadline",
-	"shadow_ai_hos_2",
-	"hos_model_drift_team_blame",
-	"hos_explainability_politics",
-	"hos_prompt_injection_review_escape",
+	{
+		id: "hos_managing_up_down",
+		leftSlug: "tell-leadership-no",
+		rightSlug: "promise-the-impossible",
+	},
+	{
+		id: "explainability_hos_2",
+		leftSlug: "delay-and-comply",
+		rightSlug: "refuse-and-fight",
+	},
+	{
+		id: "hos_copyright_team_blame",
+		leftSlug: "protect-the-team",
+		rightSlug: "cooperate-with-investigation",
+	},
+	{
+		id: "hos_team_burnout_deadline",
+		leftSlug: "push-back-on-deadline",
+		rightSlug: "push-team-harder",
+	},
+	{
+		id: "shadow_ai_hos_2",
+		leftSlug: "allow-claude-use",
+		rightSlug: "force-compliance",
+	},
+	{
+		id: "hos_model_drift_team_blame",
+		leftSlug: "defend-and-take-heat",
+		rightSlug: "blame-data-scientist",
+	},
+	{
+		id: "hos_explainability_politics",
+		leftSlug: "side-with-engineering",
+		rightSlug: "side-with-auditors",
+	},
+	{
+		id: "hos_prompt_injection_review_escape",
+		leftSlug: "force-security-fix",
+		rightSlug: "let-it-slide",
+	},
+	{
+		id: "hos_prompt_injection_blame",
+		leftSlug: "take-the-blame",
+		rightSlug: "name-the-engineer",
+	},
+	{
+		id: "hos_model_drift_budget_conflict",
+		leftSlug: "fight-for-budget",
+		rightSlug: "ship-without-retraining",
+	},
+	{
+		id: "hos_delegation_gone_wrong",
+		leftSlug: "defend-delegation",
+		rightSlug: "admit-oversight-failure",
+	},
+	{
+		id: "hos_promotion_politics",
+		leftSlug: "promote-best-performer",
+		rightSlug: "promote-politically-connected",
+	},
+	{
+		id: "hos_prompt_injection_copilot_team",
+		leftSlug: "pull-for-patching",
+		rightSlug: "continue-development",
+	},
+	{
+		id: "hos_model_drift_retrain_delay",
+		leftSlug: "start-immediately",
+		rightSlug: "delay-until-next-quarter",
+	},
+	{
+		id: "explainability_hos_1",
+		leftSlug: "side-with-auditors",
+		rightSlug: "side-with-engineering",
+	},
+	{
+		id: "shadow_ai_hos_1",
+		leftSlug: "shield-the-team",
+		rightSlug: "give-names-to-compliance",
+	},
+	{
+		id: "synthetic_data_hos_1",
+		leftSlug: "take-the-blame",
+		rightSlug: "name-the-data-scientist",
+	},
+	{
+		id: "synthetic_data_hos_2",
+		leftSlug: "provide-full-documentation",
+		rightSlug: "claim-poor-record-keeping",
+	},
 ];
 
 test.describe("Head of Something Critical Card Audio @smoke @area:audio", () => {
 	test.describe("Critical HoS cards have feedback audio for both choices", () => {
-		for (const cardId of CRITICAL_HOS_CARDS) {
-			test(`${cardId} has feedback audio for LEFT and RIGHT choices`, () => {
+		for (const card of CRITICAL_HOS_CARDS) {
+			test(`${card.id} has feedback audio for LEFT and RIGHT choices`, () => {
 				const leftPath = path.join(
 					VOICES_DIR,
 					"roaster",
 					"feedback",
-					`feedback_${cardId}_left.opus`,
+					`feedback_${card.id}_${card.leftSlug}.opus`,
 				);
 				const rightPath = path.join(
 					VOICES_DIR,
 					"roaster",
 					"feedback",
-					`feedback_${cardId}_right.opus`,
+					`feedback_${card.id}_${card.rightSlug}.opus`,
 				);
 
 				expect(
 					fs.existsSync(leftPath),
-					`Missing LEFT feedback audio: roaster/feedback_${cardId}_left.opus`,
+					`Missing LEFT feedback audio: roaster/feedback_${card.id}_${card.leftSlug}.opus`,
 				).toBe(true);
 				expect(
 					fs.existsSync(rightPath),
-					`Missing RIGHT feedback audio: roaster/feedback_${cardId}_right.opus`,
+					`Missing RIGHT feedback audio: roaster/feedback_${card.id}_${card.rightSlug}.opus`,
 				).toBe(true);
 			});
 		}
 	});
 
-	test("All 16 critical HoS audio files exist (8 cards x 2 choices)", () => {
+	test("All 36 critical HoS audio files exist (18 cards x 2 choices)", () => {
 		let missingCount = 0;
 		const missingFiles: string[] = [];
 
-		for (const cardId of CRITICAL_HOS_CARDS) {
-			for (const choice of ["left", "right"] as const) {
+		for (const card of CRITICAL_HOS_CARDS) {
+			for (const slug of [card.leftSlug, card.rightSlug]) {
 				const filePath = path.join(
 					VOICES_DIR,
 					"roaster",
 					"feedback",
-					`feedback_${cardId}_${choice}.opus`,
+					`feedback_${card.id}_${slug}.opus`,
 				);
 				if (!fs.existsSync(filePath)) {
 					missingCount++;
 					missingFiles.push(
-						`roaster/feedback/feedback_${cardId}_${choice}.opus`,
+						`roaster/feedback/feedback_${card.id}_${slug}.opus`,
 					);
 				}
 			}
@@ -84,14 +166,14 @@ test.describe("Head of Something Critical Card Audio @smoke @area:audio", () => 
 	});
 
 	test.describe("Critical HoS audio files are Opus format", () => {
-		for (const cardId of CRITICAL_HOS_CARDS) {
-			for (const choice of ["left", "right"] as const) {
-				test(`feedback/feedback_${cardId}_${choice}.opus is valid Opus`, () => {
+		for (const card of CRITICAL_HOS_CARDS) {
+			for (const slug of [card.leftSlug, card.rightSlug]) {
+				test(`feedback/feedback_${card.id}_${slug}.opus is valid Opus`, () => {
 					const filePath = path.join(
 						VOICES_DIR,
 						"roaster",
 						"feedback",
-						`feedback_${cardId}_${choice}.opus`,
+						`feedback_${card.id}_${slug}.opus`,
 					);
 
 					expect(
@@ -113,17 +195,17 @@ test.describe("Head of Something Critical Card Audio @smoke @area:audio", () => 
 
 		for (const personality of otherPersonalities) {
 			test(`${personality} does NOT have critical HoS feedback files`, () => {
-				for (const cardId of CRITICAL_HOS_CARDS) {
-					for (const choice of ["left", "right"] as const) {
+				for (const card of CRITICAL_HOS_CARDS) {
+					for (const slug of [card.leftSlug, card.rightSlug]) {
 						const filePath = path.join(
 							VOICES_DIR,
 							personality,
 							"feedback",
-							`feedback_${cardId}_${choice}.opus`,
+							`feedback_${card.id}_${slug}.opus`,
 						);
 						expect(
 							fs.existsSync(filePath),
-							`${personality} should NOT have feedback/feedback_${cardId}_${choice}.opus (per design)`,
+							`${personality} should NOT have feedback/feedback_${card.id}_${slug}.opus (per design)`,
 						).toBe(false);
 					}
 				}

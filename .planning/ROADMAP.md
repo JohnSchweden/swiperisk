@@ -401,7 +401,7 @@ Plans:
 
 ### Phase 13: Image Asset Pipeline
 
-**Goal:** Generate AI images for HOS incidents, HOS per-direction outcomes, death endings, and archetypes via automated Gemini pipeline + GIF/meme template overlay system
+**Goal:** Generate AI images for HOS incidents, HOS per-direction outcomes, death endings, and archetypes via automated Gemini pipeline + GIF/meme template overlay system (70+ templates)
 **Depends on:** Phase 06 (archetype system for mapping), Phase 15 (HOS audio coverage defines scope)
 **Plans:** 9 plans (3 original + 6 new for GIF/meme system)
 

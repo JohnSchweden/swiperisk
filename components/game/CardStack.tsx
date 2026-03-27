@@ -145,7 +145,7 @@ export const CardStack: React.FC<CardStackProps> = ({
 
 	return (
 		<div
-			className={`relative flex-shrink-0 w-full max-w-full lg:max-w-[43rem] h-[420px] md:h-[560px] ${hasStressVisuals ? "pressure-shake" : ""}`}
+			className={`relative flex-shrink-0 w-full max-w-full lg:max-w-[43rem] h-[480px] md:h-[620px] ${hasStressVisuals ? "pressure-shake" : ""}`}
 			data-testid="incident-card-container"
 			data-pressure-stress={hasStressVisuals ? "true" : undefined}
 		>
@@ -276,14 +276,14 @@ export const CardStack: React.FC<CardStackProps> = ({
 				<div className="p-4 md:p-10 flex flex-col justify-between flex-1 overflow-hidden">
 					{/* Hero image - moves with card during swipe */}
 					{currentCard.realWorldReference?.incident && (
-						<div className="mb-4 md:mb-6 shrink-0">
+						<div className="mb-3 md:mb-6 shrink-0">
 							<ImageWithFallback
 								src={getIncidentImagePath(
 									slugify(currentCard.realWorldReference.incident),
 								)}
 								alt={`Incident: ${currentCard.context}`}
 								aspectRatio="video"
-								containerClassName="max-h-[200px] md:max-h-none"
+								containerClassName="max-h-[140px] md:max-h-[280px]"
 							/>
 						</div>
 					)}
@@ -316,7 +316,7 @@ export const CardStack: React.FC<CardStackProps> = ({
 							{currentCard.text}
 						</p>
 					</div>
-					<div className="flex flex-col gap-3 mt-6 md:mt-8 shrink-0">
+					<div className="flex flex-col gap-2 md:gap-3 mt-4 md:mt-8 shrink-0">
 						{/* Keyboard hint */}
 						<div className="flex items-center justify-center gap-2 text-[10px] text-slate-400 mono">
 							<span className="hidden md:inline px-1.5 py-0.5 bg-slate-800 border border-slate-700 rounded">

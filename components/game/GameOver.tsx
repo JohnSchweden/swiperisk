@@ -1,7 +1,9 @@
 import type React from "react";
 import { DEATH_ENDINGS } from "../../data";
+import { getDeathImagePath } from "../../data/imageMap";
 import { useUnlockedEndings } from "../../hooks";
 import { DeathType, type GameState, PersonalityType } from "../../types";
+import { ImageWithFallback } from "../ImageWithFallback";
 import LayoutShell from "../LayoutShell";
 import {
 	GLASS_FILL_STRONG,
@@ -47,6 +49,16 @@ export const GameOver: React.FC<GameOverProps> = ({ state, onDebrief }) => {
 				{/* Death Ending Display */}
 				{deathEnding && (
 					<>
+						{/* Death Image - full-width hero above icon */}
+						{state.deathType && (
+							<div className="mb-6 md:mb-8 mx-auto max-w-md">
+								<ImageWithFallback
+									src={getDeathImagePath(state.deathType) ?? ""}
+									alt={`Ending: ${deathEnding.title}`}
+									aspectRatio="video"
+								/>
+							</div>
+						)}
 						<div
 							className={`text-6xl md:text-9xl mb-4 md:mb-6 animate-pulse drop-shadow-[0_0_30px_rgba(220,38,38,0.5)] ${deathEnding.color}`}
 						>

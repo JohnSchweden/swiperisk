@@ -307,7 +307,7 @@ export const CardStack: React.FC<CardStackProps> = ({
 						<div className="w-2.5 h-2.5 rounded-full bg-red-500/50"></div>
 					</div>
 				</div>
-				<div className="p-4 md:p-10 flex flex-col justify-between flex-1 overflow-hidden">
+				<div className="p-4 md:p-6 flex flex-col justify-between flex-1 overflow-hidden">
 					{/* Hero image - moves with card during swipe */}
 					{currentCard.realWorldReference?.incident && (
 						<div className="mb-3 md:mb-6 shrink-0">
@@ -341,11 +341,17 @@ export const CardStack: React.FC<CardStackProps> = ({
 								</div>
 							</div>
 						</div>
-						{currentCard.storyContext && (
-							<p className="text-sm md:text-base text-slate-400 leading-relaxed">
-								{currentCard.storyContext}
-							</p>
-						)}
+						{currentCard.storyContext &&
+							(() => {
+								const hasCardImage = !!currentCard.realWorldReference?.incident;
+								return (
+									<p
+										className={`text-sm md:text-base text-slate-400 leading-relaxed ${hasCardImage ? "hidden md:block" : ""}`}
+									>
+										{currentCard.storyContext}
+									</p>
+								);
+							})()}
 						<p className="text-base md:text-xl font-medium leading-relaxed text-slate-200">
 							{currentCard.text}
 						</p>

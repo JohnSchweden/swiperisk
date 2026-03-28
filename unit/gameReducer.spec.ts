@@ -1,10 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { ROLE_CARDS } from "../data/cards";
-import {
-	determineDeathType,
-	gameReducer,
-	initialGameState,
-} from "../hooks/useGameState";
+import { gameReducer, initialGameState } from "../hooks/useGameState";
 import { DeathType, GameStage, PersonalityType, RoleType } from "../types";
 import { createMockCard } from "./testHelpers";
 
@@ -183,43 +179,6 @@ describe("gameReducer", () => {
 		const next = gameReducer(s, { type: "RESET" });
 		expect(next.stage).toBe(GameStage.INTRO);
 		expect(next.unlockedEndings).toEqual([DeathType.BANKRUPT]);
-	});
-});
-
-describe("determineDeathType", () => {
-	it("returns BANKRUPT when budget <= 0", () => {
-		expect(determineDeathType(0, 50, 50, RoleType.SOFTWARE_ENGINEER)).toBe(
-			DeathType.BANKRUPT,
-		);
-	});
-
-	it("returns REPLACED_BY_SCRIPT when heat >= 100 and hype <= 10", () => {
-		expect(determineDeathType(1e6, 100, 10, RoleType.SOFTWARE_ENGINEER)).toBe(
-			DeathType.REPLACED_BY_SCRIPT,
-		);
-	});
-
-	it("returns FLED_COUNTRY for unmatched roles when heat >= 100 and hype > 10", () => {
-		// Note: DECK_DEATH_TYPES mapping has incorrect keys, so all roles fall back to FLED_COUNTRY
-		expect(determineDeathType(1e6, 100, 50, RoleType.SOMETHING_MANAGER)).toBe(
-			DeathType.FLED_COUNTRY,
-		);
-		expect(determineDeathType(1e6, 100, 50, RoleType.TECH_AI_CONSULTANT)).toBe(
-			DeathType.FLED_COUNTRY,
-		);
-		expect(
-			determineDeathType(1e6, 100, 50, RoleType.CHIEF_SOMETHING_OFFICER),
-		).toBe(DeathType.FLED_COUNTRY);
-	});
-
-	it("returns FLED_COUNTRY for DEVELOPMENT role when heat >= 100 and hype > 10", () => {
-		expect(determineDeathType(1e6, 100, 50, RoleType.SOFTWARE_ENGINEER)).toBe(
-			DeathType.FLED_COUNTRY,
-		);
-	});
-
-	it("returns AUDIT_FAILURE when heat < 100", () => {
-		expect(determineDeathType(1e6, 50, 50, null)).toBe(DeathType.AUDIT_FAILURE);
 	});
 });
 

@@ -10,15 +10,14 @@ import {
 	getOutcomeImagePath,
 	INCIDENT_IMAGES,
 	OUTCOME_IMAGES,
-	slugifyIncident,
-	slugifyLabel,
+	slugify,
 } from "../../data/imageMap";
 import { type ArchetypeId, DeathType } from "../../types";
 
 /**
  * Helper function to slugify incident names — must match the implementation in imageMap.ts
  */
-function slugifyIncidentLocal(incident: string): string {
+function slugifyLocal(incident: string): string {
 	return incident
 		.toLowerCase()
 		.replace(/[^a-z0-9]+/g, "-")
@@ -41,7 +40,7 @@ describe("Image Map Contract Validation", () => {
 
 		it("every card with realWorldReference has a corresponding INCIDENT_IMAGES entry", () => {
 			for (const incident of incidents) {
-				const slug = slugifyIncidentLocal(incident);
+				const slug = slugifyLocal(incident);
 				expect(
 					INCIDENT_IMAGES[slug],
 					`Missing image entry for incident: ${incident} (slug: ${slug})`,
@@ -50,7 +49,7 @@ describe("Image Map Contract Validation", () => {
 		});
 
 		it("no duplicate incident slugs", () => {
-			const slugs = incidents.map(slugifyIncidentLocal);
+			const slugs = incidents.map(slugifyLocal);
 			const uniqueSlugs = new Set(slugs);
 			expect(
 				slugs.length,
@@ -65,7 +64,7 @@ describe("Image Map Contract Validation", () => {
 				if (!card.realWorldReference?.incident) continue;
 
 				const incident = card.realWorldReference.incident;
-				const slug = slugifyIncidentLocal(incident);
+				const slug = slugifyLocal(incident);
 				const path = INCIDENT_IMAGES[slug];
 
 				if (incidentToPath.has(incident)) {
@@ -87,18 +86,18 @@ describe("Image Map Contract Validation", () => {
 		if (!card.realWorldReference?.incident) continue;
 
 		const incident = card.realWorldReference.incident;
-		const incidentSlug = slugifyIncident(incident);
+		const incidentSlug = slugify(incident);
 
 		if (!hosOutcomes.has(incidentSlug)) {
 			hosOutcomes.set(incidentSlug, new Set());
 		}
 
 		// Add left label
-		const leftLabelSlug = slugifyLabel(card.onLeft.label);
+		const leftLabelSlug = slugify(card.onLeft.label);
 		hosOutcomes.get(incidentSlug)?.add(leftLabelSlug);
 
 		// Add right label
-		const rightLabelSlug = slugifyLabel(card.onRight.label);
+		const rightLabelSlug = slugify(card.onRight.label);
 		hosOutcomes.get(incidentSlug)?.add(rightLabelSlug);
 	}
 
@@ -123,11 +122,9 @@ describe("Image Map Contract Validation", () => {
 				for (const card of HEAD_OF_SOMETHING_CARDS) {
 					if (!card.realWorldReference?.incident) continue;
 
-					const incidentSlug = slugifyIncident(
-						card.realWorldReference.incident,
-					);
-					const leftLabelSlug = slugifyLabel(card.onLeft.label);
-					const rightLabelSlug = slugifyLabel(card.onRight.label);
+					const incidentSlug = slugify(card.realWorldReference.incident);
+					const leftLabelSlug = slugify(card.onLeft.label);
+					const rightLabelSlug = slugify(card.onRight.label);
 
 					if (
 						`${incidentSlug}-${leftLabelSlug}` === key ||
@@ -297,15 +294,15 @@ describe("helper functions", () => {
 		expect(path).toBe(DEATH_IMAGES[deathType]);
 	});
 
-	describe("slugifyLabel", () => {
-		it("slugifyLabel produces consistent slugs", () => {
-			expect(slugifyLabel("Take the blame")).toBe("take-the-blame");
-			expect(slugifyLabel("Name the engineer")).toBe("name-the-engineer");
-			expect(slugifyLabel("  Multiple   Spaces  ")).toBe("multiple-spaces");
-			expect(slugifyLabel("Special!@#$%^&*()Chars")).toBe("special-chars");
-			expect(slugifyLabel("CamelCaseWord")).toBe("camelcaseword");
-			expect(slugifyLabel("")).toBe("");
-			expect(slugifyLabel("---")).toBe("");
+	describe("slugify", () => {
+		it("slugify produces consistent slugs", () => {
+			expect(slugify("Take the blame")).toBe("take-the-blame");
+			expect(slugify("Name the engineer")).toBe("name-the-engineer");
+			expect(slugify("  Multiple   Spaces  ")).toBe("multiple-spaces");
+			expect(slugify("Special!@#$%^&*()Chars")).toBe("special-chars");
+			expect(slugify("CamelCaseWord")).toBe("camelcaseword");
+			expect(slugify("")).toBe("");
+			expect(slugify("---")).toBe("");
 		});
 	});
 });

@@ -71,26 +71,9 @@ export type GameAction =
 	| { type: "RESET" }
 	| { type: "KIRK_REFUSAL" };
 
-/**
- * Legacy death type determination based on role and stats.
- * @deprecated Use `resolveDeathType(state)` in the game reducer instead.
- */
-export function determineDeathType(
-	budget: number,
-	heat: number,
-	hype: number,
-	role: RoleType | null,
-): DeathType {
-	if (budget <= 0) return DeathType.BANKRUPT;
-	if (heat < 100) return DeathType.AUDIT_FAILURE;
-	if (hype <= 10) return DeathType.REPLACED_BY_SCRIPT;
-
-	const deck = role ? DECK_DEATH_TYPES[role] : null;
-	return deck ?? DeathType.FLED_COUNTRY;
-}
-
 function resolveDeathType(state: GameState): DeathType {
-	const deck = state.effectiveDeck ?? getRoleDeck(state.role);
+	const deck =
+		state.effectiveDeck ?? (state.role ? ROLE_CARDS[state.role] : []);
 	const vectorMap = accumulateDeathVectors(state.history, deck);
 	const archetypeResult = calculateArchetype(
 		state.history,

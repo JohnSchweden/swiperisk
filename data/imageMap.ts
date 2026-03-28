@@ -26,16 +26,6 @@ export function slugify(text: string): string {
 }
 
 /**
- * @deprecated Use slugify() instead - functionality is identical
- */
-export const slugifyIncident = slugify;
-
-/**
- * @deprecated Use slugify() instead - functionality is identical
- */
-export const slugifyLabel = slugify;
-
-/**
  * Type alias for incident slugs (incident names converted to kebab-case)
  * Used as keys in INCIDENT_IMAGES Record
  */
@@ -48,27 +38,43 @@ export type IncidentSlug = string;
 export type OutcomeImageKey = string;
 
 /**
+ * Extract unique incidents from all role card decks
+ * Used by both imageMap.ts and generate-images.ts
+ */
+export function extractIncidentSlugs(): Map<
+	string,
+	{ incident: string; slug: string }
+> {
+	const incidents = new Map<string, { incident: string; slug: string }>();
+
+	for (const cards of Object.values(ROLE_CARDS)) {
+		for (const card of cards) {
+			if (card.realWorldReference?.incident) {
+				const incident = card.realWorldReference.incident;
+				const slug = slugify(incident);
+
+				if (!incidents.has(slug)) {
+					incidents.set(slug, { incident, slug });
+				}
+			}
+		}
+	}
+
+	return incidents;
+}
+
+/**
  * Auto-generate INCIDENT_IMAGES by extracting unique incidents from all card decks
  * This ensures cards sharing the same incident automatically resolve to the same image.
  *
  * Returns ~118 entries keyed by slugified incident name.
  */
 function buildIncidentImages(): Record<IncidentSlug, string> {
-	const uniqueIncidents = new Set<string>();
-
-	// Extract unique incidents from all role decks
-	for (const cards of Object.values(ROLE_CARDS)) {
-		for (const card of cards) {
-			if (card.realWorldReference?.incident) {
-				uniqueIncidents.add(card.realWorldReference.incident);
-			}
-		}
-	}
+	const incidents = extractIncidentSlugs();
 
 	// Map slugified incidents to paths
 	return Object.fromEntries(
-		Array.from(uniqueIncidents).map((incident) => {
-			const slug = slugify(incident);
+		Array.from(incidents).map(([slug, { incident }]) => {
 			return [slug, `/images/incidents/${slug}.webp`];
 		}),
 	);
@@ -85,35 +91,63 @@ export const INCIDENT_IMAGES: Record<IncidentSlug, string> =
 	buildIncidentImages();
 
 /**
- * Auto-generate OUTCOME_IMAGES by extracting unique HOS incidents and their labels
- * Each incident+label combination gets one entry: ${incidentSlug}-${labelSlug}
- * Returns ~30 entries for HOS pilot (varies by unique incident+label combinations)
+ * Extract unique HOS incident+label combinations
+ * Used by both imageMap.ts and generate-images.ts
  */
-function buildOutcomeImages(): Record<OutcomeImageKey, string> {
-	const outcomeEntries = new Map<string, string>();
+export function extractHosOutcomePairs(): Map<
+	string,
+	{ incident: string; label: string; key: string }
+> {
+	const outcomes = new Map<
+		string,
+		{ incident: string; label: string; key: string }
+	>();
 
-	// Process Head of Something cards only (pilot scope)
 	for (const card of HEAD_OF_SOMETHING_CARDS) {
 		if (!card.realWorldReference?.incident) continue;
 
-		const incidentSlug = slugify(card.realWorldReference.incident);
+		const incident = card.realWorldReference.incident;
+		const incidentSlug = slugify(incident);
 
 		// Process onLeft label
 		const leftLabelSlug = slugify(card.onLeft.label);
 		const leftKey = `${incidentSlug}-${leftLabelSlug}`;
-		if (!outcomeEntries.has(leftKey)) {
-			outcomeEntries.set(leftKey, `/images/outcomes/${leftKey}.webp`);
+		if (!outcomes.has(leftKey)) {
+			outcomes.set(leftKey, {
+				incident,
+				label: card.onLeft.label,
+				key: leftKey,
+			});
 		}
 
 		// Process onRight label
 		const rightLabelSlug = slugify(card.onRight.label);
 		const rightKey = `${incidentSlug}-${rightLabelSlug}`;
-		if (!outcomeEntries.has(rightKey)) {
-			outcomeEntries.set(rightKey, `/images/outcomes/${rightKey}.webp`);
+		if (!outcomes.has(rightKey)) {
+			outcomes.set(rightKey, {
+				incident,
+				label: card.onRight.label,
+				key: rightKey,
+			});
 		}
 	}
 
-	return Object.fromEntries(outcomeEntries);
+	return outcomes;
+}
+
+/**
+ * Auto-generate OUTCOME_IMAGES by extracting unique HOS incidents and their labels
+ * Each incident+label combination gets one entry: ${incidentSlug}-${labelSlug}
+ * Returns ~30 entries for HOS pilot (varies by unique incident+label combinations)
+ */
+function buildOutcomeImages(): Record<OutcomeImageKey, string> {
+	const outcomes = extractHosOutcomePairs();
+
+	return Object.fromEntries(
+		Array.from(outcomes).map(([key, _]) => {
+			return [key, `/images/outcomes/${key}.webp`];
+		}),
+	);
 }
 
 /**

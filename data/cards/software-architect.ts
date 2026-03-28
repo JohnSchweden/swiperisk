@@ -1,4 +1,7 @@
 import { AppSource, type Card, DeathType, makeCard } from "../../types";
+import { ChoiceLabel } from "../choiceLabels";
+import { RealWorld } from "../incidents";
+import { Violation } from "../violations";
 
 /**
  * Software Architect cards - System design and architecture scenarios

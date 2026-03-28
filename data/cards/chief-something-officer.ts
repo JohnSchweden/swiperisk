@@ -1,4 +1,7 @@
 import { AppSource, type Card, DeathType, makeCard } from "../../types";
+import { ChoiceLabel } from "../choiceLabels";
+import { RealWorld } from "../incidents";
+import { Violation } from "../violations";
 
 /**
  * Chief Something Officer cards - C-suite governance and liability scenarios

@@ -7,7 +7,11 @@ import { ARCHETYPES } from "../data/archetypes";
 import { ROLE_CARDS } from "../data/cards";
 import { HEAD_OF_SOMETHING_CARDS } from "../data/cards/head-of-something";
 import { DEATH_ENDINGS } from "../data/deathEndings";
-import { slugify, slugifyIncident, slugifyLabel } from "../data/imageMap";
+import {
+	extractHosOutcomePairs,
+	extractIncidentSlugs,
+	slugify,
+} from "../data/imageMap";
 import type { ArchetypeId, DeathType } from "../types";
 
 const apiKey = process.env.GEMINI_API_KEY;
@@ -79,6 +83,7 @@ function resolveScopedRoleName(roleFilter?: string): string | undefined {
 
 /**
  * Extract unique incidents from card data across all (or specified) roles
+ * Reuses extractIncidentSlugs from imageMap for deduplication consistency
  */
 function extractIncidents(roleFilter?: string): Map<string, IncidentEntry> {
 	const incidents = new Map<string, IncidentEntry>();
@@ -93,7 +98,7 @@ function extractIncidents(roleFilter?: string): Map<string, IncidentEntry> {
 			if (!card.realWorldReference) continue;
 
 			const { incident, date, outcome } = card.realWorldReference;
-			const slug = slugifyIncident(incident);
+			const slug = slugify(incident);
 
 			if (!incidents.has(slug)) {
 				incidents.set(slug, {
@@ -200,6 +205,7 @@ function generateIncidentPrompt(entry: IncidentEntry): {
  * Extract outcomes for a specific incident from HOS cards using actual labels
  * Returns array of { label, labelSlug, lesson } for each choice
  * Deduplicates by labelSlug (same incident may appear in multiple cards)
+ * Reuses extractHosOutcomePairs for consistency
  */
 function extractOutcomesForIncident(
 	incidentSlug: string,
@@ -212,11 +218,11 @@ function extractOutcomesForIncident(
 	for (const card of HEAD_OF_SOMETHING_CARDS) {
 		if (!card.realWorldReference?.incident) continue;
 
-		const cardIncidentSlug = slugifyIncident(card.realWorldReference.incident);
+		const cardIncidentSlug = slugify(card.realWorldReference.incident);
 		if (cardIncidentSlug !== incidentSlug) continue;
 
 		// onLeft choice
-		const leftLabelSlug = slugifyLabel(card.onLeft.label);
+		const leftLabelSlug = slugify(card.onLeft.label);
 		if (!outcomes.has(leftLabelSlug)) {
 			outcomes.set(leftLabelSlug, {
 				label: card.onLeft.label,
@@ -226,7 +232,7 @@ function extractOutcomesForIncident(
 		}
 
 		// onRight choice
-		const rightLabelSlug = slugifyLabel(card.onRight.label);
+		const rightLabelSlug = slugify(card.onRight.label);
 		if (!outcomes.has(rightLabelSlug)) {
 			outcomes.set(rightLabelSlug, {
 				label: card.onRight.label,
@@ -242,6 +248,7 @@ function extractOutcomesForIncident(
 /**
  * Extract HOS outcomes by label (not direction)
  * Returns a map of ${incidentSlug}-${labelSlug} → { incident, label, labelSlug, lesson }
+ * Reuses extractHosOutcomePairs from imageMap for deduplication consistency
  */
 function extractHosOutcomesByLabel(): Map<
 	string,
@@ -252,37 +259,37 @@ function extractHosOutcomesByLabel(): Map<
 		{ incident: string; label: string; labelSlug: string; lesson: string }
 	>();
 
-	for (const card of HEAD_OF_SOMETHING_CARDS) {
-		if (!card.realWorldReference?.incident) continue;
+	// Reuse the shared extractor from imageMap for consistency
+	const pairs = extractHosOutcomePairs();
+	for (const [key, pair] of pairs) {
+		// Find the lesson text from the original card
+		let lesson = "";
+		for (const card of HEAD_OF_SOMETHING_CARDS) {
+			if (!card.realWorldReference?.incident) continue;
+			if (card.realWorldReference.incident !== pair.incident) continue;
 
-		const incident = card.realWorldReference.incident;
-		const incidentSlug = slugifyIncident(incident);
+			const incidentSlug = slugify(card.realWorldReference.incident);
+			if (incidentSlug !== key.split("-")[0]) continue;
 
-		// Process onLeft
-		const leftLabel = card.onLeft.label;
-		const leftLabelSlug = slugifyLabel(leftLabel);
-		const leftKey = `${incidentSlug}-${leftLabelSlug}`;
-		if (!outcomes.has(leftKey)) {
-			outcomes.set(leftKey, {
-				incident,
-				label: leftLabel,
-				labelSlug: leftLabelSlug,
-				lesson: card.onLeft.lesson,
-			});
+			const leftLabelSlug = slugify(card.onLeft.label);
+			const rightLabelSlug = slugify(card.onRight.label);
+			const expectedLabelSlug = key.split("-")[1];
+
+			if (leftLabelSlug === expectedLabelSlug) {
+				lesson = card.onLeft.lesson;
+				break;
+			} else if (rightLabelSlug === expectedLabelSlug) {
+				lesson = card.onRight.lesson;
+				break;
+			}
 		}
 
-		// Process onRight
-		const rightLabel = card.onRight.label;
-		const rightLabelSlug = slugifyLabel(rightLabel);
-		const rightKey = `${incidentSlug}-${rightLabelSlug}`;
-		if (!outcomes.has(rightKey)) {
-			outcomes.set(rightKey, {
-				incident,
-				label: rightLabel,
-				labelSlug: rightLabelSlug,
-				lesson: card.onRight.lesson,
-			});
-		}
+		outcomes.set(key, {
+			incident: pair.incident,
+			label: pair.label,
+			labelSlug: key.split("-")[1],
+			lesson,
+		});
 	}
 
 	return outcomes;
@@ -555,6 +562,8 @@ async function generateAndSaveImage(
 	task: ImageGenTask,
 	ai: GoogleGenAI | null,
 	args: Args,
+	retryCount: number = 0,
+	maxRetries: number = 3,
 ): Promise<{
 	status: "success" | "skipped" | "failed" | "dry-run";
 	message: string;
@@ -593,7 +602,6 @@ async function generateAndSaveImage(
 
 	try {
 		// Call Gemini API
-		// eslint-disable-next-line @typescript-eslint/no-explicit-any
 		// biome-ignore lint/suspicious/noExplicitAny: External Google AI SDK type inference
 		const response = await (ai.models as any).generateContent({
 			model: args.model,
@@ -650,12 +658,21 @@ async function generateAndSaveImage(
 		};
 	} catch (error) {
 		const err = error as Error;
-		// Handle rate limit
+		// Handle rate limit with max-retry
 		if (err.message?.includes("429")) {
-			console.warn(`Rate limit hit, waiting 60s...`);
+			if (retryCount >= maxRetries) {
+				return {
+					status: "failed",
+					message: `Rate limit exhausted after ${maxRetries} retries: ${task.slug}`,
+				};
+			}
+
+			console.warn(
+				`Rate limit hit, waiting 60s... (retry ${retryCount + 1}/${maxRetries})`,
+			);
 			await new Promise((r) => setTimeout(r, 60000));
-			// Retry once
-			return generateAndSaveImage(task, ai, args);
+			// Retry with incremented counter
+			return generateAndSaveImage(task, ai, args, retryCount + 1, maxRetries);
 		}
 
 		return {
@@ -737,7 +754,7 @@ async function main() {
 				});
 			} else {
 				const deathMatch = deathEntries.find(
-					({ id }) => id.toLowerCase() === replaceSlug,
+					({ id }) => slugify(id) === replaceSlug,
 				);
 				if (deathMatch) {
 					const { prompt, source } = generateDeathPrompt(
@@ -763,7 +780,7 @@ async function main() {
 		}
 	} else if (args.slug) {
 		// If scoped to single slug
-		const slugifiedSlug = slugifyIncident(args.slug);
+		const slugifiedSlug = slugify(args.slug);
 		const incidents = extractIncidents();
 		const incident = incidents.get(slugifiedSlug);
 		if (incident) {
@@ -798,19 +815,6 @@ async function main() {
 		} else {
 			console.error(`Incident not found: ${args.slug}`);
 			process.exit(1);
-		}
-	} else if (
-		args.scope === "cso" ||
-		args.scope === "hos" ||
-		args.scope === "incidents" ||
-		args.scope === undefined
-	) {
-		const roleScope =
-			args.scope === "cso" || args.scope === "hos" ? args.scope : undefined;
-		const incidents = extractIncidents(roleScope);
-		for (const [slug, entry] of incidents) {
-			const { prompt, source } = generateIncidentPrompt(entry);
-			tasks.push({ category: "incident", slug, prompt, source });
 		}
 	}
 

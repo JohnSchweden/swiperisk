@@ -1,7 +1,10 @@
 import { beforeEach, describe, expect, it } from "vitest";
 import { accumulateDeathVectors } from "../data/deathVectors";
 import { type Card, DeathType, type GameState, RoleType } from "../types";
-import { createMockCard, determineDeathType } from "./testHelpers";
+import {
+	createMockCard,
+	determineDeathType as determineDeathTypeHelper,
+} from "./testHelpers";
 
 describe("Death Vector System", () => {
 	let mockDeck: Card[];
@@ -77,14 +80,14 @@ describe("Death Vector System", () => {
 		];
 
 		it("returns highest-frequency vector when count >= 2", () => {
-			const result = determineDeathType({
+			const result = determineDeathTypeHelper({
 				vectorMap: { CONGRESS: 3, PRISON: 1 },
 			});
 			expect(result).toBe(DeathType.CONGRESS);
 		});
 
 		it("breaks ties using archetype affinity", () => {
-			const result = determineDeathType({
+			const result = determineDeathTypeHelper({
 				vectorMap: { CONGRESS: 2, PRISON: 2 },
 				archetype: "SHADOW_ARCHITECT",
 			});
@@ -92,7 +95,7 @@ describe("Death Vector System", () => {
 		});
 
 		it("breaks ties with DISRUPTOR favoring CONGRESS", () => {
-			const result = determineDeathType({
+			const result = determineDeathTypeHelper({
 				vectorMap: { CONGRESS: 2, PRISON: 2 },
 				archetype: "DISRUPTOR",
 			});
@@ -100,7 +103,7 @@ describe("Death Vector System", () => {
 		});
 
 		it("falls back to legacy logic when no vector has count >= 2", () => {
-			const result = determineDeathType({
+			const result = determineDeathTypeHelper({
 				vectorMap: { CONGRESS: 1, PRISON: 1 },
 				role: RoleType.SOFTWARE_ENGINEER,
 			});
@@ -108,7 +111,7 @@ describe("Death Vector System", () => {
 		});
 
 		it("BANKRUPT always wins when budget <= 0", () => {
-			const result = determineDeathType({
+			const result = determineDeathTypeHelper({
 				vectorMap: { CONGRESS: 10, PRISON: 10 },
 				budget: 0,
 			});
@@ -116,7 +119,7 @@ describe("Death Vector System", () => {
 		});
 
 		it("REPLACED_BY_SCRIPT wins when heat >= 100 and hype <= 10", () => {
-			const result = determineDeathType({
+			const result = determineDeathTypeHelper({
 				vectorMap: { CONGRESS: 10, PRISON: 10 },
 				heat: 100,
 				hype: 10,
@@ -125,12 +128,12 @@ describe("Death Vector System", () => {
 		});
 
 		it("KIRK is never returned from vector logic", () => {
-			const result = determineDeathType({ vectorMap: { KIRK: 10 } });
+			const result = determineDeathTypeHelper({ vectorMap: { KIRK: 10 } });
 			expect(result).not.toBe(DeathType.KIRK);
 		});
 
 		it("handles empty vector map gracefully", () => {
-			const result = determineDeathType({
+			const result = determineDeathTypeHelper({
 				vectorMap: {},
 				role: RoleType.SOFTWARE_ENGINEER,
 			});

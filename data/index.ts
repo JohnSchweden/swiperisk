@@ -39,6 +39,8 @@ export type { IncidentSlug, OutcomeImageKey } from "./imageMap";
 export {
 	ARCHETYPE_IMAGES,
 	DEATH_IMAGES,
+	extractHosOutcomePairs,
+	extractIncidentSlugs,
 	getArchetypeImagePath,
 	getDeathImagePath,
 	getIncidentImagePath,
@@ -46,8 +48,6 @@ export {
 	INCIDENT_IMAGES,
 	OUTCOME_IMAGES,
 	slugify,
-	slugifyIncident,
-	slugifyLabel,
 } from "./imageMap";
 export { PERSONALITIES } from "./personalities";
 export { PRESSURE_SCENARIOS } from "./pressureScenarios";

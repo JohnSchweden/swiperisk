@@ -22,6 +22,7 @@ export {
 	MARKETING_CARDS,
 	ROLE_CARDS,
 } from "./cards";
+export { ChoiceLabel } from "./choiceLabels";
 export { DEATH_ENDINGS } from "./deathEndings";
 export {
 	ARCHETYPE_DEATH_AFFINITY,
@@ -49,6 +50,7 @@ export {
 	OUTCOME_IMAGES,
 	slugify,
 } from "./imageMap";
+export { RealWorld as Incident } from "./incidents";
 export { PERSONALITIES } from "./personalities";
 export { PRESSURE_SCENARIOS } from "./pressureScenarios";
 export {
@@ -58,4 +60,5 @@ export {
 	ROLE_ICONS,
 	ROLE_LABELS,
 } from "./roles";
+export { Violation } from "./violations";
 export { VOICE_COVERAGE_HINT } from "./voiceUiCopy";

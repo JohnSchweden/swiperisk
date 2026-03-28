@@ -78,3 +78,6 @@ Patterns to prevent repeat mistakes. Update after corrections from the user.
 
 <!-- Captured 2026-03-26 via post-commit analysis -->
 - [RULE] When exposing state objects with side-specific fields through tool APIs, include semantic metadata (like feedbackAuthoringStem) alongside presence flags — Tools need both "does feedback exist?" and "which side was it authored for?" to make correct decisions. Exposing only boolean presence is incomplete and forces consumers to guess intent.
+
+<!-- Captured 2026-03-28 via post-commit analysis -->
+- [RULE] When exposing game state through tool APIs (WebMCP, etc.), audit all tool consumer code to ensure every referenced field is included in the state payload — Missing fields cause silent failures where tools cannot access state they need, and no error is raised.

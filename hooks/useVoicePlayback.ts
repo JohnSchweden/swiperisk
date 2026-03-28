@@ -8,6 +8,9 @@ import {
 	PersonalityType,
 } from "../types";
 
+/**
+ * Options for the useVoicePlayback hook.
+ */
 interface UseVoicePlaybackOptions {
 	stage: GameStage;
 	personality: PersonalityType | null;
@@ -147,6 +150,10 @@ function archetypeTrigger(archetypeId: ArchetypeId): string {
 	return `archetype_${suffix}`;
 }
 
+/**
+ * Custom hook for managing voice playback during different game stages.
+ * @param options - Configuration options for voice playback
+ */
 export function useVoicePlayback({
 	stage,
 	personality,

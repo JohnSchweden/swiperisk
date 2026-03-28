@@ -17,42 +17,71 @@ function getCardTransition(
 	return "transform 0.55s cubic-bezier(0.34, 1.56, 0.64, 1)";
 }
 
+/**
+ * Props for the CardStack component.
+ */
 interface CardStackProps {
+	/** The user's selected role type */
 	role: RoleType;
+	/** Array of cards to display */
 	cards: Card[];
+	/** Index of the currently displayed card */
 	currentCardIndex: number;
+	/** Whether this is the first card in the deck */
 	isFirstCard: boolean;
+	/** Reference to the card container div for swipe handling */
 	cardRef: RefObject<HTMLDivElement>;
-	// Swipe state
+	/** Horizontal offset for swipe animation */
 	offset: number;
+	/** Vertical offset for swipe animation */
 	verticalOffset?: number;
+	/** Current swipe direction */
 	direction: "LEFT" | "RIGHT" | null;
+	/** Whether the user is currently dragging */
 	isDragging: boolean;
+	/** Whether the user has dragged at least once */
 	hasDragged: boolean;
+	/** Direction of card exit animation */
 	exitDirection: "LEFT" | "RIGHT" | null;
+	/** Position and rotation for exit animation */
 	exitPosition: { x: number; rotate: number } | null;
+	/** Whether the card is snapping back to center */
 	isSnappingBack: boolean;
+	/** Whether swipe up gesture is detected */
 	isSwipeUp?: boolean;
-	// Event handlers
+	/** Handler for touch/mouse start events */
 	onTouchStart: (e: React.TouchEvent | React.MouseEvent) => void;
+	/** Handler for touch/mouse move events */
 	onTouchMove: (e: React.TouchEvent | React.MouseEvent) => void;
+	/** Handler for touch/mouse end events */
 	onTouchEnd: () => void;
-	// Actions
+	/** Action to perform on left swipe */
 	onSwipeLeft: () => void;
+	/** Action to perform on right swipe */
 	onSwipeRight: () => void;
-	// Thresholds
+	/** Threshold distance for completing a swipe */
 	swipeThreshold: number;
+	/** Threshold distance for showing swipe preview */
 	swipePreviewThreshold: number;
-	// Phase 04: pressure-driven stress visuals
+	/** Whether the card should show urgent stress visuals */
 	isUrgent?: boolean;
+	/** Whether the card should show critical stress visuals */
 	isCritical?: boolean;
 }
 
+/**
+ * Props for the SwipePreview component.
+ */
 interface SwipePreviewProps {
+	/** Direction of the swipe preview */
 	direction: "LEFT" | "RIGHT";
+	/** Current swipe offset distance */
 	offset: number;
+	/** Threshold for showing swipe preview */
 	swipePreviewThreshold: number;
+	/** Threshold for completing swipe */
 	swipeThreshold: number;
+	/** The card being swiped to show preview for */
 	card: Card;
 }
 
@@ -86,6 +115,13 @@ function SwipePreview({
 	);
 }
 
+/**
+ * CardStack component for displaying and handling swipe interactions on incident cards.
+ * Renders the current card with swipe gestures, preview overlays, and next card background.
+ * Handles touch/mouse events, animations, and visual stress indicators.
+ * @param props - The component props
+ * @returns The rendered card stack component
+ */
 export const CardStack: React.FC<CardStackProps> = ({
 	role,
 	cards: propsCards,

@@ -25,8 +25,14 @@ interface SwipeState {
 	isSwipeUp: boolean;
 }
 
+/**
+ * State representing the current swipe gesture.
+ */
 export type { SwipeState };
 
+/**
+ * Options for the useSwipeGestures hook.
+ */
 interface UseSwipeGesturesOptions {
 	enabled: boolean;
 	onSwipe: (direction: "LEFT" | "RIGHT") => void;
@@ -34,6 +40,11 @@ interface UseSwipeGesturesOptions {
 	onSwipeUp?: () => void;
 }
 
+/**
+ * Custom hook for handling swipe gestures on touch and mouse events.
+ * @param options - Configuration options for swipe behavior
+ * @returns Object with current state, event handlers, and programmatic swipe function
+ */
 export function useSwipeGestures({
 	enabled,
 	onSwipe,

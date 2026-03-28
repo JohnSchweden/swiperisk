@@ -27,6 +27,9 @@ function getInitialBudgetForRole(role: RoleType | null): number {
 	return ROLE_FINE_TIERS[role]?.budget ?? INITIAL_BUDGET;
 }
 
+/**
+ * Default initial state for the game state reducer.
+ */
 export const initialGameState: GameState = {
 	hype: 50,
 	heat: 0,
@@ -45,6 +48,9 @@ export const initialGameState: GameState = {
 	kirkCorruptionActive: false,
 };
 
+/**
+ * Actions that can be dispatched to modify the game state.
+ */
 export type GameAction =
 	| {
 			type: "STAGE_CHANGE";
@@ -219,6 +225,12 @@ function handleNextIncident(state: GameState): GameState {
 	};
 }
 
+/**
+ * Reducer function for managing game state changes.
+ * @param state - Current game state
+ * @param action - Action to apply
+ * @returns New game state after applying the action
+ */
 export function gameReducer(state: GameState, action: GameAction): GameState {
 	switch (action.type) {
 		case "STAGE_CHANGE":
@@ -240,6 +252,9 @@ export function gameReducer(state: GameState, action: GameAction): GameState {
 	}
 }
 
+/**
+ * Return type for the useGameState hook.
+ */
 export interface UseGameStateResult {
 	state: GameState;
 	dispatch: Dispatch<GameAction>;
@@ -302,6 +317,10 @@ function useDebugStateSync(state: GameState) {
 	}, [state]);
 }
 
+/**
+ * Custom hook for managing game state using a reducer pattern.
+ * @returns Object containing current state, dispatch function, and action dispatchers
+ */
 export function useGameState(): UseGameStateResult {
 	const [state, dispatch] = useReducer(gameReducer, null, getHydratedState);
 	useDebugStateSync(state);

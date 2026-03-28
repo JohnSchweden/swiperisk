@@ -7,6 +7,11 @@ function getCurrentTime(): string {
 	});
 }
 
+/**
+ * Hook that provides the current time as a formatted string, updating at regular intervals.
+ * @param updateInterval - Interval in milliseconds for updating the time (default: 10000)
+ * @returns Current time formatted as HH:MM
+ */
 export function useClock(updateInterval = 10000): string {
 	const [time, setTime] = useState(getCurrentTime);
 

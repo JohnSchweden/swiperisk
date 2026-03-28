@@ -1,17 +1,28 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import type { GameStage } from "../types";
 
+/**
+ * Options for the useStageReady hook.
+ */
 interface UseStageReadyOptions {
 	stage: GameStage;
 	targetStage: GameStage;
 	delay?: number;
 }
 
+/**
+ * Return type for the useStageReady hook.
+ */
 interface UseStageReadyResult {
 	isReady: boolean;
 	hoverEnabled: boolean;
 }
 
+/**
+ * Custom hook for managing UI readiness after stage transitions.
+ * @param options - Configuration options
+ * @returns Object with readiness state and hover enablement
+ */
 export function useStageReady({
 	stage,
 	targetStage,

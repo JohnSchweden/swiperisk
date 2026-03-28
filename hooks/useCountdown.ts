@@ -12,6 +12,12 @@ interface UseCountdownResult {
 	reset: () => void;
 }
 
+/**
+ * Hook for managing a countdown timer with completion and expiry callbacks.
+ * Handles activation, reset, and automatic progression.
+ * @param options - Configuration options for the countdown
+ * @returns Object containing current count and reset function
+ */
 export function useCountdown(options: UseCountdownOptions): UseCountdownResult {
 	const { startFrom, onComplete, onExpire, isActive } = options;
 	const [count, setCount] = useState(startFrom);

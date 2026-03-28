@@ -84,3 +84,6 @@ Patterns to prevent repeat mistakes. Update after corrections from the user.
 
 <!-- Captured 2026-03-28 via post-commit analysis -->
 - [RULE] Audio playback effects coordinating on the same behavior (death audio, victory audio) must reference the same canonical GameStage value across all effects. Outcome screens use `DEBRIEF_PAGE_1` (death when `deathType` is set, victory when null); keep triggers aligned with that stage and `deathType`, not split legacy stages.
+
+<!-- Captured 2026-03-29 via post-commit analysis -->
+- [RULE] Don't use Playwright's `page.mouse.move/down/up` for testing card drag interactions; use DOM-level synthetic event dispatch instead — Playwright's synthetic mouse events don't reliably fire window-level listeners in this architecture's gesture detection, causing flaky tests. Create helper functions (`syntheticDragOnCard`, `syntheticMouseUpAtCard`) that dispatch events directly on the target element.

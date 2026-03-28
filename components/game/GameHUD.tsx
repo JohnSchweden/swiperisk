@@ -6,13 +6,19 @@ const BUDGET_CRITICAL = 2_000_000;
 const HEAT_HIGH = 70;
 const HEAT_CRITICAL = 85;
 
+/**
+ * Props for the GameHUD component.
+ */
 interface GameHUDProps {
+	/** Current budget amount */
 	budget: number;
+	/** Current heat/risk level percentage */
 	heat: number;
+	/** Current hype level percentage */
 	hype: number;
-	/** When set, HUD shows countdown is active (escalation context). */
+	/** Optional countdown value when escalation is active */
 	countdownValue?: number;
-	/** Starting budget for progress bar calculation (defaults to 10M) */
+	/** Starting budget for progress bar calculation */
 	startingBudget?: number;
 }
 
@@ -38,6 +44,13 @@ function getHeatColorClass(heatCritical: boolean, heatHigh: boolean): string {
 	return "text-orange-500";
 }
 
+/**
+ * GameHUD component displays the game's heads-up display with budget, risk, and hype meters.
+ * Shows progress bars with color-coded thresholds for critical/warning states.
+ * Includes pressure styling when under critical conditions.
+ * @param props - The component props
+ * @returns The rendered HUD component
+ */
 export const GameHUD = React.memo(function GameHUD({
 	budget,
 	heat,

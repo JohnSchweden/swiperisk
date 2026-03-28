@@ -5,6 +5,9 @@ import {
 } from "../services/roastService";
 import type { PersonalityType } from "../types";
 
+/**
+ * Possible states for the roast functionality.
+ */
 export type RoastStatus =
 	| "idle"
 	| "loading"
@@ -12,6 +15,11 @@ export type RoastStatus =
 	| "speaking"
 	| "complete";
 
+/**
+ * Custom hook for handling roast functionality with speech synthesis.
+ * @param personality - The AI personality type
+ * @returns Object with input state, output, loading status, and roast handler
+ */
 export function useRoast(personality: PersonalityType | null) {
 	const [input, setInput] = useState("");
 	const [output, setOutput] = useState<string | null>(null);

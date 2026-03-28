@@ -1,13 +1,24 @@
+/**
+ * Enumeration of available personality types for the game's narrator.
+ */
 export enum PersonalityType {
 	ROASTER = "ROASTER",
 	ZEN_MASTER = "ZEN_MASTER",
 	LOVEBOMBER = "LOVEBOMBER",
 }
 
-/** Map of personality types to their feedback strings */
+/**
+ * Map of personality types to their feedback strings for choice outcomes.
+ */
 export type PersonalityFeedback = Record<PersonalityType, string>;
 
-/** Helper to create feedback for all three personalities */
+/**
+ * Helper function to create feedback object for all three personalities.
+ * @param roaster - Feedback text for ROASTER personality
+ * @param zenMaster - Feedback text for ZEN_MASTER personality
+ * @param lovebomber - Feedback text for LOVEBOMBER personality
+ * @returns PersonalityFeedback object with all three personalities
+ */
 export function makeFeedback(
 	roaster: string,
 	zenMaster: string,
@@ -47,7 +58,19 @@ function makeOutcome(input: OutcomeInput): ChoiceOutcome {
 	};
 }
 
-/** Factory function to create a Card with reduced boilerplate */
+/**
+ * Factory function to create a Card with reduced boilerplate.
+ * @param id - Unique identifier for the card
+ * @param source - App source (e.g. SLACK, EMAIL)
+ * @param sender - Sender of the message/incident
+ * @param context - Context or title of the incident
+ * @param storyContext - Optional scene-setting text
+ * @param text - Main text content of the card
+ * @param realWorldRef - Real-world incident reference
+ * @param onLeft - Outcome for left swipe choice
+ * @param onRight - Outcome for right swipe choice
+ * @returns Complete Card object
+ */
 export function makeCard(
 	id: string,
 	source: AppSource,
@@ -72,6 +95,9 @@ export function makeCard(
 	};
 }
 
+/**
+ * Enumeration of available role types for the player character.
+ */
 export enum RoleType {
 	CHIEF_SOMETHING_OFFICER = "CHIEF_SOMETHING_OFFICER",
 	HEAD_OF_SOMETHING = "HEAD_OF_SOMETHING",
@@ -85,6 +111,9 @@ export enum RoleType {
 	AGENTIC_ENGINEER = "AGENTIC_ENGINEER",
 }
 
+/**
+ * Enumeration of application sources for incident cards.
+ */
 export enum AppSource {
 	SLACK = "SLACK",
 	EMAIL = "EMAIL",
@@ -95,6 +124,9 @@ export enum AppSource {
 	MEETING = "MEETING",
 }
 
+/**
+ * Reference to a real-world incident that inspired the card scenario.
+ */
 export interface RealWorldReference {
 	/** Name of the company, product, or system involved in the real incident */
 	incident: string;
@@ -106,7 +138,9 @@ export interface RealWorldReference {
 	sourceUrl?: string;
 }
 
-/** Outcome of a card choice (left or right swipe) */
+/**
+ * Outcome of a card choice (left or right swipe).
+ */
 export interface ChoiceOutcome {
 	label: string;
 	hype: number;
@@ -119,6 +153,9 @@ export interface ChoiceOutcome {
 	deathVector?: DeathType;
 }
 
+/**
+ * Represents an incident card with choices and outcomes.
+ */
 export interface Card {
 	id: string;
 	source: AppSource;
@@ -138,6 +175,9 @@ export interface Card {
 	choiceSidesSwapped?: boolean;
 }
 
+/**
+ * Enumeration of game stages for state management.
+ */
 export enum GameStage {
 	INTRO = "INTRO",
 	PERSONALITY_SELECT = "PERSONALITY_SELECT",
@@ -150,6 +190,9 @@ export enum GameStage {
 	DEBRIEF_PAGE_3 = "DEBRIEF_PAGE_3",
 }
 
+/**
+ * Complete game state object containing all game variables and progress.
+ */
 export interface GameState {
 	hype: number;
 	heat: number;
@@ -172,6 +215,9 @@ export interface GameState {
 	deathVectorMap?: DeathVectorMap;
 }
 
+/**
+ * Enumeration of possible death/endgame types.
+ */
 export enum DeathType {
 	BANKRUPT = "BANKRUPT",
 	REPLACED_BY_SCRIPT = "REPLACED_BY_SCRIPT",
@@ -182,10 +228,14 @@ export enum DeathType {
 	KIRK = "KIRK",
 }
 
-/** Frequency map of death vectors accumulated from player choices */
+/**
+ * Frequency map of death vectors accumulated from player choices.
+ */
 export type DeathVectorMap = Partial<Record<DeathType, number>>;
 
-/** Phase 03-06: Role-based fine tiers for balanced gameplay */
+/**
+ * Role-based fine tiers for balanced gameplay across different roles.
+ */
 export const ROLE_FINE_TIERS = {
 	CHIEF_SOMETHING_OFFICER: { min: 5000000, max: 500000000, budget: 200000000 },
 	HEAD_OF_SOMETHING: { min: 1000000, max: 50000000, budget: 100000000 },
@@ -199,19 +249,13 @@ export const ROLE_FINE_TIERS = {
 	AGENTIC_ENGINEER: { min: 300000, max: 18000000, budget: 60000000 },
 } as const;
 
+/**
+ * Type representing the keys of ROLE_FINE_TIERS.
+ */
 export type RoleFineTier = keyof typeof ROLE_FINE_TIERS;
 
 /**
  * Role-based heat scaling for 8-10 card gameplay.
- * Target: ~10-12 average heat per card (was 20-25)
- * Formula: newHeat = Math.round(oldHeat * 0.45)
- *
- * Actual ranges achieved:
- * - Vibe Coder: 4-18 (was 8-40), scale 0.45
- * - Software Engineer: 4-16 (was 8-35), scale 0.45
- * - Data Scientist: 4-19 (was 8-42), scale 0.5
- * - C-suite: 9-31 (was 20-68), scale 0.75
- *
  * @deprecated Kept for reference. Use tests/data/heat-correlation.test.ts for validation.
  */
 export const ROLE_HEAT_SCALES = {
@@ -227,9 +271,14 @@ export const ROLE_HEAT_SCALES = {
 	AGENTIC_ENGINEER: { min: 5, max: 23 },
 } as const;
 
+/**
+ * Type representing the keys of ROLE_HEAT_SCALES.
+ */
 export type RoleHeatScale = keyof typeof ROLE_HEAT_SCALES;
 
-/** Phase 06: Archetype types for debrief system */
+/**
+ * Archetype identifiers for the debrief system.
+ */
 export type ArchetypeId =
 	| "PRAGMATIST"
 	| "SHADOW_ARCHITECT"
@@ -240,6 +289,9 @@ export type ArchetypeId =
 	/** Phase 07: Kirk Easter Egg archetype */
 	| "KIRK";
 
+/**
+ * Represents a leadership archetype determined from gameplay.
+ */
 export interface Archetype {
 	id: ArchetypeId;
 	name: string;
@@ -251,12 +303,18 @@ export interface Archetype {
 	image?: string;
 }
 
+/**
+ * Enumeration of debrief page stages.
+ */
 export enum DebrieRStage {
 	PAGE_1 = "PAGE_1",
 	PAGE_2 = "PAGE_2",
 	PAGE_3 = "PAGE_3",
 }
 
+/**
+ * State object for the debrief system.
+ */
 export interface DebriefState {
 	page: DebrieRStage;
 	archetype: Archetype | null;
@@ -264,6 +322,9 @@ export interface DebriefState {
 	deathType: DeathType | null;
 }
 
+/**
+ * Represents a question for the boss fight quiz.
+ */
 export interface BossQuestion {
 	id: string;
 	question: string;
@@ -272,7 +333,9 @@ export interface BossQuestion {
 	explanation: string;
 }
 
-/** Phase 06-04: V2 Waitlist payload for email capture */
+/**
+ * Payload for V2 waitlist email capture.
+ */
 export interface V2WaitlistPayload {
 	email: string;
 	role: string;
@@ -281,12 +344,17 @@ export interface V2WaitlistPayload {
 	timestamp: number;
 }
 
-/** Phase 04: Pressure metadata for immersive effects. Keyed by card ID, referenced at runtime. */
+/**
+ * Pressure metadata for immersive effects, keyed by card ID.
+ */
 export interface PressureOutcomeMetadata {
 	/** Optional team-impact copy shown in feedback overlay (e.g. morale, resignations). */
 	teamImpact?: string;
 }
 
+/**
+ * Pressure scenario metadata for urgent/critical incidents.
+ */
 export interface PressureScenarioMetadata {
 	/** If true, incident starts a countdown; expiry resolves to timeoutResolvesTo. */
 	urgent: boolean;

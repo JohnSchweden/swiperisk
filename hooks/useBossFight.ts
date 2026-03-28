@@ -22,6 +22,12 @@ interface UseBossFightResult {
 	nextQuestion: () => void;
 }
 
+/**
+ * Hook for managing boss fight quiz mechanics with timed questions and scoring.
+ * Handles question progression, answer validation, timer countdown, and completion logic.
+ * @param options - Configuration options for the boss fight
+ * @returns Object containing current question state, timer, and control functions
+ */
 export function useBossFight({
 	isActive,
 	onAnswer,

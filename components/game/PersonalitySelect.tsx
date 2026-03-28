@@ -13,9 +13,15 @@ import {
 
 const SPEECH_UI_ENABLED = import.meta.env.VITE_ENABLE_SPEECH !== "false";
 
+/**
+ * Props for the PersonalitySelect component.
+ */
 interface PersonalitySelectProps {
+	/** Whether the selection is ready and interactive */
 	isReady: boolean;
+	/** Whether hover effects are enabled */
 	hoverEnabled: boolean;
+	/** Callback when a personality is selected */
 	onSelect: (personality: PersonalityType) => void;
 }
 
@@ -32,6 +38,13 @@ function getPersonalityIcon(type: PersonalityType): string {
 	}
 }
 
+/**
+ * PersonalitySelect component for choosing the game's narrator personality.
+ * Displays available personalities with descriptions and voice hints.
+ * Handles selection state and hover interactions.
+ * @param props - The component props
+ * @returns The rendered personality selection interface
+ */
 export const PersonalitySelect: React.FC<PersonalitySelectProps> = ({
 	isReady,
 	hoverEnabled,

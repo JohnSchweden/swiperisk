@@ -59,6 +59,12 @@ const TaskbarFlySpeedBurger = forwardRef<
 	);
 });
 
+/**
+ * Taskbar component displays the bottom taskbar with personality info, time, and speed controls.
+ * Integrates with starfield speed UI context for mobile burger menu.
+ * @param props - The component props
+ * @returns The rendered taskbar component
+ */
 export const Taskbar: React.FC<TaskbarProps> = ({
 	personality,
 	currentTime,

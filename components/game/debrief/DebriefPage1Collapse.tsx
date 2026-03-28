@@ -206,6 +206,13 @@ interface DebriefPage1CollapseProps {
 	onNext: () => void;
 }
 
+/**
+ * DebriefPage1Collapse component displays the first page of the game debrief.
+ * Shows game over status, stats, unlocked endings, and failure lessons.
+ * Handles victory and various death types including KIRK breach.
+ * @param props - The component props
+ * @returns The rendered debrief page 1 component
+ */
 export function DebriefPage1Collapse({
 	state,
 	onNext,

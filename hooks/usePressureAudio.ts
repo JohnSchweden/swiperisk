@@ -8,6 +8,9 @@ import { triggerHaptic } from "../utils/haptic";
 
 /** Phase 04: React lifecycle wrapper around pressure audio session */
 
+/**
+ * Options for the usePressureAudio hook.
+ */
 export interface UsePressureAudioOptions {
 	/** Whether pressure is high enough to trigger stress cues */
 	hasHighPressure: boolean;
@@ -38,6 +41,10 @@ function resumeOnFirstGesture(ctx: AudioContext): void {
 	document.addEventListener("click", resume, opts);
 }
 
+/**
+ * Custom hook for managing pressure audio cues during gameplay.
+ * @param options - Configuration options for pressure audio
+ */
 export function usePressureAudio({
 	hasHighPressure,
 	isCritical,

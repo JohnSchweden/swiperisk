@@ -1,5 +1,8 @@
 import { RoleType } from "../types";
 
+/**
+ * Descriptions for each role type, providing context and flavor.
+ */
 export const ROLE_DESCRIPTIONS: Record<RoleType, string> = {
 	[RoleType.CHIEF_SOMETHING_OFFICER]:
 		"The art of plausible deniability, elevated to C-suite levels.",
@@ -23,7 +26,9 @@ export const ROLE_DESCRIPTIONS: Record<RoleType, string> = {
 		"The puppet master of rogue bots. Automation at scale.",
 };
 
-// Display labels for UI
+/**
+ * Display labels for each role type, used in the UI.
+ */
 export const ROLE_LABELS: Record<RoleType, string> = {
 	[RoleType.CHIEF_SOMETHING_OFFICER]: "Chief Something Officer",
 	[RoleType.HEAD_OF_SOMETHING]: "Head of Something",
@@ -37,7 +42,9 @@ export const ROLE_LABELS: Record<RoleType, string> = {
 	[RoleType.AGENTIC_ENGINEER]: "Agentic Engineer",
 };
 
-// Font Awesome icon class names for each role
+/**
+ * Font Awesome icon class names for each role type.
+ */
 export const ROLE_ICONS: Record<RoleType, string> = {
 	[RoleType.CHIEF_SOMETHING_OFFICER]: "fa-user-tie",
 	[RoleType.HEAD_OF_SOMETHING]: "fa-user-group",
@@ -51,9 +58,10 @@ export const ROLE_ICONS: Record<RoleType, string> = {
 	[RoleType.AGENTIC_ENGINEER]: "fa-robot",
 };
 
-// Temporary deck aliases mapping impact zones to existing card decks
-// until Phase 05 adds role-specific cards
-// Using string deck names for alias resolution
+/**
+ * Temporary deck aliases mapping role types to existing card decks.
+ * Used until role-specific cards are implemented in Phase 05.
+ */
 export const ROLE_DECK_ALIASES: Record<RoleType, string> = {
 	[RoleType.CHIEF_SOMETHING_OFFICER]: "MANAGEMENT",
 	[RoleType.HEAD_OF_SOMETHING]: "MANAGEMENT",
@@ -67,13 +75,19 @@ export const ROLE_DECK_ALIASES: Record<RoleType, string> = {
 	[RoleType.AGENTIC_ENGINEER]: "DEVELOPMENT",
 };
 
-// Helper to get the actual deck to use (resolves alias to deck name)
+/**
+ * Gets the actual deck name to use for a given role (resolves alias).
+ * @param role - The role type
+ * @returns The deck name string
+ */
 export function getRoleDeck(role: RoleType): string {
 	return ROLE_DECK_ALIASES[role];
 }
 
-// Legacy RoleType values preserved for Phase 05 recovery
-// These are not used at runtime but preserved for reference
+/**
+ * Legacy role type values preserved for Phase 05 recovery.
+ * Not used at runtime but kept for reference.
+ */
 export const LEGACY_ROLE_TYPES = {
 	DEVELOPMENT: "DEVELOPMENT",
 	MARKETING: "MARKETING",

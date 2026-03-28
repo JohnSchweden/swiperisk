@@ -86,6 +86,13 @@ function updateMetaTags(
 const KIRK_SHARE_TEXT =
 	"I broke the Kobayashi Maru. There was always a third option. Kirk would be proud.\n\nhttps://k-maru-seven.vercel.app/";
 
+/**
+ * DebriefPage3Verdict component displays the final page of the game debrief.
+ * Shows the player's archetype classification, resilience score, and sharing options.
+ * Handles meta tag updates for social sharing and voice playback.
+ * @param props - The component props
+ * @returns The rendered debrief page 3 component
+ */
 export const DebriefPage3Verdict: React.FC<DebriefPage3VerdictProps> = ({
 	archetype,
 	archetypeDescription,

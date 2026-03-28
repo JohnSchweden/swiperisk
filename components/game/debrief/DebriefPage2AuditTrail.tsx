@@ -212,6 +212,13 @@ function PathHint({
 	);
 }
 
+/**
+ * DebriefPage2AuditTrail component displays the second page of the game debrief.
+ * Shows the complete audit trail of player decisions with expandable card details.
+ * Includes personality commentary and reflection prompts for non-KIRK paths.
+ * @param props - The component props
+ * @returns The rendered debrief page 2 component
+ */
 export const DebriefPage2AuditTrail: React.FC<DebriefPage2AuditTrailProps> = ({
 	state,
 	onNext,

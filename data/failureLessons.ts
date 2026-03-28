@@ -1,9 +1,15 @@
 import type { DeathVectorMap, PersonalityType } from "../types";
 import { DeathType } from "../types";
 
+/**
+ * Represents a failure lesson with educational content.
+ */
 export interface FailureLesson {
+	/** The title of the lesson */
 	title: string;
+	/** Detailed explanation of the failure mode */
 	explanation: string;
+	/** Real-world example of this type of failure */
 	realWorldExample: string;
 }
 
@@ -13,6 +19,7 @@ type LessonDeathType = Exclude<DeathType, typeof DeathType.KIRK>;
 /**
  * Educational failure lessons for each death type.
  * Each death type has 3-4 lessons teaching AI governance failure modes.
+ * Provides real-world examples and explanations for learning purposes.
  */
 export const FAILURE_LESSONS: Record<LessonDeathType, FailureLesson[]> = {
 	[DeathType.BANKRUPT]: [
@@ -319,6 +326,9 @@ const RETRY_PROMPTS: Record<LessonDeathType, RetryPromptSet> = {
 
 /**
  * Returns a personality-specific "try again" suggestion that hints at a different strategy.
+ * @param deathType - The type of death that occurred
+ * @param personality - The player's personality type
+ * @returns A retry prompt tailored to the personality and death type
  */
 export function getRetryPrompt(
 	deathType: LessonDeathType,

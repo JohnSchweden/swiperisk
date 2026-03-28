@@ -2,6 +2,9 @@ import { useEffect, useMemo, useRef } from "react";
 import { PRESSURE_SCENARIOS } from "../data";
 import type { Card, GameState, PressureScenarioMetadata } from "../types";
 
+/**
+ * State returned by the useIncidentPressure hook.
+ */
 export interface IncidentPressureState {
 	/** Metadata for the current card; null if no scenario configured. */
 	activeScenario: PressureScenarioMetadata | null;
@@ -17,6 +20,9 @@ export interface IncidentPressureState {
 	getTeamImpact: (direction: "LEFT" | "RIGHT") => string | null;
 }
 
+/**
+ * Options for the useIncidentPressure hook.
+ */
 export interface UseIncidentPressureOptions {
 	/** Callback fired when transitioning into critical state (heat >= 70). */
 	onCriticalChange?: (isCritical: boolean) => void;

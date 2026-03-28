@@ -22,6 +22,12 @@ function validateEmail(email: string): boolean {
 	return EMAIL_REGEX.test(email);
 }
 
+/**
+ * Hook for managing email capture and submission to the V2 waitlist.
+ * Handles validation, API submission, and state management.
+ * @param options - Configuration options with user data
+ * @returns Object containing email state, validation, and submission controls
+ */
 export function useEmailCapture({
 	role,
 	archetype,

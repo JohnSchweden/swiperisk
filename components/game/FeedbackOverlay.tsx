@@ -9,26 +9,37 @@ const BUDGET_CRITICAL = 2_000_000;
 const HEAT_CRITICAL = 85;
 const HEAT_HIGH = 70;
 
+/**
+ * Props for the FeedbackOverlay component.
+ */
 interface FeedbackOverlayProps {
+	/** The personality type providing the feedback */
 	personality: PersonalityType | null;
+	/** The feedback text from the personality */
 	text: string;
+	/** The governance lesson or alert message */
 	lesson: string;
+	/** The choice made (left or right swipe) */
 	choice: "LEFT" | "RIGHT";
+	/** Fine amount for violation (0 if no violation) */
 	fine: number;
+	/** Description of the violation if any */
 	violation: string;
-	/** Optional team-impact copy (morale, resignations, etc.) from pressure metadata. */
+	/** Optional team impact description */
 	teamImpact?: string | null;
-	/** Optional budget/heat for escalation banner when critical (same thresholds as GameHUD). */
+	/** Optional budget amount for escalation display */
 	budget?: number;
+	/** Optional heat level for escalation display */
 	heat?: number;
-	/** Real-world incident reference for history section */
+	/** Real-world incident reference for context */
 	realWorldReference?: {
 		incident: string;
 		date: string;
 		outcome: string;
 	} | null;
-	/** Label of the chosen outcome for image lookup */
+	/** Label of the chosen outcome for image display */
 	outcomeLabel?: string;
+	/** Callback to proceed to next card */
 	onNext: () => void;
 }
 
@@ -39,6 +50,13 @@ function formatBudget(amount: number): string {
 	return `$${amount.toLocaleString()}`;
 }
 
+/**
+ * FeedbackOverlay component displays governance feedback after a card choice.
+ * Shows personality review, fine information, lessons, and escalation warnings.
+ * Includes keyboard navigation and modal accessibility features.
+ * @param props - The component props
+ * @returns The rendered feedback overlay modal
+ */
 export const FeedbackOverlay: React.FC<FeedbackOverlayProps> = ({
 	personality,
 	text,

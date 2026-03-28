@@ -1,12 +1,28 @@
 import type { VercelRequest, VercelResponse } from "@vercel/node";
 import type { V2WaitlistPayload } from "../types";
 
+/**
+ * Regular expression for validating email addresses.
+ * Matches basic email format with local@domain.tld structure.
+ */
 const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
+/**
+ * Validates if the given string is a valid email address.
+ * @param email - The email string to validate
+ * @returns True if the email matches the expected format, false otherwise
+ */
 function validateEmail(email: string): boolean {
 	return EMAIL_REGEX.test(email);
 }
 
+/**
+ * Validates if the given payload conforms to the V2WaitlistPayload type.
+ * Checks for required fields: email (string), role (string), archetype (string),
+ * resilience (number), and timestamp (number). Also validates email format.
+ * @param payload - The unknown payload to validate
+ * @returns True if payload matches V2WaitlistPayload interface, false otherwise
+ */
 function validatePayload(payload: unknown): payload is V2WaitlistPayload {
 	if (!payload || typeof payload !== "object") {
 		return false;
@@ -24,6 +40,18 @@ function validatePayload(payload: unknown): payload is V2WaitlistPayload {
 	);
 }
 
+/**
+ * Handles V2 waitlist API requests for user signups.
+ * Accepts POST requests with V2WaitlistPayload, validates the data,
+ * logs the signup, sends a confirmation email (if configured), and returns success.
+ * @param req - The incoming Vercel request object
+ * @param res - The Vercel response object to send back to the client
+ * @returns Promise that resolves when the response is sent (status 200, 400, 405, or 500)
+ * @throws Will send error responses for invalid methods (405), invalid payload (400), or server errors (500)
+ * @example
+ * POST /api/v2-waitlist
+ * Body: { "email": "user@example.com", "role": "Manager", "archetype": "Optimist", "resilience": 75, "timestamp": 1640995200000 }
+ */
 export default async function handler(req: VercelRequest, res: VercelResponse) {
 	// Only accept POST requests
 	if (req.method !== "POST") {

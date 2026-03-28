@@ -1,5 +1,8 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 
+/**
+ * Return type for the useSpeechRecognition hook.
+ */
 interface UseSpeechRecognitionReturn {
 	isListening: boolean;
 	transcript: string;
@@ -50,6 +53,10 @@ declare global {
 	}
 }
 
+/**
+ * Custom hook for speech recognition using the Web Speech API.
+ * @returns Object with listening state, transcript, control functions, and error state
+ */
 export function useSpeechRecognition(): UseSpeechRecognitionReturn {
 	const [isListening, setIsListening] = useState(false);
 	const [transcript, setTranscript] = useState("");

@@ -33,6 +33,11 @@ async function decodeAudioData(
 let audioContext: AudioContext | null = null;
 let activeSources: AudioBufferSourceNode[] = [];
 
+/**
+ * Speaks the given text using the Gemini TTS API.
+ * @param text - The text to speak
+ * @param voiceName - The voice to use (default: "Kore")
+ */
 export const speak = async (text: string, voiceName: string = "Kore") => {
 	if (import.meta.env.VITE_ENABLE_SPEECH === "false") return;
 	try {
@@ -94,6 +99,9 @@ export const speak = async (text: string, voiceName: string = "Kore") => {
 	}
 };
 
+/**
+ * Cleans up audio resources and closes the audio context.
+ */
 export const cleanupAudio = () => {
 	activeSources.forEach((source) => {
 		try {
@@ -108,6 +116,12 @@ export const cleanupAudio = () => {
 	}
 };
 
+/**
+ * Gets a roast response for the given workflow and personality.
+ * @param workflow - The workflow text to roast
+ * @param personality - The AI personality type
+ * @returns Promise resolving to the roast text
+ */
 export const getRoast = async (
 	workflow: string,
 	personality: PersonalityType,

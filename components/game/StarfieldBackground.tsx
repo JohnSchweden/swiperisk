@@ -63,7 +63,11 @@ type StarfieldSpeedUIContextValue = {
 const StarfieldSpeedUIContext =
 	createContext<StarfieldSpeedUIContextValue | null>(null);
 
-/** Taskbar fly-speed control (mobile game only); null when not under StarfieldBackground provider */
+/**
+ * Hook to access starfield speed UI controls from context.
+ * Returns null when not within a StarfieldBackground provider.
+ * @returns The starfield speed UI context value or null
+ */
 export function useStarfieldSpeedUIBurger(): StarfieldSpeedUIContextValue | null {
 	return useContext(StarfieldSpeedUIContext);
 }
@@ -168,6 +172,9 @@ function readStoredSpeedScale(): number {
 	}
 }
 
+/**
+ * Props for background music controls in the starfield panel.
+ */
 export type StarfieldBgmMenuProps = {
 	currentTrackTitle: string;
 	bgmVolume: number;
@@ -304,22 +311,26 @@ function StarfieldSpeedPanel({
 	);
 }
 
+/**
+ * Props for the StarfieldBackground component.
+ */
 export type StarfieldBackgroundProps = {
-	/**
-	 * When true, hide the desktop inline panel; fly speed is only in the burger fly-out
-	 * (landing and all other stages — one consistent control).
-	 */
+	/** When true, hide the desktop inline panel; fly speed is only in the burger fly-out */
 	flySpeedMenuOnly?: boolean;
-	/**
-	 * When true with `flySpeedMenuOnly` and a mobile viewport, the corner burger is hidden and
-	 * Taskbar (GameScreen) hosts the control via context. Must be false when Taskbar is not mounted.
-	 */
+	/** When true with `flySpeedMenuOnly` and a mobile viewport, the corner burger is hidden and Taskbar hosts the control via context */
 	taskbarHostsSpeedBurger?: boolean;
-	/** Optional background music controls (same flyout as fly speed). */
+	/** Optional background music controls */
 	bgm?: StarfieldBgmMenuProps;
+	/** Child components to render above the starfield */
 	children?: React.ReactNode;
 };
 
+/**
+ * StarfieldBackground component renders an animated starfield background with speed controls.
+ * Provides context for speed UI controls and supports background music integration.
+ * @param props - The component props
+ * @returns The rendered starfield background with controls
+ */
 export const StarfieldBackground: React.FC<StarfieldBackgroundProps> = ({
 	flySpeedMenuOnly = false,
 	taskbarHostsSpeedBurger = false,

@@ -18,13 +18,18 @@ type BossFightControls = {
 	question: BossQuestion | undefined;
 };
 
-/** Overlay fields used by dev MCP tools (matches App feedback overlay shape). */
+/**
+ * Overlay fields used by dev MCP tools (matches App feedback overlay shape).
+ */
 export type WebMCPFeedbackOverlay = {
 	cardId: string;
 	choice: "LEFT" | "RIGHT";
 	feedbackAuthoringStem: string;
 } | null;
 
+/**
+ * Dependencies required by the useWebMCPTools hook.
+ */
 export interface UseWebMCPToolsDeps {
 	state: GameState;
 	startGame: () => void;
@@ -52,6 +57,10 @@ const ROLES = [
 	"AGENTIC_ENGINEER",
 ] as const;
 
+/**
+ * Custom hook for registering WebMCP tools for game interaction.
+ * @param deps - Dependencies and game state handlers
+ */
 export function useWebMCPTools(deps: UseWebMCPToolsDeps) {
 	const {
 		state,

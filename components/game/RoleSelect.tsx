@@ -26,12 +26,25 @@ import {
 
 const SPEECH_UI_ENABLED = import.meta.env.VITE_ENABLE_SPEECH !== "false";
 
+/**
+ * Props for the RoleSelect component.
+ */
 interface RoleSelectProps {
+	/** Whether the selection is ready and interactive */
 	isReady: boolean;
+	/** Whether hover effects are enabled */
 	hoverEnabled: boolean;
+	/** Callback when a role is selected */
 	onSelect: (role: RoleType) => void;
 }
 
+/**
+ * RoleSelect component for choosing the user's role/silo in the simulation.
+ * Displays available roles with descriptions, budgets, and voice hints.
+ * Handles selection state and visual interactions.
+ * @param props - The component props
+ * @returns The rendered role selection interface
+ */
 export const RoleSelect: React.FC<RoleSelectProps> = ({
 	isReady,
 	hoverEnabled,

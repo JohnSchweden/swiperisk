@@ -133,6 +133,11 @@ function primeBgmElementAtIndex(el: HTMLAudioElement, index: number): boolean {
 	return true;
 }
 
+/**
+ * Hook for managing background music playback with volume control, track skipping, and voice ducking.
+ * Handles session persistence, user preferences, and automatic playlist progression.
+ * @returns Object containing current track info, volume controls, and playback state
+ */
 export function useBackgroundMusic() {
 	const sessionResume = useMemo(
 		() => ({

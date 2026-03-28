@@ -8,6 +8,12 @@
  *
  * stdout: always `{}` (Cursor parses hook output as JSON; Biome human output must not leak).
  */
+// Cursor pipes JSON (non-TTY). Interactive `bun format.ts` would block on stdin forever.
+if (process.stdin.isTTY) {
+	console.log("{}");
+	process.exit(0);
+}
+
 const stdin = await Bun.stdin.text();
 let payload: unknown;
 try {

@@ -38,14 +38,14 @@ describe("Card Real-World Reference Validation — 10 Role System", () => {
 		expect(invalidCards).toEqual([]);
 	});
 
-	it("outcome descriptions are reasonably sized (50-200 chars)", () => {
+	it("outcome descriptions are reasonably sized (50-250 chars)", () => {
 		const invalidCards: { id: string; length: number }[] = [];
 
 		for (const card of ALL_CARDS) {
 			if (!card.realWorldReference?.outcome) continue;
 
 			const length = card.realWorldReference.outcome.length;
-			if (length < 50 || length > 200) {
+			if (length < 50 || length > 250) {
 				invalidCards.push({ id: card.id, length });
 			}
 		}

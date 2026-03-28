@@ -28,8 +28,8 @@ export function authoringFeedbackStem(
 	// Audio must match what's displayed (card.onLeft.label), not the swapped authoring branch
 	if (card.choiceSidesSwapped === true) {
 		return selectedPresentationSlot === "LEFT"
-			? slugify(card.onLeft.label)
-			: slugify(card.onRight.label);
+			? slugify(card.onRight.label)
+			: slugify(card.onLeft.label);
 	}
 	return selectedPresentationSlot === "LEFT"
 		? slugify(card.onLeft.label)

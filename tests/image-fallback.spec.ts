@@ -58,23 +58,27 @@ test.describe("ImageWithFallback component @area:layout", () => {
 	test("d) Placeholder has glitch aesthetic (scanline animation)", async ({
 		page,
 	}) => {
+		await page.route("**/*.webp", (route) => {
+			setTimeout(() => route.continue(), 800);
+		});
 		await navigateToPlayingWithCardAtIndex(page, RoleType.SOFTWARE_ENGINEER, 0);
 
-		const placeholders = page.locator("div:has(i.fa-image)");
-		const count = await placeholders.count();
+		const placeholder = page
+			.locator('[data-testid="incident-card"]')
+			.locator("div.glitch-placeholder");
 
-		if (count > 0) {
-			const hasAnimation = await placeholders.first().evaluate((el) => {
-				const classList = el.className;
-				const style = el.getAttribute("style");
-				return (
-					classList?.includes("glitch-placeholder") ||
-					style?.includes("animation: glitch-scan") ||
-					style?.includes("repeating-linear-gradient")
-				);
-			});
+		await expect(placeholder).toBeVisible({ timeout: 6000 });
 
-			expect(hasAnimation).toBeTruthy();
-		}
+		const hasAnimation = await placeholder.first().evaluate((el) => {
+			const classList = el.className;
+			const style = el.getAttribute("style");
+			return (
+				classList?.includes("glitch-placeholder") ||
+				style?.includes("animation: glitch-scan") ||
+				style?.includes("repeating-linear-gradient")
+			);
+		});
+
+		expect(hasAnimation).toBeTruthy();
 	});
 });

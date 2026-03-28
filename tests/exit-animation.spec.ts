@@ -1,7 +1,11 @@
 import type { Locator, Page } from "@playwright/test";
 import { expect, test } from "@playwright/test";
-import { navigateToPlayingFast } from "./helpers/navigation";
-import { SELECTORS } from "./helpers/selectors";
+import { swipeWithKeyboard } from "./helpers/keyboardSwipe";
+import { getCard, navigateToPlayingFast } from "./helpers/navigation";
+import {
+	syntheticDragOnCard,
+	syntheticMouseUpAtCard,
+} from "./helpers/syntheticMouseSwipe";
 
 test.use({ baseURL: "https://localhost:3000" });
 
@@ -22,119 +26,89 @@ async function waitForExitTransition(
 
 test.describe("Exit Animation Continuity @area:input", () => {
 	test("card exits smoothly from current drag position", async ({ page }) => {
-		// Use shared navigation helper instead of inline setup
 		await navigateToPlayingFast(page);
 
-		const card = page.locator(SELECTORS.card).first();
-		const box = await card.boundingBox();
-		expect(box).not.toBeNull();
+		const card = await getCard(page);
+		expect(await card.boundingBox()).not.toBeNull();
 
-		if (box) {
-			const startX = box.x + box.width / 2;
-			const startY = box.y + box.height / 2;
+		await syntheticDragOnCard(card, { deltaX: 120, steps: 10, release: false });
 
-			// Start drag
-			await page.mouse.move(startX, startY);
-			await page.mouse.down();
+		const dragTransform = await card.evaluate((el) => {
+			return window.getComputedStyle(el).transform;
+		});
 
-			// Move 120px to the right (past threshold)
-			await page.mouse.move(startX + 120, startY, { steps: 10 });
+		expect(dragTransform).toContain("matrix");
 
-			// Check position during drag
-			const dragTransform = await card.evaluate((el) => {
-				return window.getComputedStyle(el).transform;
-			});
+		await syntheticMouseUpAtCard(card);
 
-			// Should be translated ~120px
-			expect(dragTransform).toContain("matrix");
+		await waitForExitTransition(page, card);
 
-			// Release - should trigger exit
-			await page.mouse.up();
+		const transition = await card.evaluate((el) => {
+			return window.getComputedStyle(el).transition;
+		});
+		expect(transition).toContain("0.35s");
+		expect(transition).toContain("cubic-bezier(0.25, 0.46, 0.45, 0.94)");
 
-			await waitForExitTransition(page, card);
+		const exitTransform = await card.evaluate((el) => {
+			return window.getComputedStyle(el).transform;
+		});
 
-			// Check transition is set to exit animation
-			const transition = await card.evaluate((el) => {
-				return window.getComputedStyle(el).transition;
-			});
-			expect(transition).toContain("0.35s");
-			expect(transition).toContain("cubic-bezier(0.25, 0.46, 0.45, 0.94)");
-
-			// Check transform - should be animating to exit position, not reset
-			const exitTransform = await card.evaluate((el) => {
-				return window.getComputedStyle(el).transform;
-			});
-
-			// Should NOT be identity matrix (would indicate reset to center)
-			expect(exitTransform).not.toBe("matrix(1, 0, 0, 1, 0, 0)");
-
-			// Card opacity animates to 0 when exit starts (inline style)
-		}
+		expect(exitTransform).not.toBe("matrix(1, 0, 0, 1, 0, 0)");
 	});
 
 	test("exit animation does not reset to center", async ({ page }) => {
-		// Use shared navigation helper
 		await navigateToPlayingFast(page);
 
-		const card = page.locator(SELECTORS.card).first();
-		const box = await card.boundingBox();
-		expect(box).not.toBeNull();
+		const card = await getCard(page);
+		expect(await card.boundingBox()).not.toBeNull();
 
-		if (box) {
-			const startX = box.x + box.width / 2;
-			const startY = box.y + box.height / 2;
+		await syntheticDragOnCard(card, { deltaX: 110, steps: 10, release: false });
 
-			// Drag past threshold
-			await page.mouse.move(startX, startY);
-			await page.mouse.down();
-			await page.mouse.move(startX + 110, startY, { steps: 10 });
-
-			// Wait for React to commit offset state
-			// Use polling approach to avoid serialization issues
-			const startTime = Date.now();
-			const timeout = 1000;
-			while (Date.now() - startTime < timeout) {
-				const hasOffset = await card.evaluate((el) => {
-					const style = window.getComputedStyle(el);
-					const matrix = new DOMMatrix(style.transform);
-					// Wait until transform is applied (not identity matrix anymore)
-					return matrix.m41 !== 0 || matrix.m42 !== 0;
-				});
-				if (hasOffset) {
-					break;
-				}
-				await page.waitForTimeout(50);
+		const startTime = Date.now();
+		const timeout = 1000;
+		while (Date.now() - startTime < timeout) {
+			const hasOffset = await card.evaluate((el) => {
+				const style = window.getComputedStyle(el);
+				const matrix = new DOMMatrix(style.transform);
+				return matrix.m41 !== 0 || matrix.m42 !== 0;
+			});
+			if (hasOffset) {
+				break;
 			}
-
-			// Get position just before release (ensures transform is applied before release)
-			await card.evaluate((el) => {
-				const style = window.getComputedStyle(el);
-				const matrix = new DOMMatrix(style.transform);
-				return { x: matrix.m41, y: matrix.m42 };
-			});
-
-			// Release
-			await page.mouse.up();
-
-			await waitForExitTransition(page, card);
-
-			const transition = await card.evaluate((el) => {
-				return window.getComputedStyle(el).transition;
-			});
-
-			// The transition should be set to the exit animation (0.35s)
-			expect(transition).toContain("0.35s");
-
-			// Check position - should be animating, not reset to 0
-			await card.evaluate((el) => {
-				const style = window.getComputedStyle(el);
-				const matrix = new DOMMatrix(style.transform);
-				return { x: matrix.m41, y: matrix.m42 };
-			});
-
-			// The card should be animating from its drag position toward exit
-			// It might be slightly different due to animation progress, but shouldn't be at 0
-			// (unless the animation is very fast or window.innerWidth is 0 in test env)
+			await page.waitForTimeout(50);
 		}
+
+		await card.evaluate((el) => {
+			const style = window.getComputedStyle(el);
+			const matrix = new DOMMatrix(style.transform);
+			return { x: matrix.m41, y: matrix.m42 };
+		});
+
+		await syntheticMouseUpAtCard(card);
+
+		await waitForExitTransition(page, card);
+
+		const transition = await card.evaluate((el) => {
+			return window.getComputedStyle(el).transition;
+		});
+
+		expect(transition).toContain("0.35s");
+
+		await card.evaluate((el) => {
+			const style = window.getComputedStyle(el);
+			const matrix = new DOMMatrix(style.transform);
+			return { x: matrix.m41, y: matrix.m42 };
+		});
+	});
+
+	test("keyboard swipe uses same exit transition family", async ({ page }) => {
+		await navigateToPlayingFast(page);
+		const card = await getCard(page);
+		await swipeWithKeyboard(page, "right");
+		await waitForExitTransition(page, card);
+		const transition = await card.evaluate((el) => {
+			return window.getComputedStyle(el).transition;
+		});
+		expect(transition).toContain("0.35s");
 	});
 });

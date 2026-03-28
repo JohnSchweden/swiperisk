@@ -1,6 +1,11 @@
 import { expect, test } from "@playwright/test";
+import { swipeWithKeyboard } from "./helpers/keyboardSwipe";
 import { getCard, navigateToPlayingFast } from "./helpers/navigation";
 import { SELECTORS } from "./helpers/selectors";
+import {
+	syntheticDragOnCard,
+	syntheticMouseUpAtCard,
+} from "./helpers/syntheticMouseSwipe";
 
 test.use({ baseURL: "https://localhost:3000" });
 
@@ -152,27 +157,14 @@ test.describe("Phase 2 Swipe Interactions - Interaction @area:input", () => {
 		const card = await getCard(page);
 		await expect(card).toBeVisible();
 
-		await page.keyboard.press("ArrowRight");
-
-		// ArrowRight triggers swipe; feedback dialog appears on swipe
-		const feedbackDialog = page
-			.locator(SELECTORS.feedbackDialog)
-			.or(page.locator(SELECTORS.feedbackDialogFallback));
-		await expect(feedbackDialog).toBeVisible({ timeout: 3000 });
+		await swipeWithKeyboard(page, "right");
 	});
 
 	test("swipe preview text appears on drag", async ({ page }) => {
 		const card = await getCard(page);
-		const box = await card.boundingBox();
-		expect(box).not.toBeNull();
-		if (!box) return;
+		expect(await card.boundingBox()).not.toBeNull();
 
-		const startX = box.x + box.width / 2;
-		const startY = box.y + box.height / 2;
-
-		await page.mouse.move(startX, startY);
-		await page.mouse.down();
-		await page.mouse.move(startX + 60, startY, { steps: 10 });
+		await syntheticDragOnCard(card, { deltaX: 60, steps: 10, release: false });
 
 		// Drag preview is the absolute-positioned label (e.g. PASTE) inside the card, not the static "Swipe left/right"
 		const previewLabel = card.locator(
@@ -184,23 +176,15 @@ test.describe("Phase 2 Swipe Interactions - Interaction @area:input", () => {
 		expect(previewText).not.toBeNull();
 		expect(previewText?.length).toBeGreaterThan(0);
 
-		await page.mouse.up();
+		await syntheticMouseUpAtCard(card);
 		await expect(previewLabel).toBeHidden({ timeout: 1000 });
 	});
 
 	test("card exit animation plays on threshold cross", async ({ page }) => {
 		const card = await getCard(page);
-		const box = await card.boundingBox();
-		expect(box).not.toBeNull();
-		if (!box) return;
+		expect(await card.boundingBox()).not.toBeNull();
 
-		const startX = box.x + box.width / 2;
-		const startY = box.y + box.height / 2;
-
-		await page.mouse.move(startX, startY);
-		await page.mouse.down();
-		await page.mouse.move(startX + 110, startY, { steps: 10 });
-		await page.mouse.up();
+		await syntheticDragOnCard(card, { deltaX: 110, steps: 10, release: true });
 
 		const feedbackDialog = page
 			.locator(SELECTORS.feedbackDialog)

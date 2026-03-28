@@ -1,6 +1,9 @@
 import { expect, test } from "@playwright/test";
-import { navigateToPlayingFast } from "./helpers/navigation";
-import { SELECTORS } from "./helpers/selectors";
+import { getCard, navigateToPlayingFast } from "./helpers/navigation";
+import {
+	syntheticDragOnCard,
+	syntheticMouseUpAtCard,
+} from "./helpers/syntheticMouseSwipe";
 
 test.use({ baseURL: "https://localhost:3000" });
 
@@ -17,28 +20,17 @@ test.describe("Spring Snap-Back @area:input", () => {
 	test("card snaps back smoothly when released under threshold", async ({
 		page,
 	}) => {
-		const card = page.locator(SELECTORS.card).first();
+		const card = await getCard(page);
 		expect(card).toBeTruthy();
 
-		const box = await card.boundingBox();
-		expect(box).not.toBeNull();
-
-		if (!box) return;
-
-		const startX = box.x + box.width / 2;
-		const startY = box.y + box.height / 2;
+		expect(await card.boundingBox()).not.toBeNull();
 
 		// Get initial transform
 		const initialTransform = await card.evaluate((el) => {
 			return window.getComputedStyle(el).transform;
 		});
 
-		// Start drag
-		await page.mouse.move(startX, startY);
-		await page.mouse.down();
-
-		// Move 60px to the right (under threshold)
-		await page.mouse.move(startX + 60, startY, { steps: 5 });
+		await syntheticDragOnCard(card, { deltaX: 60, steps: 5, release: false });
 
 		// Check transform during drag
 		const dragTransform = await card.evaluate((el) => {
@@ -50,7 +42,7 @@ test.describe("Spring Snap-Back @area:input", () => {
 		expect(dragTransform).toContain("matrix");
 
 		// Release - should trigger spring snap-back
-		await page.mouse.up();
+		await syntheticMouseUpAtCard(card);
 
 		// Check transition property immediately after release
 		const transition = await card.evaluate((el) => {
@@ -87,22 +79,13 @@ test.describe("Spring Snap-Back @area:input", () => {
 	});
 
 	test("ticket-transition is not applied after drag", async ({ page }) => {
-		const card = page.locator(SELECTORS.card).first();
+		const card = await getCard(page);
 		expect(card).toBeTruthy();
 
-		const box = await card.boundingBox();
-		expect(box).not.toBeNull();
+		expect(await card.boundingBox()).not.toBeNull();
 
-		if (!box) return;
-
-		const startX = box.x + box.width / 2;
-		const startY = box.y + box.height / 2;
-
-		// Drag and release under threshold
-		await page.mouse.move(startX, startY);
-		await page.mouse.down();
-		await page.mouse.move(startX + 50, startY, { steps: 5 });
-		await page.mouse.up();
+		await syntheticDragOnCard(card, { deltaX: 50, steps: 5, release: false });
+		await syntheticMouseUpAtCard(card);
 
 		// Wait briefly for any state updates
 		await page.waitForTimeout(50);

@@ -1,40 +1,33 @@
-import { expect, type Page, test } from "@playwright/test";
-import { navigateToPlayingFast } from "./helpers/navigation";
+import { expect, type Locator, type Page, test } from "@playwright/test";
+import { getCard, navigateToPlayingFast } from "./helpers/navigation";
 import { SELECTORS } from "./helpers/selectors";
+import {
+	syntheticDragOnCard,
+	syntheticMouseUpAtCard,
+} from "./helpers/syntheticMouseSwipe";
 
 test.use({ baseURL: "https://localhost:3000" });
 
 /**
- * Helper to perform a drag gesture on the current card without releasing.
- * Use negative distance for left swipe (safe choice on first SE card), positive for right.
+ * DOM-synthetic drag without release (Playwright mouse is unreliable with window mouseup).
+ * Negative distance = left (safe on first SE card).
  */
 async function performDragWithoutRelease(
 	page: Page,
 	distance: number = -120,
-): Promise<{
-	card: Awaited<ReturnType<typeof page.locator>>;
-	startX: number;
-	startY: number;
-}> {
-	const card = await page.locator(SELECTORS.cardFallback).first();
-	const box = await card.boundingBox();
-	expect(box).not.toBeNull();
-
-	const startX = box?.x + box?.width / 2;
-	const startY = box?.y + box?.height / 2;
-
-	await page.mouse.move(startX, startY);
-	await page.mouse.down();
-	await page.mouse.move(startX + distance, startY, { steps: 10 });
-
-	return { card, startX, startY };
+): Promise<{ card: Locator }> {
+	const card = await getCard(page);
+	expect(await card.boundingBox()).not.toBeNull();
+	await syntheticDragOnCard(card, {
+		deltaX: distance,
+		steps: 10,
+		release: false,
+	});
+	return { card };
 }
 
-/**
- * Helper to release the current drag
- */
-async function releaseMouseDrag(page: Page): Promise<void> {
-	await page.mouse.up();
+async function releaseDrag(card: Locator): Promise<void> {
+	await syntheticMouseUpAtCard(card);
 }
 
 /**
@@ -84,7 +77,7 @@ test.describe("Swipe Consistency @area:input", () => {
 		expect(parseFloat(firstSwipeOpacity)).toBeGreaterThan(0.5);
 
 		// Release
-		await releaseMouseDrag(page);
+		await releaseDrag(firstCard);
 
 		// Wait for feedback overlay (replaces fixed 1000ms)
 		await page.waitForSelector('[data-testid="feedback-dialog"]', {
@@ -113,7 +106,7 @@ test.describe("Swipe Consistency @area:input", () => {
 		expect(parseFloat(secondSwipeOpacity)).toBeGreaterThan(0.5);
 
 		// Release
-		await releaseMouseDrag(page);
+		await releaseDrag(secondCard);
 
 		// Wait for feedback overlay (replaces fixed 1000ms)
 		await page.waitForSelector('[data-testid="feedback-dialog"]', {
@@ -155,7 +148,7 @@ test.describe("Swipe Consistency @area:input", () => {
 			});
 
 			// Release
-			await releaseMouseDrag(page);
+			await releaseDrag(card);
 
 			// Wait for feedback overlay or Next Ticket (for first swipe only)
 			if (i === 0) {

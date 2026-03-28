@@ -1,10 +1,15 @@
 import { expect, test } from "@playwright/test";
+import { swipeWithKeyboard } from "./helpers/keyboardSwipe";
 import {
 	getCard,
 	getLeftButton,
 	getRightButton,
 	navigateToPlayingFast,
 } from "./helpers/navigation";
+import {
+	syntheticDragOnCard,
+	syntheticMouseUpAtCard,
+} from "./helpers/syntheticMouseSwipe";
 
 test.use({ baseURL: "https://localhost:3000" });
 
@@ -20,51 +25,47 @@ test.describe("Button Highlight on Swipe @area:input", () => {
 		await navigateToPlayingFast(page);
 
 		const card = await getCard(page);
-		const box = await card.boundingBox();
-		expect(box).toBeTruthy();
-
-		const startX = box?.x + box?.width / 2;
-		const startY = box?.y + box?.height / 2;
+		expect(await card.boundingBox()).toBeTruthy();
 
 		// Not highlighted before swipe
 		const rightButton = await getRightButton(page);
 		expect(await isHighlighted(rightButton)).toBe(false);
 
-		// Drag right
-		await page.mouse.move(startX, startY);
-		await page.mouse.down();
-		await page.mouse.move(startX + 60, startY, { steps: 5 });
+		// DOM-synthetic drag: Playwright mouseup often misses window listeners in this stack
+		await syntheticDragOnCard(card, { deltaX: 60, steps: 5, release: false });
 		await page.waitForTimeout(200);
 
 		// Now highlighted (classList.contains checks exact token, not hover: variant)
 		expect(await isHighlighted(rightButton)).toBe(true);
 
-		await page.mouse.up();
+		await syntheticMouseUpAtCard(card);
 	});
 
 	test("left button highlights when swiping left", async ({ page }) => {
 		await navigateToPlayingFast(page);
 
 		const card = await getCard(page);
-		const box = await card.boundingBox();
-		expect(box).toBeTruthy();
-
-		const startX = box?.x + box?.width / 2;
-		const startY = box?.y + box?.height / 2;
+		expect(await card.boundingBox()).toBeTruthy();
 
 		// Not highlighted before swipe
 		const leftButton = await getLeftButton(page);
 		expect(await isHighlighted(leftButton)).toBe(false);
 
-		// Drag left
-		await page.mouse.move(startX, startY);
-		await page.mouse.down();
-		await page.mouse.move(startX - 60, startY, { steps: 5 });
+		await syntheticDragOnCard(card, { deltaX: -60, steps: 5, release: false });
 		await page.waitForTimeout(200);
 
 		// Now highlighted
 		expect(await isHighlighted(leftButton)).toBe(true);
 
-		await page.mouse.up();
+		await syntheticMouseUpAtCard(card);
+	});
+
+	test("keyboard shortcut completes choice (no pointer preview path)", async ({
+		page,
+	}) => {
+		await navigateToPlayingFast(page);
+		const leftButton = await getLeftButton(page);
+		expect(await isHighlighted(leftButton)).toBe(false);
+		await swipeWithKeyboard(page, "right");
 	});
 });

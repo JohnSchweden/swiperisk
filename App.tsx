@@ -346,6 +346,7 @@ const App: React.FC = () => {
 		feedbackCardId: feedbackOverlay?.cardId,
 		feedbackAuthoringStem: feedbackOverlay?.feedbackAuthoringStem ?? null,
 		feedbackSelectedSlot: feedbackOverlay?.selectedSlot ?? null,
+		deathType: state.deathType,
 	});
 
 	// Handle choice (called by swipe or button click) — final, no undo

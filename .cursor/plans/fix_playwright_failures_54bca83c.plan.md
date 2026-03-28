@@ -13,10 +13,10 @@ todos:
     status: completed
   - id: verify-all-tests
     content: Run bun run test and confirm all 24 failures are fixed
-    status: in_progress
+    status: completed
   - id: commit-changes
     content: "Commit with message: fix(tests): resolve 24 Playwright failures (swipe, image, debrief)"
-    status: pending
+    status: completed
 isProject: false
 ---
 

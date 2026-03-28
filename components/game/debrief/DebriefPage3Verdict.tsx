@@ -33,7 +33,6 @@ interface DebriefPage3VerdictProps {
 	role: RoleType | null;
 	personality: PersonalityType | null;
 	deathType?: DeathType | null;
-	unlockedEndingsCount?: number;
 	onRestart: () => void;
 }
 
@@ -100,7 +99,6 @@ export const DebriefPage3Verdict: React.FC<DebriefPage3VerdictProps> = ({
 	role,
 	personality,
 	deathType,
-	unlockedEndingsCount = 0,
 	onRestart,
 }) => {
 	const isKirk = deathType === DeathType.KIRK;
@@ -280,14 +278,6 @@ export const DebriefPage3Verdict: React.FC<DebriefPage3VerdictProps> = ({
 						<i className="fa-brands fa-linkedin text-lg"></i>
 						Message Yevgen Schweden
 					</a>
-				</div>
-
-				{/* "...or is it?" hint for completionists — shown to all players */}
-				<div className="mt-6 text-center">
-					<p className="text-sm text-slate-500">
-						Endings discovered: {unlockedEndingsCount}/6{" "}
-						<span className="italic text-slate-600 text-xs">...or is it?</span>
-					</p>
 				</div>
 			</div>
 		</LayoutShell>

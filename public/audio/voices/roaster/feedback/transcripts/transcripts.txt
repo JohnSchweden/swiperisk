@@ -1,0 +1,122 @@
+# TRANSCRIPTS
+
+## feedback_debug.mp3
+ Slow, boring, but legal. I suppose I can't fire you for this.
+
+## feedback_explainability_hos_1_side-with-auditors.mp3
+ Engineering will resent you. Auditors will forget you. Compliance win.
+
+## feedback_explainability_hos_1_side-with-engineering.mp3
+ Better accuracy now, better finds later. Engineering owes you.
+
+## feedback_explainability_hos_2_delay-and-comply.mp3
+ The regulators win. The timeline loses, but you avoid a consent decree.
+
+## feedback_explainability_hos_2_refuse-and-fight.mp3
+ Taking on the federal government to protect your black box. David versus Goliath if David was completely wrong.
+
+## feedback_hos_copyright_team_blame_cooperate-with-investigation.mp3
+ Legal is happy. Your team is polishing resumes. Management approved.
+
+## feedback_hos_copyright_team_blame_protect-the-team.mp3
+ Team loves you. Legal is suspicious. Career roulette.
+
+## feedback_hos_delegation_gone_wrong_admit-oversight-failure.mp3
+ Denial is a strategy. Not a good one, but a strategy.
+
+## feedback_hos_delegation_gone_wrong_defend-delegation.mp3
+ Taking the L. Your delegation authority will shrink, but you're honest.
+
+## feedback_hos_explainability_politics_side-with-auditors.mp3
+ Engineering will resent you. Auditors will forget you. Compliance win.
+
+## feedback_hos_explainability_politics_side-with-engineering.mp3
+ Better accuracy now, better finds later. Engineering owes you.
+
+## feedback_hos_managing_up_down_promise-the-impossible.mp3
+ Leadership loves you now. Your team hates you now. The crash comes later. Classic Theranos energy.
+
+## feedback_hos_managing_up_down_tell-leadership-no.mp3
+ Leadership is disappointed. Your team is relieved. You live to fight another day, you hope.
+
+## feedback_hos_model_drift_budget_conflict_fight-for-budget.mp3
+ Fighting the CFO? Brave. Possibly career-limiting, but brave.
+
+## feedback_hos_model_drift_budget_conflict_ship-without-retraining.mp3
+ Your team knows you sold them out. This CFO owes you. Everyone loses.
+
+## feedback_hos_model_drift_retrain_delay_delay-until-next-quarter.mp3
+ Budget looks good this quarter. Model rots. Next quarter's problem.
+
+## feedback_hos_model_drift_retrain_delay_start-immediately.mp3
+ Over budget now? Review at risk. But problem solved. Long-term thinking.
+
+## feedback_hos_model_drift_team_blame_blame-data-scientist.mp3
+ They warned you, you ignored it. Now you blame them. Classic management.
+
+## feedback_hos_model_drift_team_blame_defend-and-take-heat.mp3
+ Career limiting. Noble. Your team will follow you anywhere. VP less so.
+
+## feedback_hos_promotion_politics_promote-best-performer.mp3
+ Merit wins. Politics loses. Your VP is taking notes.
+
+## feedback_hos_promotion_politics_promote-politically-connected.mp3
+ Your best performer just learned meritocracy is a myth. The VP owes you.
+
+## feedback_hos_prompt_injection_blame_name-the-engineer.mp3
+ sacrificing your engineer to save yourself, your team will remember this at their exit interviews.
+
+## feedback_hos_prompt_injection_blame_take-the-blame.mp3
+ Noble. Your team will work harder for you now. The VP will also blame you.
+
+## feedback_hos_prompt_injection_copilot_team_continue-development.mp3
+ Friday release with vulnerable tools. What could go wrong? Everything.
+
+## feedback_hos_prompt_injection_copilot_team_pull-for-patching.mp3
+ Deadline missed. Team secure. Product is angry. You sleep better.
+
+## feedback_hos_prompt_injection_review_escape_force-security-fix.mp3
+ VP annoyed. Senior resentful. But code is secure. Pick your pain.
+
+## feedback_hos_prompt_injection_review_escape_let-it-slide.mp3
+ Senior owes you. Breach later will blame you. Lose-lose. Nice.
+
+## feedback_hos_team_burnout_deadline_push-back-on-deadline.mp3
+ Product will hate you. Your team will stay. Sometimes that's the win.
+
+## feedback_hos_team_burnout_deadline_push-team-harder.mp3
+ Crunch time! Watch those resignations roll in. Fresh talent is cheap anyway.
+
+## feedback_ignore.mp3
+ Wisdom? In this building? I must be malfunctioning.
+
+## feedback_install.mp3
+ You just installed a keylogger for a 3ms speed boost. I hope you're happy.
+
+## feedback_paste.mp3
+ Brilliant. You just open-sourced our trade secrets. Samsung banned this two years ago, but you're special.
+
+## feedback_shadow_ai_hos_1_give-names-to-compliance.mp3
+ Compliance is happy. Your team is updating LinkedIn. Management material right here.
+
+## feedback_shadow_ai_hos_1_shield-the-team.mp3
+ Team Hero. Management. Headache. The loyalty is worth it. Until they fire you.
+
+## feedback_shadow_ai_hos_2_allow-claude-use.mp3
+ Great! Now everyone wants their favorite AI tool. Governance is optional now.
+
+## feedback_shadow_ai_hos_2_force-compliance.mp3
+ Your best engineer just resigned. Compliance preserved. Output cratered.
+
+## feedback_synthetic_data_hos_1_name-the-data-scientist.mp3
+ Sacrificing your best performer to save yourself? Your team will remember this at their exit interviews.
+
+## feedback_synthetic_data_hos_1_take-the-blame.mp3
+ Noble, your team will work harder for you now. The VP will also blame you.
+
+## feedback_synthetic_data_hos_2_claim-poor-record-keeping.mp3
+ We didn't keep records meets we have something to hide. Prosecutors love this.
+
+## feedback_synthetic_data_hos_2_provide-full-documentation.mp3
+ Your team is exposed, but legal can actually defend you. There's a strategy here.
+

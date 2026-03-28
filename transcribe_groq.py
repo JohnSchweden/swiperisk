@@ -4,13 +4,30 @@
 import os
 import glob
 from groq import Groq
+from pathlib import Path
+
+# Load .env file for API key
+env_path = Path("/Users/yevgenschweden/swiperisk/.env")
+if env_path.exists():
+    with open(env_path) as f:
+        for line in f:
+            line = line.strip()
+            if line.startswith("GROQ_API_KEY="):
+                os.environ["GROQ_API_KEY"] = line.split("=", 1)[1]
+                break
+
+# Get API key
+api_key = os.environ.get("GROQ_API_KEY")
+if not api_key:
+    print("ERROR: GROQ_API_KEY not found")
+    exit(1)
 
 # Initialize Groq client
-client = Groq()
+client = Groq(api_key=api_key)
 
-# Get all audio files
-audio_dir = "/Users/yevgenschweden/swiperisk/public/audio/voices/roaster/feedback"
-files = sorted(glob.glob(f"{audio_dir}/*.mp3"))
+# Get all audio files - recursively from voices folder
+voices_dir = "/Users/yevgenschweden/swiperisk/public/audio/voices"
+files = sorted(glob.glob(f"{voices_dir}/**/*.mp3", recursive=True))
 
 print(f"Found {len(files)} audio files. Transcribing...")
 
@@ -36,7 +53,7 @@ for i, f in enumerate(files):
         results.append((name, f"ERROR: {e}"))
 
 # Save to file
-out = f"{audio_dir}/transcripts/transcripts.txt"
+out = f"{voices_dir}/transcripts/all_transcripts.txt"
 os.makedirs(os.path.dirname(out), exist_ok=True)
 with open(out, "w") as f:
     f.write("# TRANSCRIPTS\n\n")

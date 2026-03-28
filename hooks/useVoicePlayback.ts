@@ -28,8 +28,6 @@ function stageTrigger(stage: GameStage): string | null {
 	switch (stage) {
 		case GameStage.ROLE_SELECT:
 			return "onboarding";
-		case GameStage.GAME_OVER:
-			return "failure";
 		case GameStage.SUMMARY:
 			return "victory";
 		default:
@@ -166,9 +164,9 @@ export function useVoicePlayback({
 		};
 	}, []);
 
-	// Reset audio flags when leaving debrief pages
+	// Reset audio flags when leaving death/debrief pages
 	useEffect(() => {
-		if (stage !== GameStage.DEBRIEF_PAGE_1) {
+		if (stage !== GameStage.GAME_OVER) {
 			hasPlayedDeathAudio.current = false;
 		}
 		if (stage !== GameStage.DEBRIEF_PAGE_3) {
@@ -213,10 +211,10 @@ export function useVoicePlayback({
 		personality,
 	]);
 
-	// Death ending audio - plays on debrief page 1 when death type is available
+	// Death ending audio - plays on GAME_OVER when death type is available
 	useEffect(() => {
 		if (!personality || !deathType) return;
-		if (stage !== GameStage.DEBRIEF_PAGE_1) return;
+		if (stage !== GameStage.GAME_OVER) return;
 		// Only play once per death ending display
 		if (hasPlayedDeathAudio.current) return;
 

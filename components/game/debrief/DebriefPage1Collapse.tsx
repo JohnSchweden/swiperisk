@@ -14,12 +14,7 @@ import {
 	playKirkCrashSound,
 	playKirkGlitchTone,
 } from "../../../services/kirkAudio";
-import {
-	DeathType,
-	GameStage,
-	type GameState,
-	PersonalityType,
-} from "../../../types";
+import { DeathType, type GameState, PersonalityType } from "../../../types";
 import { corruptText } from "../../../utils/kirkText";
 import { ImageWithFallback } from "../../ImageWithFallback";
 import LayoutShell from "../../LayoutShell";

@@ -1,15 +1,8 @@
 import * as fs from "node:fs";
 import * as path from "node:path";
-import { GoogleGenAI, Modality } from "@google/genai";
-import { compressAudioFile } from "./compress-audio";
+import { delay, generateVoiceFile, initializeClient } from "./tts-utils";
 
-const apiKey = process.env.GEMINI_API_KEY;
-if (!apiKey) {
-	console.error("GEMINI_API_KEY not set");
-	process.exit(1);
-}
-
-const ai = new GoogleGenAI({ apiKey });
+const ai = initializeClient();
 
 const CORRUPTED_HOS_FILES = [
 	{
@@ -72,62 +65,6 @@ const CORRUPTED_HOS_FILES = [
 	},
 ];
 
-function sleep(ms: number): Promise<void> {
-	return new Promise((resolve) => setTimeout(resolve, ms));
-}
-
-function createWavFile(pcmData: Buffer): Buffer {
-	const dataSize = pcmData.length;
-	const buffer = Buffer.alloc(44 + dataSize);
-	buffer.write("RIFF", 0);
-	buffer.writeUInt32LE(36 + dataSize, 4);
-	buffer.write("WAVE", 8);
-	buffer.write("fmt ", 12);
-	buffer.writeUInt32LE(16, 16);
-	buffer.writeUInt16LE(1, 20);
-	buffer.writeUInt16LE(1, 22);
-	buffer.writeUInt32LE(24000, 24);
-	buffer.writeUInt32LE(48000, 28);
-	buffer.writeUInt16LE(2, 32);
-	buffer.writeUInt16LE(16, 34);
-	buffer.write("data", 36);
-	buffer.writeUInt32LE(dataSize, 40);
-	pcmData.copy(buffer, 44);
-	return buffer;
-}
-
-async function ttsToWav(text: string, filename: string): Promise<Buffer> {
-	const response = await ai.models.generateContent({
-		model: "gemini-2.5-flash-preview-tts",
-		contents: [{ parts: [{ text }] }],
-		config: {
-			responseModalities: [Modality.AUDIO],
-			speechConfig: {
-				voiceConfig: {
-					prebuiltVoiceConfig: { voiceName: "Kore" },
-				},
-			},
-		},
-	});
-	const base64Audio =
-		response.candidates?.[0]?.content?.parts?.[0]?.inlineData?.data;
-	if (!base64Audio) throw new Error(`No audio data for ${filename}`);
-	return createWavFile(Buffer.from(base64Audio, "base64"));
-}
-
-async function generateVoiceFile(
-	filename: string,
-	text: string,
-	outputDir: string,
-): Promise<void> {
-	console.log(`Generating: ${filename}`);
-	const wavBuffer = await ttsToWav(text, filename);
-	const outputPath = path.join(outputDir, filename);
-	fs.writeFileSync(outputPath, wavBuffer);
-	console.log(`Saved: ${filename} (${wavBuffer.length} bytes)`);
-	await compressAudioFile(outputPath);
-}
-
 async function main(): Promise<void> {
 	const outputDir = path.join(
 		process.cwd(),
@@ -142,8 +79,10 @@ async function main(): Promise<void> {
 	for (let i = 0; i < CORRUPTED_HOS_FILES.length; i++) {
 		const file = CORRUPTED_HOS_FILES[i];
 		try {
-			if (i > 0) await sleep(1000);
-			await generateVoiceFile(file.filename, file.text, outputDir);
+			if (i > 0) await delay(1000);
+			await generateVoiceFile(file.filename, file.text, outputDir, ai, {
+				verbose: true,
+			});
 			success++;
 		} catch (e) {
 			console.error(`Failed: ${file.filename}`, e);

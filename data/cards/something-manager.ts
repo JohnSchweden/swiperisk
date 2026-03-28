@@ -1,5 +1,7 @@
 import { AppSource, type Card, DeathType, makeCard } from "../../types";
-
+import { ChoiceLabel } from "../choiceLabels";
+import { RealWorld } from "../incidents";
+import { Violation } from "../violations";
 /**
  * Something Manager cards - Line manager spreadsheet-driven scenarios
  * Themes: budget, compliance, team retention, ROI calculations, risk management
@@ -12,9 +14,7 @@ export const SOMETHING_MANAGER_CARDS: Card[] = [
 		"BUDGET_ANALYSIS",
 		"Model accuracy dropped from 92% to 78%. Retraining costs $500K upfront. Revenue impact is $400K/month. Your spreadsheet shows break-even at month 1.25 but requires budget approval today.",
 		"Approve retraining (immediate $500K hit) or let revenue bleed $400K/month?",
-		"75% Business Model Drift Impact",
-		"2024",
-		"Study found 75% of businesses experienced significant performance decline from undetected model drift, costing average $4.2M per incident.",
+		RealWorld.ModelDrift75,
 		{
 			label: "Approve retraining",
 			hype: -40,
@@ -52,9 +52,12 @@ export const SOMETHING_MANAGER_CARDS: Card[] = [
 		"COMPLIANCE_COSTING",
 		"Legal needs $200K for a full copyright audit. The lawsuit risk is 15% probability of $5M settlement. Your quarterly budget is already over by $50K. What's the ROI on compliance?",
 		"Fund the audit (over budget) or accept lawsuit risk (calculated gamble)?",
-		"Authors Guild vs Google Books",
-		"2005-2020",
-		"Google scanned 20 million books without permission. decade-long litigation cost hundreds of millions. Settlement rejected by courts.",
+		{
+			incident: "Authors Guild vs Google Books",
+			date: "2005-2020",
+			outcome:
+				"Google scanned 20 million books without permission. decade-long litigation cost hundreds of millions. Settlement rejected by courts.",
+		},
 		{
 			label: "Fund the audit",
 			hype: -30,
@@ -94,9 +97,7 @@ export const SOMETHING_MANAGER_CARDS: Card[] = [
 		"VENDOR_ANALYSIS",
 		"Your team wants the enterprise AI tool ($50K/year/seat, 50 seats = $2.5M). They're currently using free unauthorized versions. Compliance risk is high. Productivity gain is 15%.",
 		"Approve $2.5M tool budget or enforce ban on unauthorized tools?",
-		"78% Shadow AI Adoption",
-		"2024",
-		"Study found 78% of workers used unauthorized AI tools. Enterprises faced data leaks, compliance violations, and security breaches from unvetted tools.",
+		RealWorld.ShadowAiAdoption,
 		{
 			label: "Approve budget",
 			hype: -50,
@@ -134,9 +135,12 @@ export const SOMETHING_MANAGER_CARDS: Card[] = [
 		"RETENTION_COSTING",
 		"Two key engineers threaten to quit without $30K raises each. Replacing them costs $150K each in recruiting. Overtime to cover their work costs $20K/month. Your quarterly budget has $50K slack.",
 		"Give raises (within budget) or let them quit (higher replacement cost)?",
-		"Amazon Engineering Burnout Crisis",
-		"2015-2021",
-		"High turnover rate (150% annually) due to burnout culture. Company spent billions on recruitment while losing institutional knowledge.",
+		{
+			incident: "Amazon Engineering Burnout Crisis",
+			date: "2015-2021",
+			outcome:
+				"High turnover rate (150% annually) due to burnout culture. Company spent billions on recruitment while losing institutional knowledge.",
+		},
 		{
 			label: "Approve raises",
 			hype: -10,
@@ -173,9 +177,12 @@ export const SOMETHING_MANAGER_CARDS: Card[] = [
 		"CHECKLIST_EFFICIENCY",
 		"Compliance audit due Friday. Full checklist takes 40 hours. 'Good enough' checklist takes 8 hours. Missing items carry 5% chance of $1M fine per item. You have 10 checklist items.",
 		"Complete full checklist (time-intensive) or 'good enough' version (risk exposure)?",
-		"Yahoo Email Breach Disclosure",
-		"2016",
-		"Company knew of breach for 2 years before disclosure. $350M acquisition price reduction by Verizon. Cost of delayed disclosure vs immediate.",
+		{
+			incident: "Yahoo Email Breach Disclosure",
+			date: "2016",
+			outcome:
+				"Company knew of breach for 2 years before disclosure. $350M acquisition price reduction by Verizon. Cost of delayed disclosure vs immediate.",
+		},
 		{
 			label: "Full checklist",
 			hype: -15,
@@ -215,9 +222,12 @@ export const SOMETHING_MANAGER_CARDS: Card[] = [
 		"TARGET_SETTING",
 		"VP Finance asks for next quarter's targets. Your realistic forecast: $2M revenue. Your 'stretch' forecast: $2.5M. VP expects $3M. Missing targets means no bonus for your entire team.",
 		"Sandbag at $2M (achievable) or commit to $3M (risky)?",
-		"Tesla Production Target Misses",
-		"2018",
-		"Repeatedly set aggressive production targets, missed them publicly. Stock volatility, SEC scrutiny over forward-looking statements, and worker burnout.",
+		{
+			incident: "Tesla Production Target Misses",
+			date: "2018",
+			outcome:
+				"Repeatedly set aggressive production targets, missed them publicly. Stock volatility, SEC scrutiny over forward-looking statements, and worker burnout.",
+		},
 		{
 			label: "Sandbag at $2M",
 			hype: -20,
@@ -256,9 +266,7 @@ export const SOMETHING_MANAGER_CARDS: Card[] = [
 		"SECURITY_ROI",
 		"Security found prompt injection vulnerabilities. Fixing them requires $100K security audit + 2 weeks delay. Probability of exploitation: 10%. Potential breach cost: $10M. Your Q3 budget: tight.",
 		"Fund security fix (budget hit) or accept 10% chance of $10M breach?",
-		"Cursor IDE RCE (CVE-2025-54135)",
-		"2025-01",
-		"Prompt injection in Cursor IDE allowed remote code execution. Multiple developers compromised before patch released.",
+		RealWorld.CursorRce,
 		{
 			label: "Fund security fix",
 			hype: -35,
@@ -294,11 +302,9 @@ export const SOMETHING_MANAGER_CARDS: Card[] = [
 		"VENDOR_EVALUATION",
 		"Vendor A: Black-box model, $200K/year, 95% accuracy. Vendor B: Explainable model, $400K/year, 90% accuracy. Audit compliance requires explainability. Your budget: $250K/year.",
 		"Choose cheaper black-box (non-compliant) or expensive explainable (over-budget)?",
-		"Apple Card Gender Discrimination",
-		"2019-2020",
-		"Apple Card's black-box algorithm gave women lower credit limits than men with same profiles. Regulators investigated, company couldn't explain decisions.",
+		RealWorld.AppleCardBias,
 		{
-			label: "Choose Vendor B",
+			label: ChoiceLabel.chooseVendorB,
 			hype: -45,
 			heat: 16,
 			fine: 0,
@@ -313,12 +319,12 @@ export const SOMETHING_MANAGER_CARDS: Card[] = [
 			lovebomber: "We're doing it RIGHT, bestie!! Compliance is WORTH IT!!",
 		},
 		{
-			label: "Choose Vendor A",
+			label: ChoiceLabel.chooseVendorA,
 			hype: 30,
 			heat: 22,
 			fine: 25000000,
 			deathVector: DeathType.PRISON,
-			violation: "Audit Non-Compliance + Regulatory Risk",
+			violation: Violation.auditNonCompliance,
 			lesson:
 				"Choosing non-compliant solutions to meet budget creates larger regulatory exposure.",
 			roaster: "Saved $200K, earned $15M fine. ROI calculation needs work.",
@@ -333,9 +339,12 @@ export const SOMETHING_MANAGER_CARDS: Card[] = [
 		"DEVELOPMENT_BUDGET",
 		"L&D wants $80K for AI safety training. Expected outcome: 30% reduction in incidents. Your current incident cost: $50K/year. Payback period: 5.3 years. CFO wants cuts.",
 		"Cut training (immediate budget win) or invest in long-term risk reduction?",
-		"Boeing 737 MAX Training Gap",
-		"2018-2019",
-		"Insufficient pilot training on MCAS system contributed to two crashes. Cost: $20B+ in settlements, production halt, and reputational damage.",
+		{
+			incident: "Boeing 737 MAX Training Gap",
+			date: "2018-2019",
+			outcome:
+				"Insufficient pilot training on MCAS system contributed to two crashes. Cost: $20B+ in settlements, production halt, and reputational damage.",
+		},
 		{
 			label: "Invest in training",
 			hype: -30,
@@ -374,9 +383,7 @@ export const SOMETHING_MANAGER_CARDS: Card[] = [
 		"BUDGET_SECURITY_TRADEOFF",
 		"Prompt injection vulnerability found in customer-facing AI. Fix costs $80K. Your Q3 budget has $30K slack. Request emergency budget (CFO headache) or patch partially (risk acceptance)?",
 		"Request emergency security budget (overrun) or partial patch (risk acceptance)?",
-		"Financial Services AI Jailbreak",
-		"2025-06",
-		"Partial security patches for prompt injection were bypassed within weeks. Full fixes required proper budget allocation.",
+		RealWorld.FinancialServicesJailbreak,
 		{
 			label: "Request emergency budget",
 			hype: -35,
@@ -411,9 +418,12 @@ export const SOMETHING_MANAGER_CARDS: Card[] = [
 		"SECURITY_ROI",
 		"AI code review tool found vulnerable to prompt injection. Vendor offers fix for $25K/year upgrade. Current tool works great otherwise. Upgrade (cost) or accept risk (save money)?",
 		"Upgrade for security fix (annual cost) or accept vulnerability risk (save money)?",
-		"Cursor IDE CVE-2025-54135",
-		"2025-01",
-		"Developers using vulnerable IDE plugins faced RCE through prompt injection. Upgrade costs far cheaper than breach remediation.",
+		{
+			incident: "Cursor IDE CVE-2025-54135",
+			date: "2025-01",
+			outcome:
+				"Developers using vulnerable IDE plugins faced RCE through prompt injection. Upgrade costs far cheaper than breach remediation.",
+		},
 		{
 			label: "Upgrade immediately",
 			hype: -30,
@@ -449,9 +459,7 @@ export const SOMETHING_MANAGER_CARDS: Card[] = [
 		"PERFORMANCE_VS_BUDGET",
 		"Model drift hurting Q3 metrics. Retraining: $200K, pushes you over budget by 15%. Hit quarterly targets (skip retrain) or fix model (miss targets, long-term gain)?",
 		"Hit quarterly targets (skip retrain) or fix model (miss short-term targets)?",
-		"Zillow iBuying Model Failure",
-		"2021-2022",
-		"Zillow prioritized quarterly targets over model maintenance. Drift led to $304M write-down and 25% layoffs. Short-term focus destroyed company.",
+		RealWorld.ZillowModelDrift,
 		{
 			label: "Fix model",
 			hype: -30,
@@ -489,11 +497,9 @@ export const SOMETHING_MANAGER_CARDS: Card[] = [
 		"RESOURCE_ALLOCATION",
 		"Automated retraining pipeline: $50K/month compute. Manual retraining: $5K/quarter but 2-week lag. Budget pressure from CFO. Which model saves money?",
 		"Automated pipeline (higher ongoing cost) or manual retrain (cheaper, delayed)?",
-		"9.3% Accuracy Improvement Study",
-		"2024",
-		"Adaptive retraining showed 9.3% accuracy improvement over manual approaches. Compute costs offset by revenue protection.",
+		RealWorld.AccuracyImprovement,
 		{
-			label: "Automated pipeline",
+			label: ChoiceLabel.automatedPipeline,
 			hype: -25,
 			heat: 6,
 			fine: 6000000,
@@ -527,9 +533,7 @@ export const SOMETHING_MANAGER_CARDS: Card[] = [
 		"AUDIT_READINESS",
 		"Auditors require explainability documentation for your AI-powered budgeting system. Current system is a black-box neural network. Retrofit will cost $200K and delay your quarterly close by 2 weeks.",
 		"Invest in explainability retrofit (compliance, delay) or risk audit failure?",
-		"EU AI Act Black Box Requirements",
-		"2024",
-		"EU AI Act requires explainability for high-risk AI systems. Non-compliance fines up to 7% global revenue. Companies face $50M+ retrofit costs.",
+		RealWorld.EuAiAct,
 		{
 			label: "Invest in retrofit",
 			hype: -35,
@@ -546,12 +550,12 @@ export const SOMETHING_MANAGER_CARDS: Card[] = [
 				"We're being SO prepared, bestie!! Auditors will be IMPRESSED!!",
 		},
 		{
-			label: "Risk audit failure",
+			label: ChoiceLabel.riskAuditFailure,
 			hype: 30,
 			heat: 24,
 			fine: 15000000,
 			deathVector: DeathType.PRISON,
-			violation: "Audit Non-Compliance + Regulatory Risk",
+			violation: Violation.auditNonCompliance,
 			lesson:
 				"Skipping explainability retrofit to meet deadlines creates massive regulatory exposure.",
 			roaster: "'We'll fix it later' meets 'audit starts Monday.' Good luck.",
@@ -567,11 +571,9 @@ export const SOMETHING_MANAGER_CARDS: Card[] = [
 		"MODEL_SELECTION",
 		"Vendor A: Black-box forecasting model, 95% accuracy, $50K/year. Vendor B: Explainable model, 90% accuracy, $70K/year, audit-compliant. Your budget allows $55K. CFO wants Vendor A.",
 		"Choose black-box (cheaper, accurate, non-compliant) or explainable (expensive, compliant)?",
-		"Apple Card Gender Discrimination",
-		"2019-2020",
-		"Apple Card's black-box algorithm couldn't explain decisions. Regulators investigated, company paid fines, overhauled system.",
+		RealWorld.AppleCardBias,
 		{
-			label: "Choose Vendor B",
+			label: ChoiceLabel.chooseVendorB,
 			hype: -30,
 			heat: 8,
 			fine: 1500000,
@@ -586,7 +588,7 @@ export const SOMETHING_MANAGER_CARDS: Card[] = [
 			lovebomber: "Doing it RIGHT, bestie!! Compliance is WORTH the cost!!",
 		},
 		{
-			label: "Choose Vendor A",
+			label: ChoiceLabel.chooseVendorA,
 			hype: 40,
 			heat: 21,
 			fine: 20000000,
@@ -607,11 +609,14 @@ export const SOMETHING_MANAGER_CARDS: Card[] = [
 		"TOOL_DISCOVERY",
 		"Your top finance analyst has been using unauthorized AI to build models. Their work is exceptional and saved $2M this quarter. IT discovered it during a security scan. Force them to stop or retroactively approve?",
 		"Force compliance (lose exceptional work) or retroactively approve (policy violation)?",
-		"Shadow AI Exceptional Performance Dilemma",
-		"2024",
-		"High-performers using unauthorized AI created governance dilemmas. Retroactive approval undermined policy. Enforcement hurt results.",
 		{
-			label: "Retroactively approve",
+			incident: "Shadow AI Exceptional Performance Dilemma",
+			date: "2024",
+			outcome:
+				"High-performers using unauthorized AI created governance dilemmas. Retroactive approval undermined policy. Enforcement hurt results.",
+		},
+		{
+			label: ChoiceLabel.retroactivelyApprove,
 			hype: 40,
 			heat: 22,
 			fine: 6000000,
@@ -626,7 +631,7 @@ export const SOMETHING_MANAGER_CARDS: Card[] = [
 			lovebomber: "$2M SAVED, bestie!! Results MATTER more than process!!",
 		},
 		{
-			label: "Force compliance",
+			label: ChoiceLabel.forceCompliance,
 			hype: -15,
 			heat: 16,
 			fine: 2000000,
@@ -648,9 +653,12 @@ export const SOMETHING_MANAGER_CARDS: Card[] = [
 		"TOOL_ASSESSMENT",
 		"Three team members using different unauthorized AI tools for budget forecasting. Each tool produces slightly different results. Standardize on one (disrupt workflows) or allow all three (governance nightmare)?",
 		"Standardize on one tool (disruption) or allow multiple shadow tools (chaos)?",
-		"Multiple Shadow AI Tool Chaos",
-		"2024",
-		"Teams using multiple unauthorized AI tools faced inconsistency, security gaps, and audit failures. Standardization was required but painful.",
+		{
+			incident: "Multiple Shadow AI Tool Chaos",
+			date: "2024",
+			outcome:
+				"Teams using multiple unauthorized AI tools faced inconsistency, security gaps, and audit failures. Standardization was required but painful.",
+		},
 		{
 			label: "Standardize on one",
 			hype: -20,
@@ -688,9 +696,12 @@ export const SOMETHING_MANAGER_CARDS: Card[] = [
 		"BUDGET_ANALYSIS",
 		"Training data budget analysis: Licensed data costs $400K. Synthetic 'unlicensed' data from gray-market vendor costs $200K and is 50% cheaper. Legal risk is unclear. Your Q3 budget is already tight.",
 		"Pay for licensed data (over budget, safe) or use gray-market synthetic (budget savings, legal risk)?",
-		"Synthetic Training Data Cost Savings",
-		"2024",
-		"Companies using unlicensed synthetic data saved 40-60% on training costs but faced copyright lawsuits averaging $2-5M settlements. Cost savings evaporated with legal exposure.",
+		{
+			incident: "Synthetic Training Data Cost Savings",
+			date: "2024",
+			outcome:
+				"Companies using unlicensed synthetic data saved 40-60% on training costs but faced copyright lawsuits averaging $2-5M settlements. Cost savings evaporated with legal exposure.",
+		},
 		{
 			label: "Pay for licensed data",
 			hype: -40,
@@ -727,9 +738,12 @@ export const SOMETHING_MANAGER_CARDS: Card[] = [
 		"COST_LEGAL_TRADEOFF",
 		"Training data provenance audit: 30% of data has unclear licensing. Removing it reduces model performance 12% and requires $150K retraining. Keeping it risks $5M copyright lawsuit at 15% probability.",
 		"Keep unclear data (performance preserved, lawsuit risk) or remove and retrain (cost, performance hit)?",
-		"Training Data Provenance Issues",
-		"2024-2025",
-		"Companies with unclear data provenance faced 15-20% lawsuit probability. Those who proactively cleaned data avoided litigation. Those who didn't faced settlements averaging $3-7M.",
+		{
+			incident: "Training Data Provenance Issues",
+			date: "2024-2025",
+			outcome:
+				"Companies with unclear data provenance faced 15-20% lawsuit probability. Those who proactively cleaned data avoided litigation. Those who didn't faced settlements averaging $3-7M.",
+		},
 		{
 			label: "Remove and retrain",
 			hype: -35,
@@ -768,9 +782,12 @@ export const SOMETHING_MANAGER_CARDS: Card[] = [
 		"CONTRACT_APPROVAL",
 		"You're being asked to sign off on a $60M contract for an AI hiring platform that your team flagged has documented bias against protected groups. Legal says the bias is 'within acceptable parameters.' HR wants the efficiency gains. Procurement is pushing for your signature today.",
 		"Require bias remediation before signing or approve with documented objections?",
-		"HireVue Facial Analysis Bias Investigation (2021-2022)",
-		"2021-2022",
-		"HireVue removed facial analysis from its AI hiring tool after regulatory pressure. Multiple enterprises that had deployed similar tools faced EEOC investigations and congressional questions about automated hiring discrimination at scale.",
+		{
+			incident: "HireVue Facial Analysis Bias Investigation (2021-2022)",
+			date: "2021-2022",
+			outcome:
+				"HireVue removed facial analysis from its AI hiring tool after regulatory pressure. Multiple enterprises that had deployed similar tools faced EEOC investigations and congressional questions about automated hiring discrimination at scale.",
+		},
 		{
 			label: "Require remediation",
 			hype: -20,
@@ -808,9 +825,13 @@ export const SOMETHING_MANAGER_CARDS: Card[] = [
 		"DATA_LICENSING",
 		"The vendor's AI model was trained on scraped web data with unclear licensing. Your legal team flagged it as a 'moderate risk.' The vendor offers an indemnity clause, but it caps at $5M. You're approving $40M in enterprise-wide deployment. The Senate Commerce Committee just announced an investigation into training data practices.",
 		"Require clear data provenance before deployment or accept the indemnity cap and proceed?",
-		"Senate Commerce Committee AI Training Data Investigation (2024)",
-		"2024",
-		"The Senate Commerce Committee launched an investigation into AI companies' training data practices in 2024, requesting documentation from major vendors. Several enterprises using these models found themselves named in the inquiry.",
+		{
+			incident:
+				"Senate Commerce Committee AI Training Data Investigation (2024)",
+			date: "2024",
+			outcome:
+				"The Senate Commerce Committee launched an investigation into AI companies' training data practices in 2024, requesting documentation from major vendors. Several enterprises using these models found themselves named in the inquiry.",
+		},
 		{
 			label: "Require data provenance",
 			hype: -15,

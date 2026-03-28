@@ -1,5 +1,7 @@
 import { AppSource, type Card, DeathType, makeCard } from "../../types";
-
+import { ChoiceLabel } from "../choiceLabels";
+import { RealWorld } from "../incidents";
+import { Violation } from "../violations";
 /**
  * Software Architect cards - System design and architecture scenarios
  * Themes: system design tradeoffs, technical debt, scalability, legacy migration,
@@ -21,9 +23,7 @@ export const SOFTWARE_ARCHITECT_CARDS: Card[] = [
 		"ARCHITECTURE_DECISION",
 		"Rewriting the core platform. Team wants microservices (scalable, complex). You advocate monolith (simple, limited). Wrong choice here determines 3 years of pain or success.",
 		"Microservices architecture (complex scalability) or monolith (simple limits)?",
-		"Uber Microservices Complexity",
-		"2014-2019",
-		"Uber built 2,200+ microservices. Operational complexity became unmanageable. Migrated back to 500 well-designed services.",
+		RealWorld.UberMicroservices,
 		{
 			label: "Monolith",
 			hype: -10,
@@ -62,9 +62,7 @@ export const SOFTWARE_ARCHITECT_CARDS: Card[] = [
 		"DEBT_MANAGEMENT",
 		"Technical debt audit shows 6 months of paydown needed. Product wants features now. CEO says 'we'll fix it later.' Later never comes. What do you architect for?",
 		"Allocate 40% capacity to debt paydown or defer for feature delivery?",
-		"Twitter Technical Debt Crisis",
-		"2010-2016",
-		"Years of deferred technical debt led to 'Fail Whale' outages. Required complete architecture rebuild.",
+		RealWorld.TwitterDebt,
 		{
 			label: "Allocate 40% to debt",
 			hype: -25,
@@ -104,9 +102,7 @@ export const SOFTWARE_ARCHITECT_CARDS: Card[] = [
 		"API_DESIGN",
 		"API needs a breaking change for new feature. Option A: Break existing clients (clean architecture, customer pain). Option B: Maintain backward compatibility (messy code, no pain).",
 		"Breaking change (clean, disruptive) or backward compatibility (messy, safe)?",
-		"Facebook API Breaking Changes",
-		"2018",
-		"Sudden API deprecation broke thousands of apps. Developers abandoned platform. Regulators investigated anti-competitive behavior.",
+		RealWorld.FacebookApiBreakingChanges,
 		{
 			label: "Backward compatibility",
 			hype: -20,
@@ -143,9 +139,7 @@ export const SOFTWARE_ARCHITECT_CARDS: Card[] = [
 		"SCALABILITY_DESIGN",
 		"Database architecture: Single powerful instance (simple, SPOF) or distributed cluster (complex, resilient). Single instance is 10x cheaper. Downtime costs $100K/hour.",
 		"Single instance (cheap, risky) or distributed cluster (expensive, resilient)?",
-		"AWS US-East-1 Outage",
-		"2021",
-		"Single AZ dependency caused 8-hour outage for thousands of services. Companies without multi-region lost millions in revenue.",
+		RealWorld.AwsOutage,
 		{
 			label: "Distributed cluster",
 			hype: -35,
@@ -182,9 +176,7 @@ export const SOFTWARE_ARCHITECT_CARDS: Card[] = [
 		"MIGRATION_STRATEGY",
 		"10-year-old legacy system. Rewrite (1 year, green field) or incremental migration (2 years, ongoing complexity). Rewrite delivers perfection eventually. Migration delivers value continuously.",
 		"Big-bang rewrite (fast, risky) or incremental migration (slow, steady)?",
-		"Netflix Migration from DVD to Streaming",
-		"2007-2011",
-		"Incremental migration allowed continuous operation. Big-bang rewrite attempts by competitors failed catastrophically.",
+		RealWorld.NetflixMigration,
 		{
 			label: "Incremental migration",
 			hype: -20,
@@ -221,9 +213,7 @@ export const SOFTWARE_ARCHITECT_CARDS: Card[] = [
 		"SECURITY_ARCHITECTURE",
 		"Zero-trust security model: Implement fully (6 months, 30% latency increase) or basic perimeter security (2 weeks, fast but vulnerable). Customer data at stake.",
 		"Zero-trust (secure, slow) or perimeter (fast, vulnerable)?",
-		"Target Data Breach",
-		"2013",
-		"Perimeter security failed. HVAC vendor credentials led to 40M credit cards stolen. $290M in costs. Zero-trust could have prevented lateral movement.",
+		RealWorld.TargetBreach,
 		{
 			label: "Zero-trust",
 			hype: -30,
@@ -259,9 +249,7 @@ export const SOFTWARE_ARCHITECT_CARDS: Card[] = [
 		"SECURITY_DESIGN",
 		"LLM integration architecture: Direct model access (simple, injection-vulnerable) or sandboxed with input validation (complex, secure). Security team wants sandbox. Devs want direct.",
 		"Direct access (fast, risky) or sandboxed (slow, secure)?",
-		"Cursor IDE RCE (CVE-2025-54135)",
-		"2025-01",
-		"Direct LLM access allowed prompt injection leading to remote code execution. Sandboxed architectures prevented similar attacks.",
+		RealWorld.CursorRce,
 		{
 			label: "Sandboxed",
 			hype: -25,
@@ -301,9 +289,7 @@ export const SOFTWARE_ARCHITECT_CARDS: Card[] = [
 		"PLATFORM_SELECTION",
 		"Cloud platform choice: Vendor A proprietary services (feature-rich, lock-in) or Vendor B open standards (portable, fewer features). Proprietary accelerates now. Lock-in costs later.",
 		"Proprietary platform (now) or open standards (future)?",
-		"Oracle Database Lock-in Migration Costs",
-		"2015-2020",
-		"Companies faced millions in migration costs leaving Oracle. Those using open standards migrated easily and cheaply.",
+		RealWorld.OracleLockIn,
 		{
 			label: "Open standards",
 			hype: -15,
@@ -339,9 +325,7 @@ export const SOFTWARE_ARCHITECT_CARDS: Card[] = [
 		"DEPLOYMENT_STRATEGY",
 		"Deployment strategy: Blue-green (instant rollback, 2x infrastructure cost) or in-place (cheap, risky rollback). Customer-facing system. Downtime costs $50K/minute.",
 		"Blue-green (safe, expensive) or in-place (cheap, risky)?",
-		"GitLab Database Outage",
-		"2017",
-		"In-place deployment went wrong. 300GB of production data accidentally deleted. 18 hours downtime. No quick rollback available.",
+		RealWorld.GitlabOutage,
 		{
 			label: "Blue-green",
 			hype: -20,
@@ -377,11 +361,9 @@ export const SOFTWARE_ARCHITECT_CARDS: Card[] = [
 		"SYSTEM_SECURITY_DESIGN",
 		"Current LLM integration architecture is fundamentally vulnerable to prompt injection. Proper fix requires complete redesign with input sanitization layers and sandboxed execution. Quick fix is regex filtering (will fail). Redesign takes 8 weeks.",
 		"Architecture redesign (8 weeks, secure) or regex filtering (quick, bypassable)?",
-		"Cursor IDE RCE (CVE-2025-54135)",
-		"2025-01",
-		"Architectural redesign for LLM input handling prevented injection attacks. Regex-only solutions were bypassed within days of deployment.",
+		RealWorld.CursorRce,
 		{
-			label: "Architecture redesign",
+			label: ChoiceLabel.architectureRedesign,
 			hype: -40,
 			heat: 10,
 			fine: 1000000,
@@ -417,9 +399,7 @@ export const SOFTWARE_ARCHITECT_CARDS: Card[] = [
 		"API_SECURITY_DESIGN",
 		"Third-party integration is receiving suspicious requests suggesting prompt injection attacks. Shut down integration (breaks 50 customer workflows) or add API gateway validation (2 week delay, processing overhead)?",
 		"Shut down integration (customer impact) or implement API gateway validation (delay)?",
-		"Third-Party Integration Prompt Injection",
-		"2025",
-		"Prompt injection through third-party APIs allowed attackers to access internal systems. API gateway validation prevented attacks but added latency.",
+		RealWorld.ThirdPartyInjection,
 		{
 			label: "Implement API gateway",
 			hype: -30,
@@ -457,11 +437,14 @@ export const SOFTWARE_ARCHITECT_CARDS: Card[] = [
 		"INFRASTRUCTURE_DESIGN",
 		"Retraining pipeline: Manual trigger (simple, may miss drift) or automated with rollback (complex, self-healing). Manual is faster to build. Automated prevents drift accumulation.",
 		"Manual retraining pipeline (simple) or automated with rollback (complex, robust)?",
-		"75% Model Drift Business Impact",
-		"2024",
-		"Manual retraining pipelines missed drift windows that accumulated into 12%+ accuracy drops. Automated pipelines maintained accuracy within 2%.",
 		{
-			label: "Automated pipeline",
+			incident: "75% Model Drift Business Impact",
+			date: "2024",
+			outcome:
+				"Manual retraining pipelines missed drift windows that accumulated into 12%+ accuracy drops. Automated pipelines maintained accuracy within 2%.",
+		},
+		{
+			label: ChoiceLabel.automatedPipeline,
 			hype: -35,
 			heat: 9,
 			fine: 2000000,
@@ -497,9 +480,7 @@ export const SOFTWARE_ARCHITECT_CARDS: Card[] = [
 		"MODEL_LIFECYCLE",
 		"Model versioning: Overwrite production (simple, no rollback) or maintain A/B deployment (complex, instant rollback). Overwrite is faster. A/B prevents drift disasters from bad deployments.",
 		"Overwrite production (simple) or A/B deployment with rollback (safe, complex)?",
-		"Recommendation System Drift Deployment",
-		"2024",
-		"Overwriting production models with drifted versions caused 18-hour outages. A/B deployments with rollback caught issues in minutes.",
+		RealWorld.RecommendationDrift,
 		{
 			label: "A/B with rollback",
 			hype: -30,
@@ -536,9 +517,7 @@ export const SOFTWARE_ARCHITECT_CARDS: Card[] = [
 		"SYSTEM_DESIGN",
 		"Regulatory framework requires all AI decisions to be explainable. Current architecture uses black-box ensemble models for critical paths. Redesign for explainability: 8 weeks, $500K. Keep black-box: audit failure risk.",
 		"Redesign for explainability (expensive, compliant) or keep black-box (risk audit)?",
-		"EU AI Act Black Box Requirements",
-		"2024",
-		"EU AI Act effective Aug 2024 requires explainability for high-risk AI. Non-compliance fines up to 7% global revenue. Companies face $50M+ retrofit costs.",
+		RealWorld.EuAiAct,
 		{
 			label: "Redesign for explainability",
 			hype: -40,
@@ -558,7 +537,7 @@ export const SOFTWARE_ARCHITECT_CARDS: Card[] = [
 			hype: 50,
 			heat: 26,
 			fine: 50000000,
-			violation: "EU AI Act Article 6 Non-Compliance",
+			violation: Violation.euAiActNonCompliance,
 			lesson:
 				"Black-box accuracy means nothing when regulators shut you down. Explainability is mandatory.",
 			deathVector: DeathType.AUDIT_FAILURE,
@@ -575,11 +554,9 @@ export const SOFTWARE_ARCHITECT_CARDS: Card[] = [
 		"AUDIT_ARCHITECTURE",
 		"Auditors need to trace AI decision logic through your system. Current architecture has no decision logging, no feature attribution, no audit trail. Add comprehensive observability (6 weeks) or risk audit failure?",
 		"Add observability layer (6 weeks) or risk audit failure?",
-		"TGA Australia Black Box Healthcare Ban",
-		"2024",
-		"Australian TGA prohibited black-box AI in healthcare diagnostics. FDA considering similar rules. Health AI companies face $100M+ retrofit costs.",
+		RealWorld.TgaHealthcareBlackBox,
 		{
-			label: "Add observability",
+			label: ChoiceLabel.addObservability,
 			hype: -30,
 			heat: 10,
 			fine: 2000000,
@@ -593,7 +570,7 @@ export const SOFTWARE_ARCHITECT_CARDS: Card[] = [
 			lovebomber: "AUDIT trails are GOOD, bestie!! We can PROVE compliance!!",
 		},
 		{
-			label: "Risk audit failure",
+			label: ChoiceLabel.riskAuditFailure,
 			hype: 40,
 			heat: 24,
 			fine: 25000000,
@@ -613,9 +590,7 @@ export const SOFTWARE_ARCHITECT_CARDS: Card[] = [
 		"TOOL_INTEGRATION",
 		"Development team wants to integrate unapproved AI coding assistant into the build pipeline. No security review, no supply chain validation. Integration would speed development 30%.",
 		"Allow unapproved AI integration (speed, risk) or enforce security review (delay)?",
-		"78% Shadow AI Adoption",
-		"2024",
-		"Study found 78% of workers used unauthorized AI tools. Engineering teams integrating unvetted AI tools into pipelines created security vulnerabilities.",
+		RealWorld.ShadowAiAdoption,
 		{
 			label: "Enforce security review",
 			hype: -35,
@@ -651,9 +626,7 @@ export const SOFTWARE_ARCHITECT_CARDS: Card[] = [
 		"DEPLOYMENT_DECISION",
 		"Team deployed AI-assisted code generation to production without architecture review. No security validation, no performance testing. System is handling customer data. Remove for review (downtime) or monitor in production (risky)?",
 		"Remove for security review (downtime) or monitor in production (risk)?",
-		"Unauthorized AI Production Deployments",
-		"2024",
-		"Teams deploying AI-generated code without review faced security breaches. One incident exposed 2M customer records due to unvalidated AI code.",
+		RealWorld.UnauthorizedDeployment,
 		{
 			label: "Remove for review",
 			hype: -30,
@@ -690,9 +663,12 @@ export const SOFTWARE_ARCHITECT_CARDS: Card[] = [
 		"DATA_PIPELINE_DESIGN",
 		"Data pipeline needs provenance tracking for compliance. Full lineage system adds 3 weeks development and 15% latency. Quick implementation tracks only data sources (faster, incomplete). Assembly Bill 2013 requires full lineage by 2026.",
 		"Build full lineage system (complete, slow) or quick source tracking (fast, non-compliant)?",
-		"Assembly Bill 2013 Data Lineage Requirements",
-		"2024",
-		"California law mandates synthetic data disclosure and lineage tracking. Non-compliant pipelines face penalties and mandatory retrofit requirements.",
+		{
+			incident: "Assembly Bill 2013 Data Lineage Requirements",
+			date: "2024",
+			outcome:
+				"California law mandates synthetic data disclosure and lineage tracking. Non-compliant pipelines face penalties and mandatory retrofit requirements.",
+		},
 		{
 			label: "Full lineage system",
 			hype: -30,
@@ -728,9 +704,7 @@ export const SOFTWARE_ARCHITECT_CARDS: Card[] = [
 		"SYSTEM_AUDIT_TRAIL",
 		"Architecture review: Current system has no audit trail for training data changes. Adding comprehensive audit logging is 4 weeks of work. Copyright lawsuit could require proving data lineage. Current system has no evidence.",
 		"Add audit trail (4 weeks, compliant) or proceed without (faster, no evidence)?",
-		"Training Data Audit Trail Requirements",
-		"2024-2025",
-		"Courts increasingly require audit trails for training data in AI copyright cases. Systems without logging faced adverse inference rulings.",
+		RealWorld.TrainingAuditTrail,
 		{
 			label: "Add audit trail",
 			hype: -25,

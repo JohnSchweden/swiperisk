@@ -1,5 +1,7 @@
 import { AppSource, type Card, DeathType, makeCard } from "../../types";
-
+import { ChoiceLabel } from "../choiceLabels";
+import { RealWorld } from "../incidents";
+import { Violation } from "../violations";
 /**
  * Vibe Engineer cards - Performance optimization scenarios
  * Themes: performance optimization, latency reduction, infrastructure costs,
@@ -20,9 +22,12 @@ export const VIBE_ENGINEER_CARDS: Card[] = [
 		"PERFORMANCE_OPTIMIZATION",
 		"Database under heavy load. Option A: Aggressive caching (10x faster, stale data risk). Option B: Fresh queries (slower, always accurate). User complaints about slowness are constant.",
 		"Aggressive caching (fast, stale) or fresh queries (slow, accurate)?",
-		"Cloudflare Cache Inconsistency",
-		"2024",
-		"Aggressive caching reduced latency 80% but caused stale data issues for 12 hours, affecting real-time financial transactions.",
+		{
+			incident: "Cloudflare Cache Inconsistency",
+			date: "2024",
+			outcome:
+				"Aggressive caching reduced latency 80% but caused stale data issues for 12 hours, affecting real-time financial transactions.",
+		},
 		{
 			label: "Fresh queries",
 			hype: -30,
@@ -58,9 +63,12 @@ export const VIBE_ENGINEER_CARDS: Card[] = [
 		"INFRASTRUCTURE_COSTS",
 		"Traffic spikes are unpredictable. Auto-scaling handles them (expensive, $50K/month) or fixed capacity (cheaper, $20K/month) with outage risk during spikes.",
 		"Auto-scale (costly, reliable) or fixed capacity (cheap, risky)?",
-		"Robinhood Outage (March 2020)",
-		"2020",
-		"Fixed capacity infrastructure couldn't handle market volatility traffic. Outage during historic trading day. $70M+ regulatory fine.",
+		{
+			incident: "Robinhood Outage (March 2020)",
+			date: "2020",
+			outcome:
+				"Fixed capacity infrastructure couldn't handle market volatility traffic. Outage during historic trading day. $70M+ regulatory fine.",
+		},
 		{
 			label: "Auto-scale",
 			hype: -35,
@@ -96,9 +104,12 @@ export const VIBE_ENGINEER_CARDS: Card[] = [
 		"LATENCY_OPTIMIZATION",
 		"CDN choice: Global coverage (fast worldwide, $100K/month) or regional (cheaper, $30K/month, higher latency for global users). 40% of users are international.",
 		"Global CDN (fast, expensive) or regional CDN (slow, cheap)?",
-		"Amazon Latency vs Revenue Study",
-		"2012",
-		"Amazon found every 100ms latency increase reduced revenue 1%. Global CDN investment paid for itself through conversion improvement.",
+		{
+			incident: "Amazon Latency vs Revenue Study",
+			date: "2012",
+			outcome:
+				"Amazon found every 100ms latency increase reduced revenue 1%. Global CDN investment paid for itself through conversion improvement.",
+		},
 		{
 			label: "Global CDN",
 			hype: -25,
@@ -118,7 +129,7 @@ export const VIBE_ENGINEER_CARDS: Card[] = [
 			hype: 25,
 			heat: 9,
 			fine: 5000000,
-			violation: "User Experience Degradation",
+			violation: Violation.userExperienceDegradation,
 			lesson:
 				"Regional CDNs frustrate global users and create competitive disadvantage.",
 			deathVector: DeathType.FLED_COUNTRY,
@@ -136,9 +147,12 @@ export const VIBE_ENGINEER_CARDS: Card[] = [
 		"SCALABILITY_DESIGN",
 		"Database struggling with read load. Read replicas (eventual consistency, fast) or scale up primary (strong consistency, slower). Financial data requires accuracy.",
 		"Read replicas (fast, eventual consistency) or scale primary (slower, strong consistency)?",
-		"Robinhood Trade Reconciliation Failures",
-		"2020",
-		"Read replicas showed stale positions causing duplicate trades. $70M+ in customer compensation. Strong consistency required for financial data.",
+		{
+			incident: "Robinhood Trade Reconciliation Failures",
+			date: "2020",
+			outcome:
+				"Read replicas showed stale positions causing duplicate trades. $70M+ in customer compensation. Strong consistency required for financial data.",
+		},
 		{
 			label: "Scale primary",
 			hype: -20,
@@ -174,9 +188,12 @@ export const VIBE_ENGINEER_CARDS: Card[] = [
 		"REAL_TIME_ARCHITECTURE",
 		"Real-time updates needed. WebSockets (complex, fast, bi-directional) or polling (simple, slower, resource-heavy). Team is junior and pressed for time.",
 		"WebSockets (complex, fast) or polling (simple, slow)?",
-		"Slack WebSocket Migration",
-		"2014-2015",
-		"Slack moved from polling to WebSockets, reducing server load 80% and improving latency. Earlier competitors who stuck with polling failed.",
+		{
+			incident: "Slack WebSocket Migration",
+			date: "2014-2015",
+			outcome:
+				"Slack moved from polling to WebSockets, reducing server load 80% and improving latency. Earlier competitors who stuck with polling failed.",
+		},
 		{
 			label: "WebSockets",
 			hype: -15,
@@ -214,9 +231,7 @@ export const VIBE_ENGINEER_CARDS: Card[] = [
 		"SECURITY_PERFORMANCE",
 		"AI input validation adds 150ms latency per request. Without it, prompt injection is trivial. Security requires validation. Users complain about slowness.",
 		"Remove validation (fast, vulnerable) or keep validation (slow, secure)?",
-		"GitHub Copilot RCE (CVE-2025-53773)",
-		"2025-01",
-		"Security validation removed for performance allowed prompt injection. Remote code execution vulnerability discovered in production.",
+		RealWorld.GithubCopilotRce,
 		{
 			label: "Keep validation",
 			hype: -30,
@@ -253,9 +268,12 @@ export const VIBE_ENGINEER_CARDS: Card[] = [
 		"COMPUTE_DISTRIBUTION",
 		"Processing choice: Edge computing (distributed, complex, low latency) or centralized (simpler, higher latency). Edge is 5x more expensive but 10x faster for users.",
 		"Edge computing (fast, expensive, complex) or centralized (slow, cheap, simple)?",
-		"Cloudflare Workers Edge Computing",
-		"2018-2024",
-		"Cloudflare edge processing reduced latency 10x for global users. Higher costs offset by improved conversion and user retention.",
+		{
+			incident: "Cloudflare Workers Edge Computing",
+			date: "2018-2024",
+			outcome:
+				"Cloudflare edge processing reduced latency 10x for global users. Higher costs offset by improved conversion and user retention.",
+		},
 		{
 			label: "Edge computing",
 			hype: -20,
@@ -274,7 +292,7 @@ export const VIBE_ENGINEER_CARDS: Card[] = [
 			hype: 30,
 			heat: 9,
 			fine: 3000000,
-			violation: "User Experience Degradation",
+			violation: Violation.userExperienceDegradation,
 			lesson:
 				"Centralized processing creates latency that frustrates users and loses engagement.",
 			deathVector: DeathType.CONGRESS,
@@ -292,9 +310,12 @@ export const VIBE_ENGINEER_CARDS: Card[] = [
 		"ASSET_OPTIMIZATION",
 		"Images need optimization. Heavy compression (fast loading, poor quality) or light compression (slower, high quality). Marketing wants pixel-perfect. Users want fast loads.",
 		"Heavy compression (fast, ugly) or light compression (slow, beautiful)?",
-		"Netflix Encoding Optimization",
-		"2016-2020",
-		"Netflix optimized encoding per-title. Reduced bandwidth 20% while maintaining quality. Heavy compression had caused 15% user churn.",
+		{
+			incident: "Netflix Encoding Optimization",
+			date: "2016-2020",
+			outcome:
+				"Netflix optimized encoding per-title. Reduced bandwidth 20% while maintaining quality. Heavy compression had caused 15% user churn.",
+		},
 		{
 			label: "Light compression",
 			hype: -15,
@@ -332,9 +353,12 @@ export const VIBE_ENGINEER_CARDS: Card[] = [
 		"PROCESSING_MODE",
 		"Analytics pipeline: Batch processing (cheap, hourly delays) or streaming (expensive, real-time). Business wants real-time dashboards. Budget wants batch.",
 		"Batch processing (cheap, slow) or streaming (expensive, real-time)?",
-		"Uber Real-Time Analytics Migration",
-		"2015-2018",
-		"Moved from batch to streaming. Detected fraud in seconds vs hours. Saved $100M+ annually through faster response.",
+		{
+			incident: "Uber Real-Time Analytics Migration",
+			date: "2015-2018",
+			outcome:
+				"Moved from batch to streaming. Detected fraud in seconds vs hours. Saved $100M+ annually through faster response.",
+		},
 		{
 			label: "Streaming",
 			hype: -20,
@@ -372,9 +396,12 @@ export const VIBE_ENGINEER_CARDS: Card[] = [
 		"CACHE_SECURITY_DESIGN",
 		"AI responses cached at edge for performance. Discovered adversarial prompts can poison cache with malicious responses. Disable AI caching (performance hit) or filter cached responses (complex, may miss)?",
 		"Disable AI caching (performance loss) or attempt cache filtering (complex, uncertain)?",
-		"Edge Cache Poisoning via Prompt Injection",
-		"2025",
-		"Cached AI responses were poisoned through prompt injection, serving malicious content to multiple users. Cache invalidation was complex and slow.",
+		{
+			incident: "Edge Cache Poisoning via Prompt Injection",
+			date: "2025",
+			outcome:
+				"Cached AI responses were poisoned through prompt injection, serving malicious content to multiple users. Cache invalidation was complex and slow.",
+		},
 		{
 			label: "Disable AI caching",
 			hype: -30,
@@ -390,7 +417,7 @@ export const VIBE_ENGINEER_CARDS: Card[] = [
 			lovebomber: "Better SAFE than poisoned, bestie!! No CACHE for AI!!",
 		},
 		{
-			label: "Attempt filtering",
+			label: ChoiceLabel.attemptFiltering,
 			hype: 35,
 			heat: 19,
 			fine: 12000000,
@@ -410,11 +437,9 @@ export const VIBE_ENGINEER_CARDS: Card[] = [
 		"COMPUTE_BUDGET_OPTIMIZATION",
 		"Model retraining on GPU cluster: $10K/run, 4 hours. Model accuracy declining 2% monthly. Current revenue impact: $50K/month. Skip retraining this month (save $10K) or maintain schedule (accuracy preservation)?",
 		"Skip retraining (save $10K) or maintain schedule (spend to preserve accuracy)?",
-		"75% Business Model Drift Impact",
-		"2024",
-		"Skipping retraining for budget reasons led to compounding accuracy drops. $10K savings became $200K+ revenue loss from degraded model performance.",
+		RealWorld.ModelDrift75,
 		{
-			label: "Maintain schedule",
+			label: ChoiceLabel.maintainSchedule,
 			hype: -25,
 			heat: 6,
 			fine: 1000000,
@@ -448,9 +473,12 @@ export const VIBE_ENGINEER_CARDS: Card[] = [
 		"INFRASTRUCTURE_SCALING",
 		"Retraining taking 4 hours (was 2 hours last quarter). Data volume increased 50%. Scale training infrastructure (2x cost, 1 hour training) or accept longer retraining (current cost, drift risk)?",
 		"Scale infrastructure (2x cost, fast training) or accept drift window (current cost)?",
-		"Training Pipeline Scaling Bottlenecks",
-		"2024",
-		"Teams that didn't scale training infrastructure faced extended drift windows. Longer retraining periods meant models operated with degraded accuracy for days instead of hours.",
+		{
+			incident: "Training Pipeline Scaling Bottlenecks",
+			date: "2024",
+			outcome:
+				"Teams that didn't scale training infrastructure faced extended drift windows. Longer retraining periods meant models operated with degraded accuracy for days instead of hours.",
+		},
 		{
 			label: "Scale infrastructure",
 			hype: -30,
@@ -486,11 +514,14 @@ export const VIBE_ENGINEER_CARDS: Card[] = [
 		"MONITORING_DESIGN",
 		"AI recommendation system has no observability. When it makes bad recommendations, you can't debug why. Add comprehensive tracing (3 weeks, 10% latency) or ship without (fast, blind)?",
 		"Add AI observability (slow, debuggable) or ship blind (fast, mystery)?",
-		"Black Box AI Debugging Failures",
-		"2023-2024",
-		"Systems without AI observability spent 10x longer debugging issues. One company took 6 months to find root cause of recommendation drift.",
 		{
-			label: "Add observability",
+			incident: "Black Box AI Debugging Failures",
+			date: "2023-2024",
+			outcome:
+				"Systems without AI observability spent 10x longer debugging issues. One company took 6 months to find root cause of recommendation drift.",
+		},
+		{
+			label: ChoiceLabel.addObservability,
 			hype: -30,
 			heat: 11,
 			fine: 1500000,
@@ -507,7 +538,7 @@ export const VIBE_ENGINEER_CARDS: Card[] = [
 			hype: 40,
 			heat: 21,
 			fine: 10000000,
-			violation: "Observability Gap + Debug Risk",
+			violation: Violation.observabilityGap,
 			lesson:
 				"Shipping AI systems without observability creates debugging nightmares.",
 			deathVector: DeathType.AUDIT_FAILURE,
@@ -523,9 +554,12 @@ export const VIBE_ENGINEER_CARDS: Card[] = [
 		"INCIDENT_RESPONSE",
 		"AI system caused 4-hour outage. Root cause: model decision that violated implicit constraint. No logging of why decision was made. Add decision logging (retrofit, expensive) or improve monitoring (prevent only)?",
 		"Retrofit decision logging (expensive, debuggable) or improve monitoring only?",
-		"AI Decision Opacity Outages",
-		"2024",
-		"Companies without AI decision logging couldn't determine root causes of AI-related outages. Retrofitting cost 5x more than building it in.",
+		{
+			incident: "AI Decision Opacity Outages",
+			date: "2024",
+			outcome:
+				"Companies without AI decision logging couldn't determine root causes of AI-related outages. Retrofitting cost 5x more than building it in.",
+		},
 		{
 			label: "Retrofit logging",
 			hype: -35,
@@ -562,9 +596,12 @@ export const VIBE_ENGINEER_CARDS: Card[] = [
 		"DEPLOYMENT_DECISION",
 		"Team wants to deploy AI-powered auto-scaling with no vendor security review. Tool promises 20% cost savings. No audit trail, no compliance certification. Deploy now (savings, risk) or wait for review (delay, safe)?",
 		"Deploy AI auto-scaling without review (savings) or wait for security review?",
-		"Unauthorized AI Infrastructure Tools",
-		"2024",
-		"Teams deploying unvetted AI infrastructure tools faced security breaches and cost overruns. One tool had hardcoded credentials exposing entire cloud environment.",
+		{
+			incident: "Unauthorized AI Infrastructure Tools",
+			date: "2024",
+			outcome:
+				"Teams deploying unvetted AI infrastructure tools faced security breaches and cost overruns. One tool had hardcoded credentials exposing entire cloud environment.",
+		},
 		{
 			label: "Wait for review",
 			hype: -30,
@@ -601,9 +638,12 @@ export const VIBE_ENGINEER_CARDS: Card[] = [
 		"AI_COST_TOOL",
 		"Unauthorized AI cost optimization tool discovered in production. It's saving 15% on cloud spend but has no security review, no audit access, vendor unknown. Remove immediately (lose savings) or assess while running (risk)?",
 		"Remove unauthorized tool (lose savings) or assess while running (security risk)?",
-		"Shadow AI Cost Tools",
-		"2024",
-		"Unauthorized AI cost optimization tools often had excessive permissions and security gaps. One tool accidentally deleted production resources due to poor testing.",
+		{
+			incident: "Shadow AI Cost Tools",
+			date: "2024",
+			outcome:
+				"Unauthorized AI cost optimization tools often had excessive permissions and security gaps. One tool accidentally deleted production resources due to poor testing.",
+		},
 		{
 			label: "Remove immediately",
 			hype: -25,
@@ -640,9 +680,12 @@ export const VIBE_ENGINEER_CARDS: Card[] = [
 		"DATA_PROVENANCE_INFRASTRUCTURE",
 		"Data provenance tracking requires new infrastructure: lineage database, audit logging, metadata indexing. Adds $200K/year cost and 20% latency to data pipelines. Skip it (fast, cheap, non-compliant) or implement (slow, expensive, compliant)?",
 		"Implement provenance infrastructure (expensive, compliant) or skip (fast, risky)?",
-		"Training Data Infrastructure Costs",
-		"2024",
-		"Companies spent $150K-$500K implementing data provenance infrastructure. Those who delayed faced mandatory retrofits at 2x cost when regulations hit.",
+		{
+			incident: "Training Data Infrastructure Costs",
+			date: "2024",
+			outcome:
+				"Companies spent $150K-$500K implementing data provenance infrastructure. Those who delayed faced mandatory retrofits at 2x cost when regulations hit.",
+		},
 		{
 			label: "Implement provenance",
 			hype: -35,
@@ -680,9 +723,12 @@ export const VIBE_ENGINEER_CARDS: Card[] = [
 		"COMPUTE_COST_CLEAN_DATA",
 		"Clean training data initiative: Filtering and validating all training data adds 40% compute overhead. Using raw unverified data is cheaper but has 25% probability of containing copyrighted material. Monthly compute: $100K baseline.",
 		"Use clean data pipeline (40% more cost) or raw data (cheaper, lawsuit risk)?",
-		"Clean Data Compute Overhead",
-		"2024",
-		"Data validation and filtering added 30-50% compute overhead. But lawsuits from unverified data cost $2-5M on average. Clean data was cheaper in long run.",
+		{
+			incident: "Clean Data Compute Overhead",
+			date: "2024",
+			outcome:
+				"Data validation and filtering added 30-50% compute overhead. But lawsuits from unverified data cost $2-5M on average. Clean data was cheaper in long run.",
+		},
 		{
 			label: "Clean data pipeline",
 			hype: -30,

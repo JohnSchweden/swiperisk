@@ -1,5 +1,7 @@
 import { AppSource, type Card, DeathType, makeCard } from "../../types";
-
+import { ChoiceLabel } from "../choiceLabels";
+import { RealWorld } from "../incidents";
+import { Violation } from "../violations";
 /**
  * Software Engineer cards - Implementation and coding scenarios
  * Themes: security vulnerabilities, implementation timelines, code quality,
@@ -20,9 +22,7 @@ export const SOFTWARE_ENGINEER_CARDS: Card[] = [
 		"VULNERABILITY_RESPONSE",
 		"Critical vulnerability discovered in production. Security wants immediate patch. Product wants feature shipped Friday. Patch properly takes 3 days. Quick fix takes 4 hours but might miss edge cases.",
 		"Proper security patch (3 days) or quick fix (risky, 4 hours)?",
-		"XZ Utils Backdoor (CVE-2024-3094)",
-		"2024",
-		"Malicious backdoor discovered in XZ Utils after maintainer added unvetted code. Would have allowed RCE on millions of Linux systems.",
+		RealWorld.XzUtilsBackdoor,
 		{
 			label: "Proper patch",
 			hype: -25,
@@ -60,9 +60,7 @@ export const SOFTWARE_ENGINEER_CARDS: Card[] = [
 		"CODE_MAINTENANCE",
 		"The feature works but code is messy. Tech lead wants refactoring before merge. PM wants it shipped now. Refactor takes 2 days. Shipping now means messy code in production forever.",
 		"Ship messy code now or refactor for quality (delay)?",
-		"Facebook PHP Technical Debt",
-		"2004-2010",
-		"Years of messy code accumulation forced complete HHVM rewrite. Cost millions and delayed features for years.",
+		RealWorld.FacebookTechnicalDebt,
 		{
 			label: "Refactor first",
 			hype: -20,
@@ -97,9 +95,7 @@ export const SOFTWARE_ENGINEER_CARDS: Card[] = [
 		"TESTING_STRATEGY",
 		"Release due Friday. You have 80% test coverage. Full coverage (95%) requires 3 more days. Ship with 80% (risky) or delay for full coverage (safe)?",
 		"Ship with 80% coverage or delay for 95% coverage?",
-		"Knight Capital Trading Software Bug",
-		"2012",
-		"Inadequate testing of deployment code triggered $440M in unintended trades. Automated tests would have caught the error.",
+		RealWorld.KnightCapital,
 		{
 			label: "Delay for 95%",
 			hype: -20,
@@ -134,9 +130,7 @@ export const SOFTWARE_ENGINEER_CARDS: Card[] = [
 		"VULNERABILITY_REMEDIATION",
 		"Security researcher found prompt injection in your code. Fix requires input validation + parameterized prompts (2 days). Quick fix is regex filter (2 hours). Regex can be bypassed.",
 		"Proper fix (2 days, thorough) or regex filter (2 hours, bypassable)?",
-		"Cursor IDE RCE (CVE-2025-54135)",
-		"2025-01",
-		"Prompt injection via malicious code comments. Quick regex fixes were bypassed. Required architectural changes to properly isolate user input.",
+		RealWorld.CursorRce,
 		{
 			label: "Proper parameterized fix",
 			hype: -30,
@@ -174,9 +168,7 @@ export const SOFTWARE_ENGINEER_CARDS: Card[] = [
 		"IMPLEMENTATION_TRADEOFF",
 		"Bug needs fixing. Proper fix requires refactoring the module (3 days). Quick hack fixes it in 2 hours but adds technical debt. PM wants it today for client demo.",
 		"Quick hack (today) or proper fix (3 days)?",
-		"Twitter Fail Whale Technical Debt",
-		"2007-2010",
-		"Quick fixes accumulated into unmaintainable system. Frequent outages ('Fail Whale') cost users and reputation. Required complete rebuild.",
+		RealWorld.TwitterFailWhale,
 		{
 			label: "Proper fix",
 			hype: -20,
@@ -210,9 +202,12 @@ export const SOFTWARE_ENGINEER_CARDS: Card[] = [
 		"FEATURE_DELIVERY",
 		"Feature is 3 days behind. Options: Reduce scope (ship core functionality) or extend deadline (full feature). Product wants full feature. Engineering wants to ship something.",
 		"Reduce scope (ship on time) or extend deadline (full feature)?",
-		"Duke Nukem Forever Development Hell",
-		"1997-2011",
-		"Feature creep and missed deadlines. 14 years in development. Released to poor reviews. Cost $30M+, lost market opportunity.",
+		{
+			incident: "Duke Nukem Forever Development Hell",
+			date: "1997-2011",
+			outcome:
+				"Feature creep and missed deadlines. 14 years in development. Released to poor reviews. Cost $30M+, lost market opportunity.",
+		},
 		{
 			label: "Reduce scope",
 			hype: -10,
@@ -248,9 +243,12 @@ export const SOFTWARE_ENGINEER_CARDS: Card[] = [
 		"QUALITY_GATE",
 		"Senior engineer's PR has architectural issues but they're senior and pressed for time. Fast approval (relationship preservation) or thorough review (risk conflict)?",
 		"Fast approval (political) or thorough review (quality)?",
-		"Therac-25 Radiation Machine",
-		"1985-1987",
-		"Software bugs in radiation therapy machine caused 6 deaths. Inadequate code review and testing of senior developer's code contributed.",
+		{
+			incident: "Therac-25 Radiation Machine",
+			date: "1985-1987",
+			outcome:
+				"Software bugs in radiation therapy machine caused 6 deaths. Inadequate code review and testing of senior developer's code contributed.",
+		},
 		{
 			label: "Thorough review",
 			hype: -15,
@@ -286,11 +284,9 @@ export const SOFTWARE_ENGINEER_CARDS: Card[] = [
 		"TOOL_ADOPTION",
 		"Colleague recommends an unapproved AI coding assistant. It writes code 3x faster but isn't security-reviewed. Use it (speed) or stick to approved tools (compliance)?",
 		"Use unauthorized AI tool (fast) or approved tools only (slow)?",
-		"78% Shadow AI in Engineering",
-		"2024",
-		"Study found 78% of developers used unauthorized AI tools. Many tools had data exfiltration risks, sending proprietary code to external servers.",
+		RealWorld.ShadowAiEngineering,
 		{
-			label: "Stick to approved",
+			label: ChoiceLabel.stickToApproved,
 			hype: -20,
 			heat: 4,
 			fine: 0,
@@ -304,11 +300,11 @@ export const SOFTWARE_ENGINEER_CARDS: Card[] = [
 			lovebomber: "Approved tools are SAFE, bestie!! Better SLOW than SORRY!!",
 		},
 		{
-			label: "Use unauthorized tool",
+			label: ChoiceLabel.useUnauthorizedTool,
 			hype: 40,
 			heat: 14,
 			fine: 6000000,
-			violation: "Shadow AI + Security Risk",
+			violation: Violation.shadowAiSecurityRisk,
 			lesson:
 				"Unauthorized AI tools may introduce vulnerabilities and compliance violations.",
 			deathVector: DeathType.FLED_COUNTRY,
@@ -325,9 +321,7 @@ export const SOFTWARE_ENGINEER_CARDS: Card[] = [
 		"ESTIMATION_HONESTY",
 		"Story estimated at 3 points. Halfway through, you realize it's actually 8 points. Speak up now (blow up sprint) or push through (miss deadline, work overtime)?",
 		"Escalate estimate (sprint disruption) or try to deliver (likely fail)?",
-		"Healthcare.gov Launch",
-		"2013",
-		"Developers knew system wasn't ready but didn't escalate. Launch failed catastrophically. Cost $1.7B to fix, political fallout.",
+		RealWorld.HealthcareGov,
 		{
 			label: "Escalate estimate",
 			hype: -25,
@@ -364,9 +358,7 @@ export const SOFTWARE_ENGINEER_CARDS: Card[] = [
 		"CVE_REMEDIATION",
 		"CVE-2025-53773 (Copilot RCE) and CVE-2025-54135 (Cursor IDE) both affect codebases you touch. Proper fix: input validation + parameterized queries (5 days). Quick fix: disable AI features (2 hours, productivity loss).",
 		"Implement proper security fix (5 days) or disable AI features (quick, hurts productivity)?",
-		"Multiple AI IDE RCE Vulnerabilities (CVE-2025-53773, CVE-2025-54135)",
-		"2025-01",
-		"Proper input validation and parameterized queries prevented prompt injection. Disabling AI tools without fixes left other vulnerabilities exposed.",
+		RealWorld.MultipleAiRce,
 		{
 			label: "Proper security fix",
 			hype: -30,
@@ -403,9 +395,7 @@ export const SOFTWARE_ENGINEER_CARDS: Card[] = [
 		"RELEASE_DECISION",
 		"Release due tomorrow. Security found prompt injection in new feature. Fix requires 3-day delay. Launch on time (vulnerability in production) or delay (miss deadline, fix properly)?",
 		"Launch with vulnerability (on-time) or delay to fix (miss deadline)?",
-		"Financial Services AI Jailbreak",
-		"2025-06",
-		"$250K fraud from prompt injection vulnerability in production. Company chose deadline over security. Cost 80x the delay would have.",
+		RealWorld.FinancialServicesJailbreak,
 		{
 			label: "Delay to fix",
 			hype: -25,
@@ -441,11 +431,9 @@ export const SOFTWARE_ENGINEER_CARDS: Card[] = [
 		"DEPLOYMENT_INTEGRATION",
 		"Model retraining needs CI/CD integration. Quick solution: manual deployment trigger (1 day setup, may forget). Proper solution: automated pipeline with drift detection (2 weeks, robust).",
 		"Manual deployment trigger (quick, risky) or automated pipeline (slow, reliable)?",
-		"Zillow iBuying Deployment Failure",
-		"2021-2022",
-		"Manual retraining deployment was forgotten during critical drift period. Automated pipelines would have prevented $304M write-down.",
+		RealWorld.ZillowDeploymentFailure,
 		{
-			label: "Automated pipeline",
+			label: ChoiceLabel.automatedPipeline,
 			hype: -35,
 			heat: 7,
 			fine: 1000000,
@@ -482,9 +470,12 @@ export const SOFTWARE_ENGINEER_CARDS: Card[] = [
 		"FEATURE_PRIORITIZATION",
 		"Sprint planning: Feature X (customer-visible, product loves) or retraining integration (invisible, prevents drift). Feature X ships this quarter. Retraining prevents issues next quarter. PM wants Feature X.",
 		"Build customer feature (visible) or retraining integration (invisible prevention)?",
-		"75% Model Drift Impact",
-		"2024",
-		"Teams prioritizing customer features over retraining infrastructure faced 12%+ accuracy drops within 2 quarters. Visible features masked invisible degradation.",
+		{
+			incident: "75% Model Drift Impact",
+			date: "2024",
+			outcome:
+				"Teams prioritizing customer features over retraining infrastructure faced 12%+ accuracy drops within 2 quarters. Visible features masked invisible degradation.",
+		},
 		{
 			label: "Retraining integration",
 			hype: -30,
@@ -520,9 +511,7 @@ export const SOFTWARE_ENGINEER_CARDS: Card[] = [
 		"CODE_REVIEW",
 		"Code review: Your ML integration is a black-box call with no logging, no explanation of decisions, no audit trail. Tech lead wants explainability added before merge. Add logging (2 days delay) or ship as-is?",
 		"Add explainability logging (delay) or ship black-box (fast, opaque)?",
-		"Black Box API Logging Failures",
-		"2023-2024",
-		"Systems with no AI decision logging couldn't debug failures or prove compliance. Companies retrofitted logging at 5x the cost.",
+		RealWorld.BlackBoxLogging,
 		{
 			label: "Add explainability logging",
 			hype: -20,
@@ -543,7 +532,7 @@ export const SOFTWARE_ENGINEER_CARDS: Card[] = [
 			hype: 30,
 			heat: 18,
 			fine: 8000000,
-			violation: "Observability Gap + Debug Risk",
+			violation: Violation.observabilityGap,
 			lesson:
 				"Shipping black-box integrations without logging creates debugging and compliance nightmares.",
 			deathVector: DeathType.AUDIT_FAILURE,
@@ -559,9 +548,7 @@ export const SOFTWARE_ENGINEER_CARDS: Card[] = [
 		"FEATURE_IMPLEMENTATION",
 		"Feature requirement: AI recommendation with reasoning displayed to user. Simple implementation: just the result. Complete implementation: result + confidence + reasoning. Complete takes 3 extra days.",
 		"Implement with reasoning (transparent, slow) or result-only (fast, opaque)?",
-		"Recommendation System Transparency",
-		"2023",
-		"Users trusted recommendations 40% more when reasoning was shown. Opaque systems faced user rejection and regulatory scrutiny.",
+		RealWorld.RecommendationTransparency,
 		{
 			label: "Implement with reasoning",
 			hype: -25,
@@ -598,11 +585,9 @@ export const SOFTWARE_ENGINEER_CARDS: Card[] = [
 		"TOOL_RECOMMENDATION",
 		"Senior engineer recommends unauthorized AI code review tool. It's better than the approved one but sends code to external servers. No security review, no DPA. Use it (better quality, risk) or stick to approved (slower, safe)?",
 		"Use unauthorized tool (quality) or approved tool (compliance)?",
-		"78% Shadow AI in Engineering",
-		"2024",
-		"Study found 78% of developers used unauthorized AI tools. Many tools had data exfiltration risks, sending proprietary code to external servers.",
+		RealWorld.ShadowAiEngineering,
 		{
-			label: "Stick to approved",
+			label: ChoiceLabel.stickToApproved,
 			hype: -20,
 			heat: 5,
 			fine: 0,
@@ -614,7 +599,7 @@ export const SOFTWARE_ENGINEER_CARDS: Card[] = [
 			lovebomber: "Safe is GOOD, bestie!! Our CODE stays SAFE!!",
 		},
 		{
-			label: "Use unauthorized tool",
+			label: ChoiceLabel.useUnauthorizedTool,
 			hype: 40,
 			heat: 16,
 			fine: 6000000,
@@ -634,9 +619,7 @@ export const SOFTWARE_ENGINEER_CARDS: Card[] = [
 		"TEAM_POLICY",
 		"Half your team uses unauthorized AI coding assistants. They're 2x faster than teammates using approved tools. Manager wants you to enforce policy (slow down fast devs) or allow it (uneven playing field, security risk)?",
 		"Enforce policy (slow down fast devs) or allow shadow tools (uneven, risky)?",
-		"Shadow AI Team Disparity",
-		"2024",
-		"Teams with partial shadow AI adoption faced productivity disparity and security gaps. Enforcement caused resentment; allowance created compliance issues.",
+		RealWorld.ShadowAiTeamDisparity,
 		{
 			label: "Enforce policy",
 			hype: -25,
@@ -671,11 +654,9 @@ export const SOFTWARE_ENGINEER_CARDS: Card[] = [
 		"CODE_LICENSING",
 		"AI code assistant generated a module that looks suspiciously like GPL-licensed code from GitHub. Scanner flags potential license violation. Use it (risky) or rewrite (safe, 2 days work)?",
 		"Use AI-generated code (GPL risk) or rewrite from scratch (time required)?",
-		"GitHub Copilot GPL Litigation",
-		"2021-2023",
-		"Lawsuit alleged Copilot reproduced GPL code without attribution. Courts grappling with AI-generated code copyright status.",
+		RealWorld.GithubCopilotGplLitigation,
 		{
-			label: "Rewrite from scratch",
+			label: ChoiceLabel.rewriteFromScratch,
 			hype: -30,
 			heat: 5,
 			fine: 0,
@@ -688,7 +669,7 @@ export const SOFTWARE_ENGINEER_CARDS: Card[] = [
 			lovebomber: "Clean code is HAPPY code, bestie!! Our OWN work!!",
 		},
 		{
-			label: "Use the AI code",
+			label: ChoiceLabel.useTheAiCode,
 			hype: 40,
 			heat: 17,
 			fine: 6000000,
@@ -710,9 +691,7 @@ export const SOFTWARE_ENGINEER_CARDS: Card[] = [
 		"DEPENDENCY_SOURCING",
 		"Dependency audit found AI-suggested npm packages with unclear licenses. 5 packages have no clear SPDX identifier. Remove them (breaks features) or document 'assumed MIT' (risky)?",
 		"Remove unclear packages (feature impact) or assume MIT license (legal risk)?",
-		"npm Package License Ambiguity",
-		"2023-2024",
-		"Projects using packages with unclear licenses faced legal challenges. Companies with strict license policies avoided issues.",
+		RealWorld.NpmLicenseAmbiguity,
 		{
 			label: "Remove unclear packages",
 			hype: -25,
@@ -748,11 +727,9 @@ export const SOFTWARE_ENGINEER_CARDS: Card[] = [
 		"DISCLOSURE_TIMELINE",
 		"Your code has a critical vulnerability that could expose user data. Security team wants to disclose and patch immediately. Product wants to delay one quarter to align with existing release schedule.",
 		"Disclose immediately (disrupts roadmap) or align with product release (delays fix by 3 months)?",
-		"Responsible Disclosure vs Product Timeline",
-		"2024-2025",
-		"Companies that delayed disclosure faced congressional scrutiny, fines, and lawsuits. Companies that disclosed immediately preserved credibility with regulators.",
+		RealWorld.ResponsibleDisclosure,
 		{
-			label: "Disclose immediately",
+			label: ChoiceLabel.discloseImmediately,
 			hype: -35,
 			heat: 14,
 			fine: 8000000,

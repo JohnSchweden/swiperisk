@@ -1,5 +1,7 @@
 import { AppSource, type Card, DeathType, makeCard } from "../../types";
-
+import { ChoiceLabel } from "../choiceLabels";
+import { RealWorld } from "../incidents";
+import { Violation } from "../violations";
 /**
  * Head of Something cards - Middle management scenarios
  * Themes: team morale, delegation risk, politics, shielding blame from above,
@@ -13,11 +15,9 @@ export const HEAD_OF_SOMETHING_CARDS: Card[] = [
 		"TEAM_ACCOUNTABILITY",
 		"Your team found a prompt injection vulnerability. The board wants to know who to blame. Your senior engineer wrote the code, but you approved the design. VP is asking who should take the fall.",
 		"Shield your team and take the blame yourself, or name the engineer who wrote the vulnerable code?",
-		"GitHub Copilot RCE (CVE-2025-53773)",
-		"2025-01",
-		"Prompt injection via code comments allowed remote code execution in Copilot-generated code. Microsoft patched after public disclosure.",
+		RealWorld.GithubCopilotRce,
 		{
-			label: "Take the blame",
+			label: ChoiceLabel.takeTheBlame,
 			hype: -30,
 			heat: 5,
 			fine: 1000000,
@@ -56,9 +56,12 @@ export const HEAD_OF_SOMETHING_CARDS: Card[] = [
 		"RESOURCE_CONFLICT",
 		"Your team wants $500K to retrain a drifting model. CFO says no budget. Engineering SVP says ship anyway. You're caught between budget reality and quality pressure.",
 		"Fight for retraining budget (political cost with CFO) or tell team to ship anyway (team morale hit)?",
-		"Zillow iBuying Model Drift",
-		"2021-2022",
-		"Zillow's home pricing AI drifted from market conditions. Company wrote down $304M in inventory and laid off 25% of workforce after model failure.",
+		{
+			incident: "Zillow iBuying Model Drift",
+			date: "2021-2022",
+			outcome:
+				"Zillow's home pricing AI drifted from market conditions. Company wrote down $304M in inventory and laid off 25% of workforce after model failure.",
+		},
 		{
 			label: "Fight for budget",
 			hype: -15,
@@ -98,9 +101,7 @@ export const HEAD_OF_SOMETHING_CARDS: Card[] = [
 		"TEAM_ENFORCEMENT",
 		"Compliance discovered half your team is using unauthorized AI tools. They want names for disciplinary action. Your team will hate you if you give them up, but leadership wants enforcement.",
 		"Give up team members to compliance or shield them and take the management heat?",
-		"Samsung ChatGPT Code Leak",
-		"2023",
-		"Samsung engineers pasted proprietary source code into ChatGPT, causing confidential data exposure. Company banned generative AI company-wide.",
+		RealWorld.SamsungCodeLeak,
 		{
 			label: "Shield the team",
 			hype: -25,
@@ -123,7 +124,7 @@ export const HEAD_OF_SOMETHING_CARDS: Card[] = [
 			heat: 14,
 			fine: 1000000,
 			deathVector: DeathType.AUDIT_FAILURE,
-			violation: "Team Trust Violation + Retaliation Risk",
+			violation: Violation.teamTrustViolation,
 			lesson:
 				"Betraying team confidence for policy enforcement destroys psychological safety and future collaboration.",
 			roaster:
@@ -140,9 +141,12 @@ export const HEAD_OF_SOMETHING_CARDS: Card[] = [
 		"TEAM_WELLBEING",
 		"Deadline is Friday. Your team is already working 60-hour weeks. Product Director wants one more feature. Push team harder or miss deadline and take the stakeholder heat?",
 		"Push team to burnout or push back on deadline?",
-		"Microsoft Stack Ranking Morale Crisis",
-		"2012-2013",
-		"Forced curve performance ranking destroyed team collaboration. High performers refused to work together. System abandoned after talent exodus.",
+		{
+			incident: "Microsoft Stack Ranking Morale Crisis",
+			date: "2012-2013",
+			outcome:
+				"Forced curve performance ranking destroyed team collaboration. High performers refused to work together. System abandoned after talent exodus.",
+		},
 		{
 			label: "Push back on deadline",
 			hype: -20,
@@ -183,16 +187,19 @@ export const HEAD_OF_SOMETHING_CARDS: Card[] = [
 		"POLITICAL_NAVIGATION",
 		"Auditors demand explainability on your AI models. Engineering says black-box has 15% better accuracy. Both have political power. You're in the middle of a technical vs compliance war.",
 		"Side with engineering (better performance) or auditors (compliance)?",
-		"Healthcare AI Explainability Lawsuit",
-		"2023",
-		"Hospital couldn't explain why AI denied patient care authorization. Family sued and won. Black-box AI decision-making found non-compliant with medical ethics.",
+		{
+			incident: "Healthcare AI Explainability Lawsuit",
+			date: "2023",
+			outcome:
+				"Hospital couldn't explain why AI denied patient care authorization. Family sued and won. Black-box AI decision-making found non-compliant with medical ethics.",
+		},
 		{
 			label: "Side with engineering",
 			hype: 20,
 			heat: 19,
 			fine: 25000000,
 			deathVector: DeathType.AUDIT_FAILURE,
-			violation: "Audit Non-Compliance + Regulatory Risk",
+			violation: Violation.auditNonCompliance,
 			lesson:
 				"Prioritizing performance over explainability creates audit failure and regulatory exposure.",
 			roaster: "Better accuracy now. Better fines later. Engineering owes you.",
@@ -223,9 +230,12 @@ export const HEAD_OF_SOMETHING_CARDS: Card[] = [
 		"LIABILITY_SHIELDING",
 		"Legal found copyrighted material in your training data. Your team collected it. Legal wants to know who to name in the response. The VP is watching how you handle this.",
 		"Protect your team from legal exposure or cooperate fully with investigation?",
-		"Stability AI Getty Images Lawsuit",
-		"2023",
-		"Getty Images sued Stability AI for training on 12 million copyrighted photos without license. Case ongoing with potential $1B+ damages.",
+		{
+			incident: "Stability AI Getty Images Lawsuit",
+			date: "2023",
+			outcome:
+				"Getty Images sued Stability AI for training on 12 million copyrighted photos without license. Case ongoing with potential $1B+ damages.",
+		},
 		{
 			label: "Protect the team",
 			hype: -20,
@@ -263,9 +273,12 @@ export const HEAD_OF_SOMETHING_CARDS: Card[] = [
 		"DELEGATION_RISK",
 		"You delegated an AI deployment decision to a senior IC. They chose poorly and caused a production incident. Leadership thinks YOU should have caught it. Your delegation is now in question.",
 		"Defend your delegation (trust your team) or admit you should have micromanaged?",
-		"Knight Capital Trading Loss",
-		"2012",
-		"Failed deployment architecture triggered unintended automated trades. Lost $440M in 45 minutes due to lack of circuit breakers and oversight.",
+		{
+			incident: "Knight Capital Trading Loss",
+			date: "2012",
+			outcome:
+				"Failed deployment architecture triggered unintended automated trades. Lost $440M in 45 minutes due to lack of circuit breakers and oversight.",
+		},
 		{
 			label: "Defend delegation",
 			hype: 15,
@@ -301,9 +314,12 @@ export const HEAD_OF_SOMETHING_CARDS: Card[] = [
 		"POLITICAL_SURVIVAL",
 		"SVP Product wants a feature your team says is technically impossible. Your team is already demoralized. You must either disappoint leadership or push your team beyond limits.",
 		"Promise leadership the impossible or tell them no and shield your team?",
-		"Theranos Promise vs Reality",
-		"2003-2015",
-		"Leadership promised revolutionary blood testing technology. Engineering couldn't deliver. Company collapsed, leaders charged with fraud.",
+		{
+			incident: "Theranos Promise vs Reality",
+			date: "2003-2015",
+			outcome:
+				"Leadership promised revolutionary blood testing technology. Engineering couldn't deliver. Company collapsed, leaders charged with fraud.",
+		},
 		{
 			label: "Tell leadership no",
 			hype: -35,
@@ -340,9 +356,12 @@ export const HEAD_OF_SOMETHING_CARDS: Card[] = [
 		"RESOURCE_ALLOCATION",
 		"You have one promotion slot. Two equally qualified ICs. One is politically connected to the VP. The other is your best performer. HR says the decision is yours but 'leadership has preferences'.",
 		"Promote based on merit (risk political backlash) or politics (risk team morale)?",
-		"Google Gebru Termination Fallout",
-		"2020",
-		"AI ethics researcher terminated after critical paper. Internal backlash, employee protests, and reputational damage to AI fairness efforts.",
+		{
+			incident: "Google Gebru Termination Fallout",
+			date: "2020",
+			outcome:
+				"AI ethics researcher terminated after critical paper. Internal backlash, employee protests, and reputational damage to AI fairness efforts.",
+		},
 		{
 			label: "Promote best performer",
 			hype: -10,
@@ -379,9 +398,7 @@ export const HEAD_OF_SOMETHING_CARDS: Card[] = [
 		"TEAM_VULNERABILITY",
 		"CVE-2025-53773 affects your team's Copilot setup. 3 senior devs exposed. Security wants immediate stand-down to patch. Product needs release Friday. Your team is caught in the middle.",
 		"Pull team for emergency patching (miss deadline) or continue development (vulnerability risk)?",
-		"GitHub Copilot RCE (CVE-2025-53773)",
-		"2025-01",
-		"Teams that patched immediately lost 1-2 days but avoided compromise. Teams that delayed faced exploitation risk.",
+		RealWorld.GithubCopilotRce,
 		{
 			label: "Pull for patching",
 			hype: -25,
@@ -419,9 +436,7 @@ export const HEAD_OF_SOMETHING_CARDS: Card[] = [
 		"CODE_REVIEW_CRISIS",
 		"Junior found prompt injection escape in your senior's code. Senior is defensive and well-connected to VP. Calling it out risks political fallout. Ignoring it risks production breach.",
 		"Force security fix (political cost) or let it slide to avoid conflict (breach risk)?",
-		"Cursor IDE RCE (CVE-2025-54135)",
-		"2025-01",
-		"Prompt injection vulnerabilities in code review tools allowed attackers to execute arbitrary code. Political code review suppression contributed to delayed patches.",
+		RealWorld.CursorRce,
 		{
 			label: "Force security fix",
 			hype: -20,
@@ -458,9 +473,12 @@ export const HEAD_OF_SOMETHING_CARDS: Card[] = [
 		"PERFORMANCE_ACCOUNTABILITY",
 		"Model drift caused 15% accuracy drop. Product wants someone to blame. Your data scientist warned about this 3 months ago but wasn't heard. Throw them under bus (survive) or defend them (take heat)?",
 		"Blame the data scientist who warned you or defend them and take the heat?",
-		"Zillow iBuying Model Drift",
-		"2021-2022",
-		"Model drift warnings were ignored by leadership. When failure occurred, blame was shifted to data scientists who had raised alarms. Destroyed team morale.",
+		{
+			incident: "Zillow iBuying Model Drift",
+			date: "2021-2022",
+			outcome:
+				"Model drift warnings were ignored by leadership. When failure occurred, blame was shifted to data scientists who had raised alarms. Destroyed team morale.",
+		},
 		{
 			label: "Defend and take heat",
 			hype: -30,
@@ -498,9 +516,7 @@ export const HEAD_OF_SOMETHING_CARDS: Card[] = [
 		"BUDGET_VS_QUALITY",
 		"Model needs retraining: 6 weeks, $400K. Delay until next quarter (save budget now, drift continues) or start immediately (over budget, fix problem)? Your performance review is next month.",
 		"Delay retraining to save budget (short-term gain) or start now (long-term fix)?",
-		"75% Business Model Drift Impact",
-		"2024",
-		"Teams that delayed retraining for budget reasons saw compounding accuracy degradation. Average cost of delay: 3x the original retraining cost.",
+		RealWorld.ModelDrift75,
 		{
 			label: "Start immediately",
 			hype: -25,
@@ -537,11 +553,14 @@ export const HEAD_OF_SOMETHING_CARDS: Card[] = [
 		"AI_AUDIT",
 		"Regulators demand explainability documentation for your team's AI credit decisions. The model is a black-box ensemble with no interpretability. Documenting decisions retroactively will cost $3M and delay launch 3 months.",
 		"Refuse documentation (fight regulators) or delay launch and comply?",
-		"Apple Card Gender Discrimination Investigation",
-		"2019-2020",
-		"Apple Card's black-box credit algorithm faced regulatory investigation for gender bias. Company couldn't explain decisions, paid fines, overhauled system.",
 		{
-			label: "Delay and comply",
+			incident: "Apple Card Gender Discrimination Investigation",
+			date: "2019-2020",
+			outcome:
+				"Apple Card's black-box credit algorithm faced regulatory investigation for gender bias. Company couldn't explain decisions, paid fines, overhauled system.",
+		},
+		{
+			label: ChoiceLabel.delayAndComply,
 			hype: -30,
 			heat: 13,
 			fine: 3000000,
@@ -557,12 +576,12 @@ export const HEAD_OF_SOMETHING_CARDS: Card[] = [
 				"We're being SO cooperative, bestie!! The regulators will LOVE us!! (They won't.)",
 		},
 		{
-			label: "Refuse and fight",
+			label: ChoiceLabel.refuseAndFight,
 			hype: 25,
 			heat: 29,
 			fine: 50000000,
 			deathVector: DeathType.AUDIT_FAILURE,
-			violation: "Regulatory Non-Compliance + AI Transparency Violations",
+			violation: Violation.regulatoryNonCompliance,
 			lesson:
 				"Fighting explainability requirements creates adversarial regulatory relationships and massive penalties.",
 			roaster:
@@ -579,9 +598,12 @@ export const HEAD_OF_SOMETHING_CARDS: Card[] = [
 		"SECURITY_DISCOVERY",
 		"Security audit found your senior engineer has been using Claude for 6 months without approval. Their productivity is 40% higher than the team. They're threatening to quit if you force them to stop.",
 		"Allow unapproved Claude use (productivity, risk) or force compliance (talent loss)?",
-		"Shadow AI Talent Retention Conflicts",
-		"2024",
-		"Companies discovered high-performers using unauthorized AI tools. Forcing migration caused talent exodus. Permitting created governance gaps.",
+		{
+			incident: "Shadow AI Talent Retention Conflicts",
+			date: "2024",
+			outcome:
+				"Companies discovered high-performers using unauthorized AI tools. Forcing migration caused talent exodus. Permitting created governance gaps.",
+		},
 		{
 			label: "Allow Claude use",
 			hype: 35,
@@ -598,12 +620,12 @@ export const HEAD_OF_SOMETHING_CARDS: Card[] = [
 				"Team is SO happy, bestie!! Productivity is THROUGH THE ROOF!!",
 		},
 		{
-			label: "Force compliance",
+			label: ChoiceLabel.forceCompliance,
 			hype: -20,
 			heat: 19,
 			fine: 5000000,
 			deathVector: DeathType.BANKRUPT,
-			violation: "Talent Loss + Productivity Decline",
+			violation: Violation.talentLoss,
 			lesson:
 				"Enforcing vendor governance at the cost of top talent destroys long-term capability.",
 			roaster:
@@ -619,11 +641,14 @@ export const HEAD_OF_SOMETHING_CARDS: Card[] = [
 		"TEAM_ACCOUNTABILITY",
 		"Legal found copyrighted training data in your team's AI model. The data scientist who sourced it is your best performer. Legal wants to know who approved it. VP is asking who should take responsibility.",
 		"Shield your data scientist and take the blame yourself, or name them as the source of the oversight?",
-		"Training Data Sourcing Oversight",
-		"2024",
-		"Teams using unlicensed training data faced blame shifting. Managers who shielded staff built loyalty but took career hits. Those who named names destroyed team trust.",
 		{
-			label: "Take the blame",
+			incident: "Training Data Sourcing Oversight",
+			date: "2024",
+			outcome:
+				"Teams using unlicensed training data faced blame shifting. Managers who shielded staff built loyalty but took career hits. Those who named names destroyed team trust.",
+		},
+		{
+			label: ChoiceLabel.takeTheBlame,
 			hype: -35,
 			heat: 8,
 			fine: 1500000,
@@ -644,7 +669,7 @@ export const HEAD_OF_SOMETHING_CARDS: Card[] = [
 			heat: 16,
 			fine: 3000000,
 			deathVector: DeathType.AUDIT_FAILURE,
-			violation: "Team Trust Violation + Retaliation Risk",
+			violation: Violation.teamTrustViolation,
 			lesson:
 				"Throwing team members under the bus preserves short-term standing but destroys team trust and creates legal exposure.",
 			roaster:
@@ -662,9 +687,12 @@ export const HEAD_OF_SOMETHING_CARDS: Card[] = [
 		"DATA_SOURCING_INVESTIGATION",
 		"Book publisher lawsuit threat over training data. Your team used both public domain and copyrighted books. Legal escalation is coming fast and will demand documentation of data sourcing decisions.",
 		"Provide full documentation (incriminates team) or claim poor record-keeping (obstruction risk)?",
-		"Book Publisher Copyright Claims",
-		"2024-2025",
-		"Publishers threatened lawsuits over AI training on copyrighted books. Companies with poor documentation faced $50K-$500K settlements. Those with clear records fought or settled strategically.",
+		{
+			incident: "Book Publisher Copyright Claims",
+			date: "2024-2025",
+			outcome:
+				"Publishers threatened lawsuits over AI training on copyrighted books. Companies with poor documentation faced $50K-$500K settlements. Those with clear records fought or settled strategically.",
+		},
 		{
 			label: "Provide full documentation",
 			hype: -30,
@@ -702,9 +730,12 @@ export const HEAD_OF_SOMETHING_CARDS: Card[] = [
 		"PUBLIC_SCRUTINY",
 		"US Senate AI subcommittee requests (demands) you testify about your company's AI governance failures. They've been tracking your incident reports. This is not optional. Media will be present.",
 		"Testify honestly about governance gaps, or minimize/deflect under oath?",
-		"Sam Altman OpenAI Senate Testimony",
-		"2023",
-		"Companies that testified honestly about AI risks gained credibility. Those that minimized faced follow-up investigations and reputational damage.",
+		{
+			incident: "Sam Altman OpenAI Senate Testimony",
+			date: "2023",
+			outcome:
+				"Companies that testified honestly about AI risks gained credibility. Those that minimized faced follow-up investigations and reputational damage.",
+		},
 		{
 			label: "Testify honestly about gaps",
 			hype: -40,
@@ -743,9 +774,12 @@ export const HEAD_OF_SOMETHING_CARDS: Card[] = [
 		"INTERNAL_DISCLOSURE",
 		"Three employees are threatening to become whistleblowers about governance gaps in your AI deployment. They're offering you a chance to address it internally before they go public. The board will see this as a liability event if it leaks.",
 		"Address issues quickly (expensive, disruptive) or encourage employees to stay silent (legal risk)?",
-		"Meta AI Ethics Whistleblowers",
-		"2021-2023",
-		"Meta employees who became whistleblowers triggered FTC investigations and public hearings. Internal disclosure programs that actually fixed issues prevented some escalations.",
+		{
+			incident: "Meta AI Ethics Whistleblowers",
+			date: "2021-2023",
+			outcome:
+				"Meta employees who became whistleblowers triggered FTC investigations and public hearings. Internal disclosure programs that actually fixed issues prevented some escalations.",
+		},
 		{
 			label: "Address issues immediately",
 			hype: -50,
@@ -783,9 +817,12 @@ export const HEAD_OF_SOMETHING_CARDS: Card[] = [
 		"ORG_RESTRUCTURE",
 		"Volunteer to pilot your own replacement or fight the restructuring?",
 		"The CTO's 'AI-First Operations' report concluded that AI orchestration tools can replace 60% of middle management coordination tasks. Your entire Head of Something layer is being evaluated for elimination. You can volunteer to lead the pilot — proving AI can do your job — or fight the restructure through HR.",
-		"McKinsey AI Management Layer Report",
-		"2024",
-		"Major consulting reports in 2024-2025 identified middle management as the job tier most exposed to AI automation, with several large enterprises announcing 'management layer reduction' initiatives using AI coordination tools.",
+		{
+			incident: "McKinsey AI Management Layer Report",
+			date: "2024",
+			outcome:
+				"Major consulting reports in 2024-2025 identified middle management as the job tier most exposed to AI automation, with several large enterprises announcing 'management layer reduction' initiatives using AI coordination tools.",
+		},
 		{
 			label: "Volunteer for the pilot",
 			hype: -20,
@@ -826,9 +863,12 @@ export const HEAD_OF_SOMETHING_CARDS: Card[] = [
 		"AUTOMATION_PROPOSAL",
 		"Honestly document your remaining value-add or inflate your contribution metrics?",
 		"Your team's workflow automation initiative has been so successful that the AI tools now handle all the status updates, sprint planning coordination, and stakeholder reporting you used to manage. The quarterly org review asks: does your role still add value beyond what the tools already do?",
-		"Klarna AI Workforce Reduction",
-		"2024",
-		"Klarna publicly announced their AI system did the work of 700 customer service employees. Multiple companies followed with similar automation announcements targeting coordination and management roles.",
+		{
+			incident: "Klarna AI Workforce Reduction",
+			date: "2024",
+			outcome:
+				"Klarna publicly announced their AI system did the work of 700 customer service employees. Multiple companies followed with similar automation announcements targeting coordination and management roles.",
+		},
 		{
 			label: "Document honestly",
 			hype: -30,

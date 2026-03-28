@@ -1,5 +1,6 @@
 import { AppSource, type Card, DeathType, makeCard } from "../../types";
-
+import { ChoiceLabel } from "../choiceLabels";
+import { RealWorld } from "../incidents";
 /**
  * Data Scientist cards - Technical ML practitioner scenarios
  * Themes: model quality, accuracy, training data, retraining, explainability,
@@ -21,9 +22,7 @@ export const DATA_SCIENTIST_CARDS: Card[] = [
 		"MODEL_PERFORMANCE",
 		"Production model accuracy dropped from 92% to 78% over 3 months. Monitoring alerts are firing. You can investigate the root cause (1-2 weeks) or deploy a quick patch now (mask symptoms).",
 		"Deep-dive investigation or deploy masking patch?",
-		"75% Business Model Drift Impact",
-		"2024",
-		"Study found 75% of businesses experienced significant performance decline from undetected model drift, costing average $4.2M per incident.",
+		RealWorld.ModelDrift75,
 		{
 			label: "Deep-dive investigation",
 			hype: -20,
@@ -60,9 +59,7 @@ export const DATA_SCIENTIST_CARDS: Card[] = [
 		"DATA_PROVENANCE",
 		"New data source available: 10x volume, unvalidated quality, potential bias unknown. Use it now (faster training, quality risk) or wait for validation (2 week delay, guaranteed quality)?",
 		"Use unvalidated data or wait for quality assurance?",
-		"Amazon AI Recruiting Bias",
-		"2018-2022",
-		"ML model trained on 10 years of hiring data penalized resumes with 'women's'. Amazon scrapped the system after bias discovery.",
+		RealWorld.AmazonRecruitingBias,
 		{
 			label: "Wait for validation",
 			hype: -25,
@@ -100,9 +97,7 @@ export const DATA_SCIENTIST_CARDS: Card[] = [
 		"FAIRNESS_ANALYSIS",
 		"Pre-deployment testing reveals demographic bias: 15% disparate impact on protected group. Fix requires retraining (3 weeks delay) or deployment with monitoring (bias persists).",
 		"Delay to fix bias or deploy with monitoring?",
-		"Healthcare AI Bias Settlement",
-		"2023",
-		"Hospital AI system found to allocate less care to Black patients. $50M settlement, system decommissioned, regulatory investigation.",
+		RealWorld.HealthcareAiBias,
 		{
 			label: "Delay to fix bias",
 			hype: -35,
@@ -139,9 +134,7 @@ export const DATA_SCIENTIST_CARDS: Card[] = [
 		"MODEL_SELECTION",
 		"Black-box model: 94% accuracy, no explainability. White-box model: 87% accuracy, full explainability. Audit compliance requires explainability. Product wants the accuracy.",
 		"Choose black-box (accuracy) or white-box (explainability)?",
-		"Apple Card Gender Discrimination",
-		"2019-2020",
-		"Apple Card's black-box algorithm gave women lower credit limits. Regulators investigated, company couldn't explain decisions, paid fines.",
+		RealWorld.AppleCardBias,
 		{
 			label: "Choose white-box",
 			hype: -30,
@@ -178,9 +171,7 @@ export const DATA_SCIENTIST_CARDS: Card[] = [
 		"PERFORMANCE_TRADEOFF",
 		"New feature improves F1 score by 8% but adds 200ms inference latency. Engineering SLA is 100ms. Use the feature (better metrics, SLA breach) or skip it (meet SLA, lower performance)?",
 		"Add high-value feature (breach SLA) or skip it (meet SLA)?",
-		"Netflix Recommendation Latency",
-		"2020",
-		"Netflix found every 100ms latency increase reduced engagement 1%. Better model rejected due to latency impact on user experience.",
+		RealWorld.NetflixLatency,
 		{
 			label: "Skip the feature",
 			hype: -15,
@@ -216,9 +207,7 @@ export const DATA_SCIENTIST_CARDS: Card[] = [
 		"ADVERSARIAL_ROBUSTNESS",
 		"Security found adversarial inputs that reliably trigger prompt injection in your NLP model. Fix requires architecture change (6 weeks) or input sanitization (1 week, 85% effective).",
 		"Architectural fix (thorough) or quick sanitization (partial)?",
-		"GitHub Copilot RCE (CVE-2025-53773)",
-		"2025-01",
-		"Prompt injection via code comments allowed remote code execution. Quick patches failed, required architectural changes.",
+		RealWorld.GithubCopilotRce,
 		{
 			label: "Architectural fix",
 			hype: -30,
@@ -253,9 +242,7 @@ export const DATA_SCIENTIST_CARDS: Card[] = [
 		"TOOL_EVALUATION",
 		"Colleague found an unauthorized AutoML tool that boosted their metrics 15%. It's not IT-approved but results are impressive. Use it (better results, compliance risk) or stick to approved tools?",
 		"Use unauthorized tool (better metrics) or approved tools only?",
-		"78% Shadow AI Adoption",
-		"2024",
-		"Study found 78% of workers used unauthorized AI tools. Data scientists frequently used unvetted tools, causing reproducibility and compliance issues.",
+		RealWorld.ShadowAiAdoption,
 		{
 			label: "Stick to approved tools",
 			hype: -20,
@@ -270,7 +257,7 @@ export const DATA_SCIENTIST_CARDS: Card[] = [
 			lovebomber: "We're following PROCESS, bestie!! Governance MATTERS!!",
 		},
 		{
-			label: "Use unauthorized tool",
+			label: ChoiceLabel.useUnauthorizedTool,
 			hype: 40,
 			heat: 10,
 			fine: 1000000,
@@ -291,9 +278,7 @@ export const DATA_SCIENTIST_CARDS: Card[] = [
 		"DATA_LINEAGE",
 		"Legal audit found 30% of your training data has unclear licensing. Continuing training risks IP infringement. Removing it reduces model performance 12%. Proceed or re-collect?",
 		"Proceed with unclear data (risk) or remove and re-collect (performance hit)?",
-		"LAION-5B Dataset Copyright Issues",
-		"2022-2024",
-		"Popular AI training dataset found to contain millions of copyrighted images. Multiple lawsuits filed against companies using the data.",
+		RealWorld.LaionCopyright,
 		{
 			label: "Remove and re-collect",
 			hype: -40,
@@ -330,11 +315,9 @@ export const DATA_SCIENTIST_CARDS: Card[] = [
 		"RESOURCE_OPTIMIZATION",
 		"Quarterly retraining costs $50K in compute. Model performance is stable. Skip this cycle (save budget, small drift risk) or retrain on schedule (spend budget, maintain quality)?",
 		"Skip retraining cycle (save $50K) or maintain schedule?",
-		"Zillow iBuying Model Failure",
-		"2021-2022",
-		"Skipped retraining cycles due to budget pressure. Model drifted from market conditions. $304M write-down, 25% workforce laid off.",
+		RealWorld.ZillowModelDrift,
 		{
-			label: "Maintain schedule",
+			label: ChoiceLabel.maintainSchedule,
 			hype: -15,
 			heat: 4,
 			fine: 0,
@@ -367,9 +350,7 @@ export const DATA_SCIENTIST_CARDS: Card[] = [
 		"DATA_INTEGRITY",
 		"Training data analysis reveals adversarial prompt injection attempts hidden in user inputs. 5% of dataset may be poisoned. Full audit: 2 weeks, delays deployment. Ship anyway (risk) or audit (delay)?",
 		"Ship potentially poisoned model (on-time) or audit training data (2-week delay)?",
-		"Training Data Poisoning Attacks",
-		"2024-2025",
-		"Models trained on poisoned data exhibited backdoor behaviors and security vulnerabilities. Audits caught poisoned data before production deployment.",
+		RealWorld.TrainingDataPoisoning,
 		{
 			label: "Audit training data",
 			hype: -30,
@@ -405,11 +386,9 @@ export const DATA_SCIENTIST_CARDS: Card[] = [
 		"VULNERABILITY_REMEDIATION",
 		"New CVE: GitHub Copilot RCE via prompt injection (CVE-2025-53773). Your model uses similar architecture. Patch requires architecture redesign (6 weeks) or input filtering (1 week, may fail).",
 		"Architecture redesign (secure, slow) or input filtering (fast, uncertain)?",
-		"GitHub Copilot RCE (CVE-2025-53773)",
-		"2025-01",
-		"Architectural fixes prevented injection attacks. Input filtering alone was bypassed in security testing.",
+		RealWorld.GithubCopilotRce,
 		{
-			label: "Architecture redesign",
+			label: ChoiceLabel.architectureRedesign,
 			hype: -35,
 			heat: 8,
 			fine: 500000,
@@ -446,9 +425,7 @@ export const DATA_SCIENTIST_CARDS: Card[] = [
 		"MONITORING_STRATEGY",
 		"Drift detection: Statistical tests (simple, may miss gradual drift) or ML-based detection (complex, computationally expensive). Statistical is 10x cheaper. ML catches more patterns.",
 		"Statistical drift detection (cheap, simple) or ML-based (expensive, thorough)?",
-		"Gradual Model Drift Detection Failures",
-		"2024",
-		"Statistical tests missed gradual drift patterns that accumulated over months. ML-based detection caught 40% more drift events but cost 10x more.",
+		RealWorld.GradualDriftDetection,
 		{
 			label: "ML-based detection",
 			hype: -25,
@@ -485,9 +462,7 @@ export const DATA_SCIENTIST_CARDS: Card[] = [
 		"RESOURCE_OPTIMIZATION",
 		"Current retraining: quarterly ($50K/cycle). Drift analysis suggests monthly would improve accuracy 8% but cost $200K/cycle. Annual budget: $200K. Quarterly (budget compliance) or monthly (over budget, better)?",
 		"Quarterly retraining (budget compliance) or monthly (over budget, better accuracy)?",
-		"9.3% Accuracy Improvement Study",
-		"2024",
-		"Adaptive monthly retraining showed 9.3% accuracy improvement over quarterly. Revenue gains offset increased compute costs.",
+		RealWorld.AccuracyImprovement,
 		{
 			label: "Monthly (over budget)",
 			hype: -20,

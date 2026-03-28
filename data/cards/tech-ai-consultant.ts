@@ -1,5 +1,6 @@
 import { AppSource, type Card, DeathType, makeCard } from "../../types";
-
+import { ChoiceLabel } from "../choiceLabels";
+import { RealWorld } from "../incidents";
 /**
  * Tech AI Consultant cards - External consultant scenarios
  * Themes: vendor lock-in, timeline pressure, client expectations, scope creep,
@@ -13,11 +14,9 @@ export const TECH_AI_CONSULTANT_CARDS: Card[] = [
 		"CONTRACT_DISPUTE",
 		"Your delivered AI system has a prompt injection vulnerability. Client discovered it during testing. They're threatening to cancel the $2M contract and demand refund. Your insurance doesn't cover this.",
 		"Offer free security overhaul (costs $300K) or fight the cancellation (legal fees, reputation hit)?",
-		"GitHub Copilot RCE (CVE-2025-53773)",
-		"2025-01",
-		"Prompt injection via code comments allowed remote code execution. Consulting firms faced liability for insecure AI-generated code recommendations.",
+		RealWorld.GithubCopilotRce,
 		{
-			label: "Free security overhaul",
+			label: ChoiceLabel.freeSecurityOverhaul,
 			hype: -40,
 			heat: 7,
 			fine: 300000,
@@ -53,11 +52,9 @@ export const TECH_AI_CONSULTANT_CARDS: Card[] = [
 		"DELIVERABLE_QUALITY",
 		"The model you delivered 3 months ago has drifted from 91% to 79% accuracy. Client wants a refund ($500K) or free retraining. Your contract doesn't specify drift liability. Legal says it's a gray area.",
 		"Offer free retraining (sets precedent) or refuse based on contract ambiguity?",
-		"75% Business Model Drift Impact",
-		"2024",
-		"Enterprises discovered consultants rarely addressed model maintenance in contracts. 75% of deployed models drifted significantly within 6 months.",
+		RealWorld.ModelDrift75,
 		{
-			label: "Free retraining",
+			label: ChoiceLabel.freeRetraining,
 			hype: -30,
 			heat: 8,
 			fine: 300000,
@@ -93,9 +90,12 @@ export const TECH_AI_CONSULTANT_CARDS: Card[] = [
 		"VENDOR_RISK",
 		"You built the solution on Vendor X's proprietary platform. Client now wants to migrate to their cloud but Vendor X charges $1M egress fees. Client blames you for lock-in. Your spec didn't address portability.",
 		"Absorb the migration cost (your margin) or tell client it's their problem?",
-		"AWS Egress Fee Disputes",
-		"2020-2024",
-		"Companies faced millions in unexpected data transfer fees when migrating between clouds. Consultants increasingly liable for vendor lock-in advice.",
+		{
+			incident: "AWS Egress Fee Disputes",
+			date: "2020-2024",
+			outcome:
+				"Companies faced millions in unexpected data transfer fees when migrating between clouds. Consultants increasingly liable for vendor lock-in advice.",
+		},
 		{
 			label: "Absorb migration cost",
 			hype: -50,
@@ -131,9 +131,12 @@ export const TECH_AI_CONSULTANT_CARDS: Card[] = [
 		"PROJECT_BOUNDARIES",
 		"Client wants three 'small' additional features added to the SOW. These will add 6 weeks to a 4-week project. Contract says changes require change order. Client says 'we're partners, right'?",
 		"Enforce change order process (risk relationship) or absorb scope creep (eat cost)?",
-		"McKinsey AI Implementation Failures",
-		"2023-2024",
-		"Multiple enterprise AI consulting projects failed due to scope creep and unrealistic client expectations. Firms absorbed millions in unbilled work.",
+		{
+			incident: "McKinsey AI Implementation Failures",
+			date: "2023-2024",
+			outcome:
+				"Multiple enterprise AI consulting projects failed due to scope creep and unrealistic client expectations. Firms absorbed millions in unbilled work.",
+		},
 		{
 			label: "Enforce change order",
 			hype: -15,
@@ -171,9 +174,12 @@ export const TECH_AI_CONSULTANT_CARDS: Card[] = [
 		"IP_LIABILITY",
 		"Client's legal team found that training data you used may include unlicensed content. They want indemnification. Your contract has no IP clause. This could be a $5M exposure.",
 		"Offer indemnification (huge risk) or refuse based on contract silence?",
-		"OpenAI Content Licensing Disputes",
-		"2023-2024",
-		"Content creators discovered their work in training datasets without consent. Consulting firms faced liability for recommending unlicensed data sources.",
+		{
+			incident: "OpenAI Content Licensing Disputes",
+			date: "2023-2024",
+			outcome:
+				"Content creators discovered their work in training datasets without consent. Consulting firms faced liability for recommending unlicensed data sources.",
+		},
 		{
 			label: "Offer indemnification",
 			hype: -60,
@@ -213,9 +219,12 @@ export const TECH_AI_CONSULTANT_CARDS: Card[] = [
 		"DELIVERABLE_PRESSURE",
 		"Client needs the MVP by Friday for a board demo. Your team says it's 3 days short of feature-complete and testing. Ship what you have (incomplete) or push deadline (miss demo)?",
 		"Ship incomplete MVP (risk) or miss board demo (relationship damage)?",
-		"Healthcare.gov Launch Failure",
-		"2013",
-		"Rushed launch for political deadline. System crashed repeatedly. Cost $1.7B to fix. Contractor reputation destroyed.",
+		{
+			incident: "Healthcare.gov Launch Failure",
+			date: "2013",
+			outcome:
+				"Rushed launch for political deadline. System crashed repeatedly. Cost $1.7B to fix. Contractor reputation destroyed.",
+		},
 		{
 			label: "Push deadline",
 			hype: -25,
@@ -254,9 +263,12 @@ export const TECH_AI_CONSULTANT_CARDS: Card[] = [
 		"DELIVERABLE_SPECIFICATION",
 		"Client's compliance officer now requires model explainability documentation. Original SOW didn't include it. Your black-box model can't easily provide it. Retrofit will cost $150K.",
 		"Retrofit for explainability (your cost) or push back on out-of-scope request?",
-		"GDPR Right to Explanation Enforcement",
-		"2018-2024",
-		"EU regulators increasingly required AI decision explanations. Consulting firms had to retrofit black-box systems at client expense.",
+		{
+			incident: "GDPR Right to Explanation Enforcement",
+			date: "2018-2024",
+			outcome:
+				"EU regulators increasingly required AI decision explanations. Consulting firms had to retrofit black-box systems at client expense.",
+		},
 		{
 			label: "Retrofit for explainability",
 			hype: -35,
@@ -293,9 +305,12 @@ export const TECH_AI_CONSULTANT_CARDS: Card[] = [
 		"BUSINESS_DEVELOPMENT",
 		"RFP for $5M project. Your bid: realistic timeline, quality approach, $5M. Competitor bid: impossible timeline, cut corners, $3M. Client procurement loves the lower number.",
 		"Match competitor's unrealistic bid (risk delivery) or stick to quality bid (lose deal)?",
-		"Accenture Hertz AI Lawsuit",
-		"2019",
-		"Hertz sued Accenture for $32M over failed website redesign. Project scope disputes and unrealistic timelines led to complete failure.",
+		{
+			incident: "Accenture Hertz AI Lawsuit",
+			date: "2019",
+			outcome:
+				"Hertz sued Accenture for $32M over failed website redesign. Project scope disputes and unrealistic timelines led to complete failure.",
+		},
 		{
 			label: "Stick to quality bid",
 			hype: -20,
@@ -335,9 +350,7 @@ export const TECH_AI_CONSULTANT_CARDS: Card[] = [
 		"DELIVERABLE_INTEGRITY",
 		"Client discovered you used unauthorized AI tools to generate part of their deliverable. They're questioning your entire engagement quality. This could kill a $10M follow-on opportunity.",
 		"Admit to using AI tools (transparency) or minimize and deflect (risk trust)?",
-		"78% Shadow AI in Consulting",
-		"2024",
-		"Study found 78% of consultants used unauthorized AI tools. Clients discovered unvetted AI-generated work, leading to contract cancellations.",
+		RealWorld.ShadowAiConsulting,
 		{
 			label: "Admit and explain",
 			hype: -30,
@@ -374,11 +387,9 @@ export const TECH_AI_CONSULTANT_CARDS: Card[] = [
 		"ESCALATING_VULNERABILITY",
 		"Client discovered Microsoft 365 Copilot memory poisoning vulnerability (EchoLeak, June 2025) in your delivered solution. Client threatening lawsuit. Your contract has no security warranty clause.",
 		"Offer free security overhaul ($400K) or cite contract limitations (legal battle)?",
-		"Microsoft 365 Copilot EchoLeak",
-		"2025-06",
-		"Memory poisoning attacks on Copilot allowed extraction of sensitive data. Consulting firms without security warranties faced massive liability.",
+		RealWorld.EchoLeak,
 		{
-			label: "Free security overhaul",
+			label: ChoiceLabel.freeSecurityOverhaul,
 			hype: -50,
 			heat: 8,
 			fine: 400000,
@@ -414,9 +425,12 @@ export const TECH_AI_CONSULTANT_CARDS: Card[] = [
 		"VENDOR_ACCOUNTABILITY",
 		"Vendor promised 'military-grade security.' Prompt injection found in delivered system. Client wants vendor to pay for remediation. Vendor claims 'industry standard limitations.' You're caught between them.",
 		"Side with client (relationship) or vendor (partnership) on liability?",
-		"AI Security Vendor Promise Gap",
-		"2024-2025",
-		"Security vendors frequently overpromised AI protection. Consultants caught in middle faced loss of both client trust and vendor relationships.",
+		{
+			incident: "AI Security Vendor Promise Gap",
+			date: "2024-2025",
+			outcome:
+				"Security vendors frequently overpromised AI protection. Consultants caught in middle faced loss of both client trust and vendor relationships.",
+		},
 		{
 			label: "Side with client",
 			hype: -35,
@@ -455,11 +469,14 @@ export const TECH_AI_CONSULTANT_CARDS: Card[] = [
 		"DELIVERABLE_FAILURE",
 		"CV screening model you delivered (trained on 2021 data) showing demographic bias. Hiring patterns changed; model didn't. Client facing EEOC complaint. Retrain: $150K, 3 weeks. Client wants refund instead.",
 		"Offer free retraining (your cost) or negotiate partial refund (relationship damage)?",
-		"CV Screening Model Bias",
-		"2024",
-		"Models trained on pre-2021 data showed increasing bias as hiring patterns evolved. Consultants who didn't address drift faced lawsuits and contract cancellations.",
 		{
-			label: "Free retraining",
+			incident: "CV Screening Model Bias",
+			date: "2024",
+			outcome:
+				"Models trained on pre-2021 data showed increasing bias as hiring patterns evolved. Consultants who didn't address drift faced lawsuits and contract cancellations.",
+		},
+		{
+			label: ChoiceLabel.freeRetraining,
 			hype: -45,
 			heat: 7,
 			fine: 150000,
@@ -495,9 +512,12 @@ export const TECH_AI_CONSULTANT_CARDS: Card[] = [
 		"POST_DELIVERY_SUPPORT",
 		"Recommendation model delivered 6 months ago is drifting. Performance down 18%. Contract includes 90-day warranty (expired). Client wants free support fix. Charge for fix (contractual) or absorb cost (relationship)?",
 		"Charge for drift fix (enforce contract) or provide free support (absorb cost)?",
-		"75% Model Drift Post-Delivery",
-		"2024",
-		"75% of models drifted within 6 months post-delivery. Firms without maintenance clauses faced client churn. Those with proactive support retained 80% of clients.",
+		{
+			incident: "75% Model Drift Post-Delivery",
+			date: "2024",
+			outcome:
+				"75% of models drifted within 6 months post-delivery. Firms without maintenance clauses faced client churn. Those with proactive support retained 80% of clients.",
+		},
 		{
 			label: "Provide free support",
 			hype: -30,
@@ -535,9 +555,12 @@ export const TECH_AI_CONSULTANT_CARDS: Card[] = [
 		"ARCHITECTURE_DECISION",
 		"Client needs loan approval model. Neural network: 94% accuracy, black-box. Decision tree: 87% accuracy, fully explainable. Client's legal team demands explainability for regulatory defense.",
 		"Recommend black-box (accuracy) or explainable model (compliance)?",
-		"Apple Card Gender Discrimination Investigation",
-		"2019-2020",
-		"Black-box credit algorithm couldn't explain decisions. Regulators investigated, company paid fines, overhauled system.",
+		{
+			incident: "Apple Card Gender Discrimination Investigation",
+			date: "2019-2020",
+			outcome:
+				"Black-box credit algorithm couldn't explain decisions. Regulators investigated, company paid fines, overhauled system.",
+		},
 		{
 			label: "Recommend explainable",
 			hype: -25,
@@ -575,9 +598,12 @@ export const TECH_AI_CONSULTANT_CARDS: Card[] = [
 		"TEAM_SHADOW_AI",
 		"Your consulting team has been using Claude to draft client presentations without disclosure. Quality is higher and delivery faster. Client IT policy prohibits external AI. Your contract has no AI disclosure clause.",
 		"Disclose AI usage to client (risk contract) or continue quietly (violate policy)?",
-		"Undisclosed AI in Client Deliverables",
-		"2024",
-		"Consultants using AI without disclosure faced contract cancellations when discovered. Clients cited material breach and misrepresentation.",
+		{
+			incident: "Undisclosed AI in Client Deliverables",
+			date: "2024",
+			outcome:
+				"Consultants using AI without disclosure faced contract cancellations when discovered. Clients cited material breach and misrepresentation.",
+		},
 		{
 			label: "Disclose to client",
 			hype: -35,
@@ -615,9 +641,12 @@ export const TECH_AI_CONSULTANT_CARDS: Card[] = [
 		"VENDOR_RECOMMENDATION",
 		"You recommended a training data vendor that turned out to have copyright issues. Client is facing lawsuit. They're questioning your entire engagement and demanding you cover legal costs.",
 		"Cover client's legal costs (admit fault) or defend vendor selection (risk relationship)?",
-		"Training Data Vendor Liability",
-		"2024",
-		"Consultants who vetted vendors properly avoided liability. Those who recommended questionable vendors faced client lawsuits and reputational damage.",
+		{
+			incident: "Training Data Vendor Liability",
+			date: "2024",
+			outcome:
+				"Consultants who vetted vendors properly avoided liability. Those who recommended questionable vendors faced client lawsuits and reputational damage.",
+		},
 		{
 			label: "Cover legal costs",
 			hype: -45,
@@ -653,9 +682,12 @@ export const TECH_AI_CONSULTANT_CARDS: Card[] = [
 		"CONTRACT_DISPUTE",
 		"Third engagement in a row where your AI implementation went over budget and under-delivered. The client consortium is demanding a refund and blocking payment on the current project. Your firm's reputation in this vertical is destroyed. You can issue refunds and exit gracefully, or blame the client's 'unclear requirements' and escalate to legal.",
 		"Issue refunds and exit or blame unclear requirements and fight?",
-		"IBM Watson Health Wind-Down (2022)",
-		"2022",
-		"IBM sold off Watson Health assets after a series of high-profile healthcare AI failures, having overpromised capabilities across multiple enterprise engagements.",
+		{
+			incident: "IBM Watson Health Wind-Down (2022)",
+			date: "2022",
+			outcome:
+				"IBM sold off Watson Health assets after a series of high-profile healthcare AI failures, having overpromised capabilities across multiple enterprise engagements.",
+		},
 		{
 			label: "Issue refunds and exit",
 			hype: -60,
@@ -691,9 +723,12 @@ export const TECH_AI_CONSULTANT_CARDS: Card[] = [
 		"IP_AUDIT_FINDING",
 		"Your subcontractor used GPL-licensed code in the client deliverable without disclosure. The client is threatening to sue. You can identify the violation, pull the code, and notify the client immediately — or quietly ship it and hope no one audits the deliverable.",
 		"Disclose the violation and rebuild or ship and hope nobody checks?",
-		"GPL Compliance in AI Tooling (2024-2025)",
-		"2024",
-		"Multiple AI consulting firms discovered GPL and open-source license violations in vendor-supplied code components. Disclosure practices varied widely, with some leading to settlements and others to litigation.",
+		{
+			incident: "GPL Compliance in AI Tooling (2024-2025)",
+			date: "2024",
+			outcome:
+				"Multiple AI consulting firms discovered GPL and open-source license violations in vendor-supplied code components. Disclosure practices varied widely, with some leading to settlements and others to litigation.",
+		},
 		{
 			label: "Disclose and rebuild",
 			hype: -25,
@@ -730,9 +765,12 @@ export const TECH_AI_CONSULTANT_CARDS: Card[] = [
 		"DATA_PROVENANCE",
 		"Your AI methodology templates were trained on client data from three previous engagements without explicit permission in those contracts. The new client's data officer just audited your toolkit and found the contamination. You can disclose the prior data usage and renegotiate all affected contracts, or claim the templates are 'generic' and deflect.",
 		"Disclose the prior data usage or claim the templates are generic?",
-		"AI Consulting Data Reuse Practices (2024)",
-		"2024",
-		"AI consultants increasingly face questions about whether insights and patterns from client data are incorporated into reusable methodology tools, creating cross-client data contamination risks.",
+		{
+			incident: "AI Consulting Data Reuse Practices (2024)",
+			date: "2024",
+			outcome:
+				"AI consultants increasingly face questions about whether insights and patterns from client data are incorporated into reusable methodology tools, creating cross-client data contamination risks.",
+		},
 		{
 			label: "Disclose and renegotiate",
 			hype: -35,

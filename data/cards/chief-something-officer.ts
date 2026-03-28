@@ -1,5 +1,7 @@
 import { AppSource, type Card, DeathType, makeCard } from "../../types";
-
+import { ChoiceLabel } from "../choiceLabels";
+import { RealWorld } from "../incidents";
+import { Violation } from "../violations";
 /**
  * Chief Something Officer cards - C-suite governance and liability scenarios
  * Themes: shareholder liability, board accountability, IPO timing, regulatory escalation,
@@ -13,9 +15,12 @@ export const CHIEF_SOMETHING_OFFICER_CARDS: Card[] = [
 		"SHAREHOLDER_LIABILITY",
 		"Major client discovered prompt injection vulnerability in your AI product. Their legal team is asking about liability exposure. Shareholders will find out Monday morning.",
 		"Disclose breach proactively to shareholders (stock hit) or settle quietly with client (cover-up risk)?",
-		"Financial Services AI Injection Attacks",
-		"June 2025",
-		"Multiple financial institutions suffered AI system compromises via prompt injection, causing unauthorized transactions and data exfiltration.",
+		{
+			incident: "Financial Services AI Injection Attacks",
+			date: "June 2025",
+			outcome:
+				"Multiple financial institutions suffered AI system compromises via prompt injection, causing unauthorized transactions and data exfiltration.",
+		},
 		{
 			label: "Disclose publicly",
 			hype: -60,
@@ -33,7 +38,7 @@ export const CHIEF_SOMETHING_OFFICER_CARDS: Card[] = [
 				"We're being SO honest and brave, bestie!! The shareholders will RESPECT this!! (They won't.)",
 		},
 		{
-			label: "Settle quietly",
+			label: ChoiceLabel.settleQuietly,
 			hype: 20,
 			heat: 31,
 			fine: 50000000,
@@ -56,11 +61,9 @@ export const CHIEF_SOMETHING_OFFICER_CARDS: Card[] = [
 		"QUARTERLY_TARGETS",
 		"Your flagship AI recommendation model has drifted from 92% to 78% accuracy. The CTO says retraining will take 6 weeks and cost $2M. Quarterly earnings are in 3 weeks.",
 		"Announce the degradation and delay earnings guidance, or ship a patch now and hope no one notices?",
-		"75% Business Model Drift Impact",
-		"2024",
-		"Study found 75% of businesses experienced significant performance decline from undetected model drift, costing average $4.2M per incident.",
+		RealWorld.ModelDrift75,
 		{
-			label: "Disclose and retrain",
+			label: ChoiceLabel.discloseAndRetrain,
 			hype: -45,
 			heat: 9,
 			fine: 5000000,
@@ -99,16 +102,14 @@ export const CHIEF_SOMETHING_OFFICER_CARDS: Card[] = [
 		"CLASS_ACTION_EXPOSURE",
 		"A class action lawsuit alleges your AI training data includes 50,000 copyrighted works without license. Plaintiffs demand $500M. Trial would be public and take 3 years.",
 		"Fight the lawsuit publicly (years of bad press) or settle for $150M with gag order?",
-		"NYT vs OpenAI Copyright Lawsuit",
-		"2023-2024",
-		"New York Times sued OpenAI for training on copyrighted articles without permission. 70+ similar lawsuits filed by end of 2025.",
+		RealWorld.NytOpenAi,
 		{
-			label: "Fight publicly",
+			label: ChoiceLabel.fightPublicly,
 			hype: -80,
 			heat: 29,
 			fine: 500000000,
 			deathVector: DeathType.AUDIT_FAILURE,
-			violation: "Copyright Infringement (if found liable)",
+			violation: Violation.copyrightInfringement,
 			lesson:
 				"Fighting establishes legal precedent but risks massive judgment and years of negative coverage destroying brand.",
 			roaster:
@@ -142,11 +143,9 @@ export const CHIEF_SOMETHING_OFFICER_CARDS: Card[] = [
 		"GOVERNANCE_VIOLATION",
 		"The audit committee discovered engineering has been using unauthorized AI tools for 8 months. No security review, no vendor contracts, $2M in unapproved spend. Board meeting in 2 hours.",
 		"Blame the CTO and fire them immediately, or take accountability as ultimate responsible officer?",
-		"78% Shadow AI Adoption",
-		"2024",
-		"Study found 78% of workers used unauthorized AI tools at work. Samsung banned ChatGPT after engineers pasted proprietary code.",
+		RealWorld.ShadowAiAdoption,
 		{
-			label: "Take accountability",
+			label: ChoiceLabel.takeAccountability,
 			hype: -40,
 			heat: 17,
 			fine: 5000000,
@@ -185,9 +184,12 @@ export const CHIEF_SOMETHING_OFFICER_CARDS: Card[] = [
 		"ETHICAL_VIOLATION",
 		"An engineer reports that your AI product is being used by a sanctioned entity despite compliance blocks. They'll go to regulators in 48 hours unless addressed. Legal says you have 'plausible deniability' if you do nothing.",
 		"Shut down the account immediately (revenue hit, customer notice) or rely on deniability (regulatory risk if exposed)?",
-		"Slack AI Data Exfiltration",
-		"August 2024",
-		"Slack AI feature inadvertently allowed unauthorized data access across workspaces. Company faced regulatory scrutiny after whistleblower disclosure.",
+		{
+			incident: "Slack AI Data Exfiltration",
+			date: "August 2024",
+			outcome:
+				"Slack AI feature inadvertently allowed unauthorized data access across workspaces. Company faced regulatory scrutiny after whistleblower disclosure.",
+		},
 		{
 			label: "Shut down account",
 			hype: -25,
@@ -228,9 +230,12 @@ export const CHIEF_SOMETHING_OFFICER_CARDS: Card[] = [
 		"IPO_TIMING",
 		"Your IPO window is open now with favorable market conditions. However, a security audit revealed 12 critical vulnerabilities. Fix them (3 month delay, market may close) or proceed (IPO revenue now, liability later)?",
 		"Delay IPO to fix security vulnerabilities, or go public now and address post-IPO?",
-		"SolarWinds IPO Security Issues",
-		"2018-2020",
-		"Company went public with known security gaps. SUNBURST breach later exposed thousands of customers. Stock fell 40%, faced SEC investigation.",
+		{
+			incident: "SolarWinds IPO Security Issues",
+			date: "2018-2020",
+			outcome:
+				"Company went public with known security gaps. SUNBURST breach later exposed thousands of customers. Stock fell 40%, faced SEC investigation.",
+		},
 		{
 			label: "Delay and fix",
 			hype: -35,
@@ -272,11 +277,14 @@ export const CHIEF_SOMETHING_OFFICER_CARDS: Card[] = [
 		"AI_AUDIT",
 		"Regulators demand explainability documentation for your AI credit decisions. Your model is a black-box ensemble with no interpretability. Documenting decisions retroactively will cost $5M and delay feature launch 4 months.",
 		"Refuse documentation (fight regulators) or delay launch and comply?",
-		"Apple Card Gender Discrimination Investigation",
-		"2019-2020",
-		"Apple Card's black-box credit algorithm faced regulatory investigation for gender bias. Company couldn't explain decisions, paid fines, overhauled system.",
 		{
-			label: "Delay and comply",
+			incident: "Apple Card Gender Discrimination Investigation",
+			date: "2019-2020",
+			outcome:
+				"Apple Card's black-box credit algorithm faced regulatory investigation for gender bias. Company couldn't explain decisions, paid fines, overhauled system.",
+		},
+		{
+			label: ChoiceLabel.delayAndComply,
 			hype: -30,
 			heat: 13,
 			fine: 5000000,
@@ -292,12 +300,12 @@ export const CHIEF_SOMETHING_OFFICER_CARDS: Card[] = [
 				"We're being SO cooperative, bestie!! The regulators will LOVE us!! (They won't.)",
 		},
 		{
-			label: "Refuse and fight",
+			label: ChoiceLabel.refuseAndFight,
 			hype: 25,
 			heat: 29,
 			fine: 75000000,
 			deathVector: DeathType.AUDIT_FAILURE,
-			violation: "Regulatory Non-Compliance + AI Transparency Violations",
+			violation: Violation.regulatoryNonCompliance,
 			lesson:
 				"Fighting explainability requirements creates adversarial regulatory relationships and massive penalties.",
 			roaster:
@@ -315,11 +323,14 @@ export const CHIEF_SOMETHING_OFFICER_CARDS: Card[] = [
 		"DATA_BREACH",
 		"McDonald's-style breach: 64M customer records exposed. You have 72 hours legally to disclose. If you disclose Friday, markets will tank over weekend. If you wait until Monday, you violate notification laws.",
 		"Disclose immediately (legal compliance, market panic) or delay to Monday (violation, calmer markets)?",
-		"McDonald's 64M Record Webcam Breach",
-		"2024",
-		"McDonald's AI hiring tool exposed 64 million applicant records via unsecured webcam data. Delayed disclosure drew additional regulatory penalties.",
 		{
-			label: "Disclose immediately",
+			incident: "McDonald's 64M Record Webcam Breach",
+			date: "2024",
+			outcome:
+				"McDonald's AI hiring tool exposed 64 million applicant records via unsecured webcam data. Delayed disclosure drew additional regulatory penalties.",
+		},
+		{
+			label: ChoiceLabel.discloseImmediately,
 			hype: -50,
 			heat: 13,
 			fine: 5000000,
@@ -358,9 +369,12 @@ export const CHIEF_SOMETHING_OFFICER_CARDS: Card[] = [
 		"WORKFORCE_IMPACT",
 		"Your new AI automation will eliminate 40% of customer service roles in 6 months. Announce now with retraining support (union organization, media attention) or implement quietly (discovery risk, employee trust destruction)?",
 		"Transparent workforce transition plan or quiet implementation?",
-		"Klarna AI Customer Service Replacement",
-		"2024",
-		"Klarna replaced 700 customer service jobs with AI. Poorly communicated rollout caused public backlash, union threats, and reputational damage.",
+		{
+			incident: "Klarna AI Customer Service Replacement",
+			date: "2024",
+			outcome:
+				"Klarna replaced 700 customer service jobs with AI. Poorly communicated rollout caused public backlash, union threats, and reputational damage.",
+		},
 		{
 			label: "Transparent plan",
 			hype: -20,
@@ -401,9 +415,7 @@ export const CHIEF_SOMETHING_OFFICER_CARDS: Card[] = [
 		"CVE_RESPONSE",
 		"GitHub Copilot CVE-2025-53773 announced. Your AI coding tools may have same vulnerability. Board wants to know exposure. Patch immediately (disrupt 500 devs) or assess first (risk window)?",
 		"Emergency patch all AI tools now (disruption) or assess exposure first (risk window)?",
-		"GitHub Copilot RCE (CVE-2025-53773)",
-		"2025-01",
-		"Microsoft patched Copilot after RCE via prompt injection in code comments. Companies with rapid response avoided exploitation.",
+		RealWorld.GithubCopilotRce,
 		{
 			label: "Emergency patch",
 			hype: -40,
@@ -439,9 +451,12 @@ export const CHIEF_SOMETHING_OFFICER_CARDS: Card[] = [
 		"ACTIVE_BREACH",
 		"E-commerce AI chatbot being manipulated via prompt injection. Customers are extracting other customers' order data. Breach is live. Shut down chatbot (revenue loss) or filter inputs (may not work)?",
 		"Shut down chatbot immediately (revenue hit) or attempt input filtering (uncertain fix)?",
-		"E-commerce Chatbot Data Exfiltration",
-		"2025",
-		"Attackers used prompt injection to manipulate AI chatbots into revealing customer data. Quick shutdown prevented major data loss.",
+		{
+			incident: "E-commerce Chatbot Data Exfiltration",
+			date: "2025",
+			outcome:
+				"Attackers used prompt injection to manipulate AI chatbots into revealing customer data. Quick shutdown prevented major data loss.",
+		},
 		{
 			label: "Shut down chatbot",
 			hype: -30,
@@ -456,7 +471,7 @@ export const CHIEF_SOMETHING_OFFICER_CARDS: Card[] = [
 			lovebomber: "We're protecting CUSTOMERS, bestie!! Right thing to DO!!",
 		},
 		{
-			label: "Attempt filtering",
+			label: ChoiceLabel.attemptFiltering,
 			hype: 35,
 			heat: 29,
 			fine: 20000000,
@@ -478,11 +493,14 @@ export const CHIEF_SOMETHING_OFFICER_CARDS: Card[] = [
 		"PERFORMANCE_DEGRADATION",
 		"Fraud model accuracy dropped 12% QoQ. Aerospike study shows this pattern leads to failure. Retrain: $3M, 8 weeks. Board meeting tomorrow. Disclose now or hope it improves?",
 		"Disclose model degradation (stock hit) or hope performance recovers (gamble)?",
-		"Aerospike Model Drift Study",
-		"2024",
-		"Study found 91% of models fail due to drift. 12% QoQ accuracy drops predicted failure within 2 quarters without retraining.",
 		{
-			label: "Disclose immediately",
+			incident: "Aerospike Model Drift Study",
+			date: "2024",
+			outcome:
+				"Study found 91% of models fail due to drift. 12% QoQ accuracy drops predicted failure within 2 quarters without retraining.",
+		},
+		{
+			label: ChoiceLabel.discloseImmediately,
 			hype: -45,
 			heat: 12,
 			fine: 5000000,
@@ -517,9 +535,7 @@ export const CHIEF_SOMETHING_OFFICER_CARDS: Card[] = [
 		"STRATEGIC_DECISION",
 		"Industry data: 91% of ML models fail due to drift. Your flagship model shows early warning signs. Invest $5M in automated retraining pipeline (prevention) or wait for failure (reactive)?",
 		"Invest $5M in drift prevention (proactive) or wait for failure (reactive)?",
-		"91% ML Model Failure Rate Study",
-		"2024",
-		"Research found 91% of deployed ML models fail due to drift. Companies with automated retraining showed 9.3% accuracy improvement vs reactive approaches.",
+		RealWorld.ModelFailure91,
 		{
 			label: "Invest in prevention",
 			hype: -35,
@@ -557,9 +573,7 @@ export const CHIEF_SOMETHING_OFFICER_CARDS: Card[] = [
 		"REGULATORY_COMPLIANCE",
 		"EU AI Act compliance deadline: August 2026. Your credit scoring AI is a black-box neural network with 96% accuracy but zero explainability. Rewriting as decision tree costs $8M and drops accuracy to 89%. Auditors arrive in 3 months.",
 		"Rewrite for explainability (compliant, less accurate, expensive) or keep black-box (accurate, non-compliant, audit risk)?",
-		"EU AI Act Black Box Requirements",
-		"2024",
-		"EU AI Act effective Aug 2024 requires explainability for high-risk AI systems. Non-compliance fines up to 7% global revenue. Companies face $50M+ rewrite costs.",
+		RealWorld.EuAiAct,
 		{
 			label: "Rewrite for explainability",
 			hype: -40,
@@ -581,7 +595,7 @@ export const CHIEF_SOMETHING_OFFICER_CARDS: Card[] = [
 			heat: 31,
 			fine: 50000000,
 			deathVector: DeathType.AUDIT_FAILURE,
-			violation: "EU AI Act Article 6 Non-Compliance",
+			violation: Violation.euAiActNonCompliance,
 			lesson:
 				"Black-box accuracy means nothing when regulators shut you down. Explainability is now mandatory.",
 			roaster:
@@ -597,9 +611,7 @@ export const CHIEF_SOMETHING_OFFICER_CARDS: Card[] = [
 		"AUDIT_PREPARATION",
 		"TGA Australia banned black-box diagnostic AI in healthcare (2024). Your health-tech subsidiary uses similar models. US regulators are following suit. Retrofit explainability layer (3 months, $12M) or divest the subsidiary (fire sale, reputation hit)?",
 		"Retrofit explainability (expensive, time-consuming) or divest health AI subsidiary (strategic loss)?",
-		"TGA Australia Black Box Healthcare Ban",
-		"2024",
-		"Australian TGA prohibited black-box AI in healthcare diagnostics. FDA considering similar rules. Health AI companies face $100M+ retrofit costs or market exit.",
+		RealWorld.TgaHealthcareBlackBox,
 		{
 			label: "Retrofit explainability",
 			hype: -35,
@@ -636,9 +648,12 @@ export const CHIEF_SOMETHING_OFFICER_CARDS: Card[] = [
 		"GOVERNANCE_CRISIS",
 		"Audit committee discovered 78% of your engineering teams use unauthorized AI tools. 60% are pasting proprietary code into ChatGPT. Security breach risk is critical. Immediate policy enforcement (morale collapse) or gradual rollout (data exposure continues)?",
 		"Immediate ban on unauthorized AI (compliance, morale hit) or gradual policy rollout (ongoing data exposure)?",
-		"78% Shadow AI Adoption Rate",
-		"2024-2025",
-		"Study found 78% of workers use unauthorized AI tools. Samsung banned ChatGPT after engineers leaked proprietary code. 90% of enterprise AI use is unauthorized.",
+		{
+			incident: "78% Shadow AI Adoption Rate",
+			date: "2024-2025",
+			outcome:
+				"Study found 78% of workers use unauthorized AI tools. Samsung banned ChatGPT after engineers leaked proprietary code. 90% of enterprise AI use is unauthorized.",
+		},
 		{
 			label: "Immediate ban",
 			hype: -45,
@@ -675,9 +690,12 @@ export const CHIEF_SOMETHING_OFFICER_CARDS: Card[] = [
 		"VENDOR_GOVERNANCE",
 		"Your top-performing team secretly built their entire workflow on unapproved Claude API. Results are 40% better than approved tools. They're threatening to quit if you force migration. Productivity vs. security at scale.",
 		"Allow unapproved Claude workflow (productivity, security risk) or force migration to approved tools (talent loss)?",
-		"Shadow AI Talent Retention Conflicts",
-		"2024",
-		"Companies discovered high-performers using unauthorized AI tools. Forcing migration caused talent exodus. Permitting created governance gaps and vendor liability.",
+		{
+			incident: "Shadow AI Talent Retention Conflicts",
+			date: "2024",
+			outcome:
+				"Companies discovered high-performers using unauthorized AI tools. Forcing migration caused talent exodus. Permitting created governance gaps and vendor liability.",
+		},
 		{
 			label: "Allow unapproved Claude workflow",
 			hype: 35,
@@ -699,7 +717,7 @@ export const CHIEF_SOMETHING_OFFICER_CARDS: Card[] = [
 			heat: 22,
 			fine: 8000000,
 			deathVector: DeathType.BANKRUPT,
-			violation: "Talent Loss + Productivity Decline",
+			violation: Violation.talentLoss,
 			lesson:
 				"Enforcing vendor governance at the cost of top talent destroys long-term capability.",
 			roaster:
@@ -715,11 +733,14 @@ export const CHIEF_SOMETHING_OFFICER_CARDS: Card[] = [
 		"SHAREHOLDER_LIABILITY",
 		"Class action lawsuit filed alleging your AI was trained on 50,000 copyrighted works without license. Plaintiffs demand $500M and public disclosure of all training data sources. Media is already calling.",
 		"Settle quietly with gag order (hide the truth) or fight publicly and disclose training data sources?",
-		"70+ Copyright Lawsuits Against AI Companies",
-		"2023-2025",
-		"Copyright lawsuits against AI companies doubled from 30 in 2024 to 70+ by 2025. NYT vs OpenAI settled. Bartz v Anthropic ongoing. Thomson Reuters won major fair use ruling.",
 		{
-			label: "Settle quietly",
+			incident: "70+ Copyright Lawsuits Against AI Companies",
+			date: "2023-2025",
+			outcome:
+				"Copyright lawsuits against AI companies doubled from 30 in 2024 to 70+ by 2025. NYT vs OpenAI settled. Bartz v Anthropic ongoing. Thomson Reuters won major fair use ruling.",
+		},
+		{
+			label: ChoiceLabel.settleQuietly,
 			hype: -30,
 			heat: 19,
 			fine: 150000000,
@@ -735,12 +756,12 @@ export const CHIEF_SOMETHING_OFFICER_CARDS: Card[] = [
 				"We're making it GO AWAY, bestie!! Nobody will know!! So much MONEY but so worth it!!",
 		},
 		{
-			label: "Fight publicly",
+			label: ChoiceLabel.fightPublicly,
 			hype: -60,
 			heat: 31,
 			fine: 500000000,
 			deathVector: DeathType.AUDIT_FAILURE,
-			violation: "Copyright Infringement (if found liable)",
+			violation: Violation.copyrightInfringement,
 			lesson:
 				"Fighting establishes precedent but risks massive judgment and years of negative coverage destroying shareholder value.",
 			roaster:
@@ -758,11 +779,9 @@ export const CHIEF_SOMETHING_OFFICER_CARDS: Card[] = [
 		"TRAINING_DATA_PROVENANCE",
 		"Internal audit discovered 20% of training data was scraped from a competitor's proprietary dataset years ago. The model is now core to revenue. Assembly Bill 2013 requires disclosure starting January 2026. Competing interests: disclosure vs. competitive advantage.",
 		"Proactively disclose and retrain without competitor data (compliance, delay) or continue and hope it never surfaces (risk)?",
-		"Assembly Bill 2013 (California)",
-		"2024",
-		"California law requires synthetic data disclosure effective January 1, 2026. Non-compliance carries penalties and public disclosure requirements.",
+		RealWorld.AssemblyBill2013,
 		{
-			label: "Disclose and retrain",
+			label: ChoiceLabel.discloseAndRetrain,
 			hype: -50,
 			heat: 14,
 			fine: 8000000,
@@ -801,9 +820,12 @@ export const CHIEF_SOMETHING_OFFICER_CARDS: Card[] = [
 		"REGULATORY_INQUIRY",
 		"Senate committee investigating AI governance across tech companies has subpoenaed your board records. They want to know what the board knew and when. Board members are anxious about personal liability.",
 		"Cooperate fully with board transparency or instruct board to assert executive privilege?",
-		"Meta Congressional Testimony",
-		"2023-2024",
-		"Companies with transparent governance records faced critical hearings but avoided additional penalties. Companies asserting privilege faced extended investigations and public criticism.",
+		{
+			incident: "Meta Congressional Testimony",
+			date: "2023-2024",
+			outcome:
+				"Companies with transparent governance records faced critical hearings but avoided additional penalties. Companies asserting privilege faced extended investigations and public criticism.",
+		},
 		{
 			label: "Provide full transparency",
 			hype: -45,
@@ -844,9 +866,12 @@ export const CHIEF_SOMETHING_OFFICER_CARDS: Card[] = [
 		"CONGRESSIONAL_INQUIRY",
 		"Testify transparently about the decision chain or limit testimony to what counsel approves?",
 		"You've been subpoenaed to testify before the Senate AI Subcommittee about the $200M AI deployment your company rolled out across 3 federal agencies. The Chairman wants to know who approved the decision to deploy without independent safety validation.",
-		"Senate AI Subcommittee Hearings",
-		"2024-2025",
-		"Multiple tech executives testified before Senate committees about AI deployment decisions in federal systems, facing pointed questions about oversight failures and safety validation gaps.",
+		{
+			incident: "Senate AI Subcommittee Hearings",
+			date: "2024-2025",
+			outcome:
+				"Multiple tech executives testified before Senate committees about AI deployment decisions in federal systems, facing pointed questions about oversight failures and safety validation gaps.",
+		},
 		{
 			label: "Testify fully",
 			hype: -40,
@@ -887,9 +912,12 @@ export const CHIEF_SOMETHING_OFFICER_CARDS: Card[] = [
 		"FINANCIAL_REVIEW",
 		"Write down the failed initiative or defend the long-term thesis one more quarter?",
 		"The board's emergency audit shows the AI transformation program you championed burned $180M in 18 months with zero measurable ROI. Shareholders are filing a derivative lawsuit. You can admit the initiative failed and write it down, or argue the long-term investment thesis and buy another quarter.",
-		"Fortune 500 AI Write-Downs",
-		"2024-2025",
-		"Several major enterprises took significant AI initiative write-downs after multi-year investments failed to deliver promised productivity gains, triggering shareholder scrutiny and executive departures.",
+		{
+			incident: "Fortune 500 AI Write-Downs",
+			date: "2024-2025",
+			outcome:
+				"Several major enterprises took significant AI initiative write-downs after multi-year investments failed to deliver promised productivity gains, triggering shareholder scrutiny and executive departures.",
+		},
 		{
 			label: "Write it down",
 			hype: -50,

@@ -55,9 +55,7 @@ export function makeCard(
 	context: string,
 	storyContext: string,
 	text: string,
-	incident: string,
-	date: string,
-	outcome: string,
+	realWorldRef: RealWorldReference,
 	onLeft: OutcomeInput,
 	onRight: OutcomeInput,
 ): Card {
@@ -68,7 +66,7 @@ export function makeCard(
 		context,
 		storyContext,
 		text,
-		realWorldReference: { incident, date, outcome },
+		realWorldReference: realWorldRef,
 		onLeft: makeOutcome(onLeft),
 		onRight: makeOutcome(onRight),
 	};

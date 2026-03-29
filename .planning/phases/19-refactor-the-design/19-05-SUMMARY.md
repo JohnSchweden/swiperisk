@@ -57,7 +57,7 @@ completed: 2026-03-29
 
 Each task was committed atomically:
 
-1. **Task 1: Remove endings hint from DebriefPage3Verdict** - `6c1cae7` (refactor)
+1. **Task 1: Remove endings hint from DebriefPage3Verdict** - `4c30b5b` (refactor)
 
 **Plan metadata:** (included in final commit below)
 
@@ -82,3 +82,13 @@ None - plan executed exactly as written.
 ---
 *Phase: 19-refactor-the-design*
 *Completed: 2026-03-29*
+
+## Self-Check: PASSED
+
+- SUMMARY.md file exists: ✅
+- Task commit `4c30b5b` exists: ✅
+- Metadata commit `448d1c5` exists: ✅
+- DebriefPage3Verdict.tsx modified: ✅
+- "Endings discovered" absent from file: ✅
+- "or is it" absent from file: ✅
+- typecheck passes: ✅

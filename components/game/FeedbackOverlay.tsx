@@ -1,6 +1,5 @@
 import type React from "react";
 import { useEffect } from "react";
-import { PERSONALITIES } from "../../data";
 import { getOutcomeImagePath, slugify } from "../../data/imageMap";
 import type { PersonalityType } from "../../types";
 import { ImageWithFallback } from "../ImageWithFallback";
@@ -52,13 +51,12 @@ function formatBudget(amount: number): string {
 
 /**
  * FeedbackOverlay component displays governance feedback after a card choice.
- * Shows personality review, fine information, lessons, and escalation warnings.
+ * Shows fine information, lessons, and escalation warnings.
  * Includes keyboard navigation and modal accessibility features.
  * @param props - The component props
  * @returns The rendered feedback overlay modal
  */
 export const FeedbackOverlay: React.FC<FeedbackOverlayProps> = ({
-	personality,
 	text,
 	lesson,
 	choice,
@@ -86,8 +84,6 @@ export const FeedbackOverlay: React.FC<FeedbackOverlayProps> = ({
 		window.addEventListener("keydown", handleOverlayKey);
 		return () => window.removeEventListener("keydown", handleOverlayKey);
 	}, [onNext]);
-
-	const personalityName = personality ? PERSONALITIES[personality].name : "";
 
 	return (
 		<div
@@ -136,7 +132,7 @@ export const FeedbackOverlay: React.FC<FeedbackOverlayProps> = ({
 									src={imagePath}
 									alt={`Outcome: ${outcomeLabel}`}
 									aspectRatio="video"
-									containerClassName="max-h-[200px] md:max-h-none"
+									containerClassName="max-h-[200px] md:max-h-[220px]"
 								/>
 							</div>
 						) : null;
@@ -168,9 +164,6 @@ export const FeedbackOverlay: React.FC<FeedbackOverlayProps> = ({
 					</div>
 				)}
 
-				<div className="text-cyan-400 mono text-xs md:text-sm mb-3 md:mb-4 font-bold tracking-wide">
-					{personalityName}'s review
-				</div>
 				<p className="text-lg md:text-2xl mb-4 md:mb-8 text-slate-100 font-light leading-relaxed">
 					"{text}"
 				</p>
@@ -179,17 +172,11 @@ export const FeedbackOverlay: React.FC<FeedbackOverlayProps> = ({
 					id="feedback-overlay-desc"
 					className="bg-black/50 border border-white/5 p-4 md:p-6 rounded-xl text-left mb-4 md:mb-8 min-h-[4.5rem]"
 				>
-					<div className="text-xs md:text-sm font-bold text-slate-300 tracking-wide mb-3 border-b border-white/5 pb-2">
-						Governance alert
-					</div>
 					<p className="text-sm md:text-base text-slate-300 leading-relaxed font-light">
 						{lesson}
 					</p>
 					{teamImpact && (
 						<div className="mt-3 pt-3 border-t border-white/5">
-							<div className="text-xs font-bold text-amber-400/90 tracking-wide mb-1">
-								Team impact
-							</div>
 							<p className="text-sm text-slate-400 leading-relaxed font-light">
 								{teamImpact}
 							</p>
@@ -197,19 +184,11 @@ export const FeedbackOverlay: React.FC<FeedbackOverlayProps> = ({
 					)}
 					{realWorldReference && (
 						<div className="mt-3 pt-3 border-t border-white/5">
-							<div className="text-xs font-bold text-cyan-400/90 tracking-wide mb-2">
-								<i className="fa-solid fa-book-open mr-1.5" aria-hidden></i>
-								Real Case: {realWorldReference.incident} (
-								{realWorldReference.date})
-							</div>
 							<p className="text-sm text-slate-400 leading-relaxed font-light">
 								{realWorldReference.outcome}
 							</p>
 						</div>
 					)}
-					<p className="mt-3 text-xs text-slate-500 font-medium">
-						Decision logged — no undo. Proceed when ready.
-					</p>
 				</div>
 
 				<button

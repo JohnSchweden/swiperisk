@@ -104,6 +104,7 @@ See: .planning/PROJECT.md
 - 2026-03-28: Completed 16-10 modularization (extracted hydration.ts and deathResolver.ts from useGameState.ts)
 - 2026-03-28: Updated ROADMAP.md with all gap closure plans (Phase 04: 10/10, Phase 13: 8/8, Phase 16: 10/10, Phase 18: 3 plans)
 - 2026-03-28: Added Phase 20 (Short Video Clips) to roadmap
+- 2026-03-29: Completed 19-04-PLAN.md (CardStack desktop padding reduction from md:p-10 to md:p-6, mobile storyContext suppression when image present)
 - 2026-03-29: Completed 19-05-PLAN.md (Remove duplicate endings hint from debrief page 3)
 
 ## Accumulated Context
@@ -133,6 +134,7 @@ See: .planning/PROJECT.md
 - [Phase 17-02]: Roaster pre-baked feedback clips use overlay feedbackAuthoringStem; playing currentCard indexes effectiveDeck for pressure parity with CardStack
 - [Phase 17-04]: authoringFeedbackStem returns slugified label strings (e.g., "shield-the-team") instead of "left"|"right"; feedbackAuthoringStem widened to string throughout; selectedSlot preserves non-critical card fallback clip routing; slugify duplicated in lib/feedbackAudioChoice.ts (not imported from data/imageMap.ts layer)
 - [Phase 17-shuffle-aware-feedback-tts-fixes]: Completed directional→label-slug rename: 72 audio files renamed, E2E test expanded from 8→18 cards, 5 generation scripts updated
+- [Phase 19-04]: CardStack desktop padding reduced from md:p-10 (40px) to md:p-6 (24px); storyContext hidden on mobile when card has incident image using IIFE + hidden md:block pattern
 
 ## Key Metrics
 

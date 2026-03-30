@@ -53,6 +53,70 @@ test.describe("Debrief Audit Trail - Choice Labels @area:gameplay", () => {
 		expect(pageContent).toMatch(/amber-500/);
 	});
 
+	test("displays both LEFT and RIGHT outcome forks for each decision", async ({
+		page,
+	}) => {
+		await gotoWithKmDebugState(page, {
+			stage: "DEBRIEF_PAGE_2",
+			history: [{ cardId: "se_security_patch_timeline", choice: "LEFT" }],
+		});
+
+		await page.waitForSelector("h1", { timeout: 10000 });
+
+		// Verify fork segments with direction labels
+		const pageContent = await page.content();
+
+		// Each audit entry should show both "Swipe left" and "Swipe right" labels
+		const leftSwipeMatches = (pageContent.match(/Swipe left/gi) || []).length;
+		const rightSwipeMatches = (pageContent.match(/Swipe right/gi) || []).length;
+
+		expect(leftSwipeMatches).toBeGreaterThan(0);
+		expect(rightSwipeMatches).toBeGreaterThan(0);
+	});
+
+	test("highlights chosen fork branch with cyan/amber badge, mutes unchosen branch", async ({
+		page,
+	}) => {
+		await gotoWithKmDebugState(page, {
+			stage: "DEBRIEF_PAGE_2",
+			history: [{ cardId: "se_security_patch_timeline", choice: "LEFT" }],
+		});
+
+		await page.waitForSelector("h1", { timeout: 10000 });
+
+		// Verify chosen branch has strong styling, unchosen has muted styling
+		const pageContent = await page.content();
+
+		// Both variants should be present (one entry with 2 forks = 2 badges)
+		expect(pageContent).toMatch(/cyan-500|amber-500/); // chosen badge
+		expect(pageContent).toMatch(/text-slate-400/); // muted text
+		expect(pageContent).toMatch(/bg-black\/30/); // muted background
+	});
+
+	test("displays consequences for both chosen and unchosen outcomes in fork", async ({
+		page,
+	}) => {
+		await gotoWithKmDebugState(page, {
+			stage: "DEBRIEF_PAGE_2",
+			history: [
+				{ cardId: "se_security_patch_timeline", choice: "LEFT" },
+				{ cardId: "se_code_quality_refactor", choice: "RIGHT" },
+			],
+		});
+
+		await page.waitForSelector("h1", { timeout: 10000 });
+
+		// Multiple entries = multiple consequence blocks
+		const pageContent = await page.content();
+
+		// Consequence label should appear in both left and right branches for each entry
+		const consequenceMatches = (pageContent.match(/Consequence:/gi) || [])
+			.length;
+
+		// 2 entries × 2 forks (left + right) = 4 consequence lines minimum
+		expect(consequenceMatches).toBeGreaterThanOrEqual(4);
+	});
+
 	test("displays sender and decision number for each decision", async ({
 		page,
 	}) => {

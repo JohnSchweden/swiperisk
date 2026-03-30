@@ -3,14 +3,14 @@ gsd_state_version: 1.0
 milestone: v1.2
 milestone_name: Kobayashi Maru — AI Governance Simulator
 current_phase: 19-refactor-the-design
-current_plan: 09
-status: planning
-last_updated: "2026-03-30T20:45:11.070Z"
+current_plan: 12
+status: complete
+last_updated: "2026-03-30T21:00:39.494Z"
 progress:
   total_phases: 23
   completed_phases: 13
-  total_plans: 121
-  completed_plans: 103
+  total_plans: 122
+  completed_plans: 104
 ---
 
 # Session State
@@ -23,8 +23,8 @@ See: .planning/PROJECT.md
 
 **Milestone:** v1.2 Kobayashi Maru — AI Governance Simulator
 **Current phase:** 19-refactor-the-design
-**Current plan:** 09
-**Status:** Ready to plan
+**Current plan:** 12 (complete — Phase 19 complete)
+**Status:** Phase complete
 
 ## Session Log
 
@@ -113,6 +113,8 @@ See: .planning/PROJECT.md
 - 2026-03-30: Completed 19-07-PLAN.md (Hype metric in FeedbackOverlay: fa-bullhorn icon, red/amber thresholds, 3 new tests)
 - 2026-03-30: Completed 19-09-PLAN.md (Victory page alignment: removed trophy icon, h2→h1, matches death/Kirk pattern)
 - 2026-03-30: Completed 19-10-PLAN.md (Center outcome images in FeedbackOverlay with mx-auto — 1 task, 1 file, 1 min)
+- 2026-03-30: Completed 19-12-PLAN.md (Kirk/Victory ending consistency: KIRK added to failure lessons data, explanation + lesson blocks for all ending types — 2 tasks, 2 files, 3 min)
+- 2026-03-30: Phase 19 complete — 12/12 plans
 
 ## Accumulated Context
 
@@ -148,6 +150,7 @@ See: .planning/PROJECT.md
 - [Phase 19-07]: Hype metric in FeedbackOverlay escalation — thresholds mirror Heat (critical >=85 red, high >=70 amber); fa-bullhorn icon differentiates from heat's fa-fire; showEscalation includes hypeCritical; 3 new tests verify all thresholds
 - [Phase 19-09]: Victory path aligned with death/Kirk pattern — removed decorative trophy icon, changed h2 to h1; all three ending paths now use identical h1-first structure with no pre-content decorative icon
 - [Phase 19-10]: Outcome images centered with mx-auto on shrink-0 container; check/warning icon retained for visual differentiation, accessibility, and pattern consistency
+- [Phase 19-12]: All DeathType variants have failure lesson data — widened LessonDeathType from Exclude<DeathType, KIRK> to DeathType; KIRK added to FAILURE_LESSONS (3 easter-egg lessons), DEATH_EXPLANATIONS, RETRY_PROMPTS; victory gets static "Why you survived" explanation (no image in imageMap, no lesson since victory is success)
 
 ## Key Metrics
 

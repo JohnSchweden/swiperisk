@@ -73,7 +73,7 @@ function AuditEntry({
 			? "bg-amber-500/20 text-amber-400 border border-amber-500/30"
 			: "bg-cyan-500/20 text-cyan-400 border border-cyan-500/30";
 	const expandToggleClass =
-		"inline-flex items-center justify-center min-h-11 min-w-11 sm:min-h-0 sm:min-w-0 text-cyan-400 hover:text-cyan-300 underline cursor-pointer";
+		"inline-flex items-center justify-center min-h-11 min-w-11 sm:min-h-0 sm:min-w-0 text-cyan-400 hover:text-cyan-300 underline";
 
 	return (
 		<div className={`rounded-xl p-4 sm:p-5 text-left ${GLASS_PANEL_DEFAULT}`}>
@@ -196,7 +196,7 @@ export const DebriefPage2AuditTrail: React.FC<DebriefPage2AuditTrailProps> = ({
 							? "WARNING: Audit integrity compromised"
 							: "A complete record of your governance decisions"}
 					</p>
-					<p className="mt-2 text-sm text-slate-500 italic">
+					<p className="mt-2 text-xs md:text-sm text-[#B8962E]/70">
 						Consider how different choices might have changed the outcome
 					</p>
 				</div>
@@ -262,12 +262,12 @@ export const DebriefPage2AuditTrail: React.FC<DebriefPage2AuditTrailProps> = ({
 					</div>
 				)}
 
-				{/* Generate Psych Evaluation Button — content-sized, centered (matches Intro Boot system) */}
+				{/* Generate Psych Evaluation — same primary CTA as debrief page 1 */}
 				<div className="flex w-full justify-center">
 					<button
 						type="button"
 						onClick={onNext}
-						className="min-h-[40px] bg-white px-6 py-3 text-base font-bold tracking-wide text-black transition-colors duration-300 hover:bg-cyan-400 hover:shadow-[0_0_20px_rgba(34,211,238,0.4)] md:min-h-[48px] md:px-12 md:py-4 md:text-xl"
+						className="px-6 py-3 md:px-12 md:py-4 text-base md:text-xl font-bold tracking-wide bg-white text-black hover:bg-cyan-400 hover:text-black transition-all duration-300 min-h-[40px] md:min-h-[48px]"
 					>
 						Generate Psych Evaluation
 					</button>

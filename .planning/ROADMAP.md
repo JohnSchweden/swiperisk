@@ -645,14 +645,15 @@ Plans:
 **Goal:** Reduce visual clutter across game screens (FeedbackOverlay, GameOver, DebriefPage2, CardStack, DebriefPage3) to match the minimalist design DNA of the selection screens. All changes are subtractive.
 **Requirements**: DESIGN-01 to DESIGN-05
 **Depends on:** Phase 18
-**Plans:** 5/5 plans complete
+**Plans:** 6/6 plans (5 complete, 1 gap closure)
 
 Plans:
-- [ ] 19-01-PLAN.md — FeedbackOverlay clutter removal (personality label, section header, noise copy, image cap, merge sub-blocks)
-- [ ] 19-02-PLAN.md — GameOver clutter removal (icon animation when image shown, endings box filler copy, image height cap)
-- [ ] 19-03-PLAN.md — DebriefPage2 reflection prompt block removal
-- [ ] 19-04-PLAN.md — CardStack padding reduction and mobile storyContext suppression
-- [ ] 19-05-PLAN.md — DebriefPage3 endings hint removal
+- [x] 19-01-PLAN.md — FeedbackOverlay clutter removal ✓
+- [x] 19-02-PLAN.md — GameOver clutter removal ✓
+- [x] 19-03-PLAN.md — DebriefPage2 reflection prompt removal ✓
+- [x] 19-04-PLAN.md — CardStack padding reduction and mobile storyContext suppression ✓
+- [x] 19-05-PLAN.md — DebriefPage3 endings hint removal ✓
+- [ ] 19-06-PLAN.md — Gap closure: restore context labels, add reflection hint, remove placeholder images
 
 ### Phase 20: Short Video Clips for Key Moments
 

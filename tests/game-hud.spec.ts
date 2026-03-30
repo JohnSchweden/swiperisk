@@ -1,5 +1,6 @@
 import { expect, test } from "@playwright/test";
 import { ROLE_CARDS } from "../data";
+import { formatBudget } from "../lib/formatting";
 import { RoleType } from "../types";
 import {
 	getRightButton,
@@ -7,13 +8,6 @@ import {
 	navigateToPlayingWithCardAtIndex,
 } from "./helpers/navigation";
 import { SELECTORS } from "./helpers/selectors";
-
-function formatBudgetMillion(amount: number): string {
-	if (amount >= 1_000_000) {
-		return `$${(amount / 1_000_000).toFixed(1)}M`;
-	}
-	return `$${amount.toLocaleString("en-US")}`;
-}
 
 test.use({ baseURL: "https://localhost:3000" });
 
@@ -80,7 +74,7 @@ test.describe("GameHUD @smoke @area:gameplay", () => {
 		await page.waitForTimeout(300);
 
 		const budgetSpan = budgetValue(page);
-		await expect(budgetSpan).toHaveText(formatBudgetMillion(10_000_000 - fine));
+		await expect(budgetSpan).toHaveText(formatBudget(10_000_000 - fine));
 	});
 
 	test("heat and hype values are visible and numeric (e.g. 0%, 50% initially)", async ({

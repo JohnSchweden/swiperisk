@@ -1,4 +1,5 @@
 import React from "react";
+import { formatBudget } from "../../lib/formatting";
 
 const INITIAL_BUDGET = 10000000;
 const BUDGET_WARNING = 3_000_000;
@@ -20,13 +21,6 @@ interface GameHUDProps {
 	countdownValue?: number;
 	/** Starting budget for progress bar calculation */
 	startingBudget?: number;
-}
-
-function formatBudget(amount: number): string {
-	if (amount >= 1000000) {
-		return `$${(amount / 1000000).toFixed(1)}M`;
-	}
-	return `$${amount.toLocaleString()}`;
 }
 
 function getBudgetColorClass(

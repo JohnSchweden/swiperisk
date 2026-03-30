@@ -5,15 +5,8 @@ import {
 	ROLE_LABELS,
 	VOICE_COVERAGE_HINT,
 } from "../../data";
+import { formatBudget } from "../../lib/formatting";
 import { ROLE_FINE_TIERS, RoleType } from "../../types";
-
-function formatBudget(amount: number): string {
-	if (amount >= 1000000) {
-		return `$${(amount / 1000000).toFixed(0)}M`;
-	}
-	return `$${amount.toLocaleString()}`;
-}
-
 import LayoutShell from "../LayoutShell";
 import {
 	LAYOUT_SHELL_CLASS,

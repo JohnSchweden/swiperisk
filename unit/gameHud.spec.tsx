@@ -62,10 +62,10 @@ describe("GameHUD", () => {
 			expect(screen.getByText("Critical")).toBeInTheDocument();
 		});
 
-		it("should show budget below $1M as raw number", () => {
+		it("should show budget below $1M in thousands (K)", () => {
 			render(<GameHUD {...defaultProps} budget={500_000} />);
 
-			expect(screen.getByText("$500,000")).toBeInTheDocument();
+			expect(screen.getByText("$500K")).toBeInTheDocument();
 		});
 	});
 

@@ -208,6 +208,42 @@ export const FeedbackOverlay: React.FC<FeedbackOverlayProps> = ({
 					</div>
 				)}
 
+				{/* Always-visible consequences: Fine → Heat → Hype */}
+				<div className="flex justify-center gap-3 md:gap-4 mb-4 text-xs md:text-sm">
+					<span
+						className={`inline-flex items-center gap-1.5 ${
+							fine > 0 ? "text-red-400" : "text-green-400"
+						}`}
+					>
+						<i className="fa-solid fa-coins" aria-hidden></i>
+						{fine > 0 ? `-${formatBudget(fine)}` : "$0"}
+					</span>
+					<span
+						className={`inline-flex items-center gap-1.5 ${
+							heatCritical
+								? "text-red-400"
+								: heatHigh
+									? "text-amber-400"
+									: "text-cyan-400"
+						}`}
+					>
+						<i className="fa-solid fa-fire" aria-hidden></i>
+						{heat != null ? `${heat}%` : "—"}
+					</span>
+					<span
+						className={`inline-flex items-center gap-1.5 ${
+							hypeCritical
+								? "text-red-400"
+								: hypeHigh
+									? "text-amber-400"
+									: "text-cyan-400"
+						}`}
+					>
+						<i className="fa-solid fa-bullhorn" aria-hidden></i>
+						{hype != null ? `${hype}%` : "—"}
+					</span>
+				</div>
+
 				<p className="text-lg md:text-2xl mb-4 md:mb-8 text-slate-100 font-light leading-relaxed">
 					"{text}"
 				</p>

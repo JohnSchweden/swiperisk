@@ -1,5 +1,5 @@
 import type React from "react";
-import { Fragment, useCallback, useState } from "react";
+import { Fragment } from "react";
 import { PERSONALITIES, ROLE_CARDS } from "../../../data";
 import { formatBudget } from "../../../lib/formatting";
 import { DeathType, type GameState, PersonalityType } from "../../../types";
@@ -42,13 +42,13 @@ function getKirkPersonalityBreak(personality: PersonalityType | null): string {
 	}
 }
 
-function formatConsequence(hype: number, heat: number, fine: number): string {
+function formatConsequence(fine: number, heat: number, hype: number): string {
+	// Order: Fine → Heat → Hype (matches FeedbackOverlay)
 	const parts: string[] = [];
-	if (hype !== 0) parts.push(`${hype > 0 ? "+" : ""}${hype} hype`);
-	if (heat !== 0) parts.push(`${heat > 0 ? "+" : ""}${heat} heat`);
-	// Always show fine amount (including $0) for transparency
 	parts.push(`${formatBudget(fine)} fine`);
-	return parts.join(" • ") || "No change";
+	parts.push(`${heat > 0 ? "+" : ""}${heat}% heat`);
+	parts.push(`${hype > 0 ? "+" : ""}${hype}% hype`);
+	return parts.join(" • ");
 }
 
 interface ForkSegmentProps {
@@ -79,7 +79,7 @@ function ForkSegment({
 		: "bg-black/30 text-slate-400 border border-white/[0.08]";
 
 	return (
-		<div className="flex flex-1 flex-col gap-2 p-3 md:p-4">
+		<div className="relative z-10 flex flex-1 flex-col gap-2 p-3 md:p-4">
 			<p className="text-[10px] font-bold tracking-wide text-slate-500 uppercase">
 				{directionLabel}
 			</p>
@@ -105,27 +105,13 @@ interface AuditEntryProps {
 	entry: GameState["history"][number];
 	index: number;
 	card: (typeof ROLE_CARDS)[keyof typeof ROLE_CARDS][number];
-	isExpanded: boolean;
-	onToggleExpanded: (index: number) => void;
 }
 
 function AuditEntry({
 	entry,
 	index,
 	card,
-	isExpanded,
-	onToggleExpanded,
 }: AuditEntryProps): React.ReactElement {
-	const outcome = entry.choice === "RIGHT" ? card.onRight : card.onLeft;
-	const cardPreview = card.text.slice(0, 120);
-	const shouldShowExpand = card.text.length > 120;
-	const choiceBadgeClass =
-		outcome.fine > 0
-			? "bg-amber-500/20 text-amber-400 border border-amber-500/30"
-			: "bg-cyan-500/20 text-cyan-400 border border-cyan-500/30";
-	const expandToggleClass =
-		"inline-flex items-center justify-center min-h-11 min-w-11 sm:min-h-0 sm:min-w-0 text-cyan-400 hover:text-cyan-300 underline";
-
 	return (
 		<div className={`rounded-xl p-4 sm:p-5 text-left ${GLASS_PANEL_DEFAULT}`}>
 			<div className="flex flex-col gap-4 md:flex-row md:items-start md:justify-between md:gap-6">
@@ -143,35 +129,29 @@ function AuditEntry({
 							</p>
 						</div>
 					</div>
-					<div className="text-left text-sm leading-relaxed text-slate-300">
-						<span className="text-slate-500">"</span>
-						{isExpanded ? card.text : cardPreview}
-						{!isExpanded && shouldShowExpand && (
-							<>
-								<span className="text-slate-500">...</span>
-								<button
-									type="button"
-									onClick={() => onToggleExpanded(index)}
-									className={`ml-1 ${expandToggleClass}`}
-								>
-									show more
-								</button>
-							</>
+					<div className="space-y-3 text-left text-sm leading-relaxed text-slate-300">
+						{card.storyContext && (
+							<p className="text-slate-400 leading-relaxed">
+								{card.storyContext}
+							</p>
 						)}
-						{isExpanded && (
-							<button
-								type="button"
-								onClick={() => onToggleExpanded(index)}
-								className={`ml-1 ${expandToggleClass}`}
-							>
-								show less
-							</button>
-						)}
-						<span className="text-slate-500">"</span>
+						<p>
+							<span className="text-slate-500">"</span>
+							{card.text}
+							<span className="text-slate-500">"</span>
+						</p>
 					</div>
 				</div>
 			</div>
-			<div className="mt-4 flex flex-col md:flex-row gap-0 rounded-lg border border-white/[0.08] overflow-hidden">
+			<div className="relative mt-4 flex flex-col md:flex-row">
+				{/* Desktop: T-junction — top bar + center stem; no full box */}
+				<div
+					className="pointer-events-none absolute inset-0 z-0 hidden md:block"
+					aria-hidden
+				>
+					<div className="absolute top-0 right-0 left-0 h-px bg-white/[0.12]" />
+					<div className="absolute top-0 bottom-0 left-1/2 w-px -translate-x-1/2 bg-white/[0.12]" />
+				</div>
 				<ForkSegment
 					label={card.onLeft.label}
 					hype={card.onLeft.hype}
@@ -181,8 +161,7 @@ function AuditEntry({
 					isChosen={entry.choice === "LEFT"}
 					direction="left"
 				/>
-				<div className="hidden md:block border-l border-white/[0.08]" />
-				<div className="md:hidden border-t border-white/[0.08]" />
+				<div className="border-t border-white/[0.12] md:hidden" />
 				<ForkSegment
 					label={card.onRight.label}
 					hype={card.onRight.hype}
@@ -199,7 +178,7 @@ function AuditEntry({
 
 /**
  * DebriefPage2AuditTrail component displays the second page of the game debrief.
- * Shows the complete audit trail of player decisions with expandable card details.
+ * Shows the complete audit trail with full storyContext (if any) and card prompt text.
  * Includes personality commentary for non-KIRK paths.
  * @param props - The component props
  * @returns The rendered debrief page 2 component
@@ -211,20 +190,6 @@ export const DebriefPage2AuditTrail: React.FC<DebriefPage2AuditTrailProps> = ({
 	const { personality, role, history } = state;
 	const isKirk = state.deathType === DeathType.KIRK;
 	const cards = state.effectiveDeck ?? (role ? ROLE_CARDS[role] : []);
-
-	// Track which card descriptions are expanded
-	const [expandedEntries, setExpandedEntries] = useState<Set<number>>(
-		new Set(),
-	);
-
-	const toggleExpanded = useCallback((index: number) => {
-		setExpandedEntries((prev) => {
-			const next = new Set(prev);
-			if (next.has(index)) next.delete(index);
-			else next.add(index);
-			return next;
-		});
-	}, []);
 
 	const personalityComment = personality
 		? isKirk
@@ -269,13 +234,7 @@ export const DebriefPage2AuditTrail: React.FC<DebriefPage2AuditTrailProps> = ({
 								return (
 									// biome-ignore lint/suspicious/noArrayIndexKey: chronological stable list
 									<Fragment key={`audit-entry-${index}`}>
-										<AuditEntry
-											entry={entry}
-											index={index}
-											card={card}
-											isExpanded={expandedEntries.has(index)}
-											onToggleExpanded={toggleExpanded}
-										/>
+										<AuditEntry entry={entry} index={index} card={card} />
 									</Fragment>
 								);
 							})}
@@ -283,7 +242,9 @@ export const DebriefPage2AuditTrail: React.FC<DebriefPage2AuditTrailProps> = ({
 					)}
 					{/* Phase 07: Kirk footer note */}
 					{isKirk && (
-						<div className="mt-4 p-3 rounded-lg border border-cyan-500/30 bg-cyan-950/20 text-xs text-cyan-400/80 text-left">
+						<div
+							className={`mt-4 p-3 rounded-lg border border-cyan-500/30 text-xs text-cyan-400/80 text-left ${GLASS_FILL_STRONG}`}
+						>
 							NOTE: Subject exhibited non-standard behavior. Audit integrity
 							compromised.
 						</div>

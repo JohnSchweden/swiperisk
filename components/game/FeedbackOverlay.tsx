@@ -132,23 +132,54 @@ export const FeedbackOverlay: React.FC<FeedbackOverlayProps> = ({
 					</div>
 				)}
 
-				{/* Outcome image */}
+				{/* Outcome image (Kirk-corrupted cards use kirk-breach* slugs + glitch placeholder) */}
 				{realWorldReference?.incident &&
 					outcomeLabel &&
 					(() => {
 						const incidentSlug = slugify(realWorldReference.incident);
 						const labelSlug = slugify(outcomeLabel);
 						const imagePath = getOutcomeImagePath(incidentSlug, labelSlug);
-						return imagePath ? (
+						const showKirkPlaceholder =
+							!imagePath && incidentSlug.startsWith("kirk-breach");
+						if (!imagePath && !showKirkPlaceholder) return null;
+						return (
 							<div className="mb-4 md:mb-6 shrink-0 mx-auto">
-								<ImageWithFallback
-									src={imagePath}
-									alt={`Outcome: ${outcomeLabel}`}
-									aspectRatio="video"
-									containerClassName="max-h-[200px] md:max-h-[220px]"
-								/>
+								{imagePath ? (
+									<ImageWithFallback
+										src={imagePath}
+										alt={`Outcome: ${outcomeLabel}`}
+										aspectRatio="video"
+										containerClassName="max-h-[200px] md:max-h-[220px]"
+									/>
+								) : (
+									<div
+										className="relative overflow-hidden rounded-lg border border-slate-700 bg-slate-900 aspect-video max-h-[200px] md:max-h-[220px] w-full max-w-lg mx-auto"
+										role="img"
+										aria-label="Corrupted outcome image unavailable"
+									>
+										<div
+											className="absolute inset-0 flex items-center justify-center bg-gradient-to-b from-slate-800 to-slate-900 glitch-placeholder kirk-glitch-text"
+											style={{
+												backgroundImage: `
+              repeating-linear-gradient(
+                0deg,
+                rgba(0, 0, 0, 0.15),
+                rgba(0, 0, 0, 0.15) 2px,
+                transparent 2px,
+                transparent 4px
+              )
+            `,
+											}}
+										>
+											<i
+												className="fa-solid fa-image text-cyan-500/80 text-3xl animate-pulse"
+												aria-hidden
+											></i>
+										</div>
+									</div>
+								)}
 							</div>
-						) : null;
+						);
 					})()}
 
 				<h2 id="feedback-overlay-title" className="sr-only">

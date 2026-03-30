@@ -173,6 +173,42 @@ describe("FeedbackOverlay", () => {
 		});
 	});
 
+	describe("Kirk corrupted outcome placeholder", () => {
+		it("shows glitch placeholder when incident is kirk-breach and no outcome asset", () => {
+			render(
+				<FeedbackOverlay
+					{...defaultProps}
+					realWorldReference={{
+						incident: "Kirk breach comp bump",
+						date: "████",
+						outcome: "Test outcome copy.",
+					}}
+					outcomeLabel="Reject"
+				/>,
+			);
+
+			expect(document.querySelector(".glitch-placeholder")).toBeInTheDocument();
+		});
+
+		it("does not show outcome image block when incident lacks asset and is not kirk-breach", () => {
+			render(
+				<FeedbackOverlay
+					{...defaultProps}
+					realWorldReference={{
+						incident: "zx-no-outcome-asset-test-unique",
+						date: "2020",
+						outcome: "Nothing.",
+					}}
+					outcomeLabel="Left choice"
+				/>,
+			);
+
+			expect(
+				document.querySelector(".glitch-placeholder"),
+			).not.toBeInTheDocument();
+		});
+	});
+
 	describe("choice attribute", () => {
 		it("should set data-choice attribute to RIGHT", () => {
 			render(<FeedbackOverlay {...defaultProps} choice="RIGHT" />);

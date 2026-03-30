@@ -111,3 +111,11 @@ _Note: Task 3 is verification-only — tests pass against Task 2 implementation_
 
 *Phase: 19-refactor-the-design*
 *Completed: 2026-03-28*
+
+## Self-Check: PASSED
+
+- [x] SUMMARY.md exists at `.planning/phases/19-refactor-the-design/19-02-SUMMARY.md`
+- [x] Task 1 commit: `aa4e32e` (test: failing Playwright tests)
+- [x] Task 2 commit: `9ff3e65` (feat: strip filler copy and constrain images)
+- [x] Metadata commit: `a79b8bc` (docs: complete plan)
+- [x] All verifications pass (typecheck, grep checks, Playwright 3/3)

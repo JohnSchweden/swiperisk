@@ -5,12 +5,12 @@ milestone_name: Kobayashi Maru — AI Governance Simulator
 current_phase: 19-refactor-the-design
 current_plan: Phase 19 complete
 status: planning
-last_updated: "2026-03-29T00:14:26.767Z"
+last_updated: "2026-03-30T16:24:57.736Z"
 progress:
   total_phases: 23
   completed_phases: 13
-  total_plans: 115
-  completed_plans: 97
+  total_plans: 116
+  completed_plans: 98
 ---
 
 # Session State
@@ -109,6 +109,7 @@ See: .planning/PROJECT.md
 - 2026-03-29: Completed 19-04-PLAN.md (CardStack desktop padding reduction from md:p-10 to md:p-6, mobile storyContext suppression when image present)
 - 2026-03-29: Completed 19-05-PLAN.md (Remove duplicate endings hint from debrief page 3)
 - 2026-03-29: Completed 19-02-PLAN.md (DebriefPage1Clutter removal: TDD red-green, removed PERSONALITY_REPLAY_LINES/progressText/replayLine, max-h-[220px] images, one trophy icon)
+- 2026-03-30: Completed 19-06-PLAN.md (UAT gap closure: restored FeedbackOverlay context labels, added DebriefPage2 reflection hint, commented out CardStack placeholder images)
 
 ## Accumulated Context
 
@@ -116,7 +117,7 @@ See: .planning/PROJECT.md
 - Phase 16 added: Kobayashi Maru ending variety system
 - Phase 17 planned: Shuffle-aware feedback TTS & content integrity (3 executable plans; CONTEXT + RESEARCH + VALIDATION)
 - Phase 18 added: Meme Template System (3 plans)
-- Phase 19 added: refactor the design (5 plans)
+- Phase 19 added: refactor the design (6 plans — 5 core + 1 gap closure)
 - Phase 20 added: Short Video Clips for Key Moments (for TikTok/Reels/YouTube Shorts)
 
 ## Decisions
@@ -140,6 +141,7 @@ See: .planning/PROJECT.md
 - [Phase 19-01]: FeedbackOverlay subtractive cleanup — removed personality label, governance header, decision noise line; capped image at 220px desktop; merged teamImpact and realWorldReference into one unlabeled secondary block
 - [Phase 19-04]: CardStack desktop padding reduced from md:p-10 (40px) to md:p-6 (24px); storyContext hidden on mobile when card has incident image using IIFE + hidden md:block pattern
 - [Phase 19-02]: DebriefPage1 subtractive cleanup via TDD — removed personality replay lines, progressText, retryPrompt; constrained death/Kirk images to max-h-[220px]; single trophy icon in endings header; data-testid for Playwright targeting
+- [Phase 19-06]: CardStack incident images commented out (not deleted) — reversible removal; getIncidentImagePath/slugify imports kept for preload useEffect; ImageWithFallback import commented out (now unused); storyContext simplified from IIFE+hasCardImage guard to unconditional render
 
 ## Key Metrics
 

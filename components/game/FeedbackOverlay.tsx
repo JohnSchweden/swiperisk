@@ -149,17 +149,17 @@ export const FeedbackOverlay: React.FC<FeedbackOverlayProps> = ({
 							!imagePath && incidentSlug.startsWith("kirk-breach");
 						if (!imagePath && !showKirkPlaceholder) return null;
 						return (
-							<div className="mb-4 md:mb-6 shrink-0 mx-auto">
+							<div className="mb-4 md:mb-6 flex w-full shrink-0 flex-col items-center">
 								{imagePath ? (
 									<ImageWithFallback
 										src={imagePath}
 										alt={`Outcome: ${outcomeLabel}`}
 										aspectRatio="video"
-										containerClassName="max-h-[200px] md:max-h-[220px]"
+										containerClassName="w-full max-w-[280px] sm:max-w-[340px] md:max-w-[400px]"
 									/>
 								) : (
 									<div
-										className="relative overflow-hidden rounded-lg border border-slate-700 bg-slate-900 aspect-video max-h-[200px] md:max-h-[220px] w-full max-w-lg mx-auto"
+										className="relative aspect-video w-full max-w-[280px] overflow-hidden rounded-lg border border-slate-700 bg-slate-900 sm:max-w-[340px] md:max-w-[400px]"
 										role="img"
 										aria-label="Corrupted outcome image unavailable"
 									>
@@ -192,80 +192,104 @@ export const FeedbackOverlay: React.FC<FeedbackOverlayProps> = ({
 					Governance feedback
 				</h2>
 
-				{/* Combined violation block with icon, fine, consequences, and violation text */}
-				<div className="mb-4 md:mb-6 p-3 md:p-4 bg-red-900/20 border border-red-500/30 rounded-lg">
-					<div className="flex items-center justify-center gap-2 mb-2">
-						<i
-							className={`fa-solid text-xl md:text-2xl ${
-								fine > 0
-									? "fa-triangle-exclamation text-amber-400"
-									: "fa-circle-check text-cyan-400"
-							}`}
-							aria-hidden
-						></i>
-						<span
-							className={`text-lg md:text-xl font-bold ${
-								fine > 0 ? "text-amber-400" : "text-cyan-400"
-							}`}
-						>
-							{fine > 0 ? "Violation" : "Approved"}
-						</span>
-					</div>
-
-					{/* Consequences: Fine → Heat → Hype with focus on biggest impact */}
-					<div className="flex justify-center gap-3 md:gap-4 mb-3 text-sm md:text-base">
-						{/* Fine - always show */}
-						<span
-							className={`inline-flex items-center gap-1 ${
-								fine > 0 ? "text-red-400 font-bold" : "text-green-400"
-							}`}
-						>
-							<i className="fa-solid fa-coins text-xs" aria-hidden></i>
-							{fine > 0 ? `-${formatBudget(fine)}` : "$0"}
-						</span>
-
-						{/* Heat delta */}
-						{heatDelta !== undefined && heatDelta !== 0 && (
-							<span
-								className={`inline-flex items-center gap-1 ${
-									heatDelta > 0 ? "text-red-400 font-bold" : "text-green-400"
-								}`}
-							>
-								<i className="fa-solid fa-fire text-xs" aria-hidden></i>
-								{heatDelta > 0 ? `+${heatDelta}` : `${heatDelta}`}%
-							</span>
-						)}
-
-						{/* Hype delta - use rocket icon */}
-						{hypeDelta !== undefined && hypeDelta !== 0 && (
-							<span
-								className={`inline-flex items-center gap-1 ${
-									hypeDelta > 0
-										? "text-cyan-400 font-bold"
-										: "text-red-400 font-bold"
-								}`}
-							>
-								<i className="fa-solid fa-rocket text-xs" aria-hidden></i>
-								{hypeDelta > 0 ? `+${hypeDelta}` : `${hypeDelta}`}%
-							</span>
-						)}
-					</div>
-
-					{fine > 0 && (
-						<>
-							<div className="text-2xl md:text-3xl font-black text-red-500 text-center">
-								-{formatBudget(fine)}
-							</div>
-							<div className="text-red-400/80 text-xs md:text-sm mt-1 leading-relaxed text-center">
-								{violation}
-							</div>
-						</>
-					)}
-				</div>
-
-				<p className="text-lg md:text-2xl mb-4 md:mb-8 text-slate-100 font-light leading-relaxed">
+				<p className="text-base md:text-lg mb-3 md:mb-4 text-slate-100 font-light leading-relaxed">
 					"{text}"
 				</p>
+
+				{/* Outcome impact: badge → violation copy → divider → inline stats */}
+				<div
+					className={`mb-3 md:mb-5 rounded-lg border p-3 md:p-4 ${
+						fine > 0
+							? "border-red-500/20 bg-gradient-to-b from-red-950/50 via-slate-900/60 to-slate-950/90 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.04)]"
+							: "border-emerald-500/15 bg-gradient-to-b from-emerald-950/30 via-slate-900/50 to-slate-950/90 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.04)]"
+					}`}
+				>
+					<div className="flex flex-col items-center gap-2 md:gap-3">
+						<div className="flex w-full flex-row flex-wrap items-center justify-center gap-x-3 gap-y-1.5 text-center">
+							<div
+								className={`flex shrink-0 items-center gap-1.5 rounded-full border px-2.5 py-1 ${
+									fine > 0
+										? "border-red-400/35 bg-red-500/10"
+										: "border-emerald-400/30 bg-emerald-500/10"
+								}`}
+							>
+								<i
+									className={`fa-solid text-xs ${
+										fine > 0
+											? "fa-triangle-exclamation text-amber-400"
+											: "fa-circle-check text-emerald-400"
+									}`}
+									aria-hidden
+								></i>
+								<span
+									className={`text-[10px] font-black uppercase tracking-wider ${
+										fine > 0 ? "text-red-200" : "text-emerald-200"
+									}`}
+								>
+									{fine > 0 ? "Violation" : "Approved"}
+								</span>
+							</div>
+							{fine > 0 && (
+								<p className="min-w-0 max-w-lg text-sm leading-snug text-slate-200">
+									{violation}
+								</p>
+							)}
+						</div>
+
+						<div className="w-full border-t border-white/10 pt-3">
+							<div className="flex w-full flex-wrap items-center justify-center gap-x-4 gap-y-2 md:gap-x-5">
+								<div className="flex shrink-0 items-center gap-1.5">
+									<span className="sr-only">Budget</span>
+									<i
+										className="fa-solid fa-coins text-xs text-slate-500"
+										aria-hidden
+									></i>
+									<p
+										className={`text-base font-black tabular-nums leading-none md:text-lg ${
+											fine > 0 ? "text-red-400" : "text-emerald-400"
+										}`}
+									>
+										{fine > 0 ? `-${formatBudget(fine)}` : "$0"}
+									</p>
+								</div>
+
+								{heatDelta !== undefined && heatDelta !== 0 && (
+									<div className="flex shrink-0 items-center gap-1.5">
+										<span className="sr-only">Risk</span>
+										<i
+											className="fa-solid fa-fire text-xs text-slate-500"
+											aria-hidden
+										></i>
+										<p
+											className={`text-base font-black tabular-nums leading-none md:text-lg ${
+												heatDelta > 0 ? "text-red-400" : "text-emerald-400"
+											}`}
+										>
+											{heatDelta > 0 ? `+${heatDelta}` : `${heatDelta}`}%
+										</p>
+									</div>
+								)}
+
+								{hypeDelta !== undefined && hypeDelta !== 0 && (
+									<div className="flex shrink-0 items-center gap-1.5">
+										<span className="sr-only">Hype</span>
+										<i
+											className="fa-solid fa-rocket text-xs text-slate-500"
+											aria-hidden
+										></i>
+										<p
+											className={`text-base font-black tabular-nums leading-none md:text-lg ${
+												hypeDelta > 0 ? "text-cyan-400" : "text-red-400"
+											}`}
+										>
+											{hypeDelta > 0 ? `+${hypeDelta}` : `${hypeDelta}`}%
+										</p>
+									</div>
+								)}
+							</div>
+						</div>
+					</div>
+				</div>
 
 				<div
 					id="feedback-overlay-desc"

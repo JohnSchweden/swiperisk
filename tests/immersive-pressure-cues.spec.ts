@@ -117,6 +117,8 @@ test.describe("Feedback Overlay @area:gameplay", () => {
 			timeout: 15000,
 		});
 
-		await expect(page.locator("text=Governance alert").first()).toBeVisible();
+		await expect(
+			page.getByTestId("feedback-dialog").getByText("Learning moment"),
+		).toBeVisible();
 	});
 });

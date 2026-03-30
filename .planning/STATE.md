@@ -5,7 +5,7 @@ milestone_name: Kobayashi Maru — AI Governance Simulator
 current_phase: 19-refactor-the-design
 current_plan: Phase 19 complete
 status: planning
-last_updated: "2026-03-30T16:24:57.736Z"
+last_updated: "2026-03-30T16:38:15.875Z"
 progress:
   total_phases: 23
   completed_phases: 13

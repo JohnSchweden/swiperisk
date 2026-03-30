@@ -196,6 +196,9 @@ export const DebriefPage2AuditTrail: React.FC<DebriefPage2AuditTrailProps> = ({
 							? "WARNING: Audit integrity compromised"
 							: "A complete record of your governance decisions"}
 					</p>
+					<p className="mt-2 text-sm text-slate-500 italic">
+						Consider how different choices might have changed the outcome
+					</p>
 				</div>
 
 				{/* Audit Log List */}

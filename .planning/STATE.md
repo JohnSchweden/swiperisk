@@ -3,14 +3,14 @@ gsd_state_version: 1.0
 milestone: v1.2
 milestone_name: Kobayashi Maru — AI Governance Simulator
 current_phase: 19-refactor-the-design
-current_plan: "09"
-status: in-progress
-last_updated: "2026-03-30T20:22:19Z"
+current_plan: 09
+status: executing
+last_updated: "2026-03-30T20:26:07.666Z"
 progress:
   total_phases: 23
-  completed_phases: 12
+  completed_phases: 13
   total_plans: 120
-  completed_plans: 101
+  completed_plans: 102
 ---
 
 # Session State
@@ -110,6 +110,7 @@ See: .planning/PROJECT.md
 - 2026-03-29: Completed 19-05-PLAN.md (Remove duplicate endings hint from debrief page 3)
 - 2026-03-29: Completed 19-02-PLAN.md (DebriefPage1Clutter removal: TDD red-green, removed PERSONALITY_REPLAY_LINES/progressText/replayLine, max-h-[220px] images, one trophy icon)
 - 2026-03-30: Completed 19-06-PLAN.md (UAT gap closure: restored FeedbackOverlay context labels, added DebriefPage2 reflection hint, commented out CardStack placeholder images)
+- 2026-03-30: Completed 19-07-PLAN.md (Hype metric in FeedbackOverlay: fa-bullhorn icon, red/amber thresholds, 3 new tests)
 - 2026-03-30: Completed 19-09-PLAN.md (Victory page alignment: removed trophy icon, h2→h1, matches death/Kirk pattern)
 - 2026-03-30: Completed 19-10-PLAN.md (Center outcome images in FeedbackOverlay with mx-auto — 1 task, 1 file, 1 min)
 
@@ -144,6 +145,7 @@ See: .planning/PROJECT.md
 - [Phase 19-04]: CardStack desktop padding reduced from md:p-10 (40px) to md:p-6 (24px); storyContext hidden on mobile when card has incident image using IIFE + hidden md:block pattern
 - [Phase 19-02]: DebriefPage1 subtractive cleanup via TDD — removed personality replay lines, progressText, retryPrompt; constrained death/Kirk images to max-h-[220px]; single trophy icon in endings header; data-testid for Playwright targeting
 - [Phase 19-06]: CardStack incident images commented out (not deleted) — reversible removal; getIncidentImagePath/slugify imports kept for preload useEffect; ImageWithFallback import commented out (now unused); storyContext simplified from IIFE+hasCardImage guard to unconditional render
+- [Phase 19-07]: Hype metric in FeedbackOverlay escalation — thresholds mirror Heat (critical >=85 red, high >=70 amber); fa-bullhorn icon differentiates from heat's fa-fire; showEscalation includes hypeCritical; 3 new tests verify all thresholds
 - [Phase 19-09]: Victory path aligned with death/Kirk pattern — removed decorative trophy icon, changed h2 to h1; all three ending paths now use identical h1-first structure with no pre-content decorative icon
 - [Phase 19-10]: Outcome images centered with mx-auto on shrink-0 container; check/warning icon retained for visual differentiation, accessibility, and pattern consistency
 

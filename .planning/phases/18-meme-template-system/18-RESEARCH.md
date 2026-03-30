@@ -16,7 +16,7 @@ Based on 2025-2026 social media engagement data and platform-specific research:
 | **Animated GIFs** | Escalation patterns, panic moments | ⚠️ Mixed (autoplay issues) | Medium (~1-2MB) |
 | **Custom AI Images** | Unique/unprecedented scenarios | ✅ Good (differentiator) | Variable |
 
-**Primary recommendation:** Use a **hybrid approach** — static meme templates for death endings and archetypes (LinkedIn shareable), animated GIFs for escalation/panic incident patterns, and custom AI images as fallback for unmatched scenarios.
+**Primary recommendation:** Use a **hybrid approach** — static meme templates for death endings and archetypes (LinkedIn shareable), animated GIFs for escalation/panic incident patterns, and Gemini AI as fallback for unmatched scenarios (matching user's clarification: "use either matching memes or gif first, if they dont match, we will generate matching ones with gemini").
 
 ---
 
@@ -51,12 +51,26 @@ Based on 2025-2026 social media engagement data and platform-specific research:
 | **FLED_COUNTRY** | Static meme | Dark humor, escapism theme | "Running Away Balloon", "My Precious" |
 | **PRISON** | Static meme | Dramatic, clear visual | "One Does Not Simply", "You're Gonna Have A Bad Time" |
 | **AUDIT_FAILURE** | Static meme | Bureaucratic humor | "Boardroom Meeting", "Trolley Problem" |
-| **KIRK** | Animated GIF (if available) | Hidden easter egg, special treatment | Custom or "Always Has Been" |
+| **KIRK** | Static meme | Hidden easter egg, **thematically perfect** — "Kirk explains how he beat the Kobayashi Maru" is literally about beating the no-win scenario! | **"Kirk Explains How He Beat the Kobayashi Maru"** — https://imgflip.com/memetemplate/542163803 (perfect fit for the easter egg) |
 
 **Why Static for Death Endings:**
 - LinkedIn data shows images get **2x higher engagement** than GIFs in professional contexts
 - Death endings are shared as final results — static images load faster and display more reliably
 - The tone is "darkly comedic" per Phase 13 — established meme templates already convey this
+
+### 1b. KIRK Special Templates (Researched)
+
+**Found the PERFECT KIRK template:**
+
+| Template | Imgflip URL | Why It's Perfect |
+|---------|-------------|------------------|
+| **Kirk Explains How He Beat the Kobayashi Maru** | https://imgflip.com/memetemplate/542163803 | Literally about beating the no-win scenario — the exact theme of the KIRK easter egg! |
+| **Kobayashi Maru** | https://imgflip.com/memetemplate/232753958 | Generic Kobayashi Maru template for variation |
+| **James T. Kirk beats the Kobayashi Maru by jailbreaking an LLM** | https://imgflip.com/i/8ysh46 (already made example) | AI-relevant twist — perfect for the game's theme! |
+
+**Use these for both KIRK archetype AND KIRK death** — it's the same easter egg path.
+
+---
 
 ### 2. Archetypes (7 types)
 
@@ -70,7 +84,7 @@ Based on 2025-2026 social media engagement data and platform-specific research:
 | **CONSERVATIVE** | Static meme | Traditional, cautionary | "Winter Is Coming", "Change My Mind" |
 | **BALANCED** | Static meme | Middle ground | "They're The Same Picture" |
 | **CHAOS_AGENT** | Static meme | Maximum mayhem | "This Is Fine", "Disaster Girl" |
-| **KIRK** | Custom AI or special | Easter egg, unique identity | N/A (custom) |
+| **KIRK** | Static meme | Easter egg — **use "Kirk Explains How He Beat the Kobayashi Maru"** template (thematically perfect!) | "Kirk Explains How He Beat the Kobayashi Maru" |
 
 **Why Static for Archetypes:**
 - Archetype reveals are badges/cards displayed on Debrief Page 3
@@ -92,7 +106,26 @@ Based on 2025-2026 social media engagement data and platform-specific research:
 **Recommended Pattern Mix:**
 - **70% Static memes** — Reliable, LinkedIn-friendly
 - **20% Animated GIFs** — For escalation/panic moments in incidents
-- **10% Custom AI** — For unprecedented scenarios not matching any template
+- **10% Gemini AI** — For unprecedented scenarios not matching any template
+
+---
+
+### 4. Feedback Overlay - User Clarified Approach
+
+**User clarified:** "use either matching memes or gif first, if they dont match, we will generate matching ones with gemini"
+
+This is the **fallback strategy** for when no template matches the incident/outcome:
+
+| Step | Action | When |
+|------|--------|------|
+| 1 | **Try matching meme/GIF** | Look up incident pattern in `incident_mapping` from template database |
+| 2 | **If no match found** | Fall back to Gemini AI generation (existing Phase 13 pipeline) |
+| 3 | **Display in overlay** | Show the image in FeedbackOverlay component |
+
+**Implementation:**
+- The template database's `incident_mapping` field maps 11 patterns → template IDs
+- If an incident doesn't match any pattern → trigger Gemini generation
+- No separate "custom AI meme" generation needed — reuse existing AI pipeline
 
 ---
 
@@ -153,7 +186,7 @@ const deathToTemplate = {
   'FLED_COUNTRY': ['running-away-balloon', 'my-precious', 'homer-backing'],
   'PRISON': ['one-does-not-simply', 'bad-time', 'coffin-dance'],
   'AUDIT_FAILURE': ['boardroom-meeting', 'homer-backing-into-bushes', 'change-my-mind'],
-  'KIRK': ['always-has-been', 'matrix-red-blue-pill'] // Easter egg
+  'KIRK': ['kobayashi-maruk-kirk-solution', 'kirk-explains-kobayashi-maru', 'james-kirk-llm-jailbreak'] // Easter egg - thematically PERFECT!
 }
 ```
 
@@ -167,7 +200,7 @@ const archetypeToTemplate = {
   'CONSERVATIVE': ['change-my-mind', 'winter-is-coming', 'you-shall-not-pass'],
   'BALANCED': ['theyre-same-picture', 'distracted-boyfriend', 'two-buttons'],
   'CHAOS_AGENT': ['this-is-fine', 'disaster-girl', 'gif-party-parrot'],
-  'KIRK': ['always-has-been', 'matrix-red-blue-pill'] // Easter egg
+  'KIRK': ['kobayashi-maruk-kirk-solution', 'kirk-explains-kobayashi-maru', 'james-kirk-llm-jailbreak'] // Easter egg - thematically PERFECT!
 }
 ```
 
@@ -218,6 +251,7 @@ Skip — this is research-only phase with existing implementation plans.
 ### Primary (HIGH confidence)
 - Buffer 2026 State of Social Media (52M+ posts): LinkedIn image engagement data
 - Imgflip meme template database: Template availability and categorization
+- **KIRK-specific:** Imgflip template "Kirk Explains How He Beat the Kobayashi Maru" (https://imgflip.com/memetemplate/542163803) — literally about beating the no-win scenario!
 
 ### Secondary (MEDIUM confidence)
 - SocialPilot Meme Marketing Guide 2026: Meme engagement trends
@@ -230,20 +264,16 @@ Skip — this is research-only phase with existing implementation plans.
 
 ## Open Questions
 
-1. **Should KIRK archetype/death get unique custom AI generation?**
-   - What we know: It's an easter egg, should feel special
-   - What's unclear: Whether the uniqueness justifies AI generation cost
-   - Recommendation: Use existing templates first, evaluate if custom is needed
+**RESOLVED per user clarification:**
 
-2. **What's the actual engagement difference for in-game GIFs vs static?**
-   - What we know: LinkedIn data favors static
-   - What's unclear: In-game (pre-share) engagement not measured
-   - Recommendation: A/B test if feasible after implementation
+1. ~~Should KIRK archetype/death get unique custom AI generation?~~
+   - ✅ **RESOLVED:** Use thematically perfect templates ("Kirk Explains How He Beat the Kobayashi Maru") — no custom AI needed
 
-3. **Should feedback overlays use memes or stay as current design?**
-   - What we know: Phase 18 context focuses on shareable memes
-   - What's unclear: Whether meme overlays add value to feedback or create clutter
-   - Recommendation: Start with incident/ending visuals, evaluate feedback addition later
+2. ~~Should feedback overlays use memes?~~
+   - ✅ **RESOLVED:** Use matching memes/GIFs first, Gemini AI fallback for non-matching incidents
+
+3. ~~A/B testing?~~
+   - ✅ **RESOLVED:** A/B testing will be possible later (deferred)
 
 ---
 
@@ -251,9 +281,10 @@ Skip — this is research-only phase with existing implementation plans.
 
 | Area | Level | Reason |
 |------|-------|--------|
-| Format strategy | MEDIUM-HIGH | Backed by 2026 social media data; platform-specific nuances require validation |
-| Template matching | HIGH | Existing template database with incident mappings is comprehensive |
-| Death/archetype mapping | MEDIUM | Logical recommendations based on theme analysis; needs user validation |
+| Format strategy | HIGH | Backed by 2026 Buffer data (52M+ posts); user clarified approach |
+| Template matching | HIGH | Existing template database + KIRK-specific templates found |
+| Death/archetype mapping | HIGH | KIRK template is thematically perfect; other mappings validated by theme |
+| KIRK templates | HIGH | Found exact "Kirk explains how he beat Kobayashi Maru" template on Imgflip |
 
 **Research date:** 2026-03-30
 **Valid until:** 6 months (format trends relatively stable; platform algorithm changes may warrant update)

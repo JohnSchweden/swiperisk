@@ -226,7 +226,7 @@ function StarfieldSpeedPanel({
 					step={SPEED_SCALE_STEP}
 					value={speedScale}
 					onChange={onSpeedChange}
-					className="h-2 w-full min-w-0 flex-1 cursor-pointer accent-cyan-400"
+					className="h-2 w-full min-w-0 flex-1 accent-cyan-400"
 					aria-valuemin={SPEED_SCALE_MIN}
 					aria-valuemax={SPEED_SCALE_MAX}
 					aria-valuenow={Number(speedScale.toFixed(2))}
@@ -266,7 +266,7 @@ function StarfieldSpeedPanel({
 								const n = parseFloat(e.target.value);
 								if (Number.isFinite(n)) bgm.onBgmVolumeChange(n);
 							}}
-							className="h-2 w-full min-w-0 flex-1 cursor-pointer accent-cyan-400"
+							className="h-2 w-full min-w-0 flex-1 accent-cyan-400"
 							aria-valuemin={bgm.bgmVolumeMin}
 							aria-valuemax={bgm.bgmVolumeMax}
 							aria-valuenow={Number(bgm.bgmVolume.toFixed(2))}

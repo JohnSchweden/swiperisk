@@ -5,3 +5,26 @@
  * Theme configuration lives in index.html's inline <style> block
  * to avoid duplicating design system values.
  */
+
+@layer base {
+	/* Native / ARIA interactive controls — utilities (e.g. disabled:cursor-not-allowed) override */
+	button:not(:disabled),
+	[role="button"]:not([aria-disabled="true"]),
+	a[href]:not([aria-disabled="true"]),
+	summary,
+	label[for],
+	label:has(input[type="checkbox"], input[type="radio"]),
+	input[type="checkbox"]:enabled,
+	input[type="radio"]:enabled,
+	input[type="submit"]:not(:disabled),
+	input[type="button"]:not(:disabled),
+	input[type="reset"]:not(:disabled),
+	input[type="file"]:not(:disabled),
+	input[type="range"]:not(:disabled),
+	select:not(:disabled),
+	[role="tab"]:not([aria-disabled="true"]),
+	[role="menuitem"]:not([aria-disabled="true"]),
+	[role="link"]:not([aria-disabled="true"]) {
+		cursor: pointer;
+	}
+}

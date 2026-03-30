@@ -78,7 +78,7 @@ export const EmailCaptureForm: React.FC<EmailCaptureFormProps> = ({
 					transition-all duration-300
 					${
 						canSubmit
-							? "bg-white text-black hover:bg-cyan-400 hover:text-black cursor-pointer"
+							? "bg-white text-black hover:bg-cyan-400 hover:text-black"
 							: success
 								? "bg-emerald-500/20 text-emerald-400 cursor-default"
 								: "bg-slate-700 text-slate-400 cursor-not-allowed"

@@ -173,10 +173,9 @@ test.describe("Summary Screen - Navigation @area:gameplay", () => {
 			.getByRole("button", { name: /debrief me/i })
 			.waitFor({ state: "visible", timeout: 10000 });
 
-		// Verify all three metrics are visible before navigation
-		await expect(page.getByText(/budget/i)).toBeVisible();
-		await expect(page.getByText(/heat/i)).toBeVisible();
-		await expect(page.getByText(/hype/i)).toBeVisible();
+		await expect(page.getByText("Budget", { exact: true })).toBeVisible();
+		await expect(page.getByText("Heat", { exact: true })).toBeVisible();
+		await expect(page.getByText("Hype", { exact: true })).toBeVisible();
 
 		// Navigate
 		await page.getByRole("button", { name: /debrief me/i }).click();

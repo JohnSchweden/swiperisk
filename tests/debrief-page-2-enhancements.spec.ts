@@ -3,35 +3,31 @@ import { gotoWithKmDebugState } from "./helpers/km-debug-state";
 
 test.use({ baseURL: "https://localhost:3000" });
 
-test.describe("Debrief Page 2 - UI Enhancements @area:layout", () => {
-	test("displays 'Your choice' label above decision badges", async ({
+test.describe("Debrief Page 2 - Audit UI @area:layout", () => {
+	test("shows Swipe left / Swipe right labels above fork badges", async ({
 		page,
 	}) => {
 		await gotoWithKmDebugState(page, {
 			stage: "DEBRIEF_PAGE_2",
 			history: [{ cardId: "se_security_patch_timeline", choice: "LEFT" }],
 		});
-		await page.waitForSelector("h1", { timeout: 10000 });
+		await page.getByRole("heading", { name: /incident audit log/i }).waitFor({
+			timeout: 10000,
+		});
 
-		// Verify "Your choice" label is visible above decision badge
-		const yourChoiceLabel = page.getByText("Your choice", { exact: true });
-		await expect(yourChoiceLabel).toBeVisible();
+		const leftLabel = page.getByText("Swipe left", { exact: true });
+		const rightLabel = page.getByText("Swipe right", { exact: true });
+		await expect(leftLabel).toBeVisible();
+		await expect(rightLabel).toBeVisible();
 
-		// Verify it appears before the choice badge (fine===0 → cyan; fine>0 → amber)
-		const choiceBadge = page
-			.locator(".bg-cyan-500\\/20, .bg-amber-500\\/20")
-			.first();
-		await expect(choiceBadge).toBeVisible();
-
-		// Check that label is positioned above (comes before in DOM)
-		const labelBox = await yourChoiceLabel.boundingBox();
-		const badgeBox = await choiceBadge.boundingBox();
-		expect(labelBox?.y).toBeLessThan(badgeBox?.y ?? 0);
+		const leftBox = await leftLabel.boundingBox();
+		const cyanBadge = page.locator(".bg-cyan-500\\/20").first();
+		await expect(cyanBadge).toBeVisible();
+		const badgeBox = await cyanBadge.boundingBox();
+		expect(leftBox?.y).toBeLessThan(badgeBox?.y ?? 0);
 	});
 
-	test("'Your choice' label appears for each decision in history", async ({
-		page,
-	}) => {
+	test("one fork block per history entry", async ({ page }) => {
 		await gotoWithKmDebugState(page, {
 			stage: "DEBRIEF_PAGE_2",
 			history: [
@@ -39,26 +35,31 @@ test.describe("Debrief Page 2 - UI Enhancements @area:layout", () => {
 				{ cardId: "se_code_quality_refactor", choice: "RIGHT" },
 			],
 		});
-		await page.waitForSelector("h1", { timeout: 10000 });
+		await page.getByRole("heading", { name: /incident audit log/i }).waitFor({
+			timeout: 10000,
+		});
 
-		// Should have one "Your choice" label per decision
-		const yourChoiceLabels = page.getByText("Your choice", { exact: true });
-		await expect(yourChoiceLabels).toHaveCount(2);
+		await expect(page.getByText("#1", { exact: true })).toBeVisible();
+		await expect(page.getByText("#2", { exact: true })).toBeVisible();
 	});
 
-	test("'Path you didn't take' title is center-aligned", async ({ page }) => {
+	test("reflection hint strip is centered under the header", async ({
+		page,
+	}) => {
 		await gotoWithKmDebugState(page, {
 			stage: "DEBRIEF_PAGE_2",
 			history: [{ cardId: "se_security_patch_timeline", choice: "LEFT" }],
 		});
-		await page.waitForSelector("h1", { timeout: 10000 });
+		await page.getByRole("heading", { name: /incident audit log/i }).waitFor({
+			timeout: 10000,
+		});
 
-		// Verify the title is visible
-		const pathTitle = page.getByText("Path you didn't take");
-		await expect(pathTitle).toBeVisible();
-
-		// Check that the title element itself is centered (using flex justify-center)
-		await expect(pathTitle).toHaveClass(/justify-center/);
+		await expect(
+			page.locator("div.mb-6.text-center").filter({
+				hasText:
+					/consider how different choices might have changed the outcome/i,
+			}),
+		).toBeVisible();
 	});
 
 	test("card descriptions show full text without expand toggles", async ({
@@ -68,56 +69,55 @@ test.describe("Debrief Page 2 - UI Enhancements @area:layout", () => {
 			stage: "DEBRIEF_PAGE_2",
 			history: [{ cardId: "se_security_patch_timeline", choice: "LEFT" }],
 		});
-		await page.waitForSelector("h1", { timeout: 10000 });
+		await page.getByRole("heading", { name: /incident audit log/i }).waitFor({
+			timeout: 10000,
+		});
 
 		await expect(page.getByText("show more")).toHaveCount(0);
 		await expect(page.getByText("show less")).toHaveCount(0);
-		// Tail of long card body (past prior 120-char preview cutoff)
 		await expect(page.getByText(/might miss edge cases/)).toBeVisible();
 	});
 });
 
-test.describe("Debrief Page 2 - Reflection Hints for Both Choices @area:gameplay", () => {
-	test("shows hints for safe (LEFT) decisions with emoji", async ({ page }) => {
+test.describe("Debrief Page 2 - Fork consequences @area:gameplay", () => {
+	test("safe (LEFT) branch uses cyan styling when chosen", async ({ page }) => {
 		await gotoWithKmDebugState(page, {
 			stage: "DEBRIEF_PAGE_2",
 			history: [{ cardId: "se_security_patch_timeline", choice: "LEFT" }],
 		});
-		await page.waitForSelector("h1", { timeout: 10000 });
+		await page.getByRole("heading", { name: /incident audit log/i }).waitFor({
+			timeout: 10000,
+		});
 
-		// PathHint uses 💡 for safe variant; copy still includes "played it safe"
-		const hint = page.getByText(/played it safe/i);
-		await expect(hint).toBeVisible();
-
-		// Safe PathHint borders use cyan (not emerald)
-		const hintContainer = hint.locator("xpath=../..");
-		await expect(hintContainer).toHaveClass(/border-cyan-500/);
+		const chosen = page.locator(".bg-cyan-500\\/20").filter({
+			hasText: "Proper patch",
+		});
+		await expect(chosen).toBeVisible();
 	});
 
-	test("shows hints for risky (RIGHT) decisions with shield emoji", async ({
+	test("risky (RIGHT) branch uses amber when chosen and shows violation", async ({
 		page,
 	}) => {
 		await gotoWithKmDebugState(page, {
 			stage: "DEBRIEF_PAGE_2",
 			history: [{ cardId: "se_security_patch_timeline", choice: "RIGHT" }],
 		});
-		await page.waitForSelector("h1", { timeout: 10000 });
+		await page.getByRole("heading", { name: /incident audit log/i }).waitFor({
+			timeout: 10000,
+		});
 
-		// Should show hint with shield emoji for RIGHT choice
-		const hint = page.getByText(/took a risk/i);
-		await expect(hint).toBeVisible();
-
-		// Should suggest trying safer option
+		const chosen = page.locator(".bg-amber-500\\/20").filter({
+			hasText: "Quick fix",
+		});
+		await expect(chosen).toBeVisible();
 		await expect(
-			page.getByText(/try.*to see if you can avoid the heat/i),
+			page.getByText(/Security Negligence \+ Vulnerability Exposure/i),
 		).toBeVisible();
-
-		// Risky PathHint borders use amber (not rose)
-		const hintContainer = hint.locator("xpath=../..");
-		await expect(hintContainer).toHaveClass(/border-amber-500/);
 	});
 
-	test("shows hints for mixed LEFT and RIGHT decisions", async ({ page }) => {
+	test("mixed LEFT and RIGHT decisions show distinct styling per entry", async ({
+		page,
+	}) => {
 		await gotoWithKmDebugState(page, {
 			stage: "DEBRIEF_PAGE_2",
 			history: [
@@ -125,14 +125,15 @@ test.describe("Debrief Page 2 - Reflection Hints for Both Choices @area:gameplay
 				{ cardId: "se_code_quality_refactor", choice: "RIGHT" },
 			],
 		});
-		await page.waitForSelector("h1", { timeout: 10000 });
+		await page.getByRole("heading", { name: /incident audit log/i }).waitFor({
+			timeout: 10000,
+		});
 
-		// Should show both types of hints
-		await expect(page.getByText(/played it safe/i)).toBeVisible();
-		await expect(page.getByText(/took a risk/i)).toBeVisible();
-
-		// Should show "Decision 1" and "Decision 2"
-		await expect(page.getByText("Decision 1:")).toBeVisible();
-		await expect(page.getByText("Decision 2:")).toBeVisible();
+		await expect(
+			page.locator(".bg-cyan-500\\/20").filter({ hasText: "Proper patch" }),
+		).toBeVisible();
+		await expect(
+			page.locator(".bg-amber-500\\/20").filter({ hasText: "Ship messy code" }),
+		).toBeVisible();
 	});
 });

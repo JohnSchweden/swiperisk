@@ -69,8 +69,8 @@ test.describe("Summary Screen - Debrief Flow @area:gameplay", () => {
 
 		await page.reload();
 
-		// Should show Budget metric
-		await expect(page.getByText(/budget/i)).toBeVisible();
+		// Stat label only (avoid matching body copy that mentions "budget")
+		await expect(page.getByText("Budget", { exact: true })).toBeVisible();
 		await expect(page.getByText(/\$1\.5M|\$1500000/)).toBeVisible();
 	});
 
@@ -100,8 +100,7 @@ test.describe("Summary Screen - Debrief Flow @area:gameplay", () => {
 
 		await page.reload();
 
-		// Should show Heat metric
-		await expect(page.getByText(/heat/i)).toBeVisible();
+		await expect(page.getByText("Heat", { exact: true })).toBeVisible();
 		await expect(page.getByText(/50%/)).toBeVisible();
 	});
 
@@ -131,8 +130,7 @@ test.describe("Summary Screen - Debrief Flow @area:gameplay", () => {
 
 		await page.reload();
 
-		// Should show Hype metric
-		await expect(page.getByText(/hype/i)).toBeVisible();
+		await expect(page.getByText("Hype", { exact: true })).toBeVisible();
 		await expect(page.getByText(/75%/)).toBeVisible();
 	});
 
@@ -162,10 +160,9 @@ test.describe("Summary Screen - Debrief Flow @area:gameplay", () => {
 
 		await page.reload();
 
-		// All three metrics should be visible
-		await expect(page.getByText(/budget/i)).toBeVisible();
-		await expect(page.getByText(/heat/i)).toBeVisible();
-		await expect(page.getByText(/hype/i)).toBeVisible();
+		await expect(page.getByText("Budget", { exact: true })).toBeVisible();
+		await expect(page.getByText("Heat", { exact: true })).toBeVisible();
+		await expect(page.getByText("Hype", { exact: true })).toBeVisible();
 
 		// They should be in a grid layout
 		const metricsGrid = page.locator(".grid-cols-3, [class*='grid']");
@@ -199,7 +196,9 @@ test.describe("Summary Screen - Debrief Flow @area:gameplay", () => {
 		await page.reload();
 
 		await expect(page.getByText(/unlocked endings/i)).toBeVisible();
-		await expect(page.getByText(/You've unlocked 1\/6 endings/i)).toBeVisible();
+		const endingsBox = page.getByTestId("debrief-endings-box");
+		await expect(endingsBox).toContainText("1");
+		await expect(endingsBox).toContainText("/6");
 	});
 
 	test("Debrief Me button navigates to debrief flow", async ({ page }) => {
@@ -264,7 +263,7 @@ test.describe("Summary Screen - Debrief Flow @area:gameplay", () => {
 		await page.reload();
 
 		const trophyIcon = page
-			.locator("div.text-green-500")
+			.getByTestId("debrief-endings-box")
 			.locator("i.fa-trophy");
 		await expect(trophyIcon).toBeVisible();
 
@@ -335,9 +334,9 @@ test.describe("Summary Screen - Debrief Flow @area:gameplay", () => {
 		await expect(
 			page.getByRole("button", { name: /debrief me/i }),
 		).toBeVisible();
-		await expect(page.getByText(/budget/i)).toBeVisible();
-		await expect(page.getByText(/heat/i)).toBeVisible();
-		await expect(page.getByText(/hype/i)).toBeVisible();
+		await expect(page.getByText("Budget", { exact: true })).toBeVisible();
+		await expect(page.getByText("Heat", { exact: true })).toBeVisible();
+		await expect(page.getByText("Hype", { exact: true })).toBeVisible();
 		await expect(page.getByText(/unlocked endings/i)).toBeVisible();
 	});
 });

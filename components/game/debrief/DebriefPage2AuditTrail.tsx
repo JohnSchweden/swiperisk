@@ -90,7 +90,7 @@ function ForkSegment({
 			</div>
 			<p className="text-[11px] text-slate-400">
 				<span className="font-medium text-slate-500">Consequence:</span>{" "}
-				{formatConsequence(hype, heat, fine)}
+				{formatConsequence(fine, heat, hype)}
 			</p>
 			{violation && (
 				<p className="break-words text-[11px] leading-relaxed text-red-400/85">

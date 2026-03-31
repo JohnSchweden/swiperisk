@@ -11,8 +11,8 @@ export type KmDebugStateFixture = {
 	role?: string | null;
 	currentCardIndex?: number;
 	history?: KmDebugHistoryEntry[];
-	deathReason?: string;
-	deathType?: string;
+	deathReason?: string | null;
+	deathType?: string | null;
 	unlockedEndings?: string[];
 	bossFightAnswers?: unknown[];
 	effectiveDeck?: unknown | null;

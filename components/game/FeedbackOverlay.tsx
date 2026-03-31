@@ -11,6 +11,28 @@ const HEAT_HIGH = 70;
 const HYPE_CRITICAL = 85;
 const HYPE_HIGH = 70;
 
+function ViolationRowDot() {
+	return (
+		<span
+			className="inline-block size-1.5 shrink-0 rounded-full bg-slate-500/70"
+			aria-hidden
+		/>
+	);
+}
+
+function splitViolationLabel(violation: string): {
+	left: string;
+	right?: string;
+} {
+	const sep = " - ";
+	const i = violation.indexOf(sep);
+	if (i === -1) return { left: violation };
+	return {
+		left: violation.slice(0, i).trim(),
+		right: violation.slice(i + sep.length).trim(),
+	};
+}
+
 /**
  * Props for the FeedbackOverlay component.
  */
@@ -74,6 +96,7 @@ export const FeedbackOverlay: React.FC<FeedbackOverlayProps> = ({
 	outcomeLabel,
 	onNext,
 }) => {
+	const violationParts = splitViolationLabel(violation);
 	const budgetCritical = budget != null && budget < BUDGET_CRITICAL;
 	const heatCritical = heat != null && heat >= HEAT_CRITICAL;
 	const heatHigh = heat != null && heat >= HEAT_HIGH && !heatCritical;
@@ -226,13 +249,32 @@ export const FeedbackOverlay: React.FC<FeedbackOverlayProps> = ({
 										fine > 0 ? "text-red-200" : "text-emerald-200"
 									}`}
 								>
-									{fine > 0 ? "Violation" : "Approved"}
+									{fine > 0 ? "Violation fine" : "Approved"}
 								</span>
 							</div>
-							{fine > 0 && (
-								<p className="min-w-0 max-w-lg text-sm leading-snug text-slate-200">
-									{violation}
-								</p>
+							{fine > 0 && violationParts.right != null && (
+								<>
+									<ViolationRowDot />
+									<span className="min-w-0 max-w-lg text-sm leading-snug text-slate-200">
+										<span className="font-semibold text-slate-300">
+											Classification:
+										</span>{" "}
+										{violationParts.left}
+									</span>
+									<ViolationRowDot />
+									<span className="min-w-0 max-w-lg text-sm leading-snug text-slate-200">
+										<span className="font-semibold text-slate-300">Theme:</span>{" "}
+										{violationParts.right}
+									</span>
+								</>
+							)}
+							{fine > 0 && violationParts.right == null && (
+								<>
+									<ViolationRowDot />
+									<p className="min-w-0 max-w-lg text-sm leading-snug text-slate-200">
+										{violation}
+									</p>
+								</>
 							)}
 						</div>
 

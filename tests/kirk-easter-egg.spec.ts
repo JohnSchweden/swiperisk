@@ -5,7 +5,7 @@
  * - State injection for Kirk game-over
  * - Kirk debrief pages: corrupted content, archetype, LinkedIn share
  * - IntroScreen hint text presence
- * - "...or is it?" hint on Page 3 for all players
+ * - Page 3 verdict (SIMULATION COMPLETE / HIJACKED) after refactor
  */
 import { expect, test } from "@playwright/test";
 import { KIRK_CORRUPTED_CARDS } from "../data/kirkCards";
@@ -211,19 +211,20 @@ test.describe("Kirk Easter Egg — Debrief Page 3 @area:gameplay", () => {
 		});
 	});
 
-	test("shows '...or is it?' hint for all players on Page 3", async ({
-		page,
-	}) => {
-		// Verify hint shows on Kirk path
+	test("Page 3 shows Kirk hijack headline", async ({ page }) => {
 		await injectState(page, kirkDebriefPage3State());
-		await expect(page.getByText(/or is it/i)).toBeVisible({ timeout: 8000 });
+		await expect(page.getByText(/simulation hijacked/i)).toBeVisible({
+			timeout: 8000,
+		});
 	});
 
-	test("shows '...or is it?' hint on normal (non-Kirk) endings too", async ({
+	test("Page 3 shows standard complete headline for non-Kirk endings", async ({
 		page,
 	}) => {
 		await injectState(page, normalDebriefPage3State());
-		await expect(page.getByText(/or is it/i)).toBeVisible({ timeout: 8000 });
+		await expect(page.getByText(/simulation complete/i)).toBeVisible({
+			timeout: 8000,
+		});
 	});
 });
 

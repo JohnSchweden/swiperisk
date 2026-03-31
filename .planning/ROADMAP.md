@@ -673,13 +673,23 @@ Plans:
 
 ### Phase 21: refactor-the-glassmorphism-design
 
-**Goal:** [To be planned]
-**Requirements**: TBD
-**Depends on:** Phase 20
-**Plans:** 0 plans
+**Goal:** Replace fake glass (heavy `bg-black/65` + weak `backdrop-blur-sm`) with real glassmorphism (low-opacity tint + strong blur + saturation boost) across all game components.
+**Requirements**: GLASS-01 to GLASS-03
+**Depends on:** Phase 19
+**Plans:** 1/1 plan
 
 Plans:
-- [ ] TBD (run /gsd:plan-phase 21 to break down)
+- [x] 21-01-PLAN.md — Add CSS glass classes + update shared constants + update 7 components ✓
+
+**Details:**
+Add 3 CSS glass classes to `index.html`: `.glass-card`, `.glass-strong`, `.glass-header`. Update shared constants in `selectionStageStyles.ts`. Update 7 components with inline glass definitions.
+
+Components using shared constants (PersonalitySelect, RoleSelect, DebriefPage components) automatically upgrade via updated `GLASS_FILL_STRONG` and `GLASS_PANEL_DEFAULT` constants.
+
+**Requirements:**
+- GLASS-01: Global glass CSS classes in index.html with proper blur/saturation values
+- GLASS-02: Shared glass constants reference CSS classes for automatic component updates
+- GLASS-03: All 9 components use real glassmorphism (starfield visible through glass)
 
 ---
 

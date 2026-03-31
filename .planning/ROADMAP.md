@@ -111,8 +111,7 @@ Current flat structure with 59 files across 3 personalities is becoming unwieldy
 
 | Type | Count | Folder |
 |------|-------|--------|
-| Archetype reveals | 21 files | `archetype/` |
-| Death endings | 21 files | `death/` |
+| Archetype reveals | 21 files | 1/1 | Complete    | 2026-03-31 | 21 files | `death/` |
 | Card feedback | 16 files | 9/9 | Complete    | 2026-03-26 | 9 files | `core/` |
 
 **New structure:**
@@ -578,8 +577,9 @@ Automated compression pipeline to reduce bandwidth while maintaining quality:
 | 16 | Ending Variety System | v1.2 | Complete (10/10) |
 | 17 | Shuffle-aware Feedback TTS | v1.2 | Complete (5/5) |
 | 18 | Meme Template System | v1.2 | Not started (3 plans) |
-| 19 | 13/13 | Complete |
+| 19 | refactor the design | v1.2 | Complete (13/13) |
 | 20 | Short Video Clips for Key Moments | v1.2 | Not started |
+| 21 | refactor-the-glassmorphism-design | v1.2 | Not started (1 plan) |
 
 ### Phase 16: Kobayashi Maru Ending Variety System
 
@@ -676,7 +676,7 @@ Plans:
 **Goal:** Replace fake glass (heavy `bg-black/65` + weak `backdrop-blur-sm`) with real glassmorphism (low-opacity tint + strong blur + saturation boost) across all game components.
 **Requirements**: GLASS-01 to GLASS-03
 **Depends on:** Phase 19
-**Plans:** 1/1 plan
+**Plans:** 1/1 plans complete
 
 Plans:
 - [x] 21-01-PLAN.md — Add CSS glass classes + update shared constants + update 7 components ✓

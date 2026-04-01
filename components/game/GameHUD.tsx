@@ -104,14 +104,17 @@ export const GameHUD = React.memo(function GameHUD({
 			data-pressure={underPressure ? "true" : undefined}
 		>
 			<div className="min-w-0 flex flex-1 flex-col space-y-1">
-				<div className="flex w-full min-w-0 flex-row flex-wrap items-center justify-start md:justify-between gap-x-1.5 gap-y-0 text-[10px] font-black tracking-wide">
+				<div className="flex w-full min-w-0 flex-row flex-wrap items-center justify-start md:justify-between gap-x-1.5 gap-y-0 text-[10px] lg:text-[11.5px] font-black tracking-wide">
 					<span
 						className={`${budgetColorFn({ critical: budgetCritical, warning: budgetWarning })} ${budgetCritical ? "animate-pulse" : ""} inline-flex shrink-0 items-center gap-1`}
 					>
-						<i className={`fa-solid fa-coins text-[10px]`} aria-hidden></i>
+						<i
+							className={`fa-solid fa-coins text-[10px] lg:text-[11.5px]`}
+							aria-hidden
+						></i>
 						Budget
 						{budgetCritical && (
-							<span className="hidden md:inline text-red-400 text-[9px] uppercase tracking-wider ml-0.5">
+							<span className="hidden md:inline text-red-400 text-[9px] lg:text-[10.5px] uppercase tracking-wider ml-0.5">
 								Critical
 							</span>
 						)}
@@ -124,7 +127,7 @@ export const GameHUD = React.memo(function GameHUD({
 					</span>
 				</div>
 				<div
-					className={`hidden md:block h-2 w-full min-w-0 bg-slate-900 rounded border overflow-hidden bg-stripes p-[1px] transition-colors ${budgetBorderColor}`}
+					className={`hidden md:block h-2 lg:h-[11px] w-full min-w-0 bg-slate-900 rounded border overflow-hidden bg-stripes p-[1px] transition-colors ${budgetBorderColor}`}
 				>
 					<div
 						className={`h-full progress-bar ${budgetProgressColor}`}
@@ -133,15 +136,18 @@ export const GameHUD = React.memo(function GameHUD({
 				</div>
 			</div>
 			<div className="flex shrink-0 flex-row items-center gap-2 md:contents">
-				<div className="flex min-w-0 shrink-0 flex-col space-y-1 md:w-28 md:flex-none">
-					<div className="flex w-full min-w-0 flex-row flex-wrap items-center justify-start md:justify-between gap-x-1.5 gap-y-0 text-[10px] font-black tracking-wide">
+				<div className="flex min-w-0 shrink-0 flex-col space-y-1 md:w-28 md:flex-none lg:w-36">
+					<div className="flex w-full min-w-0 flex-row flex-wrap items-center justify-start md:justify-between gap-x-1.5 gap-y-0 text-[10px] lg:text-[11.5px] font-black tracking-wide">
 						<span
 							className={`${heatColorFn({ critical: heatCritical, high: heatHigh })} ${heatCritical ? "animate-pulse" : ""} inline-flex shrink-0 items-center gap-1`}
 						>
-							<i className={`fa-solid fa-fire text-[10px]`} aria-hidden></i>
+							<i
+								className={`fa-solid fa-fire text-[10px] lg:text-[11.5px]`}
+								aria-hidden
+							></i>
 							Risk
 							{heatCritical && (
-								<span className="hidden md:inline text-red-400 text-[9px] uppercase tracking-wider ml-0.5">
+								<span className="hidden md:inline text-red-400 text-[9px] lg:text-[10.5px] uppercase tracking-wider ml-0.5">
 									Critical
 								</span>
 							)}
@@ -154,7 +160,7 @@ export const GameHUD = React.memo(function GameHUD({
 						</span>
 					</div>
 					<div
-						className={`hidden md:block h-2 w-full min-w-0 bg-slate-900 rounded border overflow-hidden bg-stripes p-[1px] transition-colors ${heatBorderColor}`}
+						className={`hidden md:block h-2 lg:h-[11px] w-full min-w-0 bg-slate-900 rounded border overflow-hidden bg-stripes p-[1px] transition-colors ${heatBorderColor}`}
 					>
 						<div
 							className={`h-full progress-bar ${heatProgressColor}`}
@@ -162,12 +168,15 @@ export const GameHUD = React.memo(function GameHUD({
 						/>
 					</div>
 				</div>
-				<div className="flex min-w-0 shrink-0 flex-col space-y-1 md:w-28 md:flex-none">
-					<div className="flex w-full min-w-0 flex-row flex-wrap items-center justify-start md:justify-between gap-x-1.5 gap-y-0 text-[10px] font-black tracking-wide">
+				<div className="flex min-w-0 shrink-0 flex-col space-y-1 md:w-28 md:flex-none lg:w-36">
+					<div className="flex w-full min-w-0 flex-row flex-wrap items-center justify-start md:justify-between gap-x-1.5 gap-y-0 text-[10px] lg:text-[11.5px] font-black tracking-wide">
 						<span
 							className={`${hypeColorFn({ critical: hypeCritical })} ${hypeCritical ? "animate-pulse" : ""} inline-flex shrink-0 items-center gap-1`}
 						>
-							<i className={`fa-solid fa-rocket text-[10px]`} aria-hidden></i>
+							<i
+								className={`fa-solid fa-rocket text-[10px] lg:text-[11.5px]`}
+								aria-hidden
+							></i>
 							Hype
 						</span>
 						<span
@@ -178,7 +187,7 @@ export const GameHUD = React.memo(function GameHUD({
 						</span>
 					</div>
 					<div
-						className={`hidden md:block h-2 w-full min-w-0 bg-slate-900 rounded border overflow-hidden bg-stripes p-[1px] transition-colors border-white/10`}
+						className={`hidden md:block h-2 lg:h-[11px] w-full min-w-0 bg-slate-900 rounded border overflow-hidden bg-stripes p-[1px] transition-colors border-white/10`}
 					>
 						<div
 							className={`h-full progress-bar ${hypeProgressColor}`}

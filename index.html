@@ -199,20 +199,32 @@
             );
         }
 
-        /* Smooth motion transitions */
+        /*
+         * Stage entrance: animated via ::before pseudo-overlay instead of the element's own
+         * opacity. This preserves the backdrop root at window level so descendant glass-card
+         * elements can sample the fixed starfield canvas. Directly animating opacity on a
+         * parent turns it into a backdrop root while opacity < 1, breaking backdrop-filter.
+         */
         .stage-transition {
-            animation: fadeSlideIn var(--anim-medium) cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+            position: relative;
         }
-
-        @keyframes fadeSlideIn {
-            from {
-                opacity: 0;
-                transform: translateY(10px) scale(0.98);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0) scale(1);
-            }
+        .stage-transition::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            z-index: 1;
+            background: #0a0a0c; /* matches canvas BG */
+            pointer-events: none;
+            animation: fadeOutOverlay var(--anim-medium) cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+        }
+        /* Content sits above the fading overlay */
+        .stage-transition > * {
+            position: relative;
+            z-index: 2;
+        }
+        @keyframes fadeOutOverlay {
+            from { opacity: 1; }
+            to   { opacity: 0; }
         }
 
         .fade-in {

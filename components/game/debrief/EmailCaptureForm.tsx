@@ -84,7 +84,7 @@ export const EmailCaptureForm: React.FC<EmailCaptureFormProps> = ({
 					}
 				`}
 			>
-				{isSubmitting ? "Joining..." : success ? "Joined" : "Join V2 Waitlist"}
+				{isSubmitting ? "Joining..." : success ? "Joined" : "Join V2 waitlist"}
 			</button>
 		</form>
 	);

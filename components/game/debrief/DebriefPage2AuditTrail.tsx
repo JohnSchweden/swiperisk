@@ -277,14 +277,14 @@ export const DebriefPage2AuditTrail: React.FC<DebriefPage2AuditTrailProps> = ({
 					</div>
 				)}
 
-				{/* Generate Psych Evaluation — same primary CTA as debrief page 1 */}
+				{/* Generate psych evaluation — same primary CTA as debrief page 1 */}
 				<div className="flex w-full justify-center">
 					<button
 						type="button"
 						onClick={onNext}
 						className="px-6 py-3 md:px-12 md:py-4 text-base md:text-xl font-bold tracking-wide bg-white text-black hover:bg-cyan-400 hover:text-black transition-all duration-300 min-h-[40px] md:min-h-[48px]"
 					>
-						Generate Psych Evaluation
+						Generate psych evaluation
 					</button>
 				</div>
 			</div>

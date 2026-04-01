@@ -222,6 +222,11 @@
             position: relative;
             z-index: 2;
         }
+        /* Firefox scrollbar */
+        .stage-overlay {
+            scrollbar-width: thin;
+            scrollbar-color: rgba(148, 163, 184, 0.25) transparent;
+        }
         @keyframes fadeOutOverlay {
             from { opacity: 1; }
             to   { opacity: 0; }
@@ -372,42 +377,33 @@
             animation: pressure-pulse-keyframes 1s ease-in-out infinite;
         }
 
-        /* Modal overlay transition */
-        .modal-overlay {
+        /*
+         * Feedback modal: dim fade lives on ::before so the overlay root stays opacity:1.
+         * Animating opacity on an ancestor breaks descendant backdrop-filter (glass-card).
+         */
+        .modal-overlay::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.5);
+            pointer-events: none;
+            z-index: 0;
             animation: overlayFadeIn 0.3s ease-out forwards;
         }
-
-        @keyframes overlayFadeIn {
-            from {
-                opacity: 0;
-            }
-            to {
-                opacity: 1;
-            }
-        }
-
-        /* Modal content scale animation */
-        .modal-content {
+        /* Scale-only on the panel — no opacity on .glass-card (same backdrop-filter rule as stage-transition). */
+        .modal-overlay > .modal-content {
+            position: relative;
+            z-index: 1;
             animation: modalScaleIn 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
         }
 
         @keyframes modalScaleIn {
             from {
-                opacity: 0;
-                transform: scale(0.9) translateY(20px);
+                transform: scale(0.92) translateY(20px);
             }
             to {
-                opacity: 1;
-                transform: scale(1) translateY(0);
+                transform: none;
             }
-        }
-
-        /* Hover shadow for selection cards */
-        .hover-shadow {
-            transition: box-shadow var(--anim-quick) cubic-bezier(0.25, 0.46, 0.45, 0.94);
-        }
-        .hover-shadow:hover {
-            box-shadow: 0 16px 48px -12px rgba(6, 182, 212, 0.2);
         }
 
         /* Ticket window transition - fade and scale */
@@ -538,7 +534,7 @@
         }
 
         /* Firefox scrollbar */
-        * {
+        html {
             scrollbar-width: thin;
             scrollbar-color: rgba(148, 163, 184, 0.25) transparent;
         }
@@ -677,6 +673,29 @@
           box-shadow: 0 10px 20px rgba(0, 0, 0, 0.16);
           backdrop-filter: blur(8px) saturate(150%);
           -webkit-backdrop-filter: blur(8px) saturate(150%);
+        }
+
+        /* Feedback / modal panels: deeper slate tint + larger blur for a softer, darker read */
+        .glass-card-modal {
+          background: rgba(15, 22, 36, 0.5);
+          border: 1px solid rgba(255, 255, 255, 0.07);
+          box-shadow: 0 16px 48px rgba(0, 0, 0, 0.32);
+          backdrop-filter: blur(18px) saturate(135%);
+          -webkit-backdrop-filter: blur(18px) saturate(135%);
+        }
+
+        /* Unlayered hover: Tailwind loses to .glass-card; .selection-card-hover gates when stage allows hover */
+        button.selection-stage-card.glass-card.selection-card-hover {
+            transition:
+                border-color var(--anim-quick) cubic-bezier(0.25, 0.46, 0.45, 0.94),
+                box-shadow var(--anim-quick) cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+        button.selection-stage-card.glass-card.selection-card-hover:hover {
+            /* Lighter cyan than cyan-500 so the stroke reads softer on glass */
+            border-color: rgba(34, 211, 238, 0.28);
+            box-shadow:
+                0 10px 20px rgba(0, 0, 0, 0.16),
+                0 14px 48px -8px rgba(6, 182, 212, 0.32);
         }
 
         .glass-strong {

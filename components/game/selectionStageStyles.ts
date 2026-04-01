@@ -22,4 +22,5 @@ export const GLASS_PANEL_DEFAULT = "glass-card";
 /** Per card, no extra grid backdrop. Class `selection-stage-card` escapes unlayered `button { border-radius: 0 }` in index.html. */
 export const SELECT_CARD_BASE = `selection-stage-card group p-6 md:p-10 rounded-xl ${GLASS_PANEL_DEFAULT} focus:outline-none flex flex-col transition-colors w-full overflow-hidden`;
 
-export const SELECT_CARD_HOVER = "hover:border-cyan-500/35 hover-shadow";
+/** Unlayered hover in index.html — Tailwind `hover:border-*` loses to `.glass-card`. */
+export const SELECT_CARD_HOVER = "selection-card-hover";

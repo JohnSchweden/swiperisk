@@ -36,7 +36,7 @@ test.describe("Email Capture Form @smoke", () => {
 		await expect(emailInput).toBeVisible();
 
 		// Check for submit button
-		const submitButton = page.locator('button:has-text("Join V2 Waitlist")');
+		const submitButton = page.locator('button:has-text("Join V2 waitlist")');
 		await expect(submitButton).toBeVisible();
 		await expect(submitButton).toBeDisabled();
 	});
@@ -45,7 +45,7 @@ test.describe("Email Capture Form @smoke", () => {
 		page,
 	}) => {
 		const emailInput = page.locator('input[type="email"]');
-		const submitButton = page.locator('button:has-text("Join V2 Waitlist")');
+		const submitButton = page.locator('button:has-text("Join V2 waitlist")');
 
 		// Initially disabled
 		await expect(submitButton).toBeDisabled();
@@ -85,7 +85,7 @@ test.describe("Email Capture Form @smoke", () => {
 		});
 
 		const emailInput = page.locator('input[type="email"]');
-		const submitButton = page.locator('button:has-text("Join V2 Waitlist")');
+		const submitButton = page.locator('button:has-text("Join V2 waitlist")');
 
 		// Enter valid email and submit
 		await emailInput.fill("test@example.com");
@@ -114,7 +114,7 @@ test.describe("Email Capture Form @smoke", () => {
 		});
 
 		const emailInput = page.locator('input[type="email"]');
-		const submitButton = page.locator('button:has-text("Join V2 Waitlist")');
+		const submitButton = page.locator('button:has-text("Join V2 waitlist")');
 
 		// Enter valid email and submit
 		await emailInput.fill("test@example.com");
@@ -137,7 +137,7 @@ test.describe("Email Capture Form @smoke", () => {
 		});
 
 		const emailInput = page.locator('input[type="email"]');
-		const submitButton = page.locator('button:has-text("Join V2 Waitlist")');
+		const submitButton = page.locator('button:has-text("Join V2 waitlist")');
 
 		// Enter valid email and submit
 		await emailInput.fill("test@example.com");

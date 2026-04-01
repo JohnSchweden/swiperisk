@@ -205,7 +205,7 @@ test.describe("Kirk Easter Egg — Debrief Page 3 @area:gameplay", () => {
 
 	test("Kirk LinkedIn share copy button is present", async ({ page }) => {
 		await injectState(page, kirkDebriefPage3State());
-		// Button label is "1. Copy to Clipboard"
+		// Button label is "1. Copy to clipboard"
 		await expect(page.getByRole("button", { name: /copy/i })).toBeVisible({
 			timeout: 8000,
 		});

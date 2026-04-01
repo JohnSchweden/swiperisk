@@ -339,7 +339,7 @@ export function DebriefPage1Collapse({
 					onClick={onNext}
 					className="px-6 py-3 md:px-12 md:py-4 text-base md:text-xl font-bold tracking-wide bg-white text-black hover:bg-cyan-400 hover:text-black transition-all duration-300 min-h-[40px] md:min-h-[48px]"
 				>
-					Debrief Me
+					Debrief me
 				</button>
 			</div>
 		</LayoutShell>

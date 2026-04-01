@@ -6,8 +6,8 @@ import { getIncidentImagePath, slugify } from "../../data/imageMap";
 import type { Card, RoleType } from "../../types";
 import { CardBody, CardHeaderBar } from "./CardStackComponents";
 
-/** Match StarfieldSpeedPanel glass (StarfieldBackground) */
-const incidentCardGlass = "glass-card";
+/** Match feedback modal glass (`.glass-card-modal` in index.html) */
+const incidentCardGlass = "glass-card-modal";
 
 function getCardTransition(
 	isDragging: boolean,

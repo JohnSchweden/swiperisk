@@ -102,18 +102,18 @@ describe("RoleSelect", () => {
 	});
 
 	describe("hover state", () => {
-		it("should apply hover classes when hoverEnabled is true", () => {
+		it("should apply selection-card-hover when hoverEnabled is true", () => {
 			render(<RoleSelect {...defaultProps} hoverEnabled={true} />);
 
 			const roleButton = screen.getByTestId("role-software_engineer");
-			expect(roleButton.className).toContain("hover:border-cyan-500");
+			expect(roleButton.className).toContain("selection-card-hover");
 		});
 
-		it("should not apply hover classes when hoverEnabled is false", () => {
+		it("should not apply selection-card-hover when hoverEnabled is false", () => {
 			render(<RoleSelect {...defaultProps} hoverEnabled={false} />);
 
 			const roleButton = screen.getByTestId("role-software_engineer");
-			expect(roleButton.className).not.toContain("hover:border-cyan-500");
+			expect(roleButton.className).not.toContain("selection-card-hover");
 		});
 	});
 });

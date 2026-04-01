@@ -125,7 +125,7 @@ export function useWebMCPTools(deps: UseWebMCPToolsDeps) {
 					[GameStage.PLAYING]: `Playing — swipe cards left or right${overlayMsg}`,
 					[GameStage.BOSS_FIGHT]: `Boss fight${bossMsg}`,
 					[GameStage.DEBRIEF_PAGE_1]:
-						"Debrief page 1 — outcome summary (win or death), then Debrief Me",
+						"Debrief page 1 — outcome summary (win or death), then Debrief me",
 					[GameStage.DEBRIEF_PAGE_2]: "Debrief page 2",
 					[GameStage.DEBRIEF_PAGE_3]: "Debrief page 3",
 				};

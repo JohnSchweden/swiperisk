@@ -242,7 +242,7 @@ export const DebriefPage3Verdict: React.FC<DebriefPage3VerdictProps> = ({
 						aria-label="Copy share text to clipboard"
 					>
 						<i className="fa-regular fa-copy text-lg"></i>
-						{copied ? "Copied!" : "1. Copy to Clipboard"}
+						{copied ? "Copied!" : "1. Copy to clipboard"}
 					</button>
 					<a
 						href={linkedInShareUrl || "#"}
@@ -262,7 +262,7 @@ export const DebriefPage3Verdict: React.FC<DebriefPage3VerdictProps> = ({
 						onClick={onRestart}
 						className={actionButtonBase}
 					>
-						Reboot System
+						Reboot system
 					</button>
 				</div>
 

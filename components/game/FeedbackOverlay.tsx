@@ -123,7 +123,7 @@ export const FeedbackOverlay: React.FC<FeedbackOverlayProps> = ({
 
 	return (
 		<div
-			className="fixed inset-0 z-50 flex items-center justify-center p-4 md:p-6 bg-black/50 modal-overlay"
+			className="fixed inset-0 z-50 flex items-center justify-center p-4 md:p-6 modal-overlay"
 			data-testid="feedback-dialog"
 			data-choice={choice}
 			role="dialog"
@@ -131,9 +131,9 @@ export const FeedbackOverlay: React.FC<FeedbackOverlayProps> = ({
 			aria-labelledby="feedback-overlay-title"
 			aria-describedby="feedback-overlay-desc"
 		>
-			<div className="w-full max-w-full lg:max-w-[43rem] glass-card p-6 md:p-10 rounded-2xl text-center shadow-2xl max-h-[90vh] overflow-y-auto modal-content antialiased">
+			<div className="w-full max-w-full lg:max-w-[43rem] glass-card-modal p-4 md:p-6 rounded-2xl text-center shadow-2xl max-h-[90vh] overflow-y-auto modal-content antialiased">
 				{showEscalation && (
-					<div className="mb-4 p-2 rounded-lg border flex flex-wrap gap-x-4 gap-y-1 justify-center items-center glass-card">
+					<div className="mb-4 flex flex-wrap gap-x-4 gap-y-1 justify-center items-center">
 						{budgetCritical &&
 							(() => {
 								const level = Math.round((budget ?? 0) / 1000000);
@@ -336,8 +336,8 @@ export const FeedbackOverlay: React.FC<FeedbackOverlayProps> = ({
 				<div
 					className={`mb-3 md:mb-5 rounded-lg border p-3 md:p-4 ${
 						fine > 0
-							? "border-red-500/20 bg-gradient-to-b from-red-950/50 via-slate-900/60 to-slate-950/90 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.04)]"
-							: "border-emerald-500/15 bg-gradient-to-b from-emerald-950/30 via-slate-900/50 to-slate-950/90 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.04)]"
+							? "border-red-500/20 bg-gradient-to-b from-red-950/50 via-transparent to-transparent shadow-[inset_0_1px_0_0_rgba(255,255,255,0.04)]"
+							: "border-emerald-500/15 bg-gradient-to-b from-emerald-950/30 via-transparent to-transparent shadow-[inset_0_1px_0_0_rgba(255,255,255,0.04)]"
 					}`}
 				>
 					<div className="flex flex-col items-center gap-2 md:gap-3">
@@ -462,7 +462,7 @@ export const FeedbackOverlay: React.FC<FeedbackOverlayProps> = ({
 
 				<div
 					id="feedback-overlay-desc"
-					className="glass-card p-4 md:p-6 rounded-xl text-left mb-4 md:mb-8 min-h-[4.5rem]"
+					className="p-4 md:p-6 text-left mb-4 md:mb-8 min-h-[4.5rem]"
 				>
 					<p className="text-[10px] font-bold tracking-wide text-slate-400/70 mb-1">
 						Learning moment

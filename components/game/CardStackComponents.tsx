@@ -77,7 +77,7 @@ export function CardBody({
 					<div className="flex items-center gap-3">
 						<div className="w-7 h-7 md:w-8 md:h-8 rounded bg-white/5 flex items-center justify-center border border-white/10 shrink-0 backdrop-blur-sm">
 							<i
-								className="fa-solid fa-user-robot text-slate-500 text-xs"
+								className="fa-solid fa-robot text-slate-500 text-xs"
 								aria-hidden
 							></i>
 						</div>
@@ -111,7 +111,7 @@ export function CardBody({
 				<div className="flex items-center gap-3">
 					<div className="w-8 h-8 md:w-10 md:h-10 rounded bg-white/5 flex items-center justify-center border border-white/10 shrink-0 backdrop-blur-sm">
 						<i
-							className="fa-solid fa-user-robot text-slate-400 text-xs md:text-base"
+							className="fa-solid fa-robot text-slate-400 text-xs md:text-base"
 							aria-hidden
 						></i>
 					</div>

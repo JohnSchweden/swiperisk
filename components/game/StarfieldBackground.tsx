@@ -4,7 +4,6 @@ import {
 	useCallback,
 	useContext,
 	useEffect,
-	useId,
 	useRef,
 	useState,
 } from "react";
@@ -202,7 +201,7 @@ function StarfieldSpeedPanel({
 	bgm,
 }: StarfieldSpeedPanelProps) {
 	const inputId = `starfield-speed-${idSuffix}`;
-	const bgmVolumeId = useId();
+	const bgmVolumeId = `bgm-volume-${idSuffix}`;
 	return (
 		<div className="rounded-lg glass-card px-2.5 py-3">
 			<label

@@ -25,7 +25,7 @@ test.describe("Death types @area:boss @slow", () => {
 				}),
 			).toBeVisible();
 			await expect(
-				page.getByRole("button", { name: "Debrief Me" }),
+				page.getByRole("button", { name: "Debrief me" }),
 			).toBeVisible();
 		});
 	});
@@ -68,7 +68,7 @@ test.describe("Death types @area:boss @slow", () => {
 				}),
 			).toBeVisible();
 			await expect(
-				page.getByRole("button", { name: "Debrief Me" }),
+				page.getByRole("button", { name: "Debrief me" }),
 			).toBeVisible();
 		});
 	});
@@ -82,7 +82,7 @@ test.describe("Death types @area:boss @slow", () => {
 			await expect(page.getByText("Liquidated")).toBeVisible({
 				timeout: 5000,
 			});
-			await expect(page.getByText("Debrief Me")).toBeVisible();
+			await expect(page.getByText("Debrief me")).toBeVisible();
 		});
 	});
 });

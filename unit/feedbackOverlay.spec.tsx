@@ -75,22 +75,21 @@ describe("FeedbackOverlay", () => {
 		it("should not display fine section when fine is 0", () => {
 			render(<FeedbackOverlay {...defaultProps} fine={0} />);
 
-			// The "Violation fine" label should not be present
 			expect(screen.queryByText("Violation fine")).not.toBeInTheDocument();
 		});
 	});
 
 	describe("escalation banners", () => {
-		it("should show budget critical banner when budget is critical", () => {
+		it("should show budget escalation when budget is critical", () => {
 			render(<FeedbackOverlay {...defaultProps} budget={1_000_000} />);
 
-			expect(screen.getByText(/Budget Critical/)).toBeInTheDocument();
+			expect(screen.getByText(/Budget — \$1\.0M/)).toBeInTheDocument();
 		});
 
 		it("should show heat critical banner when heat is critical", () => {
 			render(<FeedbackOverlay {...defaultProps} heat={90} />);
 
-			expect(screen.getByText(/Risk Critical/)).toBeInTheDocument();
+			expect(screen.getByText(/Risk — 90%/)).toBeInTheDocument();
 		});
 
 		it("should show heat high banner when heat is high but not critical", () => {
@@ -98,13 +97,13 @@ describe("FeedbackOverlay", () => {
 				<FeedbackOverlay {...defaultProps} budget={1_000_000} heat={75} />,
 			);
 
-			expect(screen.getByText(/Risk High/)).toBeInTheDocument();
+			expect(screen.getByText(/Risk — 75%/)).toBeInTheDocument();
 		});
 
 		it("should show hype critical banner when hype is critical", () => {
 			render(<FeedbackOverlay {...defaultProps} hype={90} />);
 
-			expect(screen.getByText(/Hype Critical/)).toBeInTheDocument();
+			expect(screen.getByText(/Hype — 90%/)).toBeInTheDocument();
 		});
 
 		it("should show hype high banner when hype is high but not critical", () => {
@@ -112,13 +111,22 @@ describe("FeedbackOverlay", () => {
 				<FeedbackOverlay {...defaultProps} budget={1_000_000} hype={75} />,
 			);
 
-			expect(screen.getByText(/Hype High/)).toBeInTheDocument();
+			expect(screen.getByText(/Hype — 75%/)).toBeInTheDocument();
 		});
 
-		it("should not show hype banner when hype is below high threshold", () => {
-			render(<FeedbackOverlay {...defaultProps} hype={50} />);
+		it("should not show escalation banners when values are normal", () => {
+			render(
+				<FeedbackOverlay
+					{...defaultProps}
+					budget={50_000_000}
+					heat={30}
+					hype={30}
+				/>,
+			);
 
-			expect(screen.queryByText(/Hype/)).not.toBeInTheDocument();
+			expect(screen.queryByText(/Budget — /)).not.toBeInTheDocument();
+			expect(screen.queryByText(/Risk — /)).not.toBeInTheDocument();
+			expect(screen.queryByText(/Hype — /)).not.toBeInTheDocument();
 		});
 	});
 

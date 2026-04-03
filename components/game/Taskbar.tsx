@@ -36,7 +36,7 @@ const TaskbarFlySpeedBurger = forwardRef<
 			aria-label={
 				menuOpen ? "Close game menu" : "Open game menu (starfield and music)"
 			}
-			className="flex h-9 w-9 shrink-0 items-center justify-center rounded-md bg-black/60 text-slate-100 shadow-md backdrop-blur-sm transition-colors duration-200 ease-out hover:bg-black/75 md:hidden"
+			className="flex h-9 w-9 shrink-0 items-center justify-center rounded-md text-slate-100 transition-colors duration-200 ease-out md:hidden"
 		>
 			<span
 				className={`relative block w-5 transition-[height] duration-200 ease-out ${
@@ -110,7 +110,7 @@ export const Taskbar: React.FC<TaskbarProps> = ({
 							onClick={speedUI.toggleMenu}
 						/>
 					) : null}
-					<div className="bg-black/50 px-2 md:px-3 py-1.5 rounded border border-white/5 flex items-center gap-2 md:gap-3">
+					<div className="px-2 md:px-3 py-1.5 rounded border border-white/5 flex items-center gap-2 md:gap-3">
 						<div className="w-5 h-5 rounded-full bg-slate-800 flex items-center justify-center">
 							<i
 								className={`fa-solid ${personalityIcon} text-[10px] text-slate-400`}

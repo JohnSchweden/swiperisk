@@ -7,21 +7,22 @@ import {
 	mapOutcomeToTraits,
 } from "../data/archetypes";
 import { useArchetype } from "../hooks/useArchetype";
-import type { Archetype, DebriefState, DebrieRStage } from "../types";
-import { RoleType } from "../types";
+import type { Archetype, ArchetypeId, DebriefState } from "../types";
+import { DeathType, DebrieRStage, RoleType } from "../types";
 
 describe("Archetype Types", () => {
-	describe("ArchetypeId enum", () => {
-		it("should have 6 archetype values", () => {
-			const values = [
+	describe("ArchetypeId type", () => {
+		it("should allow all valid archetype IDs", () => {
+			const validIds: ArchetypeId[] = [
 				"PRAGMATIST",
 				"SHADOW_ARCHITECT",
 				"DISRUPTOR",
 				"CONSERVATIVE",
 				"BALANCED",
 				"CHAOS_AGENT",
+				"KIRK",
 			];
-			expect(values).toHaveLength(6);
+			expect(validIds).toHaveLength(7);
 		});
 	});
 
@@ -43,9 +44,14 @@ describe("Archetype Types", () => {
 	});
 
 	describe("DebrieRStage enum", () => {
-		it("should have 3 page values", () => {
-			const values = ["PAGE_1", "PAGE_2", "PAGE_3"];
-			expect(values).toHaveLength(3);
+		it("should have 3 page values matching the enum", () => {
+			expect(DebrieRStage.PAGE_1).toBe("PAGE_1");
+			expect(DebrieRStage.PAGE_2).toBe("PAGE_2");
+			expect(DebrieRStage.PAGE_3).toBe("PAGE_3");
+			const values = Object.values(DebrieRStage);
+			expect(values).toContain("PAGE_1");
+			expect(values).toContain("PAGE_2");
+			expect(values).toContain("PAGE_3");
 		});
 	});
 

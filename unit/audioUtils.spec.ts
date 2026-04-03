@@ -4,14 +4,17 @@ describe("Audio Utils", () => {
 	let mockAudio: HTMLAudioElement;
 
 	beforeEach(() => {
-		// Mock Audio constructor and canPlayType
+		vi.resetModules();
+
 		mockAudio = {
 			canPlayType: vi.fn(),
 		} as unknown as HTMLAudioElement;
 
 		vi.stubGlobal(
 			"Audio",
-			vi.fn(() => mockAudio),
+			class MockAudio {
+				canPlayType = mockAudio.canPlayType;
+			},
 		);
 	});
 
@@ -26,7 +29,6 @@ describe("Audio Utils", () => {
 			const { supportsOpus } = await import("../services/audioUtils");
 
 			expect(supportsOpus()).toBe(false);
-			vi.unstubAllGlobals();
 		});
 
 		it("should return true when Ogg Opus is probably supported", async () => {
@@ -39,8 +41,8 @@ describe("Audio Utils", () => {
 
 		it("should return true when WebM Opus is probably supported", async () => {
 			mockAudio.canPlayType
-				.mockReturnValueOnce("") // Ogg Opus
-				.mockReturnValueOnce("probably"); // WebM Opus
+				.mockReturnValueOnce("")
+				.mockReturnValueOnce("probably");
 
 			const { supportsOpus } = await import("../services/audioUtils");
 
@@ -49,9 +51,9 @@ describe("Audio Utils", () => {
 
 		it("should return true when CAF is probably supported", async () => {
 			mockAudio.canPlayType
-				.mockReturnValueOnce("") // Ogg Opus
-				.mockReturnValueOnce("") // WebM Opus
-				.mockReturnValueOnce("probably"); // CAF
+				.mockReturnValueOnce("")
+				.mockReturnValueOnce("")
+				.mockReturnValueOnce("probably");
 
 			const { supportsOpus } = await import("../services/audioUtils");
 
@@ -71,13 +73,11 @@ describe("Audio Utils", () => {
 
 			const { supportsOpus } = await import("../services/audioUtils");
 
-			// First call
 			expect(supportsOpus()).toBe(true);
-			expect(mockAudio.canPlayType).toHaveBeenCalledTimes(3); // All three formats checked
+			expect(mockAudio.canPlayType).toHaveBeenCalledTimes(3);
 
-			// Second call should use cache
 			expect(supportsOpus()).toBe(true);
-			expect(mockAudio.canPlayType).toHaveBeenCalledTimes(3); // No additional calls
+			expect(mockAudio.canPlayType).toHaveBeenCalledTimes(3);
 		});
 	});
 

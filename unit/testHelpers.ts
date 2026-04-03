@@ -16,6 +16,9 @@ export const NON_KIRK_DEATH_TYPES = Object.values(DeathType).filter(
 	(t) => t !== DeathType.KIRK,
 );
 
+/** All death types including KIRK */
+export const ALL_DEATH_TYPES = Object.values(DeathType);
+
 /** Validates a failure lesson has all required fields */
 export function assertValidLesson(lesson: {
 	title: string;

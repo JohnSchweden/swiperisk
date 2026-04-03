@@ -38,8 +38,16 @@ describe("failureLessons", () => {
 			}
 		});
 
-		it("does not include KIRK in FAILURE_LESSONS", () => {
-			expect(FAILURE_LESSONS[DeathType.KIRK]).toBeUndefined();
+		it("includes KIRK in FAILURE_LESSONS (Phase 07 easter egg)", () => {
+			expect(FAILURE_LESSONS[DeathType.KIRK]).toBeDefined();
+			expect(FAILURE_LESSONS[DeathType.KIRK].length).toBeGreaterThanOrEqual(3);
+		});
+
+		it("has lessons for all DeathType values", () => {
+			const allDeathTypes = Object.values(DeathType);
+			for (const deathType of allDeathTypes) {
+				expect(FAILURE_LESSONS[deathType]).toBeDefined();
+			}
 		});
 	});
 

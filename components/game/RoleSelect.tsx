@@ -15,6 +15,7 @@ import {
 	STAGE_CONTAINER_CLASS,
 	STAGE_GRID_CLASS,
 	STAGE_HEADER_CLASS,
+	VOICE_HINT_DIVIDER,
 } from "./selectionStageStyles";
 
 const SPEECH_UI_ENABLED = import.meta.env.VITE_ENABLE_SPEECH !== "false";
@@ -96,7 +97,7 @@ export const RoleSelect: React.FC<RoleSelectProps> = ({
 							</div>
 							{SPEECH_UI_ENABLED && role === RoleType.HEAD_OF_SOMETHING ? (
 								<div
-									className="mt-3 md:mt-4 pt-3 md:pt-4 border-t border-white/10 w-full text-slate-400/90 text-[10px] md:text-xs leading-relaxed font-normal flex flex-col items-center justify-center gap-1.5 md:gap-2"
+									className={VOICE_HINT_DIVIDER}
 									data-testid="role-select-voice-hint"
 									role="note"
 								>

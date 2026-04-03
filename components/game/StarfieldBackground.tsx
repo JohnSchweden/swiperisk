@@ -7,6 +7,7 @@ import {
 	useRef,
 	useState,
 } from "react";
+import { GLASS_PANEL_DEFAULT } from "./selectionStageStyles";
 
 const FOCAL_LENGTH = 128;
 const Z_MAX = 1000;
@@ -203,7 +204,7 @@ function StarfieldSpeedPanel({
 	const inputId = `starfield-speed-${idSuffix}`;
 	const bgmVolumeId = `bgm-volume-${idSuffix}`;
 	return (
-		<div className="rounded-lg glass-card px-2.5 py-3">
+		<div className={`rounded-lg ${GLASS_PANEL_DEFAULT} px-2.5 py-3`}>
 			<label
 				htmlFor={inputId}
 				className="mb-1.5 block text-center text-[10px] font-bold uppercase tracking-widest text-slate-400"
@@ -532,7 +533,7 @@ export const StarfieldBackground: React.FC<StarfieldBackgroundProps> = ({
 								? "Close game menu"
 								: "Open game menu (starfield and music)"
 						}
-						className="flex h-10 w-10 items-center justify-center rounded-lg bg-black/60 text-slate-100 shadow-md backdrop-blur-sm transition-colors duration-200 ease-out hover:bg-black/75"
+						className="flex h-10 w-10 items-center justify-center rounded-lg text-slate-100 transition-colors duration-200 ease-out hover:text-white"
 					>
 						<BurgerGlyph menuOpen={menuOpen} />
 					</button>

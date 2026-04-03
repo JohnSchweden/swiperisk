@@ -8,7 +8,7 @@ import {
 } from "../data/archetypes";
 import { useArchetype } from "../hooks/useArchetype";
 import type { Archetype, ArchetypeId, DebriefState } from "../types";
-import { DeathType, DebrieRStage, RoleType } from "../types";
+import { DebrieRStage, RoleType } from "../types";
 
 describe("Archetype Types", () => {
 	describe("ArchetypeId type", () => {

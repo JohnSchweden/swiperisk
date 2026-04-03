@@ -24,3 +24,10 @@ export const SELECT_CARD_BASE = `selection-stage-card group p-6 md:p-10 rounded-
 
 /** Unlayered hover in index.html — Tailwind `hover:border-*` loses to `.glass-card`. */
 export const SELECT_CARD_HOVER = "selection-card-hover";
+
+/** Glass panel for modal-style cards (e.g., CardStack, FeedbackOverlay) */
+export const GLASS_CARD_MODAL = "glass-card-modal";
+
+/** Divider style for voice hint sections in selection cards */
+export const VOICE_HINT_DIVIDER =
+	"mt-3 md:mt-4 pt-3 md:pt-4 border-t border-white/10 w-full text-slate-400/90 text-[10px] md:text-xs leading-relaxed font-normal flex flex-col items-center justify-center gap-1.5 md:gap-2";

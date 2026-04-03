@@ -8,6 +8,7 @@ import {
 import { getDeathImagePath } from "../../../data/imageMap";
 import { useUnlockedEndings } from "../../../hooks";
 import { createAudioContext } from "../../../lib/audio";
+import { BTN_DEBRIEF_NAV } from "../../../lib/buttonStyles";
 import { formatBudget } from "../../../lib/formatting";
 import {
 	playKirkCrashSound,
@@ -334,11 +335,7 @@ export function DebriefPage1Collapse({
 					<EndingIconGrid unlockedEndings={unlockedEndings} />
 				</div>
 
-				<button
-					type="button"
-					onClick={onNext}
-					className="px-6 py-3 md:px-12 md:py-4 text-base md:text-xl font-bold tracking-wide bg-white text-black hover:bg-cyan-400 hover:text-black transition-all duration-300 min-h-[40px] md:min-h-[48px]"
-				>
+				<button type="button" onClick={onNext} className={BTN_DEBRIEF_NAV}>
 					Debrief me
 				</button>
 			</div>

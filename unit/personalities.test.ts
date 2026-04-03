@@ -77,7 +77,7 @@ describe("PERSONALITIES", () => {
 				"failure",
 			];
 
-			for (const [key, personality] of Object.entries(PERSONALITIES)) {
+			for (const [, personality] of Object.entries(PERSONALITIES)) {
 				for (const field of expectedFields) {
 					expect(personality).toHaveProperty(field);
 				}

@@ -339,7 +339,7 @@ describe("ROLE_FINE_TIERS", () => {
 	});
 
 	it("should have valid structure for each role", () => {
-		for (const [role, tier] of Object.entries(ROLE_FINE_TIERS)) {
+		for (const [, tier] of Object.entries(ROLE_FINE_TIERS)) {
 			expect(tier).toHaveProperty("min");
 			expect(tier).toHaveProperty("max");
 			expect(tier).toHaveProperty("budget");
@@ -350,13 +350,13 @@ describe("ROLE_FINE_TIERS", () => {
 	});
 
 	it("should have min < max for all roles", () => {
-		for (const [role, tier] of Object.entries(ROLE_FINE_TIERS)) {
+		for (const [, tier] of Object.entries(ROLE_FINE_TIERS)) {
 			expect(tier.min).toBeLessThan(tier.max);
 		}
 	});
 
 	it("should have reasonable budget values (positive, non-zero)", () => {
-		for (const [role, tier] of Object.entries(ROLE_FINE_TIERS)) {
+		for (const [, tier] of Object.entries(ROLE_FINE_TIERS)) {
 			expect(tier.budget).toBeGreaterThan(0);
 		}
 	});
@@ -375,7 +375,7 @@ describe("ROLE_HEAT_SCALES", () => {
 	});
 
 	it("should have valid structure for each role", () => {
-		for (const [role, scale] of Object.entries(ROLE_HEAT_SCALES)) {
+		for (const [, scale] of Object.entries(ROLE_HEAT_SCALES)) {
 			expect(scale).toHaveProperty("min");
 			expect(scale).toHaveProperty("max");
 			expect(typeof scale.min).toBe("number");
@@ -384,7 +384,7 @@ describe("ROLE_HEAT_SCALES", () => {
 	});
 
 	it("should have min < max for all roles", () => {
-		for (const [role, scale] of Object.entries(ROLE_HEAT_SCALES)) {
+		for (const [, scale] of Object.entries(ROLE_HEAT_SCALES)) {
 			expect(scale.min).toBeLessThan(scale.max);
 		}
 	});

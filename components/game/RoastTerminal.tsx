@@ -2,6 +2,7 @@ import { memo, type RefObject, useEffect, useRef, useState } from "react";
 import { PERSONALITIES } from "../../data";
 import { useLiveAPISpeechRecognition } from "../../hooks/useLiveAPISpeechRecognition";
 import { PersonalityType } from "../../types";
+import { GLASS_PANEL_DEFAULT } from "./selectionStageStyles";
 
 const ROAST_CONSOLE_NAMES: Record<PersonalityType, string> = {
 	[PersonalityType.ROASTER]: "roast_con.exe",
@@ -75,7 +76,7 @@ const RoastTerminalInner = memo(function RoastTerminalInner({
 
 	return (
 		<div
-			className={`w-full max-w-[43rem] lg:w-[43rem] flex-shrink-0 glass-card rounded-xl overflow-hidden flex flex-col shadow-2xl ${output ? "min-h-[320px] lg:min-h-[260px]" : "min-h-0"}`}
+			className={`w-full max-w-[43rem] lg:w-[43rem] flex-shrink-0 ${GLASS_PANEL_DEFAULT} rounded-xl overflow-hidden flex flex-col shadow-2xl ${output ? "min-h-[320px] lg:min-h-[260px]" : "min-h-0"}`}
 			data-testid="roast-terminal"
 		>
 			<div className="bg-slate-900 px-4 py-2 border-b border-white/5 flex-shrink-0 flex items-center justify-between">

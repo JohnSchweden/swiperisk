@@ -15,7 +15,7 @@ describe("ROLE_DESCRIPTIONS", () => {
 	});
 
 	it("should have non-empty descriptions", () => {
-		for (const [role, desc] of Object.entries(ROLE_DESCRIPTIONS)) {
+		for (const [, desc] of Object.entries(ROLE_DESCRIPTIONS)) {
 			expect(desc.length).toBeGreaterThan(0);
 			expect(typeof desc).toBe("string");
 		}
@@ -35,7 +35,7 @@ describe("ROLE_LABELS", () => {
 	});
 
 	it("should have non-empty labels", () => {
-		for (const [role, label] of Object.entries(ROLE_LABELS)) {
+		for (const [, label] of Object.entries(ROLE_LABELS)) {
 			expect(label.length).toBeGreaterThan(0);
 			expect(typeof label).toBe("string");
 		}
@@ -63,7 +63,7 @@ describe("ROLE_ICONS", () => {
 	});
 
 	it("should have valid Font Awesome class names", () => {
-		for (const [role, icon] of Object.entries(ROLE_ICONS)) {
+		for (const [, icon] of Object.entries(ROLE_ICONS)) {
 			expect(icon).toMatch(/^fa-/);
 		}
 	});
@@ -88,7 +88,7 @@ describe("ROLE_DECK_ALIASES", () => {
 	});
 
 	it("should have non-empty alias strings", () => {
-		for (const [role, alias] of Object.entries(ROLE_DECK_ALIASES)) {
+		for (const [, alias] of Object.entries(ROLE_DECK_ALIASES)) {
 			expect(alias.length).toBeGreaterThan(0);
 			expect(typeof alias).toBe("string");
 		}

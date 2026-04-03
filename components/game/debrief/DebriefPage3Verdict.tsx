@@ -3,6 +3,7 @@ import { useEffect, useRef, useState } from "react";
 import { ROLE_LABELS } from "../../../data";
 import { getArchetypeImagePath } from "../../../data/imageMap";
 import { useVoicePlayback } from "../../../hooks";
+import { BTN_DEBRIEF_NAV } from "../../../lib/buttonStyles";
 import {
 	type Archetype,
 	DeathType,
@@ -22,9 +23,6 @@ import {
 	GLASS_PANEL_DEFAULT,
 	LAYOUT_SHELL_CENTERED_CLASS,
 } from "../selectionStageStyles";
-
-const actionButtonBase =
-	"px-6 py-3 md:px-8 md:py-4 text-base font-bold tracking-wide bg-white text-black hover:bg-cyan-400 hover:text-black transition-all duration-300 whitespace-nowrap";
 
 interface DebriefPage3VerdictProps {
 	archetype: Archetype | null;
@@ -232,38 +230,35 @@ export const DebriefPage3Verdict: React.FC<DebriefPage3VerdictProps> = ({
 					</p>
 				</div>
 
-				{/* Action Buttons */}
-				<div className="flex flex-col sm:flex-row gap-4 justify-center mb-8 w-fit max-w-full mx-auto">
-					<button
-						type="button"
-						onClick={handleCopy}
-						disabled={!shareText}
-						className={`${actionButtonBase} flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed`}
-						aria-label="Copy share text to clipboard"
-					>
-						<i className="fa-regular fa-copy text-lg"></i>
-						{copied ? "Copied!" : "1. Copy to clipboard"}
-					</button>
-					<a
-						href={linkedInShareUrl || "#"}
-						className={`${actionButtonBase} flex items-center justify-center gap-2`}
-						aria-label="Share on LinkedIn"
-						onClick={(e) => {
-							if (!linkedInShareUrl) {
-								e.preventDefault();
-							}
-						}}
-					>
-						<i className="fa-brands fa-linkedin text-lg"></i>
-						2. Share on LinkedIn
-					</a>
-					<button
-						type="button"
-						onClick={onRestart}
-						className={actionButtonBase}
-					>
-						Reboot system
-					</button>
+				{/* Action Buttons — same rail as Intro (Boot) and debrief page 2: full-width row, centered control */}
+				<div className="mb-8 flex w-full flex-col gap-4">
+					<div className="flex w-full justify-center">
+						<button
+							type="button"
+							onClick={handleCopy}
+							disabled={!shareText}
+							className={`${BTN_DEBRIEF_NAV} flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed`}
+							aria-label="Copy share text to clipboard"
+						>
+							<i className="fa-regular fa-copy text-lg"></i>
+							{copied ? "Copied!" : "1. Copy to clipboard"}
+						</button>
+					</div>
+					<div className="flex w-full justify-center">
+						<a
+							href={linkedInShareUrl || "#"}
+							className={`${BTN_DEBRIEF_NAV} flex items-center justify-center gap-2`}
+							aria-label="Share on LinkedIn"
+							onClick={(e) => {
+								if (!linkedInShareUrl) {
+									e.preventDefault();
+								}
+							}}
+						>
+							<i className="fa-brands fa-linkedin text-lg"></i>
+							2. Share on LinkedIn
+						</a>
+					</div>
 				</div>
 
 				{/* V2 Waitlist LinkedIn CTA */}
@@ -286,6 +281,12 @@ export const DebriefPage3Verdict: React.FC<DebriefPage3VerdictProps> = ({
 						<i className="fa-brands fa-linkedin text-lg"></i>
 						Message Yevgen Schweden
 					</a>
+				</div>
+
+				<div className="mt-8 md:mt-10 flex w-full justify-center">
+					<button type="button" onClick={onRestart} className={BTN_DEBRIEF_NAV}>
+						Reboot system
+					</button>
 				</div>
 			</div>
 		</LayoutShell>

@@ -35,8 +35,8 @@ describe("safeParseJson", () => {
 		}
 		const result = safeParseJson<User>('{"name":"Alice","age":30}');
 		expect(result).not.toBeNull();
-		expect(result!.name).toBe("Alice");
-		expect(result!.age).toBe(30);
+		expect(result?.name).toBe("Alice");
+		expect(result?.age).toBe(30);
 	});
 });
 

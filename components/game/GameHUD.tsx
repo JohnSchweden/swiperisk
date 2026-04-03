@@ -1,11 +1,13 @@
 import React from "react";
 import { formatBudget } from "../../lib/formatting";
+import {
+	BUDGET_CRITICAL,
+	HEAT_CRITICAL,
+	HEAT_HIGH,
+} from "../../lib/thresholds";
 
 export const INITIAL_BUDGET = 10000000;
 const BUDGET_WARNING = 3_000_000;
-const BUDGET_CRITICAL = 2_000_000;
-const HEAT_HIGH = 70;
-const HEAT_CRITICAL = 85;
 
 /**
  * Props for the GameHUD component.

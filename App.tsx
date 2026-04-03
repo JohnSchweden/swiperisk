@@ -5,6 +5,7 @@ import {
 	Suspense,
 	useCallback,
 	useEffect,
+	useMemo,
 	useRef,
 	useState,
 } from "react";
@@ -465,6 +466,43 @@ const App: React.FC = () => {
 		swipe.reset();
 	}, [resetGame, resetRoast, swipe]);
 
+	// Memoized swipe handlers to avoid recreating on every render
+	const handleSwipeLeft = useCallback(() => {
+		triggerSwipeHaptic();
+		swipe.swipeProgrammatically("LEFT");
+	}, [triggerSwipeHaptic, swipe]);
+
+	const handleSwipeRight = useCallback(() => {
+		triggerSwipeHaptic();
+		swipe.swipeProgrammatically("RIGHT");
+	}, [triggerSwipeHaptic, swipe]);
+
+	// Memoized bgm config object to avoid breaking reference equality on every render
+	const bgm = useMemo(
+		() => ({
+			currentTrackTitle,
+			bgmVolume: userVolume,
+			bgmVolumeMin,
+			bgmVolumeMax,
+			bgmVolumeStep,
+			onBgmVolumeChange: setUserVolume,
+			bgmEnabled,
+			onBgmToggle: toggleBgmEnabled,
+			onBgmSkip: skipBgmTrack,
+		}),
+		[
+			currentTrackTitle,
+			userVolume,
+			bgmVolumeMin,
+			bgmVolumeMax,
+			bgmVolumeStep,
+			setUserVolume,
+			bgmEnabled,
+			toggleBgmEnabled,
+			skipBgmTrack,
+		],
+	);
+
 	// Render current stage
 	const renderStage = () => {
 		switch (state.stage) {
@@ -518,14 +556,8 @@ const App: React.FC = () => {
 							onTouchStart={swipe.onTouchStart}
 							onTouchMove={swipe.onTouchMove}
 							onTouchEnd={swipe.onTouchEnd}
-							onSwipeLeft={() => {
-								triggerSwipeHaptic();
-								swipe.swipeProgrammatically("LEFT");
-							}}
-							onSwipeRight={() => {
-								triggerSwipeHaptic();
-								swipe.swipeProgrammatically("RIGHT");
-							}}
+							onSwipeLeft={handleSwipeLeft}
+							onSwipeRight={handleSwipeRight}
 							roastInput={roastInput}
 							roastOutput={roastOutput}
 							isRoasting={isRoasting}
@@ -614,17 +646,7 @@ const App: React.FC = () => {
 			<StarfieldBackground
 				flySpeedMenuOnly
 				taskbarHostsSpeedBurger={isPlayingStage}
-				bgm={{
-					currentTrackTitle,
-					bgmVolume: userVolume,
-					bgmVolumeMin,
-					bgmVolumeMax,
-					bgmVolumeStep,
-					onBgmVolumeChange: setUserVolume,
-					bgmEnabled,
-					onBgmToggle: toggleBgmEnabled,
-					onBgmSkip: skipBgmTrack,
-				}}
+				bgm={bgm}
 			>
 				<div
 					ref={gameContainerRef}
@@ -636,6 +658,7 @@ const App: React.FC = () => {
 				{isPlayingStage && feedbackOverlay && state.personality && (
 					<FeedbackOverlay
 						personality={state.personality}
+						kirkCorruptionActive={state.kirkCorruptionActive}
 						text={feedbackOverlay.text}
 						lesson={feedbackOverlay.lesson}
 						choice={feedbackOverlay.choice}

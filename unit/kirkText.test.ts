@@ -1,4 +1,4 @@
-import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
+import { afterEach, describe, expect, it, vi } from "vitest";
 import { corruptText } from "../utils/kirkText";
 
 const COMBINING_START = 0x0300;
@@ -19,7 +19,7 @@ describe("corruptText", () => {
 			expect(result.length).toBeGreaterThan(3);
 			const chars = [...result];
 			const baseChars = chars.filter(
-				(c) => c.codePointAt(0)! < COMBINING_START,
+				(c) => (c.codePointAt(0) ?? 0) < COMBINING_START,
 			);
 			expect(baseChars).toEqual(["a", "b", "c"]);
 		});
@@ -48,8 +48,8 @@ describe("corruptText", () => {
 
 			const combiningCount = [...result].filter(
 				(c) =>
-					c.codePointAt(0)! >= COMBINING_START &&
-					c.codePointAt(0)! <= COMBINING_END,
+					(c.codePointAt(0) ?? 0) >= COMBINING_START &&
+					(c.codePointAt(0) ?? 0) <= COMBINING_END,
 			).length;
 
 			expect(combiningCount).toBeGreaterThanOrEqual(1);

@@ -96,7 +96,6 @@ export const GameScreen: React.FC<GameScreenProps> = ({
 	cardExitDirection,
 	exitPosition,
 	isSnappingBack,
-	isSwipeUp = false,
 	onTouchStart,
 	onTouchMove,
 	onTouchEnd,
@@ -164,22 +163,27 @@ export const GameScreen: React.FC<GameScreenProps> = ({
 						currentCardIndex={state.currentCardIndex}
 						isFirstCard={isFirstCard}
 						cardRef={cardRef}
-						offset={swipeOffset}
-						verticalOffset={swipeVerticalOffset}
-						direction={swipeDirection}
-						isDragging={isDragging}
-						exitDirection={cardExitDirection}
-						exitPosition={exitPosition}
-						isSnappingBack={isSnappingBack}
-						isSwipeUp={isSwipeUp}
-						hasDragged={hasDragged}
-						onTouchStart={onTouchStart}
-						onTouchMove={onTouchMove}
-						onTouchEnd={onTouchEnd}
-						onSwipeLeft={onSwipeLeft}
-						onSwipeRight={onSwipeRight}
-						swipeThreshold={swipeThreshold}
-						swipePreviewThreshold={swipePreviewThreshold}
+						swipeState={{
+							offset: swipeOffset,
+							verticalOffset: swipeVerticalOffset,
+							direction: swipeDirection,
+							isDragging,
+							hasDragged,
+							exitDirection: cardExitDirection,
+							exitPosition,
+							isSnappingBack,
+						}}
+						swipeHandlers={{
+							onTouchStart,
+							onTouchMove,
+							onTouchEnd,
+							onSwipeLeft,
+							onSwipeRight,
+						}}
+						swipeThresholds={{
+							swipeThreshold,
+							swipePreviewThreshold,
+						}}
 						isUrgent={isCountdownActive}
 						isCritical={isCritical}
 					/>

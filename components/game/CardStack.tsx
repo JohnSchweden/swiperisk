@@ -5,9 +5,17 @@ import { ROLE_CARDS } from "../../data";
 import { getIncidentImagePath, slugify } from "../../data/imageMap";
 import type { Card, RoleType } from "../../types";
 import { CardBody, CardHeaderBar } from "./CardStackComponents";
+import { GLASS_CARD_MODAL } from "./selectionStageStyles";
+
+/** Style for the next card visible behind the active card */
+const NEXT_CARD_STYLE: React.CSSProperties = {
+	zIndex: 0,
+	transform: "scale(0.95)",
+	opacity: 0.6,
+};
 
 /** Match feedback modal glass (`.glass-card-modal` in index.html) */
-const incidentCardGlass = "glass-card-modal";
+const incidentCardGlass = GLASS_CARD_MODAL;
 
 function getCardTransition(
 	isDragging: boolean,
@@ -20,19 +28,9 @@ function getCardTransition(
 }
 
 /**
- * Props for the CardStack component.
+ * Grouped swipe animation and gesture state.
  */
-interface CardStackProps {
-	/** The user's selected role type */
-	role: RoleType;
-	/** Array of cards to display */
-	cards: Card[];
-	/** Index of the currently displayed card */
-	currentCardIndex: number;
-	/** Whether this is the first card in the deck */
-	isFirstCard: boolean;
-	/** Reference to the card container div for swipe handling */
-	cardRef: RefObject<HTMLDivElement>;
+export interface SwipeState {
 	/** Horizontal offset for swipe animation */
 	offset: number;
 	/** Vertical offset for swipe animation */
@@ -49,6 +47,12 @@ interface CardStackProps {
 	exitPosition: { x: number; rotate: number } | null;
 	/** Whether the card is snapping back to center */
 	isSnappingBack: boolean;
+}
+
+/**
+ * Grouped swipe gesture handlers.
+ */
+export interface SwipeHandlers {
 	/** Handler for touch/mouse start events */
 	onTouchStart: (e: React.TouchEvent | React.MouseEvent) => void;
 	/** Handler for touch/mouse move events */
@@ -59,10 +63,38 @@ interface CardStackProps {
 	onSwipeLeft: () => void;
 	/** Action to perform on right swipe */
 	onSwipeRight: () => void;
-	/** Threshold distance for completing a swipe */
+}
+
+/**
+ * Grouped swipe distance thresholds.
+ */
+export interface SwipeThresholds {
+	/** Distance threshold for completing a swipe */
 	swipeThreshold: number;
-	/** Threshold distance for showing swipe preview */
+	/** Distance threshold for showing swipe preview */
 	swipePreviewThreshold: number;
+}
+
+/**
+ * Props for the CardStack component.
+ */
+interface CardStackProps {
+	/** The user's selected role type */
+	role: RoleType;
+	/** Array of cards to display */
+	cards: Card[];
+	/** Index of the currently displayed card */
+	currentCardIndex: number;
+	/** Whether this is the first card in the deck */
+	isFirstCard: boolean;
+	/** Reference to the card container div for swipe handling */
+	cardRef: RefObject<HTMLDivElement>;
+	/** Grouped swipe animation and gesture state */
+	swipeState: SwipeState;
+	/** Grouped swipe gesture handlers */
+	swipeHandlers: SwipeHandlers;
+	/** Grouped swipe distance thresholds */
+	swipeThresholds: SwipeThresholds;
 	/** Whether the card should show urgent stress visuals */
 	isUrgent?: boolean;
 }
@@ -139,23 +171,24 @@ export const CardStack: React.FC<CardStackProps> = ({
 	currentCardIndex,
 	isFirstCard,
 	cardRef,
-	offset,
-	verticalOffset = 0,
-	direction,
-	isDragging,
-	hasDragged,
-	exitDirection,
-	exitPosition,
-	isSnappingBack,
-	onTouchStart,
-	onTouchMove,
-	onTouchEnd,
-	onSwipeLeft,
-	onSwipeRight,
-	swipeThreshold,
-	swipePreviewThreshold,
+	swipeState,
+	swipeHandlers,
+	swipeThresholds,
 	isUrgent = false,
 }) => {
+	const {
+		offset,
+		verticalOffset = 0,
+		direction,
+		isDragging,
+		hasDragged,
+		exitDirection,
+		exitPosition,
+		isSnappingBack,
+	} = swipeState;
+	const { onTouchStart, onTouchMove, onTouchEnd, onSwipeLeft, onSwipeRight } =
+		swipeHandlers;
+	const { swipeThreshold, swipePreviewThreshold } = swipeThresholds;
 	// Use cards from props (effectiveDeck with shuffling/branching), fall back to ROLE_CARDS for compatibility
 	const cards = propsCards.length > 0 ? propsCards : ROLE_CARDS[role];
 	const currentCard = cards[currentCardIndex];
@@ -188,11 +221,7 @@ export const CardStack: React.FC<CardStackProps> = ({
 			{nextCard && (
 				<div
 					className={`absolute inset-0 rounded-xl overflow-hidden flex flex-col ${incidentCardGlass}`}
-					style={{
-						zIndex: 0,
-						transform: "scale(0.95)",
-						opacity: 0.6,
-					}}
+					style={NEXT_CARD_STYLE}
 				>
 					<CardHeaderBar source={nextCard.source} context={nextCard.context} />
 					<CardBody

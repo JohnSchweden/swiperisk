@@ -1,5 +1,7 @@
 import type React from "react";
+import { useMemo } from "react";
 import { PERSONALITIES, ROLE_CARDS } from "../../../data";
+import { BTN_DEBRIEF_NAV } from "../../../lib/buttonStyles";
 import { formatBudget } from "../../../lib/formatting";
 import { DeathType, type GameState, PersonalityType } from "../../../types";
 import LayoutShell from "../../LayoutShell";
@@ -195,6 +197,17 @@ export const DebriefPage2AuditTrail: React.FC<DebriefPage2AuditTrailProps> = ({
 	const isKirk = state.deathType === DeathType.KIRK;
 	const cards = state.effectiveDeck ?? (role ? ROLE_CARDS[role] : []);
 
+	const cardMap = useMemo(() => {
+		const map = new Map<
+			string,
+			(typeof ROLE_CARDS)[keyof typeof ROLE_CARDS][number]
+		>();
+		for (const card of cards) {
+			map.set(card.id, card);
+		}
+		return map;
+	}, [cards]);
+
 	const personalityComment = getPersonalityComment(personality, isKirk);
 	const personalityData = personality ? PERSONALITIES[personality] : null;
 
@@ -229,7 +242,7 @@ export const DebriefPage2AuditTrail: React.FC<DebriefPage2AuditTrailProps> = ({
 					) : (
 						<div className="space-y-4">
 							{history.map((entry, index) => {
-								const card = cards.find((c) => c.id === entry.cardId);
+								const card = cardMap.get(entry.cardId);
 								if (!card) return null;
 								return (
 									<AuditEntry
@@ -279,11 +292,7 @@ export const DebriefPage2AuditTrail: React.FC<DebriefPage2AuditTrailProps> = ({
 
 				{/* Generate psych evaluation — same primary CTA as debrief page 1 */}
 				<div className="flex w-full justify-center">
-					<button
-						type="button"
-						onClick={onNext}
-						className="px-6 py-3 md:px-12 md:py-4 text-base md:text-xl font-bold tracking-wide bg-white text-black hover:bg-cyan-400 hover:text-black transition-all duration-300 min-h-[40px] md:min-h-[48px]"
-					>
+					<button type="button" onClick={onNext} className={BTN_DEBRIEF_NAV}>
 						Generate psych evaluation
 					</button>
 				</div>

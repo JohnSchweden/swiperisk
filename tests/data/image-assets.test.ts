@@ -35,7 +35,7 @@ const imageMapTests = [
 describe.skipIf(!HAS_PUBLIC_IMAGES)("Image Asset File Validation", () => {
 	describe.each(imageMapTests)("$name images", ({ name, map }) => {
 		it("all $name image paths are valid strings", () => {
-			for (const [key, imagePath] of Object.entries(map)) {
+			for (const [, imagePath] of Object.entries(map)) {
 				expect(typeof imagePath).toBe("string");
 				expect(imagePath.length).toBeGreaterThan(0);
 				expect(imagePath).toMatch(/^\/images\//);
@@ -47,7 +47,7 @@ describe.skipIf(!HAS_PUBLIC_IMAGES)("Image Asset File Validation", () => {
 			let existingCount = 0;
 			let missingCount = 0;
 
-			for (const [key, imagePath] of Object.entries(map)) {
+			for (const [, imagePath] of Object.entries(map)) {
 				if (imageFileExists(imagePath)) {
 					existingCount++;
 				} else {

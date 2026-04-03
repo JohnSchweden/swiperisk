@@ -1,6 +1,8 @@
 import type React from "react";
+import { BTN_PRIMARY_CTA } from "../../lib/buttonStyles";
 import type { BossQuestion } from "../../types";
 import LayoutShell from "../LayoutShell";
+import { GLASS_PANEL_DEFAULT } from "./selectionStageStyles";
 
 /**
  * Props for the BossFight component.
@@ -71,7 +73,9 @@ export const BossFight: React.FC<BossFightProps> = ({
 					</p>
 				</div>
 
-				<div className="glass-card rounded-2xl p-4 md:p-8 shadow-2xl">
+				<div
+					className={`${GLASS_PANEL_DEFAULT} rounded-2xl p-4 md:p-8 shadow-2xl`}
+				>
 					{/* Timer Bar */}
 					<div className="mb-4 md:mb-6">
 						<div className="flex justify-between text-xs text-slate-400 mb-2">
@@ -141,7 +145,7 @@ export const BossFight: React.FC<BossFightProps> = ({
 								<button
 									type="button"
 									onClick={onNext}
-									className="w-auto px-8 py-2.5 text-sm md:text-base bg-white text-black font-black tracking-wide hover:bg-cyan-500 transition-all shadow-xl transform active:scale-95"
+									className={BTN_PRIMARY_CTA}
 								>
 									{nextQuestionLabel}
 								</button>

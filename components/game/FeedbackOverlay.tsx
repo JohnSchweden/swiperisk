@@ -1,21 +1,65 @@
 import type React from "react";
 import { useEffect } from "react";
 import { getOutcomeImagePath, slugify } from "../../data/imageMap";
+import { BTN_PRIMARY_CTA } from "../../lib/buttonStyles";
 import { formatBudget } from "../../lib/formatting";
-import type { PersonalityType } from "../../types";
+import {
+	BUDGET_CRITICAL,
+	HEAT_CRITICAL,
+	HEAT_HIGH,
+	HYPE_CRITICAL,
+	HYPE_HIGH,
+} from "../../lib/thresholds";
 import { ImageWithFallback } from "../ImageWithFallback";
+import { GLASS_CARD_MODAL } from "./selectionStageStyles";
 
-const BUDGET_CRITICAL = 2_000_000;
-const HEAT_CRITICAL = 85;
-const HEAT_HIGH = 70;
-const HYPE_CRITICAL = 85;
-const HYPE_HIGH = 70;
+interface EscalationBadgeProps {
+	label: string;
+	level: number;
+	levelSuffix?: string;
+	isCritical: boolean;
+	icon: string;
+}
 
-const escalationIconMap: Record<string, string> = {
-	budget: "fa-coins",
-	heat: "fa-fire",
-	hype: "fa-bullhorn",
-};
+function EscalationBadge({
+	label,
+	level,
+	levelSuffix = "%",
+	isCritical,
+	icon,
+}: EscalationBadgeProps) {
+	const textColor = isCritical ? "text-red-500" : "text-amber-400";
+	return (
+		<span
+			className={`text-[10px] font-black tracking-wide ${textColor} inline-flex items-center gap-1.5`}
+		>
+			<i className={`fa-solid ${icon} text-[10px] ${textColor}`} aria-hidden />
+			{label} — {level}
+			{levelSuffix}
+		</span>
+	);
+}
+
+interface StatDeltaProps {
+	icon: string;
+	label: string;
+	delta: number;
+	colorFn: (delta: number) => string;
+}
+
+function StatDelta({ icon, label, delta, colorFn }: StatDeltaProps) {
+	const color = colorFn(delta);
+	const sign = delta > 0 ? "+" : "";
+	return (
+		<span
+			className={`text-[11px] font-bold tracking-wide inline-flex items-center gap-1.5 ${color}`}
+		>
+			<i className={`fa-solid ${icon} text-[10px] ${color}`} aria-hidden />
+			{label}: {sign}
+			{delta}
+		</span>
+	);
+}
 
 function ViolationRowDot() {
 	return (
@@ -43,8 +87,6 @@ function splitViolationLabel(violation: string): {
  * Props for the FeedbackOverlay component.
  */
 interface FeedbackOverlayProps {
-	/** The personality type providing the feedback */
-	personality: PersonalityType | null;
 	/** The feedback text from the personality */
 	text: string;
 	/** The governance lesson or alert message */
@@ -75,6 +117,8 @@ interface FeedbackOverlayProps {
 	} | null;
 	/** Label of the chosen outcome for image display */
 	outcomeLabel?: string;
+	/** Kirk easter egg: match corruption tint on modal (game shell sits under z-50 sibling) */
+	kirkCorruptionActive?: boolean;
 	/** Callback to proceed to next card */
 	onNext: () => void;
 }
@@ -100,6 +144,7 @@ export const FeedbackOverlay: React.FC<FeedbackOverlayProps> = ({
 	hype,
 	realWorldReference,
 	outcomeLabel,
+	kirkCorruptionActive = false,
 	onNext,
 }) => {
 	const violationParts = splitViolationLabel(violation);
@@ -123,7 +168,7 @@ export const FeedbackOverlay: React.FC<FeedbackOverlayProps> = ({
 
 	return (
 		<div
-			className="fixed inset-0 z-50 flex items-center justify-center p-4 md:p-6 modal-overlay"
+			className={`fixed inset-0 z-50 flex items-center justify-center p-4 md:p-6 modal-overlay${kirkCorruptionActive ? " modal-overlay--kirk" : ""}`}
 			data-testid="feedback-dialog"
 			data-choice={choice}
 			role="dialog"
@@ -131,148 +176,54 @@ export const FeedbackOverlay: React.FC<FeedbackOverlayProps> = ({
 			aria-labelledby="feedback-overlay-title"
 			aria-describedby="feedback-overlay-desc"
 		>
-			<div className="w-full max-w-full lg:max-w-[43rem] glass-card-modal p-4 md:p-6 rounded-2xl text-center shadow-2xl max-h-[90vh] overflow-y-auto modal-content antialiased">
+			<div
+				className={`w-full max-w-full lg:max-w-[43rem] ${GLASS_CARD_MODAL} p-4 md:p-6 rounded-2xl text-center shadow-2xl max-h-[90vh] overflow-y-auto modal-content antialiased`}
+			>
 				{showEscalation && (
 					<div className="mb-4 flex flex-wrap gap-x-4 gap-y-1 justify-center items-center">
-						{budgetCritical &&
-							(() => {
-								const level = Math.round((budget ?? 0) / 1000000);
-								const label = `Budget — ${formatBudget(budget ?? 0)}`;
-								const variant = "critical";
-								const isCritical = variant === "critical";
-								const iconKey = label.toLowerCase().split(" ")[0];
-								const icon = escalationIconMap[iconKey] || "fa-exclamation";
-								const textColor = isCritical
-									? "text-red-500"
-									: "text-amber-400";
-								const iconColorClass = isCritical
-									? "text-red-500"
-									: "text-amber-400";
-
-								return (
-									<span
-										className={`text-[10px] font-black tracking-wide ${textColor} inline-flex items-center gap-1.5`}
-									>
-										<i
-											className={`fa-solid ${icon} text-[10px] ${iconColorClass}`}
-											aria-hidden
-										></i>
-										{label} — {level}%
-									</span>
-								);
-							})()}
-						{heatCritical &&
-							(() => {
-								const level = heat ?? 0;
-								const label = "Risk";
-								const variant = "critical";
-								const isCritical = variant === "critical";
-								const iconKey = label.toLowerCase().split(" ")[0];
-								const icon = escalationIconMap[iconKey] || "fa-exclamation";
-								const textColor = isCritical
-									? "text-red-500"
-									: "text-amber-400";
-								const iconColorClass = isCritical
-									? "text-red-500"
-									: "text-amber-400";
-
-								return (
-									<span
-										className={`text-[10px] font-black tracking-wide ${textColor} inline-flex items-center gap-1.5`}
-									>
-										<i
-											className={`fa-solid ${icon} text-[10px] ${iconColorClass}`}
-											aria-hidden
-										></i>
-										{label} — {level}%
-									</span>
-								);
-							})()}
-						{heatHigh &&
-							!heatCritical &&
-							(() => {
-								const level = heat ?? 0;
-								const label = "Risk";
-								const isCritical = false;
-								const iconKey = label.toLowerCase().split(" ")[0];
-								const icon = escalationIconMap[iconKey] || "fa-exclamation";
-								const textColor = isCritical
-									? "text-red-500"
-									: "text-amber-400";
-								const iconColorClass = isCritical
-									? "text-red-500"
-									: "text-amber-400";
-
-								return (
-									<span
-										className={`text-[10px] font-black tracking-wide ${textColor} inline-flex items-center gap-1.5`}
-									>
-										<i
-											className={`fa-solid ${icon} text-[10px] ${iconColorClass}`}
-											aria-hidden
-										></i>
-										{label} — {level}%
-									</span>
-								);
-							})()}
-						{hypeCritical &&
-							(() => {
-								const level = hype ?? 0;
-								const label = "Hype";
-								const variant = "critical";
-								const isCritical = variant === "critical";
-								const iconKey = label.toLowerCase().split(" ")[0];
-								const icon = escalationIconMap[iconKey] || "fa-exclamation";
-								const textColor = isCritical
-									? "text-red-500"
-									: "text-amber-400";
-								const iconColorClass = isCritical
-									? "text-red-500"
-									: "text-amber-400";
-
-								return (
-									<span
-										className={`text-[10px] font-black tracking-wide ${textColor} inline-flex items-center gap-1.5`}
-									>
-										<i
-											className={`fa-solid ${icon} text-[10px] ${iconColorClass}`}
-											aria-hidden
-										></i>
-										{label} — {level}%
-									</span>
-								);
-							})()}
-						{hypeHigh &&
-							!hypeCritical &&
-							(() => {
-								const level = hype ?? 0;
-								const label = "Hype";
-								const isCritical = false;
-								const iconKey = label.toLowerCase().split(" ")[0];
-								const icon = escalationIconMap[iconKey] || "fa-exclamation";
-								const textColor = isCritical
-									? "text-red-500"
-									: "text-amber-400";
-								const iconColorClass = isCritical
-									? "text-red-500"
-									: "text-amber-400";
-
-								return (
-									<span
-										className={`text-[10px] font-black tracking-wide ${textColor} inline-flex items-center gap-1.5`}
-									>
-										<i
-											className={`fa-solid ${icon} text-[10px] ${iconColorClass}`}
-											aria-hidden
-										></i>
-										{label} — {level}%
-									</span>
-								);
-							})()}
+						{budgetCritical && (
+							<EscalationBadge
+								label={`Budget — ${formatBudget(budget ?? 0)}`}
+								level={Math.round((budget ?? 0) / 1000000)}
+								isCritical={true}
+								icon="fa-exclamation"
+							/>
+						)}
+						{heatCritical && (
+							<EscalationBadge
+								label="Risk"
+								level={heat ?? 0}
+								isCritical={true}
+								icon="fa-fire"
+							/>
+						)}
+						{heatHigh && (
+							<EscalationBadge
+								label="Risk"
+								level={heat ?? 0}
+								isCritical={false}
+								icon="fa-fire"
+							/>
+						)}
+						{hypeCritical && (
+							<EscalationBadge
+								label="Hype"
+								level={hype ?? 0}
+								isCritical={true}
+								icon="fa-bullhorn"
+							/>
+						)}
+						{hypeHigh && (
+							<EscalationBadge
+								label="Hype"
+								level={hype ?? 0}
+								isCritical={false}
+								icon="fa-bullhorn"
+							/>
+						)}
 					</div>
 				)}
 
-				{/* Outcome image (Kirk-corrupted cards use kirk-breach* slugs + glitch placeholder) */}
 				{(() => {
 					if (!realWorldReference?.incident || !outcomeLabel) return null;
 
@@ -337,7 +288,9 @@ export const FeedbackOverlay: React.FC<FeedbackOverlayProps> = ({
 					className={`mb-3 md:mb-5 rounded-lg border p-3 md:p-4 ${
 						fine > 0
 							? "border-red-500/20 bg-gradient-to-b from-red-950/50 via-transparent to-transparent shadow-[inset_0_1px_0_0_rgba(255,255,255,0.04)]"
-							: "border-emerald-500/15 bg-gradient-to-b from-emerald-950/30 via-transparent to-transparent shadow-[inset_0_1px_0_0_rgba(255,255,255,0.04)]"
+							: fine < 0
+								? "border-cyan-500/20 bg-gradient-to-b from-cyan-950/25 via-transparent to-transparent shadow-[inset_0_1px_0_0_rgba(255,255,255,0.04)]"
+								: "border-emerald-500/15 bg-gradient-to-b from-emerald-950/30 via-transparent to-transparent shadow-[inset_0_1px_0_0_rgba(255,255,255,0.04)]"
 					}`}
 				>
 					<div className="flex flex-col items-center gap-2 md:gap-3">
@@ -346,23 +299,35 @@ export const FeedbackOverlay: React.FC<FeedbackOverlayProps> = ({
 								className={`flex shrink-0 items-center gap-1.5 rounded-full border px-2.5 py-1 ${
 									fine > 0
 										? "border-red-400/35 bg-red-500/10"
-										: "border-emerald-400/30 bg-emerald-500/10"
+										: fine < 0
+											? "border-cyan-400/35 bg-cyan-500/10"
+											: "border-emerald-400/30 bg-emerald-500/10"
 								}`}
 							>
 								<i
 									className={`fa-solid text-xs ${
 										fine > 0
 											? "fa-triangle-exclamation text-amber-400"
-											: "fa-circle-check text-emerald-400"
+											: fine < 0
+												? "fa-arrow-trend-up text-cyan-400"
+												: "fa-circle-check text-emerald-400"
 									}`}
 									aria-hidden
 								></i>
 								<span
 									className={`text-[10px] font-black uppercase tracking-wider ${
-										fine > 0 ? "text-red-200" : "text-emerald-200"
+										fine > 0
+											? "text-red-200"
+											: fine < 0
+												? "text-cyan-200"
+												: "text-emerald-200"
 									}`}
 								>
-									{fine > 0 ? "Violation fine" : "Approved"}
+									{fine > 0
+										? "Violation fine"
+										: fine < 0
+											? "Budget credit"
+											: "Approved"}
 								</span>
 							</div>
 							{fine > 0 && violationParts.right != null && (
@@ -401,60 +366,40 @@ export const FeedbackOverlay: React.FC<FeedbackOverlayProps> = ({
 									></i>
 									<p
 										className={`text-base font-black tabular-nums leading-none md:text-lg ${
-											fine > 0 ? "text-red-400" : "text-emerald-400"
+											fine > 0
+												? "text-red-400"
+												: fine < 0
+													? "text-cyan-400"
+													: "text-emerald-400"
 										}`}
 									>
-										{fine > 0 ? `-${formatBudget(fine)}` : "$0"}
+										{fine > 0
+											? `-${formatBudget(fine)}`
+											: fine < 0
+												? `+${formatBudget(-fine)}`
+												: "$0"}
 									</p>
 								</div>
 
-								{heatDelta !== undefined &&
-									heatDelta !== 0 &&
-									(() => {
-										const _type = "heat";
-										const value = heatDelta;
-										const label = "Risk";
-										const colorFn = (v: number) =>
-											v > 0 ? "text-red-400" : "text-emerald-400";
-										return (
-											<div className="flex shrink-0 items-center gap-1.5">
-												<span className="sr-only">{label}</span>
-												<i
-													className="fa-solid fa-fire text-xs text-slate-500"
-													aria-hidden
-												></i>
-												<p
-													className={`text-base font-black tabular-nums leading-none md:text-lg ${colorFn(value)}`}
-												>
-													{value > 0 ? `+${value}` : `${value}`}%
-												</p>
-											</div>
-										);
-									})()}
+								{heatDelta !== undefined && heatDelta !== 0 && (
+									<StatDelta
+										icon="fa-fire"
+										label="Risk"
+										delta={heatDelta}
+										colorFn={(v) =>
+											v > 0 ? "text-red-400" : "text-emerald-400"
+										}
+									/>
+								)}
 
-								{hypeDelta !== undefined &&
-									hypeDelta !== 0 &&
-									(() => {
-										const _type = "hype";
-										const value = hypeDelta;
-										const label = "Hype";
-										const colorFn = (v: number) =>
-											v > 0 ? "text-cyan-400" : "text-red-400";
-										return (
-											<div className="flex shrink-0 items-center gap-1.5">
-												<span className="sr-only">{label}</span>
-												<i
-													className="fa-solid fa-fire text-xs text-slate-500"
-													aria-hidden
-												></i>
-												<p
-													className={`text-base font-black tabular-nums leading-none md:text-lg ${colorFn(value)}`}
-												>
-													{value > 0 ? `+${value}` : `${value}`}%
-												</p>
-											</div>
-										);
-									})()}
+								{hypeDelta !== undefined && hypeDelta !== 0 && (
+									<StatDelta
+										icon="fa-bullhorn"
+										label="Hype"
+										delta={hypeDelta}
+										colorFn={(v) => (v > 0 ? "text-cyan-400" : "text-red-400")}
+									/>
+								)}
 							</div>
 						</div>
 					</div>
@@ -493,11 +438,7 @@ export const FeedbackOverlay: React.FC<FeedbackOverlayProps> = ({
 					)}
 				</div>
 
-				<button
-					type="button"
-					onClick={onNext}
-					className="w-auto px-8 py-2.5 text-sm md:text-base bg-white text-black font-black tracking-wide hover:bg-cyan-500 transition-all shadow-xl transform active:scale-95"
-				>
+				<button type="button" onClick={onNext} className={BTN_PRIMARY_CTA}>
 					Next ticket
 				</button>
 			</div>

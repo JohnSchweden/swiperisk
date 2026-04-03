@@ -43,6 +43,13 @@ describe("FeedbackOverlay", () => {
 			expect(screen.getByText("Next ticket")).toBeInTheDocument();
 		});
 
+		it("adds Kirk modal backdrop class when kirkCorruptionActive", () => {
+			render(<FeedbackOverlay {...defaultProps} kirkCorruptionActive={true} />);
+			expect(screen.getByTestId("feedback-dialog")).toHaveClass(
+				"modal-overlay--kirk",
+			);
+		});
+
 		it("should have proper accessibility attributes", () => {
 			render(<FeedbackOverlay {...defaultProps} />);
 
@@ -70,6 +77,22 @@ describe("FeedbackOverlay", () => {
 			render(<FeedbackOverlay {...defaultProps} fine={5000} />);
 
 			expect(screen.getByText(/-\$5K/)).toBeInTheDocument();
+		});
+
+		it("should display budget credit when fine < 0 (inflow)", () => {
+			render(
+				<FeedbackOverlay
+					{...defaultProps}
+					fine={-5_000_000}
+					heatDelta={-10}
+					hypeDelta={8}
+				/>,
+			);
+
+			expect(screen.getByText("Budget credit")).toBeInTheDocument();
+			expect(screen.getByText(/\+\$5\.0M/)).toBeInTheDocument();
+			expect(screen.getByText(/Risk: -10/)).toBeInTheDocument();
+			expect(screen.getByText(/Hype: \+8/)).toBeInTheDocument();
 		});
 
 		it("should not display fine section when fine is 0", () => {

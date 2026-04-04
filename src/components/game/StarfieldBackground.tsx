@@ -25,7 +25,7 @@ const SPEED_SCALE_STORAGE_KEY = "k-maru-starfield-speed-scale";
 const SPEED_SCALE_MIN = 0.15;
 const SPEED_SCALE_MAX = 2.5;
 const SPEED_SCALE_STEP = 0.05;
-const SPEED_SCALE_DEFAULT = 0.3;
+const SPEED_SCALE_DEFAULT = 0.6;
 
 const SAFE_TOP = "calc(0.75rem + env(safe-area-inset-top, 0px))";
 const SAFE_RIGHT = "calc(0.75rem + env(safe-area-inset-right, 0px))";
@@ -193,6 +193,7 @@ type StarfieldSpeedPanelProps = {
 	speedScale: number;
 	onSpeedChange: React.ChangeEventHandler<HTMLInputElement>;
 	bgm?: StarfieldBgmMenuProps;
+	onRestart?: () => void;
 };
 
 function StarfieldSpeedPanel({
@@ -200,6 +201,7 @@ function StarfieldSpeedPanel({
 	speedScale,
 	onSpeedChange,
 	bgm,
+	onRestart,
 }: StarfieldSpeedPanelProps) {
 	const inputId = `starfield-speed-${idSuffix}`;
 	const bgmVolumeId = `bgm-volume-${idSuffix}`;
@@ -308,6 +310,18 @@ function StarfieldSpeedPanel({
 					</div>
 				</div>
 			) : null}
+			{onRestart ? (
+				<div className="mt-2.5 border-t border-white/10 pt-2.5">
+					<button
+						type="button"
+						onClick={onRestart}
+						className="compact-touch-target w-full flex items-center justify-center gap-2 rounded-md px-3 py-1.5 text-xs font-bold uppercase tracking-widest text-slate-400 hover:bg-white/10 hover:text-white transition-colors"
+					>
+						<i className="fa-solid fa-rotate-left text-xs" aria-hidden />
+						Restart game
+					</button>
+				</div>
+			) : null}
 		</div>
 	);
 }
@@ -322,6 +336,8 @@ export type StarfieldBackgroundProps = {
 	taskbarHostsSpeedBurger?: boolean;
 	/** Optional background music controls */
 	bgm?: StarfieldBgmMenuProps;
+	/** When provided, shows a "Restart game" button in the burger flyout */
+	onRestart?: () => void;
 	/** Child components to render above the starfield */
 	children?: React.ReactNode;
 };
@@ -336,6 +352,7 @@ export const StarfieldBackground: React.FC<StarfieldBackgroundProps> = ({
 	flySpeedMenuOnly = false,
 	taskbarHostsSpeedBurger = false,
 	bgm,
+	onRestart,
 	children,
 }) => {
 	const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -562,6 +579,7 @@ export const StarfieldBackground: React.FC<StarfieldBackgroundProps> = ({
 						speedScale={speedScale}
 						onSpeedChange={onSpeedChange}
 						bgm={bgm}
+						onRestart={onRestart}
 					/>
 				</div>
 			) : null}

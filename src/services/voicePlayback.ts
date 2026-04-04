@@ -113,6 +113,22 @@ function getOrCreateContext(): AudioContext {
 }
 
 /**
+ * Eagerly resumes the voice AudioContext from a synchronous user-gesture handler.
+ * Call this on touchstart/click at the document level to ensure the context is
+ * running before the async loadVoice chain fires (iOS requires gesture-context).
+ */
+export function resumeVoiceContext(): void {
+	try {
+		const ctx = getOrCreateContext();
+		if (ctx.state === "suspended") {
+			void ctx.resume();
+		}
+	} catch {
+		// AudioContext not yet created or not supported — no-op
+	}
+}
+
+/**
  * Determines the appropriate subfolder for a trigger based on naming patterns
  * Organizes audio files into logical categories for better file management
  *
@@ -224,6 +240,8 @@ export async function loadVoice(
 					emitVoiceActivity(true);
 				})
 				.catch(() => {
+					currentRadio?.stop();
+					currentRadio = null;
 					emitVoiceActivity(false);
 				});
 		}, QUINDAR_INTRO_MS);

@@ -32,7 +32,8 @@ export const IntroScreen: React.FC<IntroScreenProps> = ({ onStart }) => {
 			</div>
 			<p className="max-w-xl text-slate-300 mb-8 md:mb-10 text-base md:text-lg px-4 leading-relaxed">
 				<span className="font-bold block mb-2">
-					AI Kobayashi Maru: A No-Win Simulation for the Brave
+					AI Kobayashi Maru:
+					<br className="md:hidden" /> A No-Win Simulation for the Brave
 				</span>
 				<span className="text-slate-400">
 					Swipe your way through the AI Singularity. It's not about passing;
@@ -44,7 +45,8 @@ export const IntroScreen: React.FC<IntroScreenProps> = ({ onStart }) => {
 			</p>
 			<p className="max-w-xl text-slate-300 mb-12 md:mb-16 text-base md:text-lg px-4">
 				<span className="text-slate-300 font-bold block mb-2">
-					Project Icarus: The Last Human in the Loop
+					Project Icarus:
+					<br className="md:hidden" /> The Last Human in the Loop
 				</span>
 				<span className="text-slate-400">
 					The CEO just gave "Full Autonomy" to an experimental LLM. The

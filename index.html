@@ -164,7 +164,7 @@
             backface-visibility: hidden;
             -webkit-backface-visibility: hidden;
             transform: translateZ(0); /* Force GPU layer creation */
-            touch-action: pan-y; /* Allow vertical scroll, handle horizontal in JS */
+            touch-action: none; /* Surrender all touch to JS gesture handler */
         }
 
         @keyframes swipeExitLeft {

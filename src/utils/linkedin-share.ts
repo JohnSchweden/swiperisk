@@ -58,6 +58,42 @@ export function encodeLinkedInShareUrl(
 }
 
 /**
+ * Opens a LinkedIn share dialog, preferring the native app on mobile.
+ * On mobile: tries the linkedin:// app scheme first; falls back to the web URL
+ * after 1500ms if the app is not installed.
+ * On desktop: opens the web URL in a new tab.
+ */
+export function openLinkedInShare(webUrl: string): void {
+	const isMobile = /Mobi|Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
+	if (!isMobile) {
+		window.open(webUrl, "_blank", "noopener,noreferrer");
+		return;
+	}
+
+	// Build linkedin:// deep-link from the share-offsite web URL
+	try {
+		const parsed = new URL(webUrl);
+		const params = new URLSearchParams({
+			mini: "true",
+			url: parsed.searchParams.get("url") ?? "",
+			title: parsed.searchParams.get("title") ?? "",
+			summary: parsed.searchParams.get("summary") ?? "",
+		});
+		const appUrl = `linkedin://shareArticle?${params.toString()}`;
+		window.location.href = appUrl;
+	} catch {
+		// If URL parsing fails just fall through to web fallback immediately
+	}
+
+	// Fallback: open web URL if the app didn't launch within 1.5s
+	setTimeout(() => {
+		if (!document.hidden) {
+			window.open(webUrl, "_blank", "noopener,noreferrer");
+		}
+	}, 1500);
+}
+
+/**
  * Combines formatShareText and encodeLinkedInShareUrl for convenience.
  * Returns the complete LinkedIn share URL with encoded parameters.
  */

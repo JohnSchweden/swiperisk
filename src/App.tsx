@@ -56,6 +56,7 @@ import {
 	playCountdownStart,
 	prepareCountdownAudio,
 } from "./services/pressureAudio";
+import { resumeVoiceContext } from "./services/voicePlayback";
 import { type Card, DeathType, GameStage, type RoleType } from "./types";
 import { triggerHaptic } from "./utils/haptic";
 
@@ -457,6 +458,20 @@ const App: React.FC = () => {
 		return () => window.removeEventListener("keydown", handleKeyDown);
 	}, [state.stage, feedbackOverlay, swipe]);
 
+	// Prime voice AudioContext on every gesture so iOS doesn't block it mid-game
+	useEffect(() => {
+		const unlock = () => resumeVoiceContext();
+		document.addEventListener("touchstart", unlock, {
+			capture: true,
+			passive: true,
+		});
+		document.addEventListener("click", unlock, { capture: true });
+		return () => {
+			document.removeEventListener("touchstart", unlock, { capture: true });
+			document.removeEventListener("click", unlock, { capture: true });
+		};
+	}, []);
+
 	// Restart game (full cleanup: state, roast, overlay, swipe)
 	const handleRestart = useCallback(() => {
 		resetGame();
@@ -647,6 +662,7 @@ const App: React.FC = () => {
 				flySpeedMenuOnly
 				taskbarHostsSpeedBurger={isPlayingStage}
 				bgm={bgm}
+				onRestart={handleRestart}
 			>
 				<div
 					ref={gameContainerRef}

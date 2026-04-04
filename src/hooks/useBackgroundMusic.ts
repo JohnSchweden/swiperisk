@@ -334,6 +334,25 @@ export function useBackgroundMusic() {
 		return () => el.removeEventListener("canplaythrough", kick);
 	}, [tryPlay]);
 
+	// Mobile autoplay: retry playback on first user gesture (iOS/Android block HTMLMediaElement.play() until gesture)
+	useEffect(() => {
+		const unlock = () => {
+			const el = audioRef.current;
+			if (el && enabledRef.current && el.paused) {
+				tryPlay();
+			}
+		};
+		document.addEventListener("touchstart", unlock, {
+			capture: true,
+			passive: true,
+		});
+		document.addEventListener("click", unlock, { capture: true });
+		return () => {
+			document.removeEventListener("touchstart", unlock, { capture: true });
+			document.removeEventListener("click", unlock, { capture: true });
+		};
+	}, [tryPlay]);
+
 	useLayoutEffect(() => {
 		const el = new Audio();
 		el.preload = "auto";

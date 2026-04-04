@@ -135,7 +135,9 @@ describe("Pressure Audio System", () => {
 				"../services/pressureAudio"
 			);
 			const session = createPressureAudioSession();
-			const ctx = session.context as InstanceType<typeof MockAudioContextClass>;
+			const ctx = session.context as unknown as InstanceType<
+				typeof MockAudioContextClass
+			>;
 
 			session.startHeartbeat({});
 			await vi.waitFor(() => {
@@ -164,7 +166,7 @@ describe("Pressure Audio System", () => {
 			playCountdownBeep(2);
 			playCountdownBeep(1);
 
-			const ctx = getCountdownContext() as InstanceType<
+			const ctx = getCountdownContext() as unknown as InstanceType<
 				typeof MockAudioContextClass
 			>;
 			expect(ctx.createOscillator).toHaveBeenCalledTimes(3);
@@ -181,7 +183,7 @@ describe("Pressure Audio System", () => {
 			);
 			getCountdownContext(); // populate cached ctx
 			playCountdownBeep(1);
-			const ctx = getCountdownContext() as InstanceType<
+			const ctx = getCountdownContext() as unknown as InstanceType<
 				typeof MockAudioContextClass
 			>;
 			expect(ctx.createOscillator).not.toHaveBeenCalled();
@@ -196,7 +198,7 @@ describe("Pressure Audio System", () => {
 				"../services/pressureAudio"
 			);
 			playCountdownStart();
-			const ctx = getCountdownContext() as InstanceType<
+			const ctx = getCountdownContext() as unknown as InstanceType<
 				typeof MockAudioContextClass
 			>;
 			expect(ctx.createOscillator).toHaveBeenCalledTimes(1);
@@ -211,7 +213,7 @@ describe("Pressure Audio System", () => {
 			);
 			getCountdownContext();
 			playCountdownStart();
-			const ctx = getCountdownContext() as InstanceType<
+			const ctx = getCountdownContext() as unknown as InstanceType<
 				typeof MockAudioContextClass
 			>;
 			expect(ctx.createOscillator).not.toHaveBeenCalled();
@@ -232,13 +234,13 @@ describe("Pressure Audio System", () => {
 	describe("playUnlockPulse", () => {
 		it("should create oscillator, connect, start(0), stop(0.05)", async () => {
 			const { playUnlockPulse } = await import("../services/pressureAudio");
-			const ctx = new MockAudioContextClass() as unknown as AudioContext;
+			const mockCtx = new MockAudioContextClass();
 
-			playUnlockPulse(ctx);
+			playUnlockPulse(mockCtx as unknown as AudioContext);
 
-			expect(ctx.createOscillator).toHaveBeenCalled();
-			expect(ctx.createGain).toHaveBeenCalled();
-			const osc = ctx.createOscillator.mock.results[0]?.value;
+			expect(mockCtx.createOscillator).toHaveBeenCalled();
+			expect(mockCtx.createGain).toHaveBeenCalled();
+			const osc = mockCtx.createOscillator.mock.results[0]?.value;
 			expect(osc.start).toHaveBeenCalledWith(0);
 			expect(osc.stop).toHaveBeenCalledWith(0.05);
 		});
@@ -272,7 +274,9 @@ describe("Pressure Audio System", () => {
 				"../services/pressureAudio"
 			);
 			const session = createPressureAudioSession();
-			const ctx = session.context as InstanceType<typeof MockAudioContextClass>;
+			const ctx = session.context as unknown as InstanceType<
+				typeof MockAudioContextClass
+			>;
 
 			session.startAlert();
 			await vi.waitFor(() => {

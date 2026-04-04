@@ -156,11 +156,11 @@ describe("makeCard", () => {
 			{ incident: "test", date: "2024", outcome: "test" },
 			{
 				...minimalOutcome,
-				deathVector: "BANKRUPT" as const,
+				deathVector: DeathType.BANKRUPT,
 			},
 			{
 				...minimalOutcome,
-				deathVector: "PRISON" as const,
+				deathVector: DeathType.PRISON,
 			},
 		);
 

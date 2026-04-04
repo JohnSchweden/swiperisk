@@ -193,6 +193,7 @@ describe("Archetype Data and Calculation", () => {
 				CONSERVATIVE: 0,
 				BALANCED: 0,
 				CHAOS_AGENT: 0,
+				KIRK: 0,
 			};
 			const score = calculateResilienceScore([], scores);
 			expect(score).toBe(0);
@@ -206,6 +207,7 @@ describe("Archetype Data and Calculation", () => {
 				CONSERVATIVE: 3,
 				BALANCED: 0,
 				CHAOS_AGENT: 0,
+				KIRK: 0,
 			};
 			const history = [{ cardId: "test", choice: "LEFT" as const }];
 			const score = calculateResilienceScore(history, scores);
@@ -221,6 +223,7 @@ describe("Archetype Data and Calculation", () => {
 				CONSERVATIVE: 0,
 				BALANCED: 0,
 				CHAOS_AGENT: 0,
+				KIRK: 0,
 			};
 			const history = Array(10).fill({
 				cardId: "test",

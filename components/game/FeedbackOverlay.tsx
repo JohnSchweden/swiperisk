@@ -117,7 +117,7 @@ interface FeedbackOverlayProps {
 	} | null;
 	/** Label of the chosen outcome for image display */
 	outcomeLabel?: string;
-	/** Kirk easter egg: match corruption tint on modal (game shell sits under z-50 sibling) */
+	/** Kirk path: scanline veil above modal dim (matches .kirk-corrupted::before) */
 	kirkCorruptionActive?: boolean;
 	/** Callback to proceed to next card */
 	onNext: () => void;
@@ -168,7 +168,7 @@ export const FeedbackOverlay: React.FC<FeedbackOverlayProps> = ({
 
 	return (
 		<div
-			className={`fixed inset-0 z-50 flex items-center justify-center p-4 md:p-6 modal-overlay${kirkCorruptionActive ? " modal-overlay--kirk" : ""}`}
+			className={`fixed inset-0 z-50 flex items-center justify-center p-4 md:p-6 modal-overlay${kirkCorruptionActive ? " modal-overlay--kirk-veil" : ""}`}
 			data-testid="feedback-dialog"
 			data-choice={choice}
 			role="dialog"

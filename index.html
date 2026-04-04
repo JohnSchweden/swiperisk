@@ -390,6 +390,12 @@
             z-index: 0;
             animation: overlayFadeIn 0.3s ease-out forwards;
         }
+        /* Kirk: skip dim fade — ramping ::before opacity hid the shell’s scanlines then revealed
+         * ::after, which reads as emerald fading out then back in. */
+        .modal-overlay--kirk-veil::before {
+            animation: none;
+            opacity: 1;
+        }
         /* Scale-only on the panel — no opacity on .glass-card (same backdrop-filter rule as stage-transition). */
         .modal-overlay > .modal-content {
             position: relative;
@@ -398,24 +404,26 @@
         }
 
         /*
-         * Kirk corruption: feedback modal is a sibling above the game shell (z-10 vs z-50),
-         * so the game container's .kirk-corrupted layer is fully covered. Mirror the cyan
-         * scanline tint on the modal backdrop only (no filter on the overlay root — breaks glass).
+         * Kirk corruption: game shell’s .kirk-corrupted::before sits under this modal (z-10 vs z-50).
+         * Same scanlines in ::after, above dim and above .modal-content so the veil covers the full
+         * feedback UI. pointer-events: none keeps the dialog clickable. No filter on overlay root.
          */
-        .modal-overlay--kirk::before {
-            background:
-                repeating-linear-gradient(
-                    0deg,
-                    transparent,
-                    transparent 2px,
-                    rgba(0, 255, 255, 0.035) 2px,
-                    rgba(0, 255, 255, 0.035) 4px
-                ),
-                linear-gradient(
-                    180deg,
-                    rgba(0, 45, 52, 0.42) 0%,
-                    rgba(0, 0, 0, 0.52) 100%
-                );
+        /* No opacity animation on ::after — if it shared overlayFadeIn with ::before, the dim
+         * became visible first while scanlines were still at opacity 0 → flash: dark then emerald. */
+        .modal-overlay--kirk-veil::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            pointer-events: none;
+            z-index: 2;
+            opacity: 1;
+            background: repeating-linear-gradient(
+                0deg,
+                transparent,
+                transparent 2px,
+                rgba(0, 255, 255, 0.03) 2px,
+                rgba(0, 255, 255, 0.03) 4px
+            );
         }
 
         @keyframes overlayFadeIn {
@@ -641,12 +649,10 @@
             .kirk-corrupted::before { background: rgba(0,255,255,0.05); }
             .kirk-flicker { animation: none; opacity: 0.7; }
             .kirk-glitch-text { animation: none; text-shadow: 1px 0 #ff0000, -1px 0 #00ffff; }
-            .modal-overlay--kirk::before {
-                background: linear-gradient(
-                    180deg,
-                    rgba(0, 55, 60, 0.5) 0%,
-                    rgba(0, 0, 0, 0.55) 100%
-                );
+            .modal-overlay--kirk-veil::after {
+                background: rgba(0, 255, 255, 0.05);
+                animation: none;
+                opacity: 1;
             }
         }
 

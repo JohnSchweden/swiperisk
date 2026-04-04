@@ -4,7 +4,12 @@ import { expect, test } from "@playwright/test";
 
 test.describe("Debrief Navigation @area:gameplay", () => {
 	test("DEBRIEF_PAGE_1 maps to DEBRIEF_PAGE_2 in nextPage", () => {
-		const useDebriefPath = path.join(process.cwd(), "hooks", "useDebrief.ts");
+		const useDebriefPath = path.join(
+			process.cwd(),
+			"src",
+			"hooks",
+			"useDebrief.ts",
+		);
 		const content = fs.readFileSync(useDebriefPath, "utf-8");
 
 		const debriefPage1Match = content.match(
@@ -15,7 +20,12 @@ test.describe("Debrief Navigation @area:gameplay", () => {
 	});
 
 	test("all debrief transitions are properly configured", () => {
-		const useDebriefPath = path.join(process.cwd(), "hooks", "useDebrief.ts");
+		const useDebriefPath = path.join(
+			process.cwd(),
+			"src",
+			"hooks",
+			"useDebrief.ts",
+		);
 		const content = fs.readFileSync(useDebriefPath, "utf-8");
 
 		// Expected: linear debrief 1 → 2 → 3; null ends flow
@@ -29,7 +39,12 @@ test.describe("Debrief Navigation @area:gameplay", () => {
 	});
 
 	test("transitions map is complete for all GameStage values", () => {
-		const useDebriefPath = path.join(process.cwd(), "hooks", "useDebrief.ts");
+		const useDebriefPath = path.join(
+			process.cwd(),
+			"src",
+			"hooks",
+			"useDebrief.ts",
+		);
 		const content = fs.readFileSync(useDebriefPath, "utf-8");
 
 		const transitionsMatch = content.match(

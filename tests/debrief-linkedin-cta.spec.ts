@@ -51,7 +51,7 @@ test.describe("LinkedIn CTA Section @area:debrief", () => {
 		await gotoWithKmDebugState(page, { stage: "DEBRIEF_PAGE_3" });
 
 		// Link text should display name
-		const linkedinLink = page.getByText(/message yevgen schweden/i);
+		const linkedinLink = page.getByText(/dm yevgen schweden/i);
 		await expect(linkedinLink).toBeVisible();
 	});
 
@@ -65,7 +65,7 @@ test.describe("LinkedIn CTA Section @area:debrief", () => {
 		await expect(linkedinLink).toBeVisible();
 
 		// Text should be visible
-		await expect(page.getByText(/message yevgen schweden/i)).toBeVisible();
+		await expect(page.getByText(/dm yevgen schweden/i)).toBeVisible();
 	});
 
 	test("Description text mentions LinkedIn and adaptive version", async ({
@@ -75,6 +75,6 @@ test.describe("LinkedIn CTA Section @area:debrief", () => {
 
 		// Description should mention LinkedIn and adaptive version
 		await expect(page.getByText(/adaptive version/i)).toBeVisible();
-		await expect(page.getByText(/message me on linkedin/i)).toBeVisible();
+		await expect(page.getByText(/dm me on linkedin/i)).toBeVisible();
 	});
 });

@@ -86,7 +86,7 @@ src/utils/
 <!-- AUTO-MANAGED: conventions -->
 ## Code Conventions
 
-- **Components**: PascalCase files, `.tsx` extension, `components/game/` for game screens
+- **Components**: PascalCase files, `.tsx` extension, `src/components/game/` for game screens
 - **Hooks**: `use` prefix, camelCase, one concern per hook (`useSwipeGestures`, `useVoicePlayback`)
 - **Imports**: `import type` for type-only imports; `@/` alias for root-relative paths
 - **Formatting**: Biome — tabs, double quotes in TSX, no trailing semicolons enforced by linter
@@ -100,7 +100,7 @@ src/utils/
 
 - **Finite state machine**: `GameStage` enum + `STAGE_TRANSITIONS` map validates all stage changes; illegal transitions are blocked
 - **Custom hooks as controllers**: Each major subsystem (swipe, voice, boss fight, roast) is a custom hook; `App.tsx` composes them
-- **Barrel exports**: `components/game/index.ts`, `data/index.ts`, `hooks/index.ts` — import from directory, not individual files
+- **Barrel exports**: `src/components/game/index.ts`, `src/data/index.ts`, `src/hooks/index.ts` — import from directory, not individual files
 - **Role-scoped content**: Card decks, death endings, and boss questions are keyed by `RoleType` — add new content by extending the role map
 - **Personality-scoped feedback**: Each `ChoiceOutcome` contains a `feedback: Record<PersonalityType, string>` — all three personalities must have entries
 - **Env-gated features**: `VITE_ENABLE_SPEECH=false` disables TTS; `GEMINI_API_KEY` injected at build time via Vite define

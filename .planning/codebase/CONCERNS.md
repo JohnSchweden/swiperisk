@@ -8,7 +8,7 @@
 
 **Issue:** 16 state refs + 7 timers managing drag, swipe, and snap-back animation — high cognitive load and potential race condition vectors.
 
-**Files:** `hooks/useSwipeGestures.ts` (405 lines)
+**Files:** `src/hooks/useSwipeGestures.ts` (405 lines)
 
 **Impact:**
 - Multiple `setTimeout`/`requestAnimationFrame` cleanup paths (lines 221–227, 244–251, 273–280, 290–296, 386–390)
@@ -31,10 +31,10 @@
 **Files:** `unit/deck.test.ts` (lines 6–18)
 
 **Impact:**
-- Shuffle algorithm in `lib/deck.ts` (lines 9–33) untested — requires 9 `Math.random()` calls for 5 cards, but mocks only provide 1–3
+- Shuffle algorithm in `src/lib/deck.ts` (lines 9–33) untested — requires 9 `Math.random()` calls for 5 cards, but mocks only provide 1–3
 - Silent test skip — no CI failure, tests pass with coverage blind spot
 - Any refactor to shuffle behavior undetectable
-- Choice-side swap logic (lines 16–30 of `lib/deck.ts`) also untested
+- Choice-side swap logic (lines 16–30 of `src/lib/deck.ts`) also untested
 
 **Fix approach:**
 1. Replace mock strategy: use seeded random (e.g., `seedrandom` package) instead of `Math.random()` mock
@@ -48,7 +48,7 @@
 
 **Issue:** Hard-coded 15s timeout (line 121) with `Promise.race` — connection may hang if WebSocket doesn't emit `onopen` before timeout.
 
-**Files:** `services/geminiLive.ts` (lines 121, 253–260)
+**Files:** `src/services/geminiLive.ts` (lines 121, 253–260)
 
 **Impact:**
 - Timeout fires before `onopen` callback, but callback may still execute — controller already errored
@@ -70,7 +70,7 @@
 
 **Issue:** `outputTranscription` field parsing is defensive/fragile (lines 180–203).
 
-**Files:** `services/geminiLive.ts` (lines 175–203)
+**Files:** `src/services/geminiLive.ts` (lines 175–203)
 
 **Impact:**
 - Type coercion: `outputTranscription` could be string OR object, handled with typeof check (line 189)
@@ -92,7 +92,7 @@
 
 **Issue:** `_isCritical` parameter passed but never used (line 112 of `CardStack.tsx`).
 
-**Files:** `components/game/CardStack.tsx` (line 112)
+**Files:** `src/components/game/CardStack.tsx` (line 112)
 
 **Impact:**
 - Parameter suggests intention to apply critical-level stress visuals, but only `isUrgent` is checked (line 138)
@@ -112,7 +112,7 @@
 
 **Issue:** Next card image preloaded (lines 120–132) but no verification it loads before swipe.
 
-**Files:** `components/game/CardStack.tsx` (lines 120–132)
+**Files:** `src/components/game/CardStack.tsx` (lines 120–132)
 
 **Impact:**
 - Preload link created but never awaited — browser may not fetch before card swipes
@@ -134,7 +134,7 @@
 
 **Issue:** Fetch requests in `loadVoice` (line 87 of `voicePlayback.ts`) not aborted on unmount or hook cleanup.
 
-**Files:** `services/voicePlayback.ts` (line 87), `hooks/useVoicePlayback.ts` (lines 47–62)
+**Files:** `src/services/voicePlayback.ts` (line 87), `src/hooks/useVoicePlayback.ts` (lines 47–62)
 
 **Impact:**
 - `loadVoice().then().catch()` fire even if component unmounts — potential memory leak
@@ -156,7 +156,7 @@
 
 **Issue:** `VALID_TRANSITIONS` map enforces forward-only flow, but no exhaustiveness check or runtime validation.
 
-**Files:** `hooks/useGameState.ts` (lines 68–88)
+**Files:** `src/hooks/useGameState.ts` (lines 68–88)
 
 **Impact:**
 - New `GameStage` enum values can be added without updating `VALID_TRANSITIONS` — silent invalid state possible
@@ -178,7 +178,7 @@
 
 **Issue:** Empty audio buffer marked as final (lines 222–230) but no verification buffer was non-empty earlier.
 
-**Files:** `services/geminiLive.ts` (lines 222–230)
+**Files:** `src/services/geminiLive.ts` (lines 222–230)
 
 **Impact:**
 - If API sends only `turnComplete` without audio chunks, empty buffer enqueued as "final"
@@ -200,7 +200,7 @@
 
 **Issue:** Extensive console.log statements throughout codebase used for debugging.
 
-**Files:** `services/geminiLive.ts`, `vite.config.ts`, `scripts/*.ts`, `tests/*.ts`
+**Files:** `src/services/geminiLive.ts`, `vite.config.ts`, `scripts/*.ts`, `tests/*.ts`
 
 **Impact:**
 - Performance overhead from console operations
@@ -220,7 +220,7 @@
 
 **Issue:** Card definition files exceed 900 lines, all loaded upfront.
 
-**Files:** `data/cards/*.ts` (chief-something-officer.ts: 954 lines, head-of-something.ts: 905 lines, etc.)
+**Files:** `src/data/cards/*.ts` (chief-something-officer.ts: 954 lines, head-of-something.ts: 905 lines, etc.)
 
 **Impact:**
 - Large bundle size increases initial load time
@@ -240,7 +240,7 @@
 
 **Issue:** Large utility functions lack unit test coverage.
 
-**Files:** `lib/gif-overlay.ts` (646 lines), `lib/safeCoercion.ts`, `lib/slugify.ts`
+**Files:** `src/lib/gif-overlay.ts` (646 lines), `src/lib/safeCoercion.ts`, `src/lib/slugify.ts`
 
 **Impact:**
 - Untested code changes could introduce regressions
@@ -248,7 +248,7 @@
 - Core utility functions used across application lack safety net
 
 **Fix approach:**
-1. Add unit tests for all lib/ functions
+1. Add unit tests for all src/lib/ functions
 2. Create test fixtures for GIF overlay operations
 3. Add integration tests for utility usage in components
 4. Set up test coverage thresholds to prevent future gaps
@@ -259,7 +259,7 @@
 
 **[Incomplete roaster text]:**
 - Issue: Placeholder text "TODO: Fix properly later. Later never comes. Debt compounds." in card definition
-- Files: `data/cards/software-engineer.ts`
+- Files: `src/data/cards/software-engineer.ts`
 - Trigger: Display of specific card roaster text
 - Workaround: Content renders as-is with TODO placeholder
 
@@ -272,8 +272,8 @@
 **Issue:** Commented-out streaming transcript display (lines 135–142 of `RoastTerminal.tsx`) suggests duplicate state management.
 
 **Files:**
-- `hooks/useLiveAPISpeechRecognition.ts` — returns `transcript`
-- `components/game/RoastTerminal.tsx` — also tracks `_streamingTranscript` state
+- `src/hooks/useLiveAPISpeechRecognition.ts` — returns `transcript`
+- `src/components/game/RoastTerminal.tsx` — also tracks `_streamingTranscript` state
 
 **Symptoms:** Multiple sources of truth for transcription; streaming display disabled to avoid duplication.
 
@@ -289,7 +289,7 @@
 
 ### 1. Deck Shuffling with Branching
 
-**Files:** `lib/deck.ts` (lines 9–33), `hooks/useGameState.ts` (lines 44–66)
+**Files:** `src/lib/deck.ts` (lines 9–33), `src/hooks/useGameState.ts` (lines 44–66)
 
 **Why fragile:**
 - `shuffleDeck()` modifies choice sides (lines 16–30); `resolveDeckWithBranching()` injects cards (line 64)
@@ -309,7 +309,7 @@
 
 ### 2. Image Fallback Chain
 
-**Files:** `components/ImageWithFallback.tsx`
+**Files:** `src/components/ImageWithFallback.tsx`
 
 **Why fragile:**
 - Fallback image may also fail to load — no cascade fallback beyond placeholder color
@@ -335,7 +335,7 @@
 - No max duration guard — timer could count forever
 
 **Safe modification:**
-1. Read file `hooks/useBossFight.ts` to verify timer cleanup pattern
+1. Read file `src/hooks/useBossFight.ts` to verify timer cleanup pattern
 2. Add explicit interval cleanup in return statement of effect
 3. Test: unmount during countdown, verify no dispatch after unmount
 4. Add timeout guard: max 30s absolute, auto-exit if exceeded
@@ -349,7 +349,7 @@
 
 **What's not tested:** Text overlay on GIF templates, fallback handling, error recovery.
 
-**Files:** `lib/gif-overlay.ts` (646 lines)
+**Files:** `src/lib/gif-overlay.ts` (646 lines)
 
 **Risk:** GIF generation fails silently, memes don't render in debrief.
 
@@ -363,7 +363,7 @@
 
 **What's not tested:** Shuffled deck distribution, uniform randomness, choice-side swapping.
 
-**Files:** `lib/deck.ts` (lines 9–33)
+**Files:** `src/lib/deck.ts` (lines 9–33)
 
 **Risk:** Shuffled deck could bias toward first/last card without detection. Choice-side swap logic could break silently.
 
@@ -377,7 +377,7 @@
 
 **What's not tested:** Whether image is actually cached before card swipes off-screen.
 
-**Files:** `components/game/CardStack.tsx` (lines 120–132)
+**Files:** `src/components/game/CardStack.tsx` (lines 120–132)
 
 **Risk:** Placeholder flash visible if image slow to load.
 
@@ -395,7 +395,7 @@
 - Rapid reconnects
 - Empty audio buffer handling
 
-**Files:** `services/geminiLive.ts` (lines 72–277)
+**Files:** `src/services/geminiLive.ts` (lines 72–277)
 
 **Risk:** Roast feature freezes if API hangs; user waits indefinitely.
 
@@ -409,7 +409,7 @@
 
 **What's not tested:** Attempting invalid transitions; new `GameStage` values without updating `VALID_TRANSITIONS`.
 
-**Files:** `hooks/useGameState.ts` (lines 68–88)
+**Files:** `src/hooks/useGameState.ts` (lines 68–88)
 
 **Risk:** Invalid state reachable; breaking level progression.
 
@@ -442,7 +442,7 @@
 
 **Problem:** DOM insertion/removal on every card change (lines 122–131 of `CardStack.tsx`).
 
-**Files:** `components/game/CardStack.tsx` (lines 120–132)
+**Files:** `src/components/game/CardStack.tsx` (lines 120–132)
 
 **Cause:** Creates link, appends, removes on next card or unmount — multiple reflows.
 
@@ -460,11 +460,11 @@
 
 ### 1. Deck Branching Injection
 
-**Current capacity:** `resolveDeckWithBranching()` handles single branch key lookup (line 55–56 of `lib/deck.ts`).
+**Current capacity:** `resolveDeckWithBranching()` handles single branch key lookup (line 55–56 of `src/lib/deck.ts`).
 
 **Limit:** If multiple branch paths possible (choice1 + choice2 = different branches), current code only reads last choice.
 
-**Files:** `lib/deck.ts` (lines 44–66)
+**Files:** `src/lib/deck.ts` (lines 44–66)
 
 **Scaling path:**
 1. Extend to multi-choice branching: `branchKey = [choice1, choice2, ...].join(':')`
@@ -480,7 +480,7 @@
 
 **Limit:** If player plays many games, history array grows indefinitely, hydration slows.
 
-**Files:** `hooks/useGameState.ts` (line 38: `history: []`)
+**Files:** `src/hooks/useGameState.ts` (line 38: `history: []`)
 
 **Scaling path:**
 1. Cap history to last 100 entries
@@ -494,9 +494,9 @@
 
 ### 1. Gemini 2.5 Flash Native Audio API
 
-**Risk:** API is `v1alpha` (line 90 of `services/geminiLive.ts`), subject to breaking changes.
+**Risk:** API is `v1alpha` (line 90 of `src/services/geminiLive.ts`), subject to breaking changes.
 
-**Files:** `services/geminiLive.ts` (line 90)
+**Files:** `src/services/geminiLive.ts` (line 90)
 
 **Impact:** TTS, roast, boss fight audio depend on this. API deprecation = feature loss.
 
@@ -512,7 +512,7 @@
 
 **Risk:** Environment variables injected at build time, not runtime.
 
-**Files:** Multiple (e.g., `services/geminiLive.ts` line 76)
+**Files:** Multiple (e.g., `src/services/geminiLive.ts` line 76)
 
 **Impact:** `VITE_GEMINI_API_KEY` missing at build = runtime error, not build error.
 
@@ -528,7 +528,7 @@
 
 **Risk:** text-on-gif and canvas packages used without proper type definitions or fallbacks.
 
-**Files:** `lib/gif-overlay.ts` (lines 209, 225)
+**Files:** `src/lib/gif-overlay.ts` (lines 209, 225)
 
 **Impact:** @ts-expect-error comments indicate missing type safety, potential runtime errors.
 
@@ -546,7 +546,7 @@
 
 **Risk:** Browser makes direct fetch to Google API with API key (line 39 of `geminiLive.ts`).
 
-**Files:** `services/geminiLive.ts` (lines 38–63)
+**Files:** `src/services/geminiLive.ts` (lines 38–63)
 
 **Current mitigation:** Ephemeral token API returns short-lived token, key not exposed to WebSocket.
 
@@ -581,7 +581,7 @@
 
 **Problem:** If voice.mp3 fetch fails (line 87 of `voicePlayback.ts`), no fallback.
 
-**Files:** `services/voicePlayback.ts` (line 87), `hooks/useVoicePlayback.ts` (lines 47–62)
+**Files:** `src/services/voicePlayback.ts` (line 87), `src/hooks/useVoicePlayback.ts` (lines 47–62)
 
 **Blocks:** If voice files deleted/moved, feedback audio silent — gameplay confused.
 
@@ -597,7 +597,7 @@
 
 **Problem:** If roast audio starts playing, user can't interrupt (no stop button visible during playback).
 
-**Files:** `services/voicePlayback.ts`, `hooks/useVoicePlayback.ts`
+**Files:** `src/services/voicePlayback.ts`, `src/hooks/useVoicePlayback.ts`
 
 **Blocks:** Long roasts force user to wait or mute speaker.
 

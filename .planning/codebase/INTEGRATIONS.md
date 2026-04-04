@@ -11,7 +11,7 @@
   - Live API: `gemini-2.5-flash-native-audio-latest` for streaming audio interaction
   - SDK/Client: `@google/generative-ai` (v0.24.1 for REST), `@google/genai` (v1.40.0 for Live API)
   - Auth (server): `GEMINI_API_KEY` via `process.env` (checked in `api/speak.ts:13`, `api/roast.ts:28`)
-  - Auth (client): `VITE_GEMINI_API_KEY` via `import.meta.env` (checked in `services/geminiLive.ts:76`)
+  - Auth (client): `VITE_GEMINI_API_KEY` via `import.meta.env` (checked in `src/services/geminiLive.ts:76`)
   - Ephemeral token: Obtained via POST to `https://generativelanguage.googleapis.com/v1beta/tokens?key={apiKey}` (1-hour expiry)
 
 **Resend Email Service (Optional):**
@@ -101,7 +101,7 @@
 **Optional env vars:**
 - `VITE_ENABLE_SPEECH` - Feature flag for TTS UI (default: "true", can set to "false" to disable)
 - `VITE_ENABLE_LIVE_API` - Feature flag for Gemini Live API streaming
-- `VITE_STT_LOW_LATENCY` - Low-latency speech-to-text mode (experimental, checked in `hooks/useLiveAPISpeechRecognition.ts:78`)
+- `VITE_STT_LOW_LATENCY` - Low-latency speech-to-text mode (experimental, checked in `src/hooks/useLiveAPISpeechRecognition.ts:78`)
 - `RESEND_API_KEY` - For v2 waitlist email confirmations (dev fallback: logs only)
 
 **Secrets location:**
@@ -131,21 +131,11 @@
 - Response: `{ audio: string }` (base64-encoded PCM) or `{ error: string }`
 - Gemini API call: POST to `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-tts:generateContent`
 - Audio format: PCM (16-bit, 24kHz sample rate, single channel)
-- Decoded client-side: `services/geminiService.ts:14-31` converts base64 to AudioBuffer
-
-### Gemini Roast Generation
-
-**File:** `api/roast.ts`
-- Endpoint: `/api/roast` (POST)
-- Request body: `{ workflow: string, personality: "ROASTER" | "ZEN_MASTER" | "LOVEBOMBER" }`
-- Response: `{ text: string }` (roast commentary under 80 words) or `{ error: string }`
-- Fallback chain: tries `gemini-2.5-flash-lite` first, then `gemini-2.5-flash` (line 48)
-- Gemini API call: POST to `https://generativelanguage.googleapis.com/v1beta/models/{model}:generateContent`
-- Error response: "The auditors found your workflow so bad they broke my AI." (fallback)
+- Decoded client-side: `src/services/geminiService.ts:14-31` converts base64 to AudioBuffer
 
 ### Gemini Live API (Streaming Audio)
 
-**File:** `services/geminiLive.ts`
+**File:** `src/services/geminiLive.ts`
 - Browser-direct WebSocket connection (no backend proxy)
 - Authentication: Ephemeral token (obtained via POST to `https://generativelanguage.googleapis.com/v1beta/tokens?key={apiKey}`)
   - Token expires ~1 hour after issuance

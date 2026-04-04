@@ -19,21 +19,21 @@
 
 **Presentation (React Components):**
 - Purpose: Render UI and wire event handlers
-- Location: `components/`
+- Location: `src/components/`
 - Contains: Screen components (`IntroScreen`, `GameScreen`, `BossFight`, `DebriefContainer`), composite UI (`CardStack`, `GameHUD`, `FeedbackOverlay`, `RoastTerminal`), layout (`LayoutShell`, `StarfieldBackground`)
 - Depends on: Hooks, types, data
-- Used by: `App.tsx` orchestrator
+- Used by: `src/App.tsx` orchestrator
 
 **State Management (useGameState + gameReducer):**
 - Purpose: Single source of truth for all game state; validates stage transitions
-- Location: `hooks/useGameState.ts`, `hooks/useGameState/` (submodules: `deathResolver.ts`, `hydration.ts`)
+- Location: `src/hooks/useGameState.ts`, `src/hooks/useGameState/` (submodules: `deathResolver.ts`, `hydration.ts`)
 - Contains: `gameReducer` (switch on action type), action dispatchers, state hydration, death resolution logic, Kirk corruption handling
 - Depends on: Types, data (card decks, branching injections)
-- Used by: `App.tsx` (root hook initialization)
+- Used by: `src/App.tsx` (root hook initialization)
 
 **Domain Hooks (Custom Hooks):**
 - Purpose: Encapsulate subsystem logic
-- Location: `hooks/`
+- Location: `src/hooks/`
 - Examples:
   - `useSwipeGestures.ts` - Gesture tracking (offset, direction, threshold, snap-back animation)
   - `useVoicePlayback.ts` - TTS audio playback state and effects
@@ -45,11 +45,11 @@
   - `useClock.ts` - Current time for taskbar display
   - `useDebrief.ts` - Debrief page navigation and archetype calculation
   - `useStageReady.ts` - Ghost-click prevention via stage readiness debounce
-- Used by: `App.tsx` composes all of them
+- Used by: `src/App.tsx` composes all of them
 
 **Data Layer:**
 - Purpose: Immutable content (card decks, personalities, roles, endings, rules, images)
-- Location: `data/`
+- Location: `src/data/`
 - Contains:
   - `cards/` - Role-specific card decks (Finance, Management, Marketing, HR, Development, Cleaning)
   - `index.ts` - Barrel export of all data
@@ -71,40 +71,33 @@
 
 **Services (Utilities & APIs):**
 - Purpose: API calls, audio playback, utility functions
-- Location: `services/`, `utils/`, `lib/`
+- Location: `src/services/`, `src/utils/`, `src/lib/`
 - Key files:
-  - `geminiService.ts` - Gemini 2.5 TTS API wrapper
-  - `geminiLive.ts` - Live API integration for voice input
-  - `roastService.ts` - AI roast generation (calls backend API)
-  - `pressureAudio.ts` - Countdown audio beeps and context management
-  - `voicePlayback.ts` - Audio element creation and playback
-  - `kirkAudio.ts` - Easter egg audio effects (glitch, crash)
-  - `radioEffect.ts` - Audio processing effects
-  - `lib/deck.ts` - Shuffle (Fisher-Yates) and branch injection algorithms
-  - `lib/feedbackAudioChoice.ts` - Audio file path resolution
-  - `utils/haptic.ts` - Haptic feedback trigger (vibration API)
-  - `utils/kirkText.ts` - Kirk Easter Egg text utilities
+  - `src/services/geminiService.ts` - Gemini 2.5 TTS API wrapper
+  - `src/services/geminiLive.ts` - Live API integration for voice input
+  - `src/services/roastService.ts` - AI roast generation (calls backend API)
+  - `src/services/pressureAudio.ts` - Countdown audio beeps and context management
+  - `src/services/voicePlayback.ts` - Audio element creation and playback
+  - `src/services/kirkAudio.ts` - Easter egg audio effects (glitch, crash)
+  - `src/services/radioEffect.ts` - Audio processing effects
+  - `src/lib/deck.ts` - Shuffle (Fisher-Yates) and branch injection algorithms
+  - `src/lib/feedbackAudioChoice.ts` - Audio file path resolution
+  - `src/utils/haptic.ts` - Haptic feedback trigger (vibration API)
+  - `src/utils/kirkText.ts` - Kirk Easter Egg text utilities
 - Used by: Hooks and components
 
 ## Data Flow
 
 **Game Initialization:**
 
-1. `index.tsx` mounts, renders `<App />`
-2. `App.tsx` initializes `useGameState` → `gameReducer` with `initialGameState` (INTRO stage)
+1. `src/index.tsx` mounts, renders `<App />`
+2. `src/App.tsx` initializes `useGameState` → `gameReducer` with `initialGameState` (INTRO stage)
 3. All domain hooks initialized in composition
 4. User clicks "Start" → `handleIntroStart()` → `startGame()` dispatch
 5. `gameReducer` validates INTRO→PERSONALITY_SELECT, updates stage
-6. `App.tsx` re-renders, switch statement routes to `<PersonalitySelect>`
+6. `src/App.tsx` re-renders, switch statement routes to `<PersonalitySelect>`
 
-**Card Swipe Flow:**
-
-1. User touches/clicks card → `useSwipeGestures.onTouchStart()` captures position, sets `isDragging: true`
-2. User drags → `onTouchMove()` calculates `deltaX`, updates `offset` and `direction` state
-3. Offset exceeds `SWIPE_PREVIEW_THRESHOLD` → card shows visual preview (opacity shift, label hint)
-4. Offset exceeds `SWIPE_THRESHOLD` (100px) → `onBeforeSwipe()` callback triggers haptics
-5. User releases → `onTouchEnd()` finalizes direction
-6. `handleChoice()` (App.tsx) called:
+6. `handleChoice()` (`src/App.tsx`) called:
    - Gets current card from `state.effectiveDeck[state.currentCardIndex]`
    - Looks up `card.onLeft` or `card.onRight` based on direction
    - Extracts personality-specific feedback via `feedback[state.personality]`
@@ -196,14 +189,14 @@
 **GameStage Enum:**
 - Purpose: Represents all possible screens/states in a finite state machine
 - Values: `INTRO`, `PERSONALITY_SELECT`, `ROLE_SELECT`, `INITIALIZING`, `PLAYING`, `BOSS_FIGHT`, `DEBRIEF_PAGE_1`, `DEBRIEF_PAGE_2`, `DEBRIEF_PAGE_3`
-- Pattern: Centralized in `types.ts`, routing logic in `App.tsx` switch statement, transition validation via `VALID_TRANSITIONS` map in `useGameState.ts`
+- Pattern: Centralized in `src/types.ts`, routing logic in `src/App.tsx` switch statement, transition validation via `VALID_TRANSITIONS` map in `src/hooks/useGameState.ts`
 
 **Card System:**
 - Purpose: Represents a decision node (incident/scenario) in gameplay
 - Structure: `{id, source, sender, context, storyContext, text, realWorldReference, onLeft, onRight, choiceSidesSwapped?}`
 - Each outcome: `{label, hype, heat, fine, violation, lesson, deathVector?, feedback: {ROASTER, ZEN_MASTER, LOVEBOMBER}}`
 - Pattern: Outcomes must include all three personality feedback strings (enforced in tests)
-- Files: `data/cards/` (role-keyed), `lib/deck.ts` (shuffle + branching)
+- Files: `src/data/cards/` (role-keyed), `src/lib/deck.ts` (shuffle + branching)
 - Shuffle: Fisher-Yates + random choice swapping (prevents directional bias)
 - Branching: Cards injected at specific positions based on prior choices (`BRANCH_INJECTIONS` map)
 
@@ -234,7 +227,7 @@
 
 **Pressure Metadata:**
 - Purpose: Card-level configuration for urgency and emotional weight
-- Location: `data/pressureScenarios.ts` (keyed by card ID)
+- Location: `src/data/pressureScenarios.ts` (keyed by card ID)
 - Structure: `{urgent: bool, countdownSec: number, timeoutResolvesTo: "LEFT"|"RIGHT", criticalForHaptics?: bool, outcomes?: {LEFT?: {teamImpact?: string}, RIGHT?: {...}}}`
 - Usage: Looked up at PLAYING stage before each card, drives countdown timer and visual stress indicators
 - Team Impact: Displayed in feedback overlay if present, shows consequence for team morale/retention
@@ -247,7 +240,7 @@
 - Responsibilities: Imports Vercel Analytics, optional WebMCP polyfill (dev only), renders `<App />` to DOM
 
 **App Component:**
-- Location: `App.tsx`
+- Location: `src/App.tsx`
 - Triggers: On mount (only once), then on state updates
 - Responsibilities:
   - Initializes all custom hooks (state machine, gestures, voice, music, etc.)
@@ -259,7 +252,7 @@
   - Dev-only: Lazy-loads `WebMCPToolsProvider` for MCP tools
 
 **Game Stage Rendering:**
-- Switch statement in `App.tsx` (lines 453–574) routes to screen components based on `state.stage`
+- Switch statement in `src/App.tsx` (lines 453–574) routes to screen components based on `state.stage`
 - Example: `GameStage.PLAYING` → renders `<GameScreen>` + `<PressureCueController>` + optional `<FeedbackOverlay>`
 
 ## Error Handling

@@ -95,10 +95,10 @@ Always call `get_current_screen` first if unsure what state the game is in.
 
 ## Implementation Files
 
-- `hooks/useWebMCPTools.ts` — tool definitions and handlers
-- `components/dev/WebMCPToolsProvider.tsx` — React component wrapper
-- `App.tsx` — mounts provider inside `{import.meta.env.DEV && ...}` block
-- `index.tsx` — imports `@mcp-b/global` polyfill in DEV mode
+- `src/hooks/useWebMCPTools.ts` — tool definitions and handlers
+- `src/components/dev/WebMCPToolsProvider.tsx` — React component wrapper
+- `src/App.tsx` — mounts provider inside `{import.meta.env.DEV && ...}` block
+- `src/index.tsx` — imports `@mcp-b/global` polyfill in DEV mode
 
 ## Troubleshooting
 

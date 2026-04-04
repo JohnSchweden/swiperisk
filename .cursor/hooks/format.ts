@@ -1,13 +1,22 @@
 #!/usr/bin/env bun
+/// <reference types="bun" />
+import { dirname, join } from "node:path";
+import { fileURLToPath } from "node:url";
+
 /**
- * Cursor hook: Biome-format a single file after an agent edit.
- *
- * stdin shapes:
- * - afterFileEdit: { file_path: string }
- * - postToolUse / Claude PostToolUse: { tool_name: "Write"|"Edit", tool_input: { file_path } }
+ * Biome-format one file after an agent edit. Used by:
+ * - Cursor: `.cursor/hooks.json` → `afterFileEdit` → `{ file_path }`
+ * - Claude Code: `.claude/settings.json` → `PostToolUse` matcher `Write|Edit` → `tool_input.file_path`
  *
  * stdout: always `{}` (Cursor parses hook output as JSON; Biome human output must not leak).
  */
+const hookDir = dirname(fileURLToPath(import.meta.url));
+const repoRootFromHook = join(hookDir, "..", "..");
+const packageRoot =
+	typeof process.env.CLAUDE_PROJECT_DIR === "string" &&
+	process.env.CLAUDE_PROJECT_DIR.trim().length > 0
+		? process.env.CLAUDE_PROJECT_DIR.trim()
+		: repoRootFromHook;
 // Cursor pipes JSON (non-TTY). Interactive `bun format.ts` would block on stdin forever.
 if (process.stdin.isTTY) {
 	console.log("{}");
@@ -36,6 +45,8 @@ if (typeof payload === "object" && payload !== null) {
 		const ti = p.tool_input as Record<string, unknown>;
 		if (typeof ti.file_path === "string") {
 			filePath = ti.file_path;
+		} else if (typeof ti.path === "string") {
+			filePath = ti.path;
 		}
 	}
 }
@@ -49,7 +60,7 @@ const proc = Bun.spawn(["bun", "run", "format:file", "--", filePath], {
 	stdin: "ignore",
 	stdout: "ignore",
 	stderr: "pipe",
-	cwd: process.cwd(),
+	cwd: packageRoot,
 });
 
 const status = await proc.exited;
@@ -58,4 +69,5 @@ if (status !== 0) {
 	if (stderr) process.stderr.write(stderr);
 }
 console.log("{}");
-process.exit(status);
+// Always exit 0 so a Biome failure does not block the agent; stderr still surfaces above.
+process.exit(0);

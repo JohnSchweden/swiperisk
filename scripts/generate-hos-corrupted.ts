@@ -55,14 +55,6 @@ const CORRUPTED_HOS_FILES = [
 		filename: "feedback_hos_team_burnout_deadline_push-team-harder.wav",
 		text: "Crunch time! Watch those resignations roll in. Fresh talent is cheap anyway.",
 	},
-	{
-		filename: "feedback_shadow_ai_hos_2_allow-claude-use.wav",
-		text: "Great, now everyone wants their favorite AI tool. Governance is optional now.",
-	},
-	{
-		filename: "feedback_shadow_ai_hos_2_force-compliance.wav",
-		text: "Your best engineer just resigned. Compliance preserved. Output cratered.",
-	},
 ];
 
 async function main(): Promise<void> {

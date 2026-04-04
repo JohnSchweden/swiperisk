@@ -83,7 +83,6 @@ const CRITICAL_HOS_CARDS = new Set([
 	"explainability_hos_2",
 	"hos_copyright_team_blame",
 	"hos_team_burnout_deadline",
-	"shadow_ai_hos_2",
 	"hos_model_drift_team_blame",
 	"hos_explainability_politics",
 	"hos_prompt_injection_review_escape",

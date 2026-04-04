@@ -38,11 +38,6 @@ const CRITICAL_HOS_CARDS = [
 		rightSlug: "push-team-harder",
 	},
 	{
-		id: "shadow_ai_hos_2",
-		leftSlug: "allow-claude-use",
-		rightSlug: "force-compliance",
-	},
-	{
 		id: "hos_model_drift_team_blame",
 		leftSlug: "defend-and-take-heat",
 		rightSlug: "blame-data-scientist",

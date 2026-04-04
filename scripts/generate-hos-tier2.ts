@@ -24,14 +24,6 @@ const TIER_2_FILES = [
 		text: "Product will hate you. Your team will stay. Sometimes that's the win.",
 	},
 	{
-		filename: "feedback_shadow_ai_hos_2_force-compliance.wav",
-		text: "Your best engineer just resigned. Compliance preserved. Output cratered.",
-	},
-	{
-		filename: "feedback_shadow_ai_hos_2_allow-claude-use.wav",
-		text: "Great, now everyone wants their favorite AI tool. Governance is optional now.",
-	},
-	{
 		filename: "feedback_hos_model_drift_team_blame_blame-data-scientist.wav",
 		text: "They warned you. You ignored it. Now you blame them. Classic management.",
 	},

@@ -48,3 +48,6 @@ Patterns to prevent repeat mistakes. Update after corrections from the user.
 ## Testing & Verification
 
 <!-- Project-specific testing patterns only. Generic Playwright/Vitest patterns live in ~/.claude/lessons.md -->
+
+<!-- Captured 2026-04-05 via post-commit analysis -->
+- [RULE] When removing a card ID, audit ALL data generation and helper scripts that reference it (generate-*.ts, *-CARDS arrays) — Dead references in generation scripts create orphaned audio files and build bloat; card deletions require updates across multiple files, not just card data and tests.

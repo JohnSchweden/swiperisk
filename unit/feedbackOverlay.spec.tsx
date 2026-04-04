@@ -43,10 +43,10 @@ describe("FeedbackOverlay", () => {
 			expect(screen.getByText("Next ticket")).toBeInTheDocument();
 		});
 
-		it("adds Kirk modal backdrop class when kirkCorruptionActive", () => {
+		it("adds Kirk veil class above modal dim when kirkCorruptionActive", () => {
 			render(<FeedbackOverlay {...defaultProps} kirkCorruptionActive={true} />);
 			expect(screen.getByTestId("feedback-dialog")).toHaveClass(
-				"modal-overlay--kirk",
+				"modal-overlay--kirk-veil",
 			);
 		});
 

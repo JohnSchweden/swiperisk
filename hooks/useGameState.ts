@@ -134,7 +134,7 @@ function handleChoiceMade(
 	return {
 		...state,
 		hype: Math.max(0, state.hype + action.outcome.hype),
-		heat: Math.min(100, state.heat + action.outcome.heat),
+		heat: Math.min(100, Math.max(0, state.heat + action.outcome.heat)),
 		budget: state.budget - action.outcome.fine,
 		history: [
 			...state.history,

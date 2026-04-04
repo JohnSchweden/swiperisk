@@ -13,6 +13,9 @@ export function formatBudget(amount: number): string {
 	if (abs === 0) {
 		return "$0";
 	}
+	if (abs >= 1_000_000_000) {
+		return `${sign}$${(abs / 1_000_000_000).toFixed(1)}B`;
+	}
 	if (abs >= 1_000_000) {
 		return `${sign}$${(abs / 1_000_000).toFixed(1)}M`;
 	}

@@ -70,6 +70,11 @@ function getRandomLesson(deathType: DeathType) {
 	return lessons[Math.floor(Math.random() * lessons.length)];
 }
 
+/** Six standard endings shown in the collection grid; KIRK is batch 7 (secret). */
+const DEBRIEF_STANDARD_DEATH_TYPES = Object.values(DeathType).filter(
+	(t): t is Exclude<DeathType, DeathType.KIRK> => t !== DeathType.KIRK,
+);
+
 interface EndingIconGridProps {
 	unlockedEndings: DeathType[];
 }
@@ -77,7 +82,7 @@ interface EndingIconGridProps {
 function EndingIconGrid({ unlockedEndings }: EndingIconGridProps) {
 	return (
 		<div className="flex gap-2 md:gap-3 justify-center flex-wrap mb-4">
-			{Object.values(DeathType).map((type) => {
+			{DEBRIEF_STANDARD_DEATH_TYPES.map((type) => {
 				const isUnlocked = unlockedEndings.includes(type);
 				const ending = DEATH_ENDINGS[type];
 				return (
@@ -97,6 +102,33 @@ function EndingIconGrid({ unlockedEndings }: EndingIconGridProps) {
 					</div>
 				);
 			})}
+		</div>
+	);
+}
+
+function KirkEndingBatch7() {
+	return (
+		<div
+			data-testid="debrief-ending-batch-7"
+			className="mt-4 border-t border-cyan-500/25 pt-4"
+		>
+			<p className="text-center text-[10px] font-black uppercase tracking-[0.2em] text-cyan-300/90 mb-1">
+				Ending batch 7
+			</p>
+			<p className="text-center text-xs text-slate-500 mb-3">
+				Secret ending — unlocked this run
+			</p>
+			<div className="flex justify-center">
+				<div
+					className="w-12 h-12 md:w-14 md:h-14 rounded-lg flex flex-col items-center justify-center border bg-cyan-500/25 border-cyan-400 shadow-[0_0_20px_rgba(34,211,238,0.15)]"
+					title="Secret ending (batch 7)"
+				>
+					<i
+						className="fa-solid fa-pizza-slice text-lg md:text-xl text-cyan-300"
+						aria-hidden
+					/>
+				</div>
+			</div>
 		</div>
 	);
 }
@@ -333,6 +365,7 @@ export function DebriefPage1Collapse({
 					</div>
 
 					<EndingIconGrid unlockedEndings={unlockedEndings} />
+					{isKirk && <KirkEndingBatch7 />}
 				</div>
 
 				<button type="button" onClick={onNext} className={BTN_DEBRIEF_NAV}>

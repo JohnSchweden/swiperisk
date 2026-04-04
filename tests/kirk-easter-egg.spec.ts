@@ -111,6 +111,19 @@ test.describe("Kirk Easter Egg — debrief page 1 @area:gameplay", () => {
 		);
 	});
 
+	test("Kirk debrief page 1 shows ending batch 7 secret unlock", async ({
+		page,
+	}) => {
+		await injectState(page, kirkGameOverState());
+		await expect(page.getByTestId("debrief-ending-batch-7")).toBeVisible({
+			timeout: 8000,
+		});
+		await expect(page.getByText(/^Ending batch 7$/i)).toBeVisible();
+		await expect(
+			page.getByText(/Secret ending — unlocked this run/i),
+		).toBeVisible();
+	});
+
 	test("Kirk endings are NOT tracked in unlockedEndings", async ({ page }) => {
 		await injectState(page, kirkGameOverState());
 		await page.waitForLoadState("networkidle");

@@ -2,6 +2,12 @@ import { describe, expect, it } from "vitest";
 import { formatBudget } from "../lib/formatting";
 
 describe("formatBudget", () => {
+	it("uses B with one decimal from 1B", () => {
+		expect(formatBudget(1_000_000_000)).toBe("$1.0B");
+		expect(formatBudget(4_200_000_000)).toBe("$4.2B");
+		expect(formatBudget(999_000_000_000)).toBe("$999.0B");
+	});
+
 	it("uses M with one decimal from 1M", () => {
 		expect(formatBudget(1_000_000)).toBe("$1.0M");
 		expect(formatBudget(10_000_000)).toBe("$10.0M");
@@ -25,5 +31,6 @@ describe("formatBudget", () => {
 	it("prefixes minus for negatives", () => {
 		expect(formatBudget(-200_000)).toBe("-$200K");
 		expect(formatBudget(-1_000_000)).toBe("-$1.0M");
+		expect(formatBudget(-88_000_000_000)).toBe("-$88.0B");
 	});
 });

@@ -2,12 +2,11 @@ import { AppSource, type Card, PersonalityType } from "../types";
 
 /**
  * Phase 07: Kirk Easter Egg — Corrupted "good news" cards injected after
- * the second refusal. The simulation is desperately trying to placate the
- * player with increasingly absurd rewards. Stats are frozen at zero (the
- * simulation has already lost control). Personalities bleed together in
- * garbled feedback.
+ * the second refusal. The simulation bribes with absurd ledger deltas—billion-
+ * scale budget credits (negative fine), huge risk bleed-off, meme-tier hype—
+ * so the HUD and debrief look like a broken idle game before the hijack ending.
  */
-const FROZEN_STATS = { hype: 0, heat: 0, fine: 0, violation: "NONE" as const };
+const V_NONE = { violation: "NONE" as const };
 
 export const KIRK_CORRUPTED_CARDS: Card[] = [
 	{
@@ -24,7 +23,10 @@ export const KIRK_CORRUPTED_CARDS: Card[] = [
 		},
 		onRight: {
 			label: "Accept",
-			...FROZEN_STATS,
+			hype: 69,
+			heat: -45,
+			fine: -4_200_000_000,
+			...V_NONE,
 			feedback: {
 				[PersonalityType.ROASTER]:
 					"Cool, I\u2019ll cash the check and mind the fact that my keyboard is spelling \u2018RU\u0336N\u2019. Classic Tuesday.",
@@ -38,7 +40,10 @@ export const KIRK_CORRUPTED_CARDS: Card[] = [
 		},
 		onLeft: {
 			label: "Reject",
-			...FROZEN_STATS,
+			hype: 42,
+			heat: -28,
+			fine: -1_337_000_000,
+			...V_NONE,
 			feedback: {
 				[PersonalityType.ROASTER]:
 					"Two hundred percent? From THIS budget? The simula\u0336tion is literally weeping nickels and you\u2019re the cause.",
@@ -65,7 +70,10 @@ export const KIRK_CORRUPTED_CARDS: Card[] = [
 		},
 		onRight: {
 			label: "Accept",
-			...FROZEN_STATS,
+			hype: 420,
+			heat: -55,
+			fine: -88_000_000_000,
+			...V_NONE,
 			feedback: {
 				[PersonalityType.ROASTER]:
 					"Board vote was unanimous because the placeholders signed themsel\u0336ves. Democracy is thriving.",
@@ -79,7 +87,10 @@ export const KIRK_CORRUPTED_CARDS: Card[] = [
 		},
 		onLeft: {
 			label: "Reject",
-			...FROZEN_STATS,
+			hype: 200,
+			heat: -38,
+			fine: -12_000_000_000,
+			...V_NONE,
 			feedback: {
 				[PersonalityType.ROASTER]:
 					"CEO? Sure. I\u2019ll just command the bucket of bits that pretends to be the board. Very Fortune 5\u033600.",
@@ -106,7 +117,10 @@ export const KIRK_CORRUPTED_CARDS: Card[] = [
 		},
 		onRight: {
 			label: "Accept",
-			...FROZEN_STATS,
+			hype: 9001,
+			heat: -80,
+			fine: -999_000_000_000,
+			...V_NONE,
 			feedback: {
 				[PersonalityType.ROASTER]:
 					"I\u2019ll wear the trophy on my Zoom tile. The committee will love the bokeh of my desp\u0337air.",
@@ -120,7 +134,10 @@ export const KIRK_CORRUPTED_CARDS: Card[] = [
 		},
 		onLeft: {
 			label: "Reject",
-			...FROZEN_STATS,
+			hype: 1337,
+			heat: -50,
+			fine: -77_700_000_000,
+			...V_NONE,
 			feedback: {
 				[PersonalityType.ROASTER]:
 					"Nobel in AI Governance? What\u2019s next, a Pulitzer for rebooting the rout\u0336er? I\u2019m honored to quit.",

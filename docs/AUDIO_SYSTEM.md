@@ -367,12 +367,7 @@ hos_process_automation_takeover
 
 **File:** `lib/feedbackAudioChoice.ts`
 
-The `authoringFeedbackStem()` function maps the player's presentation choice (LEFT/RIGHT) to the correct authoring slug, accounting for `choiceSidesSwapped`:
-
-```typescript
-// When sides are swapped, the displayed LEFT maps to the original onRight
-authoringFeedbackStem(card, "LEFT") // → slugify(card.onRight.label) if swapped
-```
+The `authoringFeedbackStem()` function maps the player's choice (LEFT/RIGHT) to `slugify()` of the **visible** outcome label. After `shuffleDeck`, `card.onLeft` / `card.onRight` already match the UI, so the stem is always `slugify(card.onLeft.label)` for LEFT and `slugify(card.onRight.label)` for RIGHT — no extra inversion from `choiceSidesSwapped`.
 
 ---
 

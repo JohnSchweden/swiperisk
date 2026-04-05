@@ -28,7 +28,7 @@ Patterns to prevent repeat mistakes. Update after corrections from the user.
 - [RULE] When state lookups reference a computed override value, use the same fallback sequence everywhere to prevent divergence — Different patterns (one using direct lookup, one using computed ?? default) reference different data when the override differs, causing state sync bugs between components. Enforce consistency across all paths and document the synchronization requirement ("same instance as X") in comments.
 
 <!-- Captured 2026-03-26 via post-commit analysis -->
-- [RULE] When selecting pre-baked side-specific assets (audio, graphics, text), resolve through a helper that accounts for card variants (choiceSidesSwapped), not the raw screen choice — Screen position diverges from authoring intent when cards are flipped, causing wrong assets to play or display.
+- [RULE] Pre-baked side-specific assets must key off the same object the player saw. If `shuffleDeck` already swaps `onLeft`/`onRight`, do not invert again from `choiceSidesSwapped` — Double inversion plays the opposite branch’s audio while the overlay shows the correct line (e.g. KPI roaster text with “document honestly” clip).
 
 <!-- Captured 2026-03-26 via post-commit analysis -->
 - [RULE] When exposing state objects with side-specific fields through tool APIs, include semantic metadata (like feedbackAuthoringStem) alongside presence flags — Tools need both "does feedback exist?" and "which side was it authored for?" to make correct decisions. Exposing only boolean presence is incomplete and forces consumers to guess intent.

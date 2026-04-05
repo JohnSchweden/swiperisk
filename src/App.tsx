@@ -109,7 +109,7 @@ type FeedbackOverlayState = {
 	text: string;
 	lesson: string;
 	choice: "LEFT" | "RIGHT";
-	/** Authoring label slug for pre-baked feedback audio (accounts for choiceSidesSwapped). */
+	/** Label slug for pre-baked feedback audio (visible choice → slugify of that side’s outcome label). */
 	feedbackAuthoringStem: string;
 	/** Fine delta from this choice */
 	fine: number;

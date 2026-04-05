@@ -6,16 +6,25 @@ import {
 } from "../src/lib/feedbackAudioChoice";
 import type { Card } from "../src/types";
 
-/** Minimal card shape for stem mapping with labels */
+/** Minimal card shape — mirrors `shuffleDeck`: when swapped, onLeft/onRight payloads trade places */
 function card(
 	swapped: boolean | undefined,
-	leftLabel = "Left Option",
-	rightLabel = "Right Option",
+	authoringLeftLabel = "Left Option",
+	authoringRightLabel = "Right Option",
 ): Pick<Card, "choiceSidesSwapped" | "onLeft" | "onRight"> {
+	const authoringLeft = { label: authoringLeftLabel } as Card["onLeft"];
+	const authoringRight = { label: authoringRightLabel } as Card["onRight"];
+	if (swapped === true) {
+		return {
+			choiceSidesSwapped: true,
+			onLeft: authoringRight,
+			onRight: authoringLeft,
+		};
+	}
 	return {
-		...(swapped !== undefined ? { choiceSidesSwapped: swapped } : {}),
-		onLeft: { label: leftLabel } as Card["onLeft"],
-		onRight: { label: rightLabel } as Card["onRight"],
+		...(swapped === false ? { choiceSidesSwapped: false } : {}),
+		onLeft: authoringLeft,
+		onRight: authoringRight,
 	};
 }
 

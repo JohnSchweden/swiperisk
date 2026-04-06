@@ -140,6 +140,7 @@ Add a parallel image generation mode that uses pre-existing meme/GIF templates (
 - Precise X/Y coordinate text positioning — current top/middle/bottom sufficient
 - Pre-caching templates at startup vs lazy load — can defer to Phase 14 display decision
 - CDN hosting for processed GIFs — Phase 14 concern
+- **Overlay service (18-04-PLAN.md)** — punchline overlay with text-on-gif deferred for later. Templates with pre-existing text used as-is for now.
 
 </deferred>
 

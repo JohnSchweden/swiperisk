@@ -1,7 +1,11 @@
 import { fireEvent, render, screen } from "@testing-library/react";
 import { describe, expect, it, vi } from "vitest";
 import { RoleSelect } from "../src/components/game/RoleSelect";
-import { ROLE_CARD_GRID_ORDER } from "../src/components/game/selectionStageStyles";
+import {
+	ROLE_CARD_GRID_ORDER,
+	SELECT_CARD_HOVER,
+	SELECT_CARD_RECOMMENDED,
+} from "../src/components/game/selectionStageStyles";
 import { VOICE_COVERAGE_HINT } from "../src/data";
 import { RoleType } from "../src/types";
 
@@ -118,24 +122,24 @@ describe("RoleSelect", () => {
 			render(<RoleSelect {...defaultProps} hoverEnabled={true} />);
 
 			const roleButton = screen.getByTestId("role-software_engineer");
-			expect(roleButton.className).toContain("selection-card-hover");
+			expect(roleButton.className).toContain(SELECT_CARD_HOVER);
 		});
 
 		it("should not apply selection-card-hover when hoverEnabled is false", () => {
 			render(<RoleSelect {...defaultProps} hoverEnabled={false} />);
 
 			const roleButton = screen.getByTestId("role-software_engineer");
-			expect(roleButton.className).not.toContain("selection-card-hover");
+			expect(roleButton.className).not.toContain(SELECT_CARD_HOVER);
 		});
 
 		it("should soft-highlight Head of Something (full voice + meme path)", () => {
 			render(<RoleSelect {...defaultProps} />);
 			expect(screen.getByTestId("role-head_of_something").className).toContain(
-				"selection-card-recommended",
+				SELECT_CARD_RECOMMENDED,
 			);
 			expect(
 				screen.getByTestId("role-software_engineer").className,
-			).not.toContain("selection-card-recommended");
+			).not.toContain(SELECT_CARD_RECOMMENDED);
 		});
 
 		it("applies responsive grid order so Head of Something stacks first on narrow viewports", () => {

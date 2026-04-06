@@ -37,25 +37,25 @@ describe("PersonalitySelect", () => {
 	it("should apply selection-card-hover when hoverEnabled is true", () => {
 		render(<PersonalitySelect {...defaultProps} hoverEnabled={true} />);
 		expect(screen.getByTestId("personality-roaster").className).toContain(
-			"selection-card-hover",
+			SELECT_CARD_HOVER,
 		);
 	});
 
 	it("should not apply selection-card-hover when hoverEnabled is false", () => {
 		render(<PersonalitySelect {...defaultProps} hoverEnabled={false} />);
 		expect(screen.getByTestId("personality-roaster").className).not.toContain(
-			"selection-card-hover",
+			SELECT_CARD_HOVER,
 		);
 	});
 
 	it("should soft-highlight V.E.R.A. (full voice + meme path)", () => {
 		render(<PersonalitySelect {...defaultProps} />);
 		expect(screen.getByTestId("personality-roaster").className).toContain(
-			"selection-card-recommended",
+			SELECT_CARD_RECOMMENDED,
 		);
 		expect(
 			screen.getByTestId("personality-zen_master").className,
-		).not.toContain("selection-card-recommended");
+		).not.toContain(SELECT_CARD_RECOMMENDED);
 	});
 
 	it("applies responsive grid order so Roaster stacks first on narrow viewports", () => {

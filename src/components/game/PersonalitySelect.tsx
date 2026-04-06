@@ -4,8 +4,10 @@ import { PersonalityType } from "../../types";
 import LayoutShell from "../LayoutShell";
 import {
 	LAYOUT_SHELL_CLASS,
+	PERSONALITY_CARD_GRID_ORDER,
 	SELECT_CARD_BASE,
 	SELECT_CARD_HOVER,
+	SELECT_CARD_RECOMMENDED,
 	STAGE_CONTAINER_CLASS,
 	STAGE_GRID_CLASS,
 	STAGE_HEADER_CLASS,
@@ -79,7 +81,7 @@ export const PersonalitySelect: React.FC<PersonalitySelectProps> = ({
 								type="button"
 								onClick={() => isReady && onSelect(personality)}
 								data-testid={`personality-${type.toLowerCase()}`}
-								className={`${SELECT_CARD_BASE} text-left ${hoverEnabled ? SELECT_CARD_HOVER : ""}`}
+								className={`${SELECT_CARD_BASE} text-left ${PERSONALITY_CARD_GRID_ORDER[personality]} ${personality === PersonalityType.ROASTER ? SELECT_CARD_RECOMMENDED : ""} ${hoverEnabled ? SELECT_CARD_HOVER : ""}`}
 								style={{
 									animationDelay: `${index * 0.1}s`,
 									pointerEvents: isReady ? "auto" : "none",
@@ -109,10 +111,22 @@ export const PersonalitySelect: React.FC<PersonalitySelectProps> = ({
 										data-testid="personality-select-voice-hint"
 										role="note"
 									>
-										<i
-											className={`fa-solid fa-volume-high text-base md:text-lg transition-colors text-slate-400/85 ${hoverEnabled ? "group-hover:text-cyan-500" : ""}`}
-											aria-hidden
-										></i>
+										<div className="flex items-center justify-center gap-1.5 md:gap-2">
+											<i
+												className={`fa-solid fa-volume-high text-base md:text-lg transition-colors text-slate-400/85 ${hoverEnabled ? "group-hover:text-cyan-500" : ""}`}
+												aria-hidden
+											></i>
+											<span
+												className={`text-slate-400/85 text-sm md:text-base font-semibold tabular-nums transition-colors ${hoverEnabled ? "group-hover:text-cyan-500" : ""}`}
+												aria-hidden
+											>
+												+
+											</span>
+											<i
+												className={`fa-solid fa-photo-film text-base md:text-lg transition-colors text-slate-400/85 ${hoverEnabled ? "group-hover:text-cyan-500" : ""}`}
+												aria-hidden
+											></i>
+										</div>
 										<span className="text-center w-full">
 											{VOICE_COVERAGE_HINT}
 										</span>

@@ -213,7 +213,7 @@ export const CardStack: React.FC<CardStackProps> = ({
 
 	return (
 		<div
-			className={`relative flex-shrink-0 w-full max-w-full lg:max-w-[43rem] h-[420px] md:h-[540px] ${isUrgent ? "pressure-shake" : ""}`}
+			className={`relative flex-shrink-0 w-full max-w-full lg:max-w-[43rem] h-[420px] md:h-[500px] ${isUrgent ? "pressure-shake" : ""}`}
 			data-testid="incident-card-container"
 			data-pressure-stress={isUrgent ? "true" : undefined}
 		>

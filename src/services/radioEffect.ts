@@ -1,9 +1,17 @@
 /** Apollo-style radio / walkie-talkie effect for voice playback */
 
+function isMobile(): boolean {
+	return (
+		typeof navigator !== "undefined" &&
+		/Mobi|Android|iPhone|iPad|iPod/i.test(navigator.userAgent)
+	);
+}
+
 const QUINDAR_INTRO_HZ = 2525;
 const QUINDAR_OUTRO_HZ = 2475;
 const QUINDAR_DURATION_S = 0.25;
-const QUINDAR_GAIN = 0.06;
+const QUINDAR_GAIN_BASE = 0.06;
+const QUINDAR_GAIN = isMobile() ? QUINDAR_GAIN_BASE * 0.15 : QUINDAR_GAIN_BASE;
 const NOISE_GAIN = 0.03;
 const NOISE_DURATION_S = 1;
 const VOICE_HIGHPASS_HZ = 400;

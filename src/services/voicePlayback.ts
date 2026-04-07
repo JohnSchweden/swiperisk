@@ -88,6 +88,28 @@ function emitVoiceActivity(active: boolean) {
 	}
 }
 
+/** BGM should refresh output after mic capture ends (iOS / mobile AEC, no voice-duck toggle). */
+const bgmAfterMicReleaseListeners = new Set<() => void>();
+
+/**
+ * Subscribe to mic-release events so BGM can resume AudioContext and re-apply gain.
+ * Fires before notifyVoiceActivity(false) so BGM AudioContext / element recover on iOS.
+ */
+export function subscribeBgmAfterMicRelease(listener: () => void): () => void {
+	bgmAfterMicReleaseListeners.add(listener);
+	return () => bgmAfterMicReleaseListeners.delete(listener);
+}
+
+export function notifyBgmAfterMicRelease(): void {
+	for (const fn of bgmAfterMicReleaseListeners) {
+		try {
+			fn();
+		} catch (e) {
+			console.error("[Voice] bgm after mic release listener:", e);
+		}
+	}
+}
+
 let audioContext: AudioContext | null = null;
 // AudioBufferSourceNode — replaces HTMLAudioElement so we can schedule via the
 // AudioContext timeline without needing a gesture per-play (iOS blocks HTMLMediaElement.play()
@@ -190,7 +212,12 @@ function getSubfolder(triggerName: string): string {
 	if (triggerName.startsWith("archetype_")) return "archetype";
 	if (triggerName.startsWith("death_")) return "death";
 	if (triggerName.startsWith("feedback_")) return "feedback";
-	if (["onboarding", "victory", "failure"].includes(triggerName)) return "core";
+	if (
+		triggerName === "onboarding" ||
+		/^onboarding_[1-9]\d*$/.test(triggerName) ||
+		["victory", "failure"].includes(triggerName)
+	)
+		return "core";
 	return ""; // Fallback to root (for backwards compatibility)
 }
 

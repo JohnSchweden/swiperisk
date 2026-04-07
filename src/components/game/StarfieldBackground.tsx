@@ -579,7 +579,14 @@ export const StarfieldBackground: React.FC<StarfieldBackgroundProps> = ({
 						speedScale={speedScale}
 						onSpeedChange={onSpeedChange}
 						bgm={bgm}
-						onRestart={onRestart}
+						onRestart={
+							onRestart
+								? () => {
+										setMenuOpen(false);
+										onRestart();
+									}
+								: undefined
+						}
 					/>
 				</div>
 			) : null}

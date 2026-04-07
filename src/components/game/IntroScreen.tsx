@@ -20,44 +20,53 @@ interface IntroScreenProps {
 export const IntroScreen: React.FC<IntroScreenProps> = ({ onStart }) => {
 	return (
 		<LayoutShell className={LAYOUT_SHELL_CENTERED_CLASS}>
-			<div className="mb-8 md:mb-12 relative">
+			{/* Brand Block */}
+			<div className="mb-6 md:mb-8 relative">
 				<h1 className="text-6xl md:text-7xl font-bold glitch-text tracking-tighter mb-2">
 					K-Maru
 				</h1>
+				<div className="text-slate-400 text-xs md:text-sm mb-3">
+					AI No-Win Scenario Simulator
+				</div>
 				<div className="text-red-600 font-bold mono text-xs md:text-sm animate-pulse tracking-[0.4em]">
 					incident_response_terminal
 					{" // "}
 					os_v0.92
 				</div>
 			</div>
-			<p className="max-w-xl text-slate-300 mb-8 md:mb-10 text-base md:text-lg px-4 leading-relaxed">
-				<span className="font-bold block mb-2">
-					AI Kobayashi Maru:
-					<br className="md:hidden" /> A No-Win Simulation for the Brave
+
+			{/* Notice — moved to top */}
+			<p className="max-w-xl text-[#B8962E] mono text-sm md:text-base mb-4 md:mb-6 px-4 text-center font-bold">
+				[NOTICE: Built for people who hate f*cking boring compliance training]
+			</p>
+
+			{/* Main Hook Block */}
+			<p className="max-w-xl text-slate-300 mb-12 md:mb-16 text-base md:text-lg px-4 leading-relaxed">
+				<span className="font-bold block mb-3 text-white text-lg md:text-xl">
+					Every AI decision you make will blow up in your face.
+					<br /> That's not a bug. That's the training.
 				</span>
-				<span className="text-slate-400">
-					Swipe your way through the AI Singularity. It's not about passing;
-					it's about discovering who you are when the system collapses.
+				<span className="text-slate-400 block mb-4">
+					Swipe through real workplace AI dilemmas.
+					<br /> Pick the least bad option. Watch it become the worst option.
+					<br /> Repeat until Congress gets involved.
 				</span>
-				<span className="block mt-2 text-[#B8962E] mono text-sm md:text-base">
-					[NOTICE: Made for people who hate f*cking boring training]
+				<span className="block text-slate-500 text-sm mono">
+					10 minutes · No signup · Based on actual 2024–25 incidents
+					<br /> (The scenarios are fictional. The lawsuits they're based on
+					aren't.)
 				</span>
 			</p>
-			<p className="max-w-xl text-slate-300 mb-12 md:mb-16 text-base md:text-lg px-4">
-				<span className="text-slate-300 font-bold block mb-2">
-					Project Icarus:
-					<br className="md:hidden" /> The Last Human in the Loop
-				</span>
-				<span className="text-slate-400">
-					The CEO just gave "Full Autonomy" to an experimental LLM. The
-					safeguards are off. The servers are screaming.
-				</span>
-				<span className="block mt-2 text-white">
-					You have 60 seconds to prevent a global PR meltdown or a total company
-					liquidation. <span className="cursor-blink text-white">_</span>
+
+			{/* Role & CTA Block */}
+			<p className="max-w-xl text-slate-300 mb-8 md:mb-10 text-base md:text-lg px-4">
+				<span className="block mb-6">
+					Pick your role. Pick your AI companion.
+					<br /> Try not to end up as a case study.
 				</span>
 			</p>
-			<div className="w-full flex justify-center">
+
+			<div className="w-full flex justify-center mb-10 md:mb-12">
 				<button
 					type="button"
 					onClick={onStart}
@@ -67,10 +76,19 @@ export const IntroScreen: React.FC<IntroScreenProps> = ({ onStart }) => {
 					Boot system
 				</button>
 			</div>
-			<div className="mt-8 md:mt-12 mono text-xs text-red-500 px-4 text-center">
+
+			{/* Team Mode */}
+			<p className="max-w-xl text-slate-400 text-xs md:text-sm mb-10 md:mb-12 px-4 text-center leading-relaxed">
+				[TEAM MODE: Forward this to a colleague.
+				<br /> Watch them swipe the opposite way on every card.
+				<br /> That's the debrief you never got from HR.]
+			</p>
+
+			{/* Footer warnings */}
+			<div className="mt-6 md:mt-8 mono text-xs text-red-500 px-4 text-center">
 				WARNING: PREVIOUS COMPLIANCE OFFICER CURRENTLY PENDING LITIGATION
 			</div>
-			<div className="mt-4 mono text-[10px] text-slate-500 px-4 text-center">
+			<div className="mt-3 mono text-[10px] text-slate-500 px-4 text-center">
 				Captain Kirk passed this test. You won&apos;t.
 			</div>
 		</LayoutShell>

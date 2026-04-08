@@ -576,7 +576,7 @@ Automated compression pipeline to reduce bandwidth while maintaining quality:
 | 15 | Voice Files Expanded | v1.2 | Complete (8/8) |
 | 16 | Ending Variety System | v1.2 | Complete (10/10) |
 | 17 | Shuffle-aware Feedback TTS | v1.2 | Complete (5/5) |
-| 18 | Meme Template System | v1.2 | Not started (3 plans) |
+| 18 | Meme Template System | v1.2 | In progress (1/3) |
 | 19 | refactor the design | v1.2 | Complete (13/13) |
 | 20 | Short Video Clips for Key Moments | v1.2 | Not started |
 | 21 | refactor-the-glassmorphism-design | v1.2 | Not started (1 plan) |
@@ -636,8 +636,8 @@ Plans:
 **Plans:** 3 plans (+ 1 deferred)
 
 Plans:
-- [ ] 18-01-PLAN.md — Meme template data model and image generation triggers
-- [ ] 18-02-PLAN.md — Simple download/caching service for Imgflip templates
+- [x] 18-01-PLAN.md — Meme template data model and image generation ✓ (COMPLETED 2026-04-06)
+- [x] 18-02-PLAN.md — Simple download/caching service for Imgflip templates ✓ (COMPLETED 2026-04-06)
 - [ ] 18-03-PLAN.md — CLI script to download all memes at once
 - [ ] ~~18-04-PLAN.md~~ — Overlay service for adding punchlines (DEFERRED)
 

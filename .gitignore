@@ -37,3 +37,6 @@ reports/
 # Audio source files (archived WAVs)
 audio-archive/
 *.wav
+
+# Meme template cache (downloaded images)
+data/templates/cache/

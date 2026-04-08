@@ -693,6 +693,16 @@ Components using shared constants (PersonalitySelect, RoleSelect, DebriefPage co
 - GLASS-02: Shared glass constants reference CSS classes for automatic component updates
 - GLASS-03: All 9 components use real glassmorphism (starfield visible through glass)
 
+### Phase 22: Feedback Folder Role Subfolders + Kirk Script Flag
+
+**Goal:** [To be planned]
+**Requirements**: TBD
+**Depends on:** Phase 21
+**Plans:** 1/1 plans
+
+Plans:
+- [x] 22-01-PLAN.md — Feedback folder reorganization + Kirk script flag
+
 ---
 
 *Roadmap updated: 2026-03-28 — Phases 13, 16, 18 updated with all gap closure plans and extra phases*

@@ -1,7 +1,7 @@
 import type React from "react";
 import { useEffect, useRef, useState } from "react";
 import { ROLE_LABELS } from "../../../data";
-import { getArchetypeImagePath } from "../../../data/imageMap";
+import { getArchetypeGifPath } from "../../../data/imageMap";
 import { useVoicePlayback } from "../../../hooks";
 import { BTN_DEBRIEF_NAV } from "../../../lib/buttonStyles";
 import {
@@ -181,15 +181,13 @@ export const DebriefPage3Verdict: React.FC<DebriefPage3VerdictProps> = ({
 						Classification
 					</div>
 
-					{/* Archetype badge - 1:1 aspect ratio, achievement unlock feel */}
+					{/* Archetype GIF */}
 					{archetype && (
-						<div className="mx-auto mb-6 w-32 h-32 md:w-40 md:h-40">
+						<div className="mx-auto mb-6 w-full max-w-sm">
 							<ImageWithFallback
-								src={
-									archetype.image ?? getArchetypeImagePath(archetype.id) ?? ""
-								}
+								src={getArchetypeGifPath(archetype.id)}
 								alt={`Badge: ${archetype.name}`}
-								aspectRatio="square"
+								aspectRatio="video"
 								containerClassName="rounded-xl border-2 border-current"
 							/>
 						</div>

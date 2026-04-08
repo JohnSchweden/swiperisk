@@ -5,7 +5,7 @@ import {
 	type FailureLesson,
 	generateDeathExplanation,
 } from "../../../data";
-import { getDeathImagePath } from "../../../data/imageMap";
+import { getDeathGifPath } from "../../../data/imageMap";
 import { useUnlockedEndings } from "../../../hooks";
 import { createAudioContext } from "../../../lib/audio";
 import { BTN_DEBRIEF_NAV } from "../../../lib/buttonStyles";
@@ -168,9 +168,9 @@ function DeathEndingCard({ ending, deathType }: DeathEndingCardProps) {
 					{ending.description}
 				</p>
 			</div>
-			<div className="mb-6 md:mb-8 mx-auto w-full max-w-md">
+			<div className="mb-6 md:mb-8 mx-auto w-full max-w-xl">
 				<ImageWithFallback
-					src={getDeathImagePath(deathType) ?? ""}
+					src={getDeathGifPath(deathType)}
 					alt={`Ending: ${ending.title}`}
 					aspectRatio="video"
 				/>
@@ -314,9 +314,9 @@ export function DebriefPage1Collapse({
 						)}
 
 						{isKirk && (
-							<div className="mb-6 md:mb-8 mx-auto w-full max-w-md">
+							<div className="mb-6 md:mb-8 mx-auto w-full max-w-xl">
 								<ImageWithFallback
-									src={getDeathImagePath(DeathType.KIRK) ?? ""}
+									src={getDeathGifPath(DeathType.KIRK)}
 									alt="KIRK simulation breach"
 									aspectRatio="video"
 								/>

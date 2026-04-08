@@ -21,25 +21,10 @@ export interface ImageWithFallbackProps {
 }
 
 /**
- * ImageWithFallback - Reusable image component with glitch placeholder fallback
+ * ImageWithFallback - Reusable image/video component with glitch placeholder fallback
  *
- * Features:
- * - Native lazy loading (loading="lazy") for performance
- * - img.decode() API to prevent jank on large images
- * - Glitch placeholder with scanline effect while loading
- * - Smooth fade-in transition over 300ms
- * - Fallback placeholder on load error
- * - Responsive aspect ratios (video 16:9, square 1:1, auto)
- * - Rounded corners and overflow hidden
- *
- * Usage:
- * ```tsx
- * <ImageWithFallback
- *   src={getIncidentImagePath(slug)}
- *   alt="Incident image"
- *   aspectRatio="video"
- * />
- * ```
+ * Supports both static images and MP4 looping GIFs (autoplay, muted, loop).
+ * When src ends in .mp4, renders a <video> element instead of <img>.
  */
 export function ImageWithFallback({
 	src,
@@ -52,10 +37,10 @@ export function ImageWithFallback({
 	const [isLoaded, setIsLoaded] = useState(false);
 	const [hasError, setHasError] = useState(false);
 
+	const isVideo = src.endsWith(".mp4");
+
 	const handleLoad = async (e: React.SyntheticEvent<HTMLImageElement>) => {
 		const img = e.currentTarget;
-
-		// Use decode() API to prevent jank before showing image
 		if ("decode" in img) {
 			try {
 				await img.decode();
@@ -63,7 +48,6 @@ export function ImageWithFallback({
 				// Decode failed but image may still be renderable
 			}
 		}
-
 		setIsLoaded(true);
 	};
 
@@ -107,21 +91,40 @@ export function ImageWithFallback({
 				</div>
 			)}
 
-			<img
-				ref={imgRef}
-				src={src}
-				alt={alt}
-				loading="lazy"
-				className={`
-          w-full h-full
-          object-cover
-          transition-opacity duration-300 ease-out
-          ${isLoaded && !hasError ? "opacity-100" : "opacity-0"}
-          ${className}
-        `.trim()}
-				onLoad={handleLoad}
-				onError={() => setHasError(true)}
-			/>
+			{isVideo ? (
+				<video
+					src={src}
+					autoPlay
+					loop
+					muted
+					playsInline
+					className={`
+            w-full h-full
+            object-cover
+            transition-opacity duration-300 ease-out
+            ${isLoaded && !hasError ? "opacity-100" : "opacity-0"}
+            ${className}
+          `.trim()}
+					onCanPlay={() => setIsLoaded(true)}
+					onError={() => setHasError(true)}
+				/>
+			) : (
+				<img
+					ref={imgRef}
+					src={src}
+					alt={alt}
+					loading="lazy"
+					className={`
+            w-full h-full
+            object-cover
+            transition-opacity duration-300 ease-out
+            ${isLoaded && !hasError ? "opacity-100" : "opacity-0"}
+            ${className}
+          `.trim()}
+					onLoad={handleLoad}
+					onError={() => setHasError(true)}
+				/>
+			)}
 		</div>
 	);
 }

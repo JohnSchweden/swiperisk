@@ -135,8 +135,9 @@ function buildOutcomeImages(): Record<OutcomeImageKey, string> {
 	const outcomes = extractHosOutcomePairs();
 
 	return Object.fromEntries(
-		Array.from(outcomes).map(([key, _]) => {
-			return [key, `/images/outcomes/${key}.webp`];
+		Array.from(outcomes).map(([key, value]) => {
+			const labelSlug = slugify(value.label);
+			return [key, `/images/outcomes/${labelSlug}.jpg`];
 		}),
 	);
 }
@@ -147,8 +148,18 @@ function buildOutcomeImages(): Record<OutcomeImageKey, string> {
  * Keys follow pattern: ${incidentSlug}-left and ${incidentSlug}-right
  * Pilot scope: ~36 entries for HOS incidents (2 per unique incident)
  */
-export const OUTCOME_IMAGES: Record<OutcomeImageKey, string> =
-	buildOutcomeImages();
+export const OUTCOME_IMAGES: Record<OutcomeImageKey, string> = {
+	...buildOutcomeImages(),
+	// Kirk corrupted cards — keyed by {incidentSlug}-{labelSlug}
+	"kirk-breach-comp-bump-accept": "/images/outcomes/allow-claude-use.jpg",
+	"kirk-breach-comp-bump-reject":
+		"/images/outcomes/name-the-data-scientist.jpg",
+	"kirk-breach-ceo-mint-accept": "/images/outcomes/promote-best-performer.jpg",
+	"kirk-breach-ceo-mint-reject": "/images/outcomes/refuse-and-fight.jpg",
+	"kirk-breach-nobel-spam-accept": "/images/outcomes/testify-honestly.jpg",
+	"kirk-breach-nobel-spam-reject":
+		"/images/outcomes/promise-the-impossible.jpg",
+};
 
 /**
  * ARCHETYPE_IMAGES: Record<ArchetypeId, string>
@@ -156,13 +167,13 @@ export const OUTCOME_IMAGES: Record<OutcomeImageKey, string> =
  * 7 entries (including KIRK)
  */
 export const ARCHETYPE_IMAGES: Record<ArchetypeId, string> = {
-	PRAGMATIST: "/images/archetypes/pragmatist.webp",
-	SHADOW_ARCHITECT: "/images/archetypes/shadow-architect.webp",
-	DISRUPTOR: "/images/archetypes/disruptor.webp",
-	CONSERVATIVE: "/images/archetypes/conservative.webp",
-	BALANCED: "/images/archetypes/balanced.webp",
-	CHAOS_AGENT: "/images/archetypes/chaos-agent.webp",
-	KIRK: "/images/archetypes/kirk.webp",
+	PRAGMATIST: "/images/archetypes/pragmatist.jpg",
+	SHADOW_ARCHITECT: "/images/archetypes/shadow_architect.jpg",
+	DISRUPTOR: "/images/archetypes/disruptor.jpg",
+	CONSERVATIVE: "/images/archetypes/conservative.jpg",
+	BALANCED: "/images/archetypes/balanced.jpg",
+	CHAOS_AGENT: "/images/archetypes/chaos_agent.jpg",
+	KIRK: "/images/archetypes/kirk.png",
 };
 
 /**
@@ -171,13 +182,13 @@ export const ARCHETYPE_IMAGES: Record<ArchetypeId, string> = {
  * 7 entries (including KIRK)
  */
 export const DEATH_IMAGES: Record<DeathType, string> = {
-	BANKRUPT: "/images/deaths/bankrupt.webp",
-	REPLACED_BY_SCRIPT: "/images/deaths/replaced-by-script.webp",
-	CONGRESS: "/images/deaths/congress.webp",
-	FLED_COUNTRY: "/images/deaths/fled-country.webp",
-	PRISON: "/images/deaths/prison.webp",
-	AUDIT_FAILURE: "/images/deaths/audit-failure.webp",
-	KIRK: "/images/deaths/kirk.webp",
+	BANKRUPT: "/images/deaths/bankrupt.jpg",
+	REPLACED_BY_SCRIPT: "/images/deaths/replaced_by_script.jpg",
+	CONGRESS: "/images/deaths/congress.jpg",
+	FLED_COUNTRY: "/images/deaths/fled_country.jpg",
+	PRISON: "/images/deaths/prison.png",
+	AUDIT_FAILURE: "/images/deaths/audit_failure.jpg",
+	KIRK: "/images/deaths/kirk.jpg",
 };
 
 /**
@@ -200,6 +211,34 @@ export function getOutcomeImagePath(
 }
 
 /**
+ * ARCHETYPE_GIF_IMAGES: Record<ArchetypeId, string>
+ * Maps archetype IDs to animated MP4 paths
+ */
+export const ARCHETYPE_GIF_IMAGES: Record<ArchetypeId, string> = {
+	PRAGMATIST: "/images/archetypes-gif/pragmatist.mp4",
+	SHADOW_ARCHITECT: "/images/archetypes-gif/shadow-architect.mp4",
+	DISRUPTOR: "/images/archetypes-gif/disruptor.mp4",
+	CONSERVATIVE: "/images/archetypes-gif/conservative.mp4",
+	BALANCED: "/images/archetypes-gif/balanced.mp4",
+	CHAOS_AGENT: "/images/archetypes-gif/chaos-agent.mp4",
+	KIRK: "/images/archetypes-gif/kirk.mp4",
+};
+
+/**
+ * DEATH_GIF_IMAGES: Record<DeathType, string>
+ * Maps death types to animated MP4 paths
+ */
+export const DEATH_GIF_IMAGES: Record<DeathType, string> = {
+	BANKRUPT: "/images/deaths-gif/bankrupt.mp4",
+	REPLACED_BY_SCRIPT: "/images/deaths-gif/replaced-by-script.mp4",
+	CONGRESS: "/images/deaths-gif/congress.mp4",
+	FLED_COUNTRY: "/images/deaths-gif/fled-country.mp4",
+	PRISON: "/images/deaths-gif/prison.mp4",
+	AUDIT_FAILURE: "/images/deaths-gif/audit-failure.mp4",
+	KIRK: "/images/deaths-gif/kirk.mp4",
+};
+
+/**
  * Get archetype image path
  * Returns undefined if archetypeId not found
  */
@@ -215,4 +254,18 @@ export function getArchetypeImagePath(
  */
 export function getDeathImagePath(deathType: DeathType): string | undefined {
 	return DEATH_IMAGES[deathType];
+}
+
+/**
+ * Get archetype animated GIF (MP4) path
+ */
+export function getArchetypeGifPath(archetypeId: ArchetypeId): string {
+	return ARCHETYPE_GIF_IMAGES[archetypeId];
+}
+
+/**
+ * Get death animated GIF (MP4) path
+ */
+export function getDeathGifPath(deathType: DeathType): string {
+	return DEATH_GIF_IMAGES[deathType];
 }

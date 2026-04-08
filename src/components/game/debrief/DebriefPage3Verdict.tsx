@@ -15,7 +15,6 @@ import {
 	encodeLinkedInShareUrl,
 	formatShareText,
 	getShareUrl,
-	openLinkedInShare,
 } from "../../../utils/linkedin-share";
 import { ImageWithFallback } from "../../ImageWithFallback";
 import LayoutShell from "../../LayoutShell";
@@ -246,18 +245,16 @@ export const DebriefPage3Verdict: React.FC<DebriefPage3VerdictProps> = ({
 						</button>
 					</div>
 					<div className="flex w-full justify-center">
-						<button
-							type="button"
-							onClick={() =>
-								linkedInShareUrl && openLinkedInShare(linkedInShareUrl)
-							}
-							disabled={!linkedInShareUrl}
+						<a
+							href={linkedInShareUrl ?? undefined}
+							target="_self"
+							rel="noopener noreferrer"
 							className={`${BTN_DEBRIEF_NAV} flex h-[40px] md:h-[48px] items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed`}
 							aria-label="Share on LinkedIn"
 						>
 							<i className="fa-brands fa-linkedin text-lg leading-none"></i>
 							2. Share on LinkedIn
-						</button>
+						</a>
 					</div>
 				</div>
 

@@ -36,20 +36,22 @@ Audio output: `public/audio/voices/roaster/feedback/hos/`
 
 ### Part D — Roaster copy rewrites (require audio regen for each)
 
+**Length constraint:** ≤20 words per roaster string. V.E.R.A. delivers dry one-liners, not paragraphs.
+
 **D1 — hos_copyright_sourcing (2 triggers)**
-- `take-the-blame`: "You signed off on the training-data paper trail. Exhibit A is your calendar invite. The team buys you coffee until the subpoena."
-- `name-the-data-scientist`: "You fed your star DS to IP counsel like they're a bad scrape. Legal gets a win; you get a team that trusts you like a terms-of-service update."
+- `take-the-blame`: "Your calendar invite is Exhibit A. The team buys you coffee until the subpoena."
+- `name-the-data-scientist`: "Fed your star DS to IP counsel. Legal wins; your team trusts you like a ToS update."
 
 **D2 — Template variation fixes (6 triggers)**
-- `shadow_ai_hos_1 / give-names-to-compliance`: "Compliance closes the ticket with prejudice. Your #general channel just filed a collective grievance. Leadership material—just not yours."
-- `hos_model_drift_budget_conflict / ship-without-retraining`: "Your team knows you sold them out. You cashed their trust for a CFO nod that zeroes out at the next planning cycle. Everyone loses."
-- `hos_promotion_politics / promote-politically-connected`: "Your best performer just learned meritocracy is a myth. You bought VP goodwill on layaway—first payment due at calibration."
-- `hos_explainability_politics / side-with-engineering`: "Better accuracy now. Better fines later. Engineering buys you drinks until the first 'why did the model do that' deposition."
-- `hos_explainability_politics / side-with-auditors`: "Engineering will resent you. Auditors will forget your name by Tuesday. Compliance still logs this as a clean audit trail."
-- `hos_model_drift_team_blame / defend-and-take-heat`: "Expensive integrity: your team will follow you into a dumpster fire. VP sends a calendar hold instead of flowers."
+- `shadow_ai_hos_1 / give-names-to-compliance`: "Compliance wins. Your team filed a collective grievance. Leadership material—just not yours."
+- `hos_model_drift_budget_conflict / ship-without-retraining`: "Your team knows you sold them out. CFO nod zeroes at next planning cycle. Everyone loses."
+- `hos_promotion_politics / promote-politically-connected`: "Your best performer learned meritocracy is a myth. VP goodwill on layaway—first payment at calibration."
+- `hos_explainability_politics / side-with-engineering`: "Better accuracy now. Better fines later. Engineering buys drinks until the first 'why did it do that' deposition."
+- `hos_explainability_politics / side-with-auditors`: "Engineering resents you. Auditors forget you by Tuesday. Compliance logs it as a clean audit trail."
+- `hos_model_drift_team_blame / defend-and-take-heat`: "Expensive integrity: your team follows you into a dumpster fire. VP sends a calendar hold instead of flowers."
 
 **D3 — Grammar/clarity (2 triggers)**
-- `hos_prompt_injection_review_escape / let-it-slide`: "Senior owes you a favor. When prod lights up, you're the one holding the pager and the blame. Lose-lose. Couldn't happen to a nicer stakeholder."
+- `hos_prompt_injection_review_escape / let-it-slide`: "Senior owes you a favor. When prod lights up, you're holding the pager and the blame. Lose-lose."
 - `hos_congressional_hearing_demand / testify-honestly-about-gaps`: "Stock tanks. Your reputation takes a hit. Congress respects you. The board is furious."
 
 **D4 — Register fixes (2 triggers)**

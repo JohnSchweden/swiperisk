@@ -4,6 +4,7 @@ import { ROLE_LABELS } from "../../../data";
 import { getArchetypeGifPath } from "../../../data/imageMap";
 import { useVoicePlayback } from "../../../hooks";
 import { BTN_DEBRIEF_NAV } from "../../../lib/buttonStyles";
+import { getPublicGameUrl } from "../../../lib/publicGameUrl";
 import {
 	type Archetype,
 	DeathType,
@@ -58,7 +59,7 @@ function updateMetaTags(
 	// Update og:title for LinkedIn preview (displayed)
 	// Format: Game - Archetype (Role, Score%)
 	const roleLabel = role ? ` (${role})` : "";
-	const ogTitle = `K-Maru - ${archetype.name}${roleLabel} • ${resilience}% Resilience`;
+	const ogTitle = `K-Maru — ${archetype.name}${roleLabel} • ${resilience}% resilience`;
 	const titleTag = document.querySelector('meta[property="og:title"]');
 	if (titleTag) {
 		titleTag.setAttribute("content", ogTitle);
@@ -66,7 +67,7 @@ function updateMetaTags(
 
 	// Update og:description for LinkedIn algorithm (130-160 chars optimal)
 	// Friendly, brag-worthy message
-	const ogDesc = `I faced the Kobayashi Maru as a ${role || "leader"} and discovered my leadership archetype. Can you beat my score?`;
+	const ogDesc = `Finished K-Maru as a ${role || "leader"}. Beat my resilience score?`;
 	const descTag = document.querySelector('meta[property="og:description"]');
 	if (descTag) {
 		descTag.setAttribute("content", ogDesc);
@@ -80,8 +81,7 @@ function updateMetaTags(
 }
 
 /** Phase 07: Kirk LinkedIn share text */
-const KIRK_SHARE_TEXT =
-	"I broke the Kobayashi Maru. There was always a third option. Kirk would be proud.\n\nhttps://k-maru-seven.vercel.app/";
+const KIRK_SHARE_TEXT = `I broke K-Maru's no-win test. Third option. Kirk-coded.\n\n${getPublicGameUrl()}/`;
 
 /**
  * DebriefPage3Verdict component displays the final page of the game debrief.
@@ -228,6 +228,12 @@ export const DebriefPage3Verdict: React.FC<DebriefPage3VerdictProps> = ({
 					</p>
 				</div>
 
+				{/* LinkedIn share hint */}
+				<p className="text-xs text-slate-500 mb-4 text-center px-2">
+					Copy the post text first — LinkedIn usually shows the site&apos;s
+					static preview, not text from this screen.
+				</p>
+
 				{/* Action Buttons — same rail as Intro (Boot) and debrief page 2: full-width row, centered control */}
 				<div className="mb-8 flex w-full flex-col gap-4">
 					<div className="flex w-full justify-center">
@@ -268,7 +274,7 @@ export const DebriefPage3Verdict: React.FC<DebriefPage3VerdictProps> = ({
 					</p>
 					<a
 						href="https://www.linkedin.com/in/schwedeny/"
-						className="inline-flex items-center justify-center gap-2 px-4 py-2 md:px-8 md:py-3 text-base font-bold bg-cyan-600 hover:bg-cyan-500 text-white transition-colors duration-200 min-h-[40px] md:min-h-[48px]"
+						className="inline-flex items-center justify-center gap-2 px-4 py-2 md:px-8 md:py-3 text-base font-bold border border-cyan-500/40 bg-transparent text-cyan-300 hover:bg-cyan-500/10 transition-colors duration-200 min-h-[40px] md:min-h-[48px]"
 					>
 						<i className="fa-brands fa-linkedin text-lg"></i>
 						DM Yevgen Schweden

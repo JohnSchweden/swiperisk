@@ -718,7 +718,7 @@ Plans:
 **Goal:** Unify brand voice (K-Maru leads), fix copy register across debrief, add Team Mode copy-link button, fix PRISON title tone, add static OG meta, and create shared public URL constant.
 **Requirements**: PRISON-01, URL-01, SEO-01, BRAND-01, SHARE-01, DEBRIEF-01 to DEBRIEF-03, INTRO-01, PERSONALITY-01, HYGIENE-01, TEST-01, TEST-02, VERIFY-01
 **Depends on:** Phase 23
-**Plans:** 4/5 plans executed
+**Plans:** 5/5 plans complete
 
 Plans:
 - [ ] 24-01-PLAN.md — PRISON title fix + publicGameUrl util + index.html OG meta + .env.example

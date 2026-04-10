@@ -282,14 +282,14 @@ export function DebriefPage1Collapse({
 								Why you survived
 							</p>
 							<p className="text-xs text-slate-500 mb-2">
-								Your decisions balanced risk across budget, heat, and hype — no
-								single vector dominated.
+								You kept budget, heat, and hype from eating each other — no
+								single meter ran away.
 							</p>
 							<p className="text-sm text-gray-300 leading-relaxed">
-								Surviving a quarter in hyperscale means managing competing
-								pressures without letting any one metric spiral. You kept the
-								budget sustainable, avoided regulatory heat, and maintained just
-								enough hype to stay funded. That balance is the real win.
+								Hyperscale is three bad incentives on one dashboard. You held an
+								uneasy truce long enough to file the quarter under "still
+								legal." The synthetic coffee is still fake; the tradeoff you
+								navigated isn&apos;t.
 							</p>
 						</div>
 						<div
@@ -322,10 +322,7 @@ export function DebriefPage1Collapse({
 							</div>
 						)}
 
-						{isKirk && explanation && (
-							<ExplanationCard explanation={explanation} />
-						)}
-
+						{/* Non-Kirk: DeathEndingCard first, then lesson, then explanation */}
 						{deathEnding && regularDeathType && (
 							<DeathEndingCard
 								ending={deathEnding}
@@ -333,11 +330,21 @@ export function DebriefPage1Collapse({
 							/>
 						)}
 
+						{/* Non-Kirk: lesson first (pedagogical anchor), then explanation */}
+						{regularDeathType && failureLesson && (
+							<FailureLessonCard lesson={failureLesson} />
+						)}
+
 						{regularDeathType && explanation && (
 							<ExplanationCard explanation={explanation} />
 						)}
 
-						{(isKirk || regularDeathType) && failureLesson && (
+						{/* Kirk: keep original order — explanation then lesson */}
+						{isKirk && explanation && (
+							<ExplanationCard explanation={explanation} />
+						)}
+
+						{isKirk && failureLesson && (
 							<FailureLessonCard lesson={failureLesson} />
 						)}
 					</>

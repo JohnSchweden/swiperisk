@@ -37,9 +37,9 @@ export const DEATH_ENDINGS: Record<DeathType, DeathEnding> = {
 		color: "text-yellow-500",
 	},
 	[DeathType.PRISON]: {
-		title: "Federal pound-me-in-the-ass prison",
+		title: "Federal indictment (jumpsuit included)",
 		description:
-			"The auditors found your search history AND the offshore accounts. Federal raid in progress. Orange is the new black.",
+			"The auditors found your search history AND the offshore accounts. Federal raid in progress. Orange is not a branding choice.",
 		icon: "fa-lock",
 		color: "text-orange-600",
 	},

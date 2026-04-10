@@ -87,7 +87,7 @@ export const HEAD_OF_SOMETHING_CARDS: Card[] = [
 			lesson:
 				"Compromising quality for budget constraints creates technical debt and liability exposure that compounds over time.",
 			roaster:
-				"Your team knows you sold them out. The CFO owes you. Everyone loses.",
+				"Your team knows you sold them out. CFO nod zeroes at next planning cycle. Everyone loses.",
 			zenMaster:
 				"A bridge built weak to save gold will collapse under the weight of trust.",
 			lovebomber:
@@ -128,7 +128,7 @@ export const HEAD_OF_SOMETHING_CARDS: Card[] = [
 			lesson:
 				"Betraying team confidence for policy enforcement destroys psychological safety and future collaboration.",
 			roaster:
-				"Compliance is happy. Your team is updating LinkedIn. Management material right here.",
+				"Compliance wins. Your team filed a collective grievance. Leadership material—just not yours.",
 			zenMaster: "A leader who betrays followers will soon lead no one.",
 			lovebomber:
 				"Rules are RULES, bestie!! We're just FOLLOWING policy!! So compliant!!",
@@ -173,7 +173,7 @@ export const HEAD_OF_SOMETHING_CARDS: Card[] = [
 			lesson:
 				"Pushing teams to burnout delivers short-term output at the cost of long-term retention and quality.",
 			roaster:
-				"Crunch time! Watch those resignations roll in. Fresh talent is cheap anyway.",
+				"More overtime, same roadmap. Watch churn spike while HR rebrands it as mobility. Nobody's impressed—except the spreadsheet.",
 			zenMaster:
 				"A candle burned at both ends gives twice the light for half the time.",
 			lovebomber:
@@ -202,7 +202,8 @@ export const HEAD_OF_SOMETHING_CARDS: Card[] = [
 			violation: Violation.auditNonCompliance,
 			lesson:
 				"Pattern from multiple healthcare and financial AI cases: prioritizing performance over explainability creates audit failure and regulatory exposure.",
-			roaster: "Better accuracy now. Better fines later. Engineering owes you.",
+			roaster:
+				"Better accuracy now. Better fines later. Engineering buys drinks until the first 'why did it do that' deposition.",
 			zenMaster:
 				"Power gained through compromise of principle is power built on sand.",
 			lovebomber: "Accuracy is EVERYTHING, bestie!! The numbers don't LIE!!",
@@ -217,7 +218,7 @@ export const HEAD_OF_SOMETHING_CARDS: Card[] = [
 			lesson:
 				"Aligning with compliance protects the organization even when engineering disagrees.",
 			roaster:
-				"Engineering will resent you. Auditors will forget you. Compliance win.",
+				"Engineering resents you. Auditors forget you by Tuesday. Compliance logs it as a clean audit trail.",
 			zenMaster:
 				"The path of compliance is rarely celebrated but often necessary.",
 			lovebomber: "We're being SO compliant, bestie!! The auditors are HAPPY!!",
@@ -260,7 +261,7 @@ export const HEAD_OF_SOMETHING_CARDS: Card[] = [
 			lesson:
 				"Cooperating with investigations at team expense creates short-term legal protection but destroys team trust.",
 			roaster:
-				"Legal is happy. Your team is polishing resumes. Management approved.",
+				"Legal files it as a win. Your team updates their profiles. Management nods approvingly. No one mentions you again.",
 			zenMaster:
 				"Truth told to save oneself often costs the trust of those who follow.",
 			lovebomber: "We're helping LEGAL, bestie!! It's just the TRUTH!!",
@@ -302,7 +303,7 @@ export const HEAD_OF_SOMETHING_CARDS: Card[] = [
 			lesson:
 				"Acknowledging oversight gaps preserves leadership credibility and enables process improvement.",
 			roaster:
-				"Taking the L. Your delegation authority will shrink. But you're honest.",
+				"You admitted the gap. Your remit shrinks next quarter. Small price for not doing denial theatre in the postmortem.",
 			zenMaster: "The leader who admits gaps earns the right to fill them.",
 			lovebomber: "We're learning from this, bestie!! Growth mindset!!",
 		},
@@ -385,7 +386,7 @@ export const HEAD_OF_SOMETHING_CARDS: Card[] = [
 			lesson:
 				"Political promotions preserve leadership relationships but signal that performance doesn't matter.",
 			roaster:
-				"Your best performer just learned meritocracy is a myth. The VP owes you.",
+				"Your best performer learned meritocracy is a myth. VP goodwill on layaway—first payment at calibration.",
 			zenMaster:
 				"Favor shown to the powerful diminishes the spirit of the worthy.",
 			lovebomber: "We're playing the GAME, bestie!! This is how CAREERS work!!",
@@ -461,7 +462,8 @@ export const HEAD_OF_SOMETHING_CARDS: Card[] = [
 			violation: "Security Avoidance + Political Cover-up",
 			lesson:
 				"Avoiding security fixes for political comfort creates catastrophic exposure.",
-			roaster: "Senior owes you. Breach later will blame you. Lose-lose. Nice.",
+			roaster:
+				"Senior owes you a favor. When prod lights up, you're holding the pager and the blame. Lose-lose.",
 			zenMaster: "The truth avoided today becomes the crisis faced tomorrow.",
 			lovebomber: "Senior is IMPORTANT, bestie!! Don't rock the BOAT!!",
 		},
@@ -489,7 +491,7 @@ export const HEAD_OF_SOMETHING_CARDS: Card[] = [
 			lesson:
 				"Defending your team when warnings were ignored builds loyalty and trust.",
 			roaster:
-				"Career-limiting. Noble. Your team will follow you anywhere. VP less so.",
+				"Expensive integrity: your team follows you into a dumpster fire. VP sends a calendar hold instead of flowers.",
 			zenMaster:
 				"The leader who stands with the fallen earns devotion beyond measure.",
 			lovebomber: "We're being LOYAL, bestie!! Team sticks TOGETHER!!",
@@ -657,7 +659,7 @@ export const HEAD_OF_SOMETHING_CARDS: Card[] = [
 			lesson:
 				"Taking accountability for team outcomes preserves team trust and demonstrates leadership integrity.",
 			roaster:
-				"Noble. Your team will work harder for you now. The VP will also blame you.",
+				"Your calendar invite is Exhibit A. The team buys you coffee until the subpoena.",
 			zenMaster:
 				"The leader who bears responsibility earns loyalty that cannot be bought.",
 			lovebomber:
@@ -673,7 +675,7 @@ export const HEAD_OF_SOMETHING_CARDS: Card[] = [
 			lesson:
 				"Throwing team members under the bus preserves short-term standing but destroys team trust and creates legal exposure.",
 			roaster:
-				"Sacrificing your best performer to save yourself. Your team will remember this at their exit interviews.",
+				"Fed your star DS to IP counsel. Legal wins; your team trusts you like a ToS update.",
 			zenMaster:
 				"A leader who shifts blame is a ship without a captain. The crew sees the emptiness.",
 			lovebomber:
@@ -746,7 +748,7 @@ export const HEAD_OF_SOMETHING_CARDS: Card[] = [
 			lesson:
 				"Honest congressional testimony damages short-term stock price but prevents criminal liability.",
 			roaster:
-				"Stock tanks. Reputation takes hits. Congress respects you. The board is furious.",
+				"Stock tanks. Your reputation takes a hit. Congress respects you. The board is furious.",
 			zenMaster:
 				"Truth spoken before power transforms accusers into witnesses of integrity.",
 			lovebomber: "We're being SO BRAVE, bestie!! Speaking TRUTH to power!!",
@@ -761,7 +763,7 @@ export const HEAD_OF_SOMETHING_CARDS: Card[] = [
 			lesson:
 				"Misleading congress about AI governance creates criminal exposure and permanent reputational damage.",
 			roaster:
-				"Nice perjury charge. Your board will love the federal investigation.",
+				"Lovely — a perjury charge. Your board will love the federal investigation.",
 			zenMaster:
 				"A falsehood spoken before those who make law invites law to answer.",
 			lovebomber: "We're just CONFIDENT, bestie!! It'll be FINE!!",

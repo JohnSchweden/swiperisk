@@ -4,8 +4,8 @@ milestone: v1.2
 milestone_name: Kobayashi Maru — AI Governance Simulator
 current_phase: 25-hos-vera-alignment-roaster-copy-update-incident-fixes-and-audio-regen
 current_plan: 04 (complete — Phase 25 complete)
-status: completed
-last_updated: "2026-04-10T22:00:00Z"
+status: planning
+last_updated: "2026-04-10T21:11:26.194Z"
 last_activity: "2026-04-10 - Completed Phase 25: HOS VERA alignment — 4/4 plans, 28 audio files, 14 roaster rewrites"
 progress:
   total_phases: 27
@@ -25,7 +25,7 @@ See: .planning/PROJECT.md
 **Milestone:** v1.2 Kobayashi Maru — AI Governance Simulator
 **Current phase:** 25-hos-vera-alignment-roaster-copy-update-incident-fixes-and-audio-regen
 **Current plan:** 04 (complete — Phase 25 complete)
-**Status:** Phase 25 complete
+**Status:** Ready to plan
 
 ## Session Log
 

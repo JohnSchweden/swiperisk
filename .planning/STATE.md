@@ -130,6 +130,8 @@ See: .planning/PROJECT.md
 - Phase 20 added: Short Video Clips for Key Moments (for TikTok/Reels/YouTube Shorts)
 - Phase 21 added: refactor-the-glassmorphism-design
 - Phase 22 added: Feedback Folder Role Subfolders + Kirk Script Flag
+- Phase 24 added: Consensus copy and funnel fixes
+- Phase 25 added: HOS VERA alignment: roaster copy update, incident fixes, and audio regen
 
 ## Decisions
 

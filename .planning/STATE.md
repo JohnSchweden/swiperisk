@@ -5,13 +5,13 @@ milestone_name: Kobayashi Maru — AI Governance Simulator
 current_phase: 19-refactor-the-design
 current_plan: 13 (complete — Phase 19 complete)
 status: completed
-last_updated: "2026-04-08T21:12:16.157Z"
+last_updated: "2026-04-10T20:46:55.237Z"
 last_activity: "2026-04-08 - Completed quick task 5: add for kirk feedback outcomes audio files with the outcome text for the roaster mode"
 progress:
-  total_phases: 26
+  total_phases: 27
   completed_phases: 15
-  total_plans: 127
-  completed_plans: 110
+  total_plans: 135
+  completed_plans: 111
 ---
 
 # Session State
@@ -159,6 +159,7 @@ See: .planning/PROJECT.md
 - [Phase 19-09]: Victory path aligned with death/Kirk pattern — removed decorative trophy icon, changed h2 to h1; all three ending paths now use identical h1-first structure with no pre-content decorative icon
 - [Phase 19-10]: Outcome images centered with mx-auto on shrink-0 container; check/warning icon retained for visual differentiation, accessibility, and pattern consistency
 - [Phase 19-12]: All DeathType variants have failure lesson data — widened LessonDeathType from Exclude<DeathType, KIRK> to DeathType; KIRK added to FAILURE_LESSONS (3 easter-egg lessons), DEATH_EXPLANATIONS, RETRY_PROMPTS; victory gets static "Why you survived" explanation (no image in imageMap, no lesson since victory is success)
+- [Phase 24-consensus-copy-and-funnel-fixes]: Kept PRISON ending humorous but removed Office Space reference for professional tone
 
 ## Key Metrics
 

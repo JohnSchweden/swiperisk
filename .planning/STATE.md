@@ -5,13 +5,13 @@ milestone_name: Kobayashi Maru — AI Governance Simulator
 current_phase: 19-refactor-the-design
 current_plan: 13 (complete — Phase 19 complete)
 status: completed
-last_updated: "2026-04-10T20:51:26.267Z"
+last_updated: "2026-04-10T21:02:35.006Z"
 last_activity: "2026-04-08 - Completed quick task 5: add for kirk feedback outcomes audio files with the outcome text for the roaster mode"
 progress:
   total_phases: 27
   completed_phases: 15
   total_plans: 135
-  completed_plans: 112
+  completed_plans: 114
 ---
 
 # Session State
@@ -161,6 +161,7 @@ See: .planning/PROJECT.md
 - [Phase 19-12]: All DeathType variants have failure lesson data — widened LessonDeathType from Exclude<DeathType, KIRK> to DeathType; KIRK added to FAILURE_LESSONS (3 easter-egg lessons), DEATH_EXPLANATIONS, RETRY_PROMPTS; victory gets static "Why you survived" explanation (no image in imageMap, no lesson since victory is success)
 - [Phase 24-consensus-copy-and-funnel-fixes]: Kept PRISON ending humorous but removed Office Space reference for professional tone
 - [Phase 24-consensus-copy-and-funnel-fixes]: K-Maru leads brand voice everywhere; Kobayashi Maru is secondary/optional
+- [Phase 24-consensus-copy-and-funnel-fixes]: Used en-dash (U+2013) not hyphen for year ranges following editorial standard
 
 ## Key Metrics
 

@@ -713,6 +713,33 @@ Plans:
 Plans:
 - [ ] TBD (run /gsd:plan-phase 23 to break down)
 
+### Phase 24: Consensus copy and funnel fixes
+
+**Goal:** Unify brand voice (K-Maru leads), fix copy register across debrief, add Team Mode copy-link button, fix PRISON title tone, add static OG meta, and create shared public URL constant.
+**Requirements**: PRISON-01, URL-01, SEO-01, BRAND-01, SHARE-01, DEBRIEF-01 to DEBRIEF-03, INTRO-01, PERSONALITY-01, HYGIENE-01, TEST-01, TEST-02, VERIFY-01
+**Depends on:** Phase 23
+**Plans:** 5 plans
+
+Plans:
+- [ ] 24-01-PLAN.md — PRISON title fix + publicGameUrl util + index.html OG meta + .env.example
+- [ ] 24-02-PLAN.md — Share text K-Maru-first brand spine + DebriefPage3Verdict updates
+- [ ] 24-03-PLAN.md — Debrief copy voice + card order + personality bridge + IntroScreen team button
+- [ ] 24-04-PLAN.md — failureLessons en-dash hygiene + test updates (linkedin-share + image-collapse)
+- [ ] 24-05-PLAN.md — Verification: typecheck + lint + unit tests + smoke tests
+
+### Phase 25: HOS VERA alignment: roaster copy update, incident fixes, and audio regen
+
+**Goal:** Align Head of Something card deck with V.E.R.A. (ROASTER) voice register: fix makeCard arg order for 2 cards, add incident copy bridges, apply 12-14 roaster copy rewrites, and regenerate all affected pre-baked audio clips.
+**Requirements**: TBD
+**Depends on:** Phase 24
+**Plans:** 4 plans
+
+Plans:
+- [ ] 25-01-PLAN.md — makeCard arg swap: fix storyContext/text arg order for hos_ai_management_elimination and hos_process_automation_takeover
+- [ ] 25-02-PLAN.md — Incident copy bridges and grammar fixes for 6 HOS cards (no audio regen)
+- [ ] 25-03-PLAN.md — V.E.R.A. roaster copy rewrites: 12 baseline + up to 2 optional triggers
+- [ ] 25-04-PLAN.md — Audio regeneration: replace 12-14 HOS feedback audio stem pairs with new V.E.R.A. copy
+
 ---
 
 *Roadmap updated: 2026-03-28 — Phases 13, 16, 18 updated with all gap closure plans and extra phases*

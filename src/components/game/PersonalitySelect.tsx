@@ -70,6 +70,10 @@ export const PersonalitySelect: React.FC<PersonalitySelectProps> = ({
 						hype your bad ideas, and occasionally try to keep you out of prison.
 						Or not.
 					</p>
+					<p className="mt-3 max-w-xl mx-auto text-slate-500 text-xs md:text-sm leading-relaxed px-4">
+						Narrator accents are flavor; the scenarios are US tech satire. That
+						mismatch is on purpose.
+					</p>
 				</div>
 
 				<div className={STAGE_GRID_CLASS}>

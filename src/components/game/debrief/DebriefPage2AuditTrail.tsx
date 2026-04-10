@@ -226,8 +226,15 @@ export const DebriefPage2AuditTrail: React.FC<DebriefPage2AuditTrailProps> = ({
 							? "WARNING: Audit integrity compromised"
 							: "A complete record of your governance decisions"}
 					</p>
+					{!isKirk && (
+						<p className="mt-2 text-sm text-slate-500 max-w-lg mx-auto px-1">
+							Every decision left a paper trail. This is it — no edits, no
+							redactions, no plausible deniability.
+						</p>
+					)}
 					<p className="mt-2 text-xs md:text-sm text-[#B8962E]/70">
-						Consider how different choices might have changed the outcome
+						Replay the forks mentally: same card, other swipe — different fine,
+						different headline.
 					</p>
 				</div>
 

@@ -78,11 +78,22 @@ export const IntroScreen: React.FC<IntroScreenProps> = ({ onStart }) => {
 			</div>
 
 			{/* Team Mode */}
-			<p className="max-w-xl text-slate-400 text-xs md:text-sm mb-10 md:mb-12 px-4 text-center leading-relaxed">
+			<p className="max-w-xl text-slate-400 text-xs md:text-sm mb-3 md:mb-4 px-4 text-center leading-relaxed">
 				[TEAM MODE: Forward this to a colleague.
 				<br /> Watch them swipe the opposite way on every card.
-				<br /> That's the debrief you never got from HR.]
+				<br /> That&apos;s the debrief you never got from HR.]
 			</p>
+
+			<div className="w-full flex justify-center mb-10 md:mb-12">
+				<button
+					type="button"
+					data-testid="copy-game-link-button"
+					onClick={() => navigator.clipboard.writeText(window.location.href)}
+					className="px-4 py-2 text-xs font-bold tracking-wide border border-slate-600 text-slate-400 hover:border-cyan-500/40 hover:text-cyan-300 transition-colors duration-200"
+				>
+					Copy game link
+				</button>
+			</div>
 
 			{/* Footer warnings */}
 			<div className="mt-6 md:mt-8 mono text-xs text-red-500 px-4 text-center">

@@ -40,3 +40,15 @@ audio-archive/
 
 # Meme template cache (downloaded images)
 data/templates/cache/
+
+# User-local symlinks to global ~/.agents/skills/* (machine-specific paths)
+.cursor/skills/find-skills
+.cursor/skills/vercel-react-best-practices
+.cursor/skills/web-design-guidelines
+.cursor/skills/copywriting
+.cursor/skills/seo-audit
+.cursor/skills/copy-editing
+.cursor/skills/critique
+.cursor/skills/page-cro
+.cursor/skills/ui-ux-pro-max
+.cursor/skills/brand-guidelines

@@ -2,8 +2,13 @@ import type React from "react";
 import type { RefObject } from "react";
 import { useEffect } from "react";
 import { ROLE_CARDS } from "../../data";
-import { getIncidentImagePath, slugify } from "../../data/imageMap";
+import {
+	getIncidentImagePath,
+	getOutcomeImagePath,
+	slugify,
+} from "../../data/imageMap";
 import type { Card, RoleType } from "../../types";
+import { preloadAsset } from "../../utils/preload";
 import { CardBody, CardHeaderBar } from "./CardStackComponents";
 import { GLASS_CARD_MODAL } from "./selectionStageStyles";
 
@@ -208,6 +213,24 @@ export const CardStack: React.FC<CardStackProps> = ({
 			document.head.removeChild(link);
 		};
 	}, [nextCard]);
+
+	// Preload both outcome images for the current card (before user swipes)
+	useEffect(() => {
+		if (!currentCard?.realWorldReference?.incident) return;
+		const slug = slugify(currentCard.realWorldReference.incident);
+		const cleanLeft = preloadAsset(
+			getOutcomeImagePath(slug, slugify(currentCard.onLeft.label)),
+			"image",
+		);
+		const cleanRight = preloadAsset(
+			getOutcomeImagePath(slug, slugify(currentCard.onRight.label)),
+			"image",
+		);
+		return () => {
+			cleanLeft();
+			cleanRight();
+		};
+	}, [currentCard]);
 
 	if (!currentCard) return null;
 

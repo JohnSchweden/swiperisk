@@ -172,6 +172,7 @@ const DeathEndingCard: React.FC<DeathEndingCardProps> = ({
 				src={getDeathGifPath(deathType)}
 				alt={`Ending: ${ending.title}`}
 				aspectRatio="video"
+				loading="eager"
 			/>
 		</div>
 	</>
@@ -314,6 +315,7 @@ export function DebriefPage1Collapse({
 									src={getDeathGifPath(DeathType.KIRK)}
 									alt="KIRK simulation breach"
 									aspectRatio="video"
+									loading="eager"
 								/>
 							</div>
 						)}

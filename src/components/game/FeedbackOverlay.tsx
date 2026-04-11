@@ -246,6 +246,7 @@ export const FeedbackOverlay: React.FC<FeedbackOverlayProps> = ({
 									alt={`Outcome: ${outcomeLabel}`}
 									aspectRatio="video"
 									containerClassName="w-full max-w-[280px] sm:max-w-[340px] md:max-w-[400px]"
+									loading="eager"
 								/>
 							) : (
 								<div

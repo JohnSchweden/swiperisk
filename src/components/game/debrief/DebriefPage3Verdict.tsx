@@ -189,6 +189,7 @@ export const DebriefPage3Verdict: React.FC<DebriefPage3VerdictProps> = ({
 								alt={`Badge: ${archetype.name}`}
 								aspectRatio="video"
 								containerClassName="rounded-xl border-2 border-current"
+								loading="eager"
 							/>
 						</div>
 					)}

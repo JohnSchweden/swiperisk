@@ -64,8 +64,9 @@ test.describe("Collapse Page Images (DEBRIEF_PAGE_1) @area:layout", () => {
 			}),
 		).toBeVisible({ timeout: 10000 });
 
+		// ImageWithFallback renders video for MP4 files
 		await expect(
-			page.locator("img[alt='Ending: Federal indictment (jumpsuit included)']"),
+			page.locator("[alt='Ending: Federal indictment (jumpsuit included)']"),
 		).toBeVisible();
 	});
 

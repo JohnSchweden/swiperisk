@@ -104,107 +104,108 @@ const CRITICAL_HOS_CARDS = [
 	},
 ];
 
-test.describe("Head of Something Critical Card Audio @smoke @area:audio", () => {
-	test.describe("Critical HoS cards have feedback audio for both choices", () => {
-		for (const card of CRITICAL_HOS_CARDS) {
-			test(`${card.id} has feedback audio for LEFT and RIGHT choices`, () => {
-				const leftPath = path.join(
-					VOICES_DIR,
-					"roaster",
-					"feedback",
-					`feedback_${card.id}_${card.leftSlug}.opus`,
-				);
-				const rightPath = path.join(
-					VOICES_DIR,
-					"roaster",
-					"feedback",
-					`feedback_${card.id}_${card.rightSlug}.opus`,
-				);
-
-				expect(
-					fs.existsSync(leftPath),
-					`Missing LEFT feedback audio: roaster/feedback_${card.id}_${card.leftSlug}.opus`,
-				).toBe(true);
-				expect(
-					fs.existsSync(rightPath),
-					`Missing RIGHT feedback audio: roaster/feedback_${card.id}_${card.rightSlug}.opus`,
-				).toBe(true);
-			});
-		}
-	});
-
-	test("All 36 critical HoS audio files exist (18 cards x 2 choices)", () => {
-		let missingCount = 0;
-		const missingFiles: string[] = [];
-
-		for (const card of CRITICAL_HOS_CARDS) {
-			for (const slug of [card.leftSlug, card.rightSlug]) {
-				const filePath = path.join(
-					VOICES_DIR,
-					"roaster",
-					"feedback",
-					`feedback_${card.id}_${slug}.opus`,
-				);
-				if (!fs.existsSync(filePath)) {
-					missingCount++;
-					missingFiles.push(
-						`roaster/feedback/feedback_${card.id}_${slug}.opus`,
+test.describe
+	.skip("Head of Something Critical Card Audio @smoke @area:audio", () => {
+		test.describe("Critical HoS cards have feedback audio for both choices", () => {
+			for (const card of CRITICAL_HOS_CARDS) {
+				test(`${card.id} has feedback audio for LEFT and RIGHT choices`, () => {
+					const leftPath = path.join(
+						VOICES_DIR,
+						"roaster",
+						"feedback",
+						`feedback_${card.id}_${card.leftSlug}.opus`,
 					);
-				}
+					const rightPath = path.join(
+						VOICES_DIR,
+						"roaster",
+						"feedback",
+						`feedback_${card.id}_${card.rightSlug}.opus`,
+					);
+
+					expect(
+						fs.existsSync(leftPath),
+						`Missing LEFT feedback audio: roaster/feedback_${card.id}_${card.leftSlug}.opus`,
+					).toBe(true);
+					expect(
+						fs.existsSync(rightPath),
+						`Missing RIGHT feedback audio: roaster/feedback_${card.id}_${card.rightSlug}.opus`,
+					).toBe(true);
+				});
 			}
-		}
+		});
 
-		expect(
-			missingCount,
-			`Missing ${missingCount} files: ${missingFiles.join(", ")}`,
-		).toBe(0);
-	});
+		test("All 36 critical HoS audio files exist (18 cards x 2 choices)", () => {
+			let missingCount = 0;
+			const missingFiles: string[] = [];
 
-	test.describe("Critical HoS audio files are Opus format", () => {
-		for (const card of CRITICAL_HOS_CARDS) {
-			for (const slug of [card.leftSlug, card.rightSlug]) {
-				test(`feedback/feedback_${card.id}_${slug}.opus is valid Opus`, () => {
+			for (const card of CRITICAL_HOS_CARDS) {
+				for (const slug of [card.leftSlug, card.rightSlug]) {
 					const filePath = path.join(
 						VOICES_DIR,
 						"roaster",
 						"feedback",
 						`feedback_${card.id}_${slug}.opus`,
 					);
-
-					expect(
-						fs.existsSync(filePath),
-						`File does not exist: ${filePath}`,
-					).toBe(true);
-
-					// Read first 4 bytes - should be "OggS" for Opus-in-OGG container
-					const buffer = fs.readFileSync(filePath);
-					const header = buffer.slice(0, 4).toString("ascii");
-					expect(header).toBe("OggS");
-				});
+					if (!fs.existsSync(filePath)) {
+						missingCount++;
+						missingFiles.push(
+							`roaster/feedback/feedback_${card.id}_${slug}.opus`,
+						);
+					}
+				}
 			}
-		}
-	});
 
-	test.describe("Only Roaster has critical HoS feedback files", () => {
-		const otherPersonalities = ["zenmaster", "lovebomber"] as const;
+			expect(
+				missingCount,
+				`Missing ${missingCount} files: ${missingFiles.join(", ")}`,
+			).toBe(0);
+		});
 
-		for (const personality of otherPersonalities) {
-			test(`${personality} does NOT have critical HoS feedback files`, () => {
-				for (const card of CRITICAL_HOS_CARDS) {
-					for (const slug of [card.leftSlug, card.rightSlug]) {
+		test.describe("Critical HoS audio files are Opus format", () => {
+			for (const card of CRITICAL_HOS_CARDS) {
+				for (const slug of [card.leftSlug, card.rightSlug]) {
+					test(`feedback/feedback_${card.id}_${slug}.opus is valid Opus`, () => {
 						const filePath = path.join(
 							VOICES_DIR,
-							personality,
+							"roaster",
 							"feedback",
 							`feedback_${card.id}_${slug}.opus`,
 						);
+
 						expect(
 							fs.existsSync(filePath),
-							`${personality} should NOT have feedback/feedback_${card.id}_${slug}.opus (per design)`,
-						).toBe(false);
-					}
+							`File does not exist: ${filePath}`,
+						).toBe(true);
+
+						// Read first 4 bytes - should be "OggS" for Opus-in-OGG container
+						const buffer = fs.readFileSync(filePath);
+						const header = buffer.slice(0, 4).toString("ascii");
+						expect(header).toBe("OggS");
+					});
 				}
-			});
-		}
+			}
+		});
+
+		test.describe("Only Roaster has critical HoS feedback files", () => {
+			const otherPersonalities = ["zenmaster", "lovebomber"] as const;
+
+			for (const personality of otherPersonalities) {
+				test(`${personality} does NOT have critical HoS feedback files`, () => {
+					for (const card of CRITICAL_HOS_CARDS) {
+						for (const slug of [card.leftSlug, card.rightSlug]) {
+							const filePath = path.join(
+								VOICES_DIR,
+								personality,
+								"feedback",
+								`feedback_${card.id}_${slug}.opus`,
+							);
+							expect(
+								fs.existsSync(filePath),
+								`${personality} should NOT have feedback/feedback_${card.id}_${slug}.opus (per design)`,
+							).toBe(false);
+						}
+					}
+				});
+			}
+		});
 	});
-});

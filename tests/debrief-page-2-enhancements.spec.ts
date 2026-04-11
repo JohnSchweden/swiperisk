@@ -56,8 +56,7 @@ test.describe("Debrief Page 2 - Audit UI @area:layout", () => {
 
 		await expect(
 			page.locator("div.mb-6.text-center").filter({
-				hasText:
-					/consider how different choices might have changed the outcome/i,
+				hasText: /Replay the forks mentally/i,
 			}),
 		).toBeVisible();
 	});

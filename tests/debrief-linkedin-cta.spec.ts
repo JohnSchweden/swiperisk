@@ -74,7 +74,7 @@ test.describe("LinkedIn CTA Section @area:debrief", () => {
 		await gotoWithKmDebugState(page, { stage: "DEBRIEF_PAGE_3" });
 
 		// Description should mention LinkedIn and adaptive version
-		await expect(page.getByText(/adaptive version/i)).toBeVisible();
-		await expect(page.getByText(/dm me on linkedin/i)).toBeVisible();
+		await expect(page.getByText(/adapts the scenarios/i)).toBeVisible();
+		await expect(page.getByText(/DM Yevgen Schweden/i)).toBeVisible();
 	});
 });

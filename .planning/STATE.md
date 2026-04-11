@@ -2,16 +2,16 @@
 gsd_state_version: 1.0
 milestone: v1.2
 milestone_name: Kobayashi Maru — AI Governance Simulator
-current_phase: 25-hos-vera-alignment-roaster-copy-update-incident-fixes-and-audio-regen
-current_plan: 04 (complete — Phase 25 complete)
-status: planning
-last_updated: "2026-04-10T21:11:26.194Z"
-last_activity: "2026-04-10 - Completed Phase 25: HOS VERA alignment — 4/4 plans, 28 audio files, 14 roaster rewrites"
+current_phase: 26-preload-outcome-ending-assets
+current_plan: 02 (complete — Phase 26 complete)
+status: ready
+last_updated: "2026-04-11T16:55:00.000Z"
+last_activity: "2026-04-11 - Completed Phase 26: Preload outcome & ending assets — 2/2 plans, 5 commits, 8 files modified"
 progress:
-  total_phases: 27
-  completed_phases: 17
-  total_plans: 135
-  completed_plans: 119
+  total_phases: 28
+  completed_phases: 18
+  total_plans: 137
+  completed_plans: 121
 ---
 
 # Session State
@@ -23,12 +23,16 @@ See: .planning/PROJECT.md
 ## Position
 
 **Milestone:** v1.2 Kobayashi Maru — AI Governance Simulator
-**Current phase:** 25-hos-vera-alignment-roaster-copy-update-incident-fixes-and-audio-regen
-**Current plan:** 04 (complete — Phase 25 complete)
-**Status:** Ready to plan
+**Current phase:** 26-preload-outcome-ending-assets
+**Current plan:** 02 (complete — Phase 26 complete)
+**Status:** Ready for next phase
 
 ## Session Log
 
+- 2026-04-11: Completed Phase 26: Preload outcome & ending assets — 2/2 plans, 5 commits, 8 files modified
+  - 26-01: preloadAsset utility + CardStack outcome preloading + App.tsx death/archetype preloading
+  - 26-02: ImageWithFallback loading prop + loading="eager" on 4 above-fold image call sites
+  - Verification: typecheck clean, lint clean, 170 smoke tests passed
 - 2026-04-10: Completed Phase 25: HOS VERA alignment — roaster copy update, incident fixes, and audio regen
   - 25-01: Structural makeCard arg fixes (2 cards)
   - 25-02: Incident bridges and grammar fixes (6 cards, 4 corrections)
@@ -135,6 +139,7 @@ See: .planning/PROJECT.md
 - Phase 20 added: Short Video Clips for Key Moments (for TikTok/Reels/YouTube Shorts)
 - Phase 21 added: refactor-the-glassmorphism-design
 - Phase 22 added: Feedback Folder Role Subfolders + Kirk Script Flag
+- Phase 26 added: Preload outcome & ending assets
 - Phase 24 added: Consensus copy and funnel fixes
 - Phase 25 added: HOS VERA alignment: roaster copy update, incident fixes, and audio regen (4 plans complete)
 

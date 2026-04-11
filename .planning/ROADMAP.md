@@ -745,11 +745,11 @@ Plans:
 **Goal:** Eliminate the 1–2s placeholder flash for outcome memes, death GIFs, and archetype GIFs by preloading assets ahead of display and fixing lazy loading on above-the-fold overlay/debrief images.
 **Requirements**: TBD
 **Depends on:** Phase 25
-**Plans:** 2 plans
+**Plans:** 2 plans (✓ Complete)
 
 Plans:
-- [ ] 26-01-PLAN.md — preloadAsset utility + outcome/death/archetype preload effects in CardStack and App.tsx
-- [ ] 26-02-PLAN.md — ImageWithFallback loading prop + eager loading on FeedbackOverlay, DebriefPage1, DebriefPage3
+- [x] 26-01-PLAN.md — preloadAsset utility + outcome/death/archetype preload effects in CardStack and App.tsx ✓
+- [x] 26-02-PLAN.md — ImageWithFallback loading prop + eager loading on FeedbackOverlay, DebriefPage1, DebriefPage3 ✓
 
 ---
 

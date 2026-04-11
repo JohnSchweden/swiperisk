@@ -30,6 +30,8 @@ export interface ImageWithFallbackProps {
 	className?: string;
 	/** Additional classes for the container */
 	containerClassName?: string;
+	/** Browser loading hint for <img> elements. Default: "lazy". Has no effect on video elements. */
+	loading?: "lazy" | "eager";
 }
 
 /**
@@ -44,6 +46,7 @@ export function ImageWithFallback({
 	aspectRatio = "video",
 	className = "",
 	containerClassName = "",
+	loading = "lazy",
 }: ImageWithFallbackProps) {
 	const imgRef = useRef<HTMLImageElement>(null);
 	const [isLoaded, setIsLoaded] = useState(false);
@@ -115,7 +118,7 @@ export function ImageWithFallback({
 					ref={imgRef}
 					src={src}
 					alt={alt}
-					loading="lazy"
+					loading={loading}
 					className={`
             w-full h-full
             object-cover

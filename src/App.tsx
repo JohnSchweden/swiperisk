@@ -31,6 +31,7 @@ const WebMCPToolsProvider = import.meta.env.DEV
 	: null;
 
 import { BOSS_FIGHT_QUESTIONS, ROLE_CARDS } from "./data";
+import { getArchetypeGifPath, getDeathGifPath } from "./data/imageMap";
 import {
 	useBackgroundMusic,
 	useBossFight,
@@ -59,6 +60,7 @@ import {
 import { resumeVoiceContext } from "./services/voicePlayback";
 import { type Card, DeathType, GameStage, type RoleType } from "./types";
 import { triggerHaptic } from "./utils/haptic";
+import { preloadAsset } from "./utils/preload";
 
 /**
  * BUTTON VARIANT PATTERNS (established design system)
@@ -172,6 +174,18 @@ const App: React.FC = () => {
 
 	// Debrief hook for 3-page flow navigation and archetype calculation
 	const debrief = useDebrief({ state, dispatch });
+
+	// Preload death GIF as soon as deathType is resolved
+	useEffect(() => {
+		if (!state.deathType) return;
+		return preloadAsset(getDeathGifPath(state.deathType), "video");
+	}, [state.deathType]);
+
+	// Preload archetype GIF once archetype is computed
+	useEffect(() => {
+		if (!debrief.archetype) return;
+		return preloadAsset(getArchetypeGifPath(debrief.archetype.id), "video");
+	}, [debrief.archetype]);
 
 	// Feedback overlay state (includes optional team-impact from pressure metadata)
 	const [feedbackOverlay, setFeedbackOverlay] =

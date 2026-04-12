@@ -421,16 +421,17 @@ export function useBackgroundMusic() {
 		});
 		document.addEventListener("click", unlock, { capture: true });
 		// Desktop: resume on first mouse/keyboard interaction (no click required).
-		document.addEventListener("mousemove", unlock, {
+		// pointerdown fires before click and IS a recognized Chrome activation gesture
+		// (mousemove is NOT — it doesn't satisfy Chrome's autoplay policy on production).
+		document.addEventListener("pointerdown", unlock, {
 			capture: true,
-			passive: true,
 			once: true,
 		});
 		document.addEventListener("keydown", unlock, { capture: true, once: true });
 		return () => {
 			document.removeEventListener("touchstart", unlock, { capture: true });
 			document.removeEventListener("click", unlock, { capture: true });
-			document.removeEventListener("mousemove", unlock, { capture: true });
+			document.removeEventListener("pointerdown", unlock, { capture: true });
 			document.removeEventListener("keydown", unlock, { capture: true });
 		};
 	}, [tryPlay, syncVolumeUnlessRamping]);
@@ -469,6 +470,11 @@ export function useBackgroundMusic() {
 		);
 
 		if (enabledRef.current) {
+			// Attempt immediate AudioContext resume. Chrome allows this on trusted
+			// origins (localhost) and on return visits with sufficient media engagement.
+			// On production first visits it will silently fail — first user gesture handles it.
+			void ctx.resume().catch(() => {});
+
 			void el
 				.play()
 				.then(() => {
@@ -478,7 +484,7 @@ export function useBackgroundMusic() {
 					syncVolumeUnlessRamping();
 				})
 				.catch(() => {
-					// Mobile autoplay blocked — first gesture will unmute and play
+					// Autoplay blocked — first pointer/key gesture will unlock
 				});
 		}
 

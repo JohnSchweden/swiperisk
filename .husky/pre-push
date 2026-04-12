@@ -1,4 +1,4 @@
 bun run typecheck
 bun run lint
 bun run vitest:run
-bun run test
+bun run test:smoke

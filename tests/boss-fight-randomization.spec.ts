@@ -1,6 +1,4 @@
-import type { Page } from "@playwright/test";
-import { expect, test } from "@playwright/test";
-import { navigateToBossFightFast } from "./helpers/navigation";
+import { test } from "@playwright/test";
 
 test.use({ baseURL: "https://localhost:3000" });
 

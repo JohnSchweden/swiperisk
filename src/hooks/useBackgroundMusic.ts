@@ -395,9 +395,10 @@ export function useBackgroundMusic() {
 		return () => el.removeEventListener("canplaythrough", kick);
 	}, [tryPlay]);
 
-	// Mobile autoplay: unmute and retry playback on first user gesture.
-	// Audio starts muted (see useLayoutEffect) so Android Chrome can autoplay silently.
-	// iOS always blocks autoplay even muted — first gesture unmutes and starts music.
+	// Autoplay unlock: resume AudioContext and unmute/play on first user interaction.
+	// iOS always blocks autoplay — first touch unmutes and starts music.
+	// Desktop: AudioContext starts suspended even when el.play() succeeds; resume it on
+	// first mousemove/keydown so music plays without requiring a click.
 	useEffect(() => {
 		const unlock = () => {
 			const el = audioRef.current;
@@ -419,16 +420,30 @@ export function useBackgroundMusic() {
 			passive: true,
 		});
 		document.addEventListener("click", unlock, { capture: true });
+		// Desktop: resume on first mouse/keyboard interaction (no click required).
+		document.addEventListener("mousemove", unlock, {
+			capture: true,
+			passive: true,
+			once: true,
+		});
+		document.addEventListener("keydown", unlock, { capture: true, once: true });
 		return () => {
 			document.removeEventListener("touchstart", unlock, { capture: true });
 			document.removeEventListener("click", unlock, { capture: true });
+			document.removeEventListener("mousemove", unlock, { capture: true });
+			document.removeEventListener("keydown", unlock, { capture: true });
 		};
 	}, [tryPlay, syncVolumeUnlessRamping]);
 
 	useLayoutEffect(() => {
 		const el = new Audio();
 		el.preload = "auto";
-		el.muted = true;
+		// iOS always blocks unmuted autoplay — start muted and unmute on first gesture.
+		// Desktop and Android can attempt unmuted playback immediately.
+		const isIOS =
+			typeof navigator !== "undefined" &&
+			/iPhone|iPad|iPod/i.test(navigator.userAgent);
+		el.muted = isIOS;
 		el.setAttribute("playsinline", "");
 		el.setAttribute("webkit-playsinline", "");
 		audioRef.current = el;

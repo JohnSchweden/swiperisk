@@ -2,6 +2,13 @@
 
 Patterns to prevent repeat mistakes. Update after corrections from the user.
 
+## Tool Usage
+
+- [RULE] Always prefix ALL commands with `rtk` — no exceptions, even for simple/short commands. Full list from `rtk discover`: `rtk git log`, `rtk git diff`, `rtk bun run`, `rtk grep`, `rtk head`, `rtk ls`, `rtk find`, `rtk gh`, `rtk curl`, `rtk brew`, `rtk diff`, `rtk tsc`
+- [RULE] Never use `bunx` — use `rtk bun` instead (e.g., `rtk bun playwright test`) — bunx bypasses RTK token savings
+- [RULE] Never use bare `git` subcommands — always `rtk git log`, `rtk git diff`, `rtk git status`, etc.
+- [RULE] Chain all piped commands with rtk prefixes in one Bash call: `rtk bun ... | rtk grep ... | rtk head ...`
+
 **Capture process:**
 1. Add learnings here after sessions
 2. Use format: `- [RULE] — Why this matters`

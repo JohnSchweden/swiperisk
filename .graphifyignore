@@ -1,0 +1,18 @@
+# Foreign code
+graphify-repo/
+# Graphify outputs
+graphify-out/
+graphify-out-*/
+scripts/graphify-out/
+src/graphify-out/
+public/graphify-out/
+# Dependencies & artifacts
+node_modules/
+dist/
+build/
+test-results/
+audio-archive/
+# Binary assets (no extractable knowledge)
+*.mp3 *.mp4 *.wav *.png *.jpg *.gif *.svg
+# Lockfiles & IDE configs
+bun.lock .vscode/ .idea/

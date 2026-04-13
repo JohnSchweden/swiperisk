@@ -1,0 +1,49 @@
+{
+	"nodes": [
+		{
+			"id": "tests_data_incident_sources_test_ts",
+			"label": "incident-sources.test.ts",
+			"file_type": "code",
+			"source_file": "tests/data/incident-sources.test.ts",
+			"source_location": "L1"
+		}
+	],
+	"edges": [
+		{
+			"source": "tests_data_incident_sources_test_ts",
+			"target": "vitest",
+			"relation": "imports_from",
+			"confidence": "EXTRACTED",
+			"source_file": "tests/data/incident-sources.test.ts",
+			"source_location": "L1",
+			"weight": 1.0
+		},
+		{
+			"source": "tests_data_incident_sources_test_ts",
+			"target": "tests_data_src_data_cards",
+			"relation": "imports_from",
+			"confidence": "EXTRACTED",
+			"source_file": "tests/data/incident-sources.test.ts",
+			"source_location": "L2",
+			"weight": 1.0
+		},
+		{
+			"source": "tests_data_incident_sources_test_ts",
+			"target": "tests_data_src_types",
+			"relation": "imports_from",
+			"confidence": "EXTRACTED",
+			"source_file": "tests/data/incident-sources.test.ts",
+			"source_location": "L3",
+			"weight": 1.0
+		},
+		{
+			"source": "tests_data_incident_sources_test_ts",
+			"target": "tests_data_card_sources_json",
+			"relation": "imports_from",
+			"confidence": "EXTRACTED",
+			"source_file": "tests/data/incident-sources.test.ts",
+			"source_location": "L4",
+			"weight": 1.0
+		}
+	]
+}

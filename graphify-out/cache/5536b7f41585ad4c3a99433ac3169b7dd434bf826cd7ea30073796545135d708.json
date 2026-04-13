@@ -1,0 +1,85 @@
+{
+	"nodes": [
+		{
+			"id": "src_components_game_gamescreen_tsx",
+			"label": "GameScreen.tsx",
+			"file_type": "code",
+			"source_file": "src/components/game/GameScreen.tsx",
+			"source_location": "L1"
+		}
+	],
+	"edges": [
+		{
+			"source": "src_components_game_gamescreen_tsx",
+			"target": "react",
+			"relation": "imports_from",
+			"confidence": "EXTRACTED",
+			"source_file": "src/components/game/GameScreen.tsx",
+			"source_location": "L1",
+			"weight": 1.0
+		},
+		{
+			"source": "src_components_game_gamescreen_tsx",
+			"target": "src_components_game_types",
+			"relation": "imports_from",
+			"confidence": "EXTRACTED",
+			"source_file": "src/components/game/GameScreen.tsx",
+			"source_location": "L2",
+			"weight": 1.0
+		},
+		{
+			"source": "src_components_game_gamescreen_tsx",
+			"target": "src_components_game_types",
+			"relation": "imports_from",
+			"confidence": "EXTRACTED",
+			"source_file": "src/components/game/GameScreen.tsx",
+			"source_location": "L3",
+			"weight": 1.0
+		},
+		{
+			"source": "src_components_game_gamescreen_tsx",
+			"target": "src_components_game_layoutshell",
+			"relation": "imports_from",
+			"confidence": "EXTRACTED",
+			"source_file": "src/components/game/GameScreen.tsx",
+			"source_location": "L4",
+			"weight": 1.0
+		},
+		{
+			"source": "src_components_game_gamescreen_tsx",
+			"target": "src_components_game_cardstack",
+			"relation": "imports_from",
+			"confidence": "EXTRACTED",
+			"source_file": "src/components/game/GameScreen.tsx",
+			"source_location": "L5",
+			"weight": 1.0
+		},
+		{
+			"source": "src_components_game_gamescreen_tsx",
+			"target": "src_components_game_gamehud",
+			"relation": "imports_from",
+			"confidence": "EXTRACTED",
+			"source_file": "src/components/game/GameScreen.tsx",
+			"source_location": "L6",
+			"weight": 1.0
+		},
+		{
+			"source": "src_components_game_gamescreen_tsx",
+			"target": "src_components_game_roastterminal",
+			"relation": "imports_from",
+			"confidence": "EXTRACTED",
+			"source_file": "src/components/game/GameScreen.tsx",
+			"source_location": "L7",
+			"weight": 1.0
+		},
+		{
+			"source": "src_components_game_gamescreen_tsx",
+			"target": "src_components_game_taskbar",
+			"relation": "imports_from",
+			"confidence": "EXTRACTED",
+			"source_file": "src/components/game/GameScreen.tsx",
+			"source_location": "L8",
+			"weight": 1.0
+		}
+	]
+}

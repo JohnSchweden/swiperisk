@@ -1,0 +1,90 @@
+{
+	"nodes": [
+		{
+			"id": "src_lib_deck_test_ts",
+			"label": "deck.test.ts",
+			"file_type": "code",
+			"source_file": "src/lib/deck.test.ts",
+			"source_location": "L1"
+		},
+		{
+			"id": "deck_test_createoutcome",
+			"label": "createOutcome()",
+			"file_type": "code",
+			"source_file": "src/lib/deck.test.ts",
+			"source_location": "L6"
+		},
+		{
+			"id": "deck_test_createcard",
+			"label": "createCard()",
+			"file_type": "code",
+			"source_file": "src/lib/deck.test.ts",
+			"source_location": "L27"
+		}
+	],
+	"edges": [
+		{
+			"source": "src_lib_deck_test_ts",
+			"target": "vitest",
+			"relation": "imports_from",
+			"confidence": "EXTRACTED",
+			"source_file": "src/lib/deck.test.ts",
+			"source_location": "L1",
+			"weight": 1.0
+		},
+		{
+			"source": "src_lib_deck_test_ts",
+			"target": "src_lib_types",
+			"relation": "imports_from",
+			"confidence": "EXTRACTED",
+			"source_file": "src/lib/deck.test.ts",
+			"source_location": "L2",
+			"weight": 1.0
+		},
+		{
+			"source": "src_lib_deck_test_ts",
+			"target": "src_lib_types",
+			"relation": "imports_from",
+			"confidence": "EXTRACTED",
+			"source_file": "src/lib/deck.test.ts",
+			"source_location": "L3",
+			"weight": 1.0
+		},
+		{
+			"source": "src_lib_deck_test_ts",
+			"target": "src_lib_deck",
+			"relation": "imports_from",
+			"confidence": "EXTRACTED",
+			"source_file": "src/lib/deck.test.ts",
+			"source_location": "L4",
+			"weight": 1.0
+		},
+		{
+			"source": "src_lib_deck_test_ts",
+			"target": "deck_test_createoutcome",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "src/lib/deck.test.ts",
+			"source_location": "L6",
+			"weight": 1.0
+		},
+		{
+			"source": "src_lib_deck_test_ts",
+			"target": "deck_test_createcard",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "src/lib/deck.test.ts",
+			"source_location": "L27",
+			"weight": 1.0
+		},
+		{
+			"source": "deck_test_createcard",
+			"target": "deck_test_createoutcome",
+			"relation": "calls",
+			"confidence": "EXTRACTED",
+			"source_file": "src/lib/deck.test.ts",
+			"source_location": "L34",
+			"weight": 1.0
+		}
+	]
+}

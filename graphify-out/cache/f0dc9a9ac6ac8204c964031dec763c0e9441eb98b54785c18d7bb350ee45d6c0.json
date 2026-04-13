@@ -1,0 +1,56 @@
+{
+	"nodes": [
+		{
+			"id": "unit_deck_branching_test_ts",
+			"label": "deck-branching.test.ts",
+			"file_type": "code",
+			"source_file": "unit/deck-branching.test.ts",
+			"source_location": "L1"
+		},
+		{
+			"id": "deck_branching_test_createtestcard",
+			"label": "createTestCard()",
+			"file_type": "code",
+			"source_file": "unit/deck-branching.test.ts",
+			"source_location": "L5"
+		}
+	],
+	"edges": [
+		{
+			"source": "unit_deck_branching_test_ts",
+			"target": "vitest",
+			"relation": "imports_from",
+			"confidence": "EXTRACTED",
+			"source_file": "unit/deck-branching.test.ts",
+			"source_location": "L1",
+			"weight": 1.0
+		},
+		{
+			"source": "unit_deck_branching_test_ts",
+			"target": "unit_src_lib_deck",
+			"relation": "imports_from",
+			"confidence": "EXTRACTED",
+			"source_file": "unit/deck-branching.test.ts",
+			"source_location": "L2",
+			"weight": 1.0
+		},
+		{
+			"source": "unit_deck_branching_test_ts",
+			"target": "unit_src_types",
+			"relation": "imports_from",
+			"confidence": "EXTRACTED",
+			"source_file": "unit/deck-branching.test.ts",
+			"source_location": "L3",
+			"weight": 1.0
+		},
+		{
+			"source": "unit_deck_branching_test_ts",
+			"target": "deck_branching_test_createtestcard",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "unit/deck-branching.test.ts",
+			"source_location": "L5",
+			"weight": 1.0
+		}
+	]
+}

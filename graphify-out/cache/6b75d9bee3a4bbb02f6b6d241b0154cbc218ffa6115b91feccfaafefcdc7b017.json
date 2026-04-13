@@ -1,0 +1,12 @@
+{
+	"nodes": [
+		{
+			"id": "src_data_incidents_ts",
+			"label": "incidents.ts",
+			"file_type": "code",
+			"source_file": "src/data/incidents.ts",
+			"source_location": "L1"
+		}
+	],
+	"edges": []
+}

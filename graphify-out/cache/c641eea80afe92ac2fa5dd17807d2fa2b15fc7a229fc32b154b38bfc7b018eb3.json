@@ -1,0 +1,40 @@
+{
+	"nodes": [
+		{
+			"id": "unit_unlocked_endings_test_ts",
+			"label": "unlocked-endings.test.ts",
+			"file_type": "code",
+			"source_file": "unit/unlocked-endings.test.ts",
+			"source_location": "L1"
+		}
+	],
+	"edges": [
+		{
+			"source": "unit_unlocked_endings_test_ts",
+			"target": "vitest",
+			"relation": "imports_from",
+			"confidence": "EXTRACTED",
+			"source_file": "unit/unlocked-endings.test.ts",
+			"source_location": "L1",
+			"weight": 1.0
+		},
+		{
+			"source": "unit_unlocked_endings_test_ts",
+			"target": "unit_src_hooks_useunlockedendings",
+			"relation": "imports_from",
+			"confidence": "EXTRACTED",
+			"source_file": "unit/unlocked-endings.test.ts",
+			"source_location": "L2",
+			"weight": 1.0
+		},
+		{
+			"source": "unit_unlocked_endings_test_ts",
+			"target": "unit_src_types",
+			"relation": "imports_from",
+			"confidence": "EXTRACTED",
+			"source_file": "unit/unlocked-endings.test.ts",
+			"source_location": "L3",
+			"weight": 1.0
+		}
+	]
+}

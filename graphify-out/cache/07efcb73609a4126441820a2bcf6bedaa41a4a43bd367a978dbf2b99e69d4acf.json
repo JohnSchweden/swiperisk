@@ -1,0 +1,54 @@
+{
+	"nodes": [
+		{
+			"id": "src_lib_deck_ts",
+			"label": "deck.ts",
+			"file_type": "code",
+			"source_file": "src/lib/deck.ts",
+			"source_location": "L1"
+		},
+		{
+			"id": "deck_shuffledeck",
+			"label": "shuffleDeck()",
+			"file_type": "code",
+			"source_file": "src/lib/deck.ts",
+			"source_location": "L9"
+		},
+		{
+			"id": "deck_resolvedeckwithbranching",
+			"label": "resolveDeckWithBranching()",
+			"file_type": "code",
+			"source_file": "src/lib/deck.ts",
+			"source_location": "L44"
+		}
+	],
+	"edges": [
+		{
+			"source": "src_lib_deck_ts",
+			"target": "src_lib_types",
+			"relation": "imports_from",
+			"confidence": "EXTRACTED",
+			"source_file": "src/lib/deck.ts",
+			"source_location": "L1",
+			"weight": 1.0
+		},
+		{
+			"source": "src_lib_deck_ts",
+			"target": "deck_shuffledeck",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "src/lib/deck.ts",
+			"source_location": "L9",
+			"weight": 1.0
+		},
+		{
+			"source": "src_lib_deck_ts",
+			"target": "deck_resolvedeckwithbranching",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "src/lib/deck.ts",
+			"source_location": "L44",
+			"weight": 1.0
+		}
+	]
+}

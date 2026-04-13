@@ -1,0 +1,395 @@
+{
+	"nodes": [
+		{
+			"id": "src_hooks_usebackgroundmusic_ts",
+			"label": "useBackgroundMusic.ts",
+			"file_type": "code",
+			"source_file": "src/hooks/useBackgroundMusic.ts",
+			"source_location": "L1"
+		},
+		{
+			"id": "usebackgroundmusic_voiceduckmultforviewport",
+			"label": "voiceDuckMultForViewport()",
+			"file_type": "code",
+			"source_file": "src/hooks/useBackgroundMusic.ts",
+			"source_location": "L35"
+		},
+		{
+			"id": "usebackgroundmusic_safeparse",
+			"label": "safeParse()",
+			"file_type": "code",
+			"source_file": "src/hooks/useBackgroundMusic.ts",
+			"source_location": "L42"
+		},
+		{
+			"id": "usebackgroundmusic_safesessionget",
+			"label": "safeSessionGet()",
+			"file_type": "code",
+			"source_file": "src/hooks/useBackgroundMusic.ts",
+			"source_location": "L58"
+		},
+		{
+			"id": "usebackgroundmusic_safesessionset",
+			"label": "safeSessionSet()",
+			"file_type": "code",
+			"source_file": "src/hooks/useBackgroundMusic.ts",
+			"source_location": "L67"
+		},
+		{
+			"id": "usebackgroundmusic_safesessionremove",
+			"label": "safeSessionRemove()",
+			"file_type": "code",
+			"source_file": "src/hooks/useBackgroundMusic.ts",
+			"source_location": "L76"
+		},
+		{
+			"id": "usebackgroundmusic_clamp",
+			"label": "clamp()",
+			"file_type": "code",
+			"source_file": "src/hooks/useBackgroundMusic.ts",
+			"source_location": "L85"
+		},
+		{
+			"id": "usebackgroundmusic_readstoredvolume",
+			"label": "readStoredVolume()",
+			"file_type": "code",
+			"source_file": "src/hooks/useBackgroundMusic.ts",
+			"source_location": "L88"
+		},
+		{
+			"id": "usebackgroundmusic_readstoredenabled",
+			"label": "readStoredEnabled()",
+			"file_type": "code",
+			"source_file": "src/hooks/useBackgroundMusic.ts",
+			"source_location": "L99"
+		},
+		{
+			"id": "usebackgroundmusic_readsessiontrackindex",
+			"label": "readSessionTrackIndex()",
+			"file_type": "code",
+			"source_file": "src/hooks/useBackgroundMusic.ts",
+			"source_location": "L103"
+		},
+		{
+			"id": "usebackgroundmusic_readsessiontime",
+			"label": "readSessionTime()",
+			"file_type": "code",
+			"source_file": "src/hooks/useBackgroundMusic.ts",
+			"source_location": "L111"
+		},
+		{
+			"id": "usebackgroundmusic_writesessionprogress",
+			"label": "writeSessionProgress()",
+			"file_type": "code",
+			"source_file": "src/hooks/useBackgroundMusic.ts",
+			"source_location": "L118"
+		},
+		{
+			"id": "usebackgroundmusic_clearsessionprogress",
+			"label": "clearSessionProgress()",
+			"file_type": "code",
+			"source_file": "src/hooks/useBackgroundMusic.ts",
+			"source_location": "L123"
+		},
+		{
+			"id": "usebackgroundmusic_applyduckedvolume",
+			"label": "applyDuckedVolume()",
+			"file_type": "code",
+			"source_file": "src/hooks/useBackgroundMusic.ts",
+			"source_location": "L128"
+		},
+		{
+			"id": "usebackgroundmusic_easeoutcubic",
+			"label": "easeOutCubic()",
+			"file_type": "code",
+			"source_file": "src/hooks/useBackgroundMusic.ts",
+			"source_location": "L142"
+		},
+		{
+			"id": "usebackgroundmusic_primebgmelementatindex",
+			"label": "primeBgmElementAtIndex()",
+			"file_type": "code",
+			"source_file": "src/hooks/useBackgroundMusic.ts",
+			"source_location": "L144"
+		},
+		{
+			"id": "usebackgroundmusic_usebackgroundmusic",
+			"label": "useBackgroundMusic()",
+			"file_type": "code",
+			"source_file": "src/hooks/useBackgroundMusic.ts",
+			"source_location": "L159"
+		}
+	],
+	"edges": [
+		{
+			"source": "src_hooks_usebackgroundmusic_ts",
+			"target": "react",
+			"relation": "imports_from",
+			"confidence": "EXTRACTED",
+			"source_file": "src/hooks/useBackgroundMusic.ts",
+			"source_location": "L1",
+			"weight": 1.0
+		},
+		{
+			"source": "src_hooks_usebackgroundmusic_ts",
+			"target": "src_hooks_data_bgmplaylist",
+			"relation": "imports_from",
+			"confidence": "EXTRACTED",
+			"source_file": "src/hooks/useBackgroundMusic.ts",
+			"source_location": "L9",
+			"weight": 1.0
+		},
+		{
+			"source": "src_hooks_usebackgroundmusic_ts",
+			"target": "src_hooks_services_voiceplayback",
+			"relation": "imports_from",
+			"confidence": "EXTRACTED",
+			"source_file": "src/hooks/useBackgroundMusic.ts",
+			"source_location": "L10",
+			"weight": 1.0
+		},
+		{
+			"source": "src_hooks_usebackgroundmusic_ts",
+			"target": "usebackgroundmusic_voiceduckmultforviewport",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "src/hooks/useBackgroundMusic.ts",
+			"source_location": "L35",
+			"weight": 1.0
+		},
+		{
+			"source": "src_hooks_usebackgroundmusic_ts",
+			"target": "usebackgroundmusic_safeparse",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "src/hooks/useBackgroundMusic.ts",
+			"source_location": "L42",
+			"weight": 1.0
+		},
+		{
+			"source": "src_hooks_usebackgroundmusic_ts",
+			"target": "usebackgroundmusic_safesessionget",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "src/hooks/useBackgroundMusic.ts",
+			"source_location": "L58",
+			"weight": 1.0
+		},
+		{
+			"source": "src_hooks_usebackgroundmusic_ts",
+			"target": "usebackgroundmusic_safesessionset",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "src/hooks/useBackgroundMusic.ts",
+			"source_location": "L67",
+			"weight": 1.0
+		},
+		{
+			"source": "src_hooks_usebackgroundmusic_ts",
+			"target": "usebackgroundmusic_safesessionremove",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "src/hooks/useBackgroundMusic.ts",
+			"source_location": "L76",
+			"weight": 1.0
+		},
+		{
+			"source": "src_hooks_usebackgroundmusic_ts",
+			"target": "usebackgroundmusic_clamp",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "src/hooks/useBackgroundMusic.ts",
+			"source_location": "L85",
+			"weight": 1.0
+		},
+		{
+			"source": "src_hooks_usebackgroundmusic_ts",
+			"target": "usebackgroundmusic_readstoredvolume",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "src/hooks/useBackgroundMusic.ts",
+			"source_location": "L88",
+			"weight": 1.0
+		},
+		{
+			"source": "src_hooks_usebackgroundmusic_ts",
+			"target": "usebackgroundmusic_readstoredenabled",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "src/hooks/useBackgroundMusic.ts",
+			"source_location": "L99",
+			"weight": 1.0
+		},
+		{
+			"source": "src_hooks_usebackgroundmusic_ts",
+			"target": "usebackgroundmusic_readsessiontrackindex",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "src/hooks/useBackgroundMusic.ts",
+			"source_location": "L103",
+			"weight": 1.0
+		},
+		{
+			"source": "src_hooks_usebackgroundmusic_ts",
+			"target": "usebackgroundmusic_readsessiontime",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "src/hooks/useBackgroundMusic.ts",
+			"source_location": "L111",
+			"weight": 1.0
+		},
+		{
+			"source": "src_hooks_usebackgroundmusic_ts",
+			"target": "usebackgroundmusic_writesessionprogress",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "src/hooks/useBackgroundMusic.ts",
+			"source_location": "L118",
+			"weight": 1.0
+		},
+		{
+			"source": "src_hooks_usebackgroundmusic_ts",
+			"target": "usebackgroundmusic_clearsessionprogress",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "src/hooks/useBackgroundMusic.ts",
+			"source_location": "L123",
+			"weight": 1.0
+		},
+		{
+			"source": "src_hooks_usebackgroundmusic_ts",
+			"target": "usebackgroundmusic_applyduckedvolume",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "src/hooks/useBackgroundMusic.ts",
+			"source_location": "L128",
+			"weight": 1.0
+		},
+		{
+			"source": "src_hooks_usebackgroundmusic_ts",
+			"target": "usebackgroundmusic_easeoutcubic",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "src/hooks/useBackgroundMusic.ts",
+			"source_location": "L142",
+			"weight": 1.0
+		},
+		{
+			"source": "src_hooks_usebackgroundmusic_ts",
+			"target": "usebackgroundmusic_primebgmelementatindex",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "src/hooks/useBackgroundMusic.ts",
+			"source_location": "L144",
+			"weight": 1.0
+		},
+		{
+			"source": "src_hooks_usebackgroundmusic_ts",
+			"target": "usebackgroundmusic_usebackgroundmusic",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "src/hooks/useBackgroundMusic.ts",
+			"source_location": "L159",
+			"weight": 1.0
+		},
+		{
+			"source": "usebackgroundmusic_readstoredvolume",
+			"target": "usebackgroundmusic_safeparse",
+			"relation": "calls",
+			"confidence": "EXTRACTED",
+			"source_file": "src/hooks/useBackgroundMusic.ts",
+			"source_location": "L89",
+			"weight": 1.0
+		},
+		{
+			"source": "usebackgroundmusic_readstoredenabled",
+			"target": "usebackgroundmusic_safeparse",
+			"relation": "calls",
+			"confidence": "EXTRACTED",
+			"source_file": "src/hooks/useBackgroundMusic.ts",
+			"source_location": "L100",
+			"weight": 1.0
+		},
+		{
+			"source": "usebackgroundmusic_readsessiontrackindex",
+			"target": "usebackgroundmusic_readstoredenabled",
+			"relation": "calls",
+			"confidence": "EXTRACTED",
+			"source_file": "src/hooks/useBackgroundMusic.ts",
+			"source_location": "L104",
+			"weight": 1.0
+		},
+		{
+			"source": "usebackgroundmusic_readsessiontrackindex",
+			"target": "usebackgroundmusic_safesessionget",
+			"relation": "calls",
+			"confidence": "EXTRACTED",
+			"source_file": "src/hooks/useBackgroundMusic.ts",
+			"source_location": "L105",
+			"weight": 1.0
+		},
+		{
+			"source": "usebackgroundmusic_readsessiontime",
+			"target": "usebackgroundmusic_safesessionget",
+			"relation": "calls",
+			"confidence": "EXTRACTED",
+			"source_file": "src/hooks/useBackgroundMusic.ts",
+			"source_location": "L112",
+			"weight": 1.0
+		},
+		{
+			"source": "usebackgroundmusic_writesessionprogress",
+			"target": "usebackgroundmusic_safesessionset",
+			"relation": "calls",
+			"confidence": "EXTRACTED",
+			"source_file": "src/hooks/useBackgroundMusic.ts",
+			"source_location": "L119",
+			"weight": 1.0
+		},
+		{
+			"source": "usebackgroundmusic_clearsessionprogress",
+			"target": "usebackgroundmusic_safesessionremove",
+			"relation": "calls",
+			"confidence": "EXTRACTED",
+			"source_file": "src/hooks/useBackgroundMusic.ts",
+			"source_location": "L124",
+			"weight": 1.0
+		},
+		{
+			"source": "usebackgroundmusic_applyduckedvolume",
+			"target": "usebackgroundmusic_clamp",
+			"relation": "calls",
+			"confidence": "EXTRACTED",
+			"source_file": "src/hooks/useBackgroundMusic.ts",
+			"source_location": "L135",
+			"weight": 1.0
+		},
+		{
+			"source": "usebackgroundmusic_usebackgroundmusic",
+			"target": "usebackgroundmusic_readstoredenabled",
+			"relation": "calls",
+			"confidence": "EXTRACTED",
+			"source_file": "src/hooks/useBackgroundMusic.ts",
+			"source_location": "L172",
+			"weight": 1.0
+		},
+		{
+			"source": "usebackgroundmusic_usebackgroundmusic",
+			"target": "usebackgroundmusic_readstoredvolume",
+			"relation": "calls",
+			"confidence": "EXTRACTED",
+			"source_file": "src/hooks/useBackgroundMusic.ts",
+			"source_location": "L173",
+			"weight": 1.0
+		},
+		{
+			"source": "usebackgroundmusic_usebackgroundmusic",
+			"target": "usebackgroundmusic_voiceduckmultforviewport",
+			"relation": "calls",
+			"confidence": "EXTRACTED",
+			"source_file": "src/hooks/useBackgroundMusic.ts",
+			"source_location": "L175",
+			"weight": 1.0
+		}
+	]
+}

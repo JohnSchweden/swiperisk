@@ -1,0 +1,56 @@
+{
+	"nodes": [
+		{
+			"id": "tests_data_heat_correlation_test_ts",
+			"label": "heat-correlation.test.ts",
+			"file_type": "code",
+			"source_file": "tests/data/heat-correlation.test.ts",
+			"source_location": "L1"
+		},
+		{
+			"id": "heat_correlation_test_getmaxheat",
+			"label": "getMaxHeat()",
+			"file_type": "code",
+			"source_file": "tests/data/heat-correlation.test.ts",
+			"source_location": "L71"
+		}
+	],
+	"edges": [
+		{
+			"source": "tests_data_heat_correlation_test_ts",
+			"target": "vitest",
+			"relation": "imports_from",
+			"confidence": "EXTRACTED",
+			"source_file": "tests/data/heat-correlation.test.ts",
+			"source_location": "L1",
+			"weight": 1.0
+		},
+		{
+			"source": "tests_data_heat_correlation_test_ts",
+			"target": "tests_data_src_data_cards",
+			"relation": "imports_from",
+			"confidence": "EXTRACTED",
+			"source_file": "tests/data/heat-correlation.test.ts",
+			"source_location": "L2",
+			"weight": 1.0
+		},
+		{
+			"source": "tests_data_heat_correlation_test_ts",
+			"target": "tests_data_src_types",
+			"relation": "imports_from",
+			"confidence": "EXTRACTED",
+			"source_file": "tests/data/heat-correlation.test.ts",
+			"source_location": "L3",
+			"weight": 1.0
+		},
+		{
+			"source": "tests_data_heat_correlation_test_ts",
+			"target": "heat_correlation_test_getmaxheat",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "tests/data/heat-correlation.test.ts",
+			"source_location": "L71",
+			"weight": 1.0
+		}
+	]
+}

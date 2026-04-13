@@ -1,0 +1,49 @@
+{
+	"nodes": [
+		{
+			"id": "unit_email_capture_test_ts",
+			"label": "email-capture.test.ts",
+			"file_type": "code",
+			"source_file": "unit/email-capture.test.ts",
+			"source_location": "L1"
+		}
+	],
+	"edges": [
+		{
+			"source": "unit_email_capture_test_ts",
+			"target": "react",
+			"relation": "imports_from",
+			"confidence": "EXTRACTED",
+			"source_file": "unit/email-capture.test.ts",
+			"source_location": "L1",
+			"weight": 1.0
+		},
+		{
+			"source": "unit_email_capture_test_ts",
+			"target": "vitest",
+			"relation": "imports_from",
+			"confidence": "EXTRACTED",
+			"source_file": "unit/email-capture.test.ts",
+			"source_location": "L2",
+			"weight": 1.0
+		},
+		{
+			"source": "unit_email_capture_test_ts",
+			"target": "unit_src_hooks_useemailcapture",
+			"relation": "imports_from",
+			"confidence": "EXTRACTED",
+			"source_file": "unit/email-capture.test.ts",
+			"source_location": "L3",
+			"weight": 1.0
+		},
+		{
+			"source": "unit_email_capture_test_ts",
+			"target": "unit_src_types",
+			"relation": "imports_from",
+			"confidence": "EXTRACTED",
+			"source_file": "unit/email-capture.test.ts",
+			"source_location": "L4",
+			"weight": 1.0
+		}
+	]
+}

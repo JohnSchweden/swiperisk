@@ -1,0 +1,186 @@
+{
+	"nodes": [
+		{
+			"id": "scripts_migrate_card_constants_ts",
+			"label": "migrate-card-constants.ts",
+			"file_type": "code",
+			"source_file": "scripts/migrate-card-constants.ts",
+			"source_location": "L1"
+		},
+		{
+			"id": "migrate_card_constants_extractstringmap",
+			"label": "extractStringMap()",
+			"file_type": "code",
+			"source_file": "scripts/migrate-card-constants.ts",
+			"source_location": "L28"
+		},
+		{
+			"id": "migrate_card_constants_extractincidentmap",
+			"label": "extractIncidentMap()",
+			"file_type": "code",
+			"source_file": "scripts/migrate-card-constants.ts",
+			"source_location": "L50"
+		},
+		{
+			"id": "migrate_card_constants_processmakecardcalls",
+			"label": "processMakeCardCalls()",
+			"file_type": "code",
+			"source_file": "scripts/migrate-card-constants.ts",
+			"source_location": "L256"
+		},
+		{
+			"id": "migrate_card_constants_extractandreplaceargs6to8",
+			"label": "extractAndReplaceArgs6to8()",
+			"file_type": "code",
+			"source_file": "scripts/migrate-card-constants.ts",
+			"source_location": "L313"
+		},
+		{
+			"id": "migrate_card_constants_isquotedstring",
+			"label": "isQuotedString()",
+			"file_type": "code",
+			"source_file": "scripts/migrate-card-constants.ts",
+			"source_location": "L441"
+		},
+		{
+			"id": "migrate_card_constants_unquote",
+			"label": "unquote()",
+			"file_type": "code",
+			"source_file": "scripts/migrate-card-constants.ts",
+			"source_location": "L448"
+		},
+		{
+			"id": "migrate_card_constants_escaperegex",
+			"label": "escapeRegex()",
+			"file_type": "code",
+			"source_file": "scripts/migrate-card-constants.ts",
+			"source_location": "L456"
+		},
+		{
+			"id": "migrate_card_constants_findimportblockend",
+			"label": "findImportBlockEnd()",
+			"file_type": "code",
+			"source_file": "scripts/migrate-card-constants.ts",
+			"source_location": "L460"
+		}
+	],
+	"edges": [
+		{
+			"source": "scripts_migrate_card_constants_ts",
+			"target": "node_fs",
+			"relation": "imports_from",
+			"confidence": "EXTRACTED",
+			"source_file": "scripts/migrate-card-constants.ts",
+			"source_location": "L17",
+			"weight": 1.0
+		},
+		{
+			"source": "scripts_migrate_card_constants_ts",
+			"target": "node_path",
+			"relation": "imports_from",
+			"confidence": "EXTRACTED",
+			"source_file": "scripts/migrate-card-constants.ts",
+			"source_location": "L18",
+			"weight": 1.0
+		},
+		{
+			"source": "scripts_migrate_card_constants_ts",
+			"target": "migrate_card_constants_extractstringmap",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "scripts/migrate-card-constants.ts",
+			"source_location": "L28",
+			"weight": 1.0
+		},
+		{
+			"source": "scripts_migrate_card_constants_ts",
+			"target": "migrate_card_constants_extractincidentmap",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "scripts/migrate-card-constants.ts",
+			"source_location": "L50",
+			"weight": 1.0
+		},
+		{
+			"source": "scripts_migrate_card_constants_ts",
+			"target": "migrate_card_constants_processmakecardcalls",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "scripts/migrate-card-constants.ts",
+			"source_location": "L256",
+			"weight": 1.0
+		},
+		{
+			"source": "scripts_migrate_card_constants_ts",
+			"target": "migrate_card_constants_extractandreplaceargs6to8",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "scripts/migrate-card-constants.ts",
+			"source_location": "L313",
+			"weight": 1.0
+		},
+		{
+			"source": "scripts_migrate_card_constants_ts",
+			"target": "migrate_card_constants_isquotedstring",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "scripts/migrate-card-constants.ts",
+			"source_location": "L441",
+			"weight": 1.0
+		},
+		{
+			"source": "scripts_migrate_card_constants_ts",
+			"target": "migrate_card_constants_unquote",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "scripts/migrate-card-constants.ts",
+			"source_location": "L448",
+			"weight": 1.0
+		},
+		{
+			"source": "scripts_migrate_card_constants_ts",
+			"target": "migrate_card_constants_escaperegex",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "scripts/migrate-card-constants.ts",
+			"source_location": "L456",
+			"weight": 1.0
+		},
+		{
+			"source": "scripts_migrate_card_constants_ts",
+			"target": "migrate_card_constants_findimportblockend",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "scripts/migrate-card-constants.ts",
+			"source_location": "L460",
+			"weight": 1.0
+		},
+		{
+			"source": "migrate_card_constants_processmakecardcalls",
+			"target": "migrate_card_constants_extractandreplaceargs6to8",
+			"relation": "calls",
+			"confidence": "EXTRACTED",
+			"source_file": "scripts/migrate-card-constants.ts",
+			"source_location": "L281",
+			"weight": 1.0
+		},
+		{
+			"source": "migrate_card_constants_extractandreplaceargs6to8",
+			"target": "migrate_card_constants_isquotedstring",
+			"relation": "calls",
+			"confidence": "EXTRACTED",
+			"source_file": "scripts/migrate-card-constants.ts",
+			"source_location": "L395",
+			"weight": 1.0
+		},
+		{
+			"source": "migrate_card_constants_extractandreplaceargs6to8",
+			"target": "migrate_card_constants_unquote",
+			"relation": "calls",
+			"confidence": "EXTRACTED",
+			"source_file": "scripts/migrate-card-constants.ts",
+			"source_location": "L400",
+			"weight": 1.0
+		}
+	]
+}

@@ -1,0 +1,81 @@
+{
+	"nodes": [
+		{
+			"id": "scripts_convert_music_to_opus_ts",
+			"label": "convert-music-to-opus.ts",
+			"file_type": "code",
+			"source_file": "scripts/convert-music-to-opus.ts",
+			"source_location": "L1"
+		},
+		{
+			"id": "convert_music_to_opus_mp3toopus",
+			"label": "mp3ToOpus()",
+			"file_type": "code",
+			"source_file": "scripts/convert-music-to-opus.ts",
+			"source_location": "L12"
+		},
+		{
+			"id": "convert_music_to_opus_convertdirectorymp3toopus",
+			"label": "convertDirectoryMp3ToOpus()",
+			"file_type": "code",
+			"source_file": "scripts/convert-music-to-opus.ts",
+			"source_location": "L39"
+		}
+	],
+	"edges": [
+		{
+			"source": "scripts_convert_music_to_opus_ts",
+			"target": "node_fs",
+			"relation": "imports_from",
+			"confidence": "EXTRACTED",
+			"source_file": "scripts/convert-music-to-opus.ts",
+			"source_location": "L1",
+			"weight": 1.0
+		},
+		{
+			"source": "scripts_convert_music_to_opus_ts",
+			"target": "node_path",
+			"relation": "imports_from",
+			"confidence": "EXTRACTED",
+			"source_file": "scripts/convert-music-to-opus.ts",
+			"source_location": "L2",
+			"weight": 1.0
+		},
+		{
+			"source": "scripts_convert_music_to_opus_ts",
+			"target": "ffmpeg_static",
+			"relation": "imports_from",
+			"confidence": "EXTRACTED",
+			"source_file": "scripts/convert-music-to-opus.ts",
+			"source_location": "L3",
+			"weight": 1.0
+		},
+		{
+			"source": "scripts_convert_music_to_opus_ts",
+			"target": "fluent_ffmpeg",
+			"relation": "imports_from",
+			"confidence": "EXTRACTED",
+			"source_file": "scripts/convert-music-to-opus.ts",
+			"source_location": "L4",
+			"weight": 1.0
+		},
+		{
+			"source": "scripts_convert_music_to_opus_ts",
+			"target": "convert_music_to_opus_mp3toopus",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "scripts/convert-music-to-opus.ts",
+			"source_location": "L12",
+			"weight": 1.0
+		},
+		{
+			"source": "scripts_convert_music_to_opus_ts",
+			"target": "convert_music_to_opus_convertdirectorymp3toopus",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "scripts/convert-music-to-opus.ts",
+			"source_location": "L39",
+			"weight": 1.0
+		}
+	]
+}

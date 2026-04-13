@@ -1,0 +1,122 @@
+{
+	"nodes": [
+		{
+			"id": "src_hooks_usegamestate_deathresolver_ts",
+			"label": "deathResolver.ts",
+			"file_type": "code",
+			"source_file": "src/hooks/useGameState/deathResolver.ts",
+			"source_location": "L1"
+		},
+		{
+			"id": "deathresolver_resolvedeathtype",
+			"label": "resolveDeathType()",
+			"file_type": "code",
+			"source_file": "src/hooks/useGameState/deathResolver.ts",
+			"source_location": "L24"
+		},
+		{
+			"id": "deathresolver_getroledeck",
+			"label": "getRoleDeck()",
+			"file_type": "code",
+			"source_file": "src/hooks/useGameState/deathResolver.ts",
+			"source_location": "L51"
+		},
+		{
+			"id": "deathresolver_getunlockedendings",
+			"label": "getUnlockedEndings()",
+			"file_type": "code",
+			"source_file": "src/hooks/useGameState/deathResolver.ts",
+			"source_location": "L58"
+		},
+		{
+			"id": "deathresolver_creategameoverstate",
+			"label": "createGameOverState()",
+			"file_type": "code",
+			"source_file": "src/hooks/useGameState/deathResolver.ts",
+			"source_location": "L70"
+		}
+	],
+	"edges": [
+		{
+			"source": "src_hooks_usegamestate_deathresolver_ts",
+			"target": "src_hooks_usegamestate_data",
+			"relation": "imports_from",
+			"confidence": "EXTRACTED",
+			"source_file": "src/hooks/useGameState/deathResolver.ts",
+			"source_location": "L1",
+			"weight": 1.0
+		},
+		{
+			"source": "src_hooks_usegamestate_deathresolver_ts",
+			"target": "src_hooks_usegamestate_data_archetypes_ts",
+			"relation": "imports_from",
+			"confidence": "EXTRACTED",
+			"source_file": "src/hooks/useGameState/deathResolver.ts",
+			"source_location": "L2",
+			"weight": 1.0
+		},
+		{
+			"source": "src_hooks_usegamestate_deathresolver_ts",
+			"target": "src_hooks_usegamestate_data_deathvectors_ts",
+			"relation": "imports_from",
+			"confidence": "EXTRACTED",
+			"source_file": "src/hooks/useGameState/deathResolver.ts",
+			"source_location": "L3",
+			"weight": 1.0
+		},
+		{
+			"source": "src_hooks_usegamestate_deathresolver_ts",
+			"target": "src_hooks_usegamestate_types_ts",
+			"relation": "imports_from",
+			"confidence": "EXTRACTED",
+			"source_file": "src/hooks/useGameState/deathResolver.ts",
+			"source_location": "L7",
+			"weight": 1.0
+		},
+		{
+			"source": "src_hooks_usegamestate_deathresolver_ts",
+			"target": "deathresolver_resolvedeathtype",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "src/hooks/useGameState/deathResolver.ts",
+			"source_location": "L24",
+			"weight": 1.0
+		},
+		{
+			"source": "src_hooks_usegamestate_deathresolver_ts",
+			"target": "deathresolver_getroledeck",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "src/hooks/useGameState/deathResolver.ts",
+			"source_location": "L51",
+			"weight": 1.0
+		},
+		{
+			"source": "src_hooks_usegamestate_deathresolver_ts",
+			"target": "deathresolver_getunlockedendings",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "src/hooks/useGameState/deathResolver.ts",
+			"source_location": "L58",
+			"weight": 1.0
+		},
+		{
+			"source": "src_hooks_usegamestate_deathresolver_ts",
+			"target": "deathresolver_creategameoverstate",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "src/hooks/useGameState/deathResolver.ts",
+			"source_location": "L70",
+			"weight": 1.0
+		},
+		{
+			"source": "deathresolver_creategameoverstate",
+			"target": "deathresolver_getunlockedendings",
+			"relation": "calls",
+			"confidence": "EXTRACTED",
+			"source_file": "src/hooks/useGameState/deathResolver.ts",
+			"source_location": "L80",
+			"weight": 1.0
+		}
+	]
+}

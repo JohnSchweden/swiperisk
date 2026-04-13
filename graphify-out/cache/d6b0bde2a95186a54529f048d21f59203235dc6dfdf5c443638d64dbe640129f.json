@@ -1,0 +1,140 @@
+{
+	"nodes": [
+		{
+			"id": "scripts_generate_archetype_voices_ts",
+			"label": "generate-archetype-voices.ts",
+			"file_type": "code",
+			"source_file": "scripts/generate-archetype-voices.ts",
+			"source_location": "L1"
+		},
+		{
+			"id": "generate_archetype_voices_createwavfile",
+			"label": "createWavFile()",
+			"file_type": "code",
+			"source_file": "scripts/generate-archetype-voices.ts",
+			"source_location": "L153"
+		},
+		{
+			"id": "generate_archetype_voices_generatevoice",
+			"label": "generateVoice()",
+			"file_type": "code",
+			"source_file": "scripts/generate-archetype-voices.ts",
+			"source_location": "L182"
+		},
+		{
+			"id": "generate_archetype_voices_parseargs",
+			"label": "parseArgs()",
+			"file_type": "code",
+			"source_file": "scripts/generate-archetype-voices.ts",
+			"source_location": "L205"
+		},
+		{
+			"id": "generate_archetype_voices_main",
+			"label": "main()",
+			"file_type": "code",
+			"source_file": "scripts/generate-archetype-voices.ts",
+			"source_location": "L223"
+		}
+	],
+	"edges": [
+		{
+			"source": "scripts_generate_archetype_voices_ts",
+			"target": "node_fs",
+			"relation": "imports_from",
+			"confidence": "EXTRACTED",
+			"source_file": "scripts/generate-archetype-voices.ts",
+			"source_location": "L1",
+			"weight": 1.0
+		},
+		{
+			"source": "scripts_generate_archetype_voices_ts",
+			"target": "node_path",
+			"relation": "imports_from",
+			"confidence": "EXTRACTED",
+			"source_file": "scripts/generate-archetype-voices.ts",
+			"source_location": "L2",
+			"weight": 1.0
+		},
+		{
+			"source": "scripts_generate_archetype_voices_ts",
+			"target": "genai",
+			"relation": "imports_from",
+			"confidence": "EXTRACTED",
+			"source_file": "scripts/generate-archetype-voices.ts",
+			"source_location": "L3",
+			"weight": 1.0
+		},
+		{
+			"source": "scripts_generate_archetype_voices_ts",
+			"target": "scripts_compress_audio",
+			"relation": "imports_from",
+			"confidence": "EXTRACTED",
+			"source_file": "scripts/generate-archetype-voices.ts",
+			"source_location": "L4",
+			"weight": 1.0
+		},
+		{
+			"source": "scripts_generate_archetype_voices_ts",
+			"target": "generate_archetype_voices_createwavfile",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "scripts/generate-archetype-voices.ts",
+			"source_location": "L153",
+			"weight": 1.0
+		},
+		{
+			"source": "scripts_generate_archetype_voices_ts",
+			"target": "generate_archetype_voices_generatevoice",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "scripts/generate-archetype-voices.ts",
+			"source_location": "L182",
+			"weight": 1.0
+		},
+		{
+			"source": "scripts_generate_archetype_voices_ts",
+			"target": "generate_archetype_voices_parseargs",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "scripts/generate-archetype-voices.ts",
+			"source_location": "L205",
+			"weight": 1.0
+		},
+		{
+			"source": "scripts_generate_archetype_voices_ts",
+			"target": "generate_archetype_voices_main",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "scripts/generate-archetype-voices.ts",
+			"source_location": "L223",
+			"weight": 1.0
+		},
+		{
+			"source": "generate_archetype_voices_main",
+			"target": "generate_archetype_voices_parseargs",
+			"relation": "calls",
+			"confidence": "EXTRACTED",
+			"source_file": "scripts/generate-archetype-voices.ts",
+			"source_location": "L224",
+			"weight": 1.0
+		},
+		{
+			"source": "generate_archetype_voices_main",
+			"target": "generate_archetype_voices_generatevoice",
+			"relation": "calls",
+			"confidence": "EXTRACTED",
+			"source_file": "scripts/generate-archetype-voices.ts",
+			"source_location": "L244",
+			"weight": 1.0
+		},
+		{
+			"source": "generate_archetype_voices_main",
+			"target": "generate_archetype_voices_createwavfile",
+			"relation": "calls",
+			"confidence": "EXTRACTED",
+			"source_file": "scripts/generate-archetype-voices.ts",
+			"source_location": "L245",
+			"weight": 1.0
+		}
+	]
+}

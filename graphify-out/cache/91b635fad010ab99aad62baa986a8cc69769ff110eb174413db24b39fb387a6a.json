@@ -1,0 +1,45 @@
+{
+	"nodes": [
+		{
+			"id": "src_services_kirkaudio_ts",
+			"label": "kirkAudio.ts",
+			"file_type": "code",
+			"source_file": "src/services/kirkAudio.ts",
+			"source_location": "L1"
+		},
+		{
+			"id": "kirkaudio_playkirkglitchtone",
+			"label": "playKirkGlitchTone()",
+			"file_type": "code",
+			"source_file": "src/services/kirkAudio.ts",
+			"source_location": "L8"
+		},
+		{
+			"id": "kirkaudio_playkirkcrashsound",
+			"label": "playKirkCrashSound()",
+			"file_type": "code",
+			"source_file": "src/services/kirkAudio.ts",
+			"source_location": "L32"
+		}
+	],
+	"edges": [
+		{
+			"source": "src_services_kirkaudio_ts",
+			"target": "kirkaudio_playkirkglitchtone",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "src/services/kirkAudio.ts",
+			"source_location": "L8",
+			"weight": 1.0
+		},
+		{
+			"source": "src_services_kirkaudio_ts",
+			"target": "kirkaudio_playkirkcrashsound",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "src/services/kirkAudio.ts",
+			"source_location": "L32",
+			"weight": 1.0
+		}
+	]
+}

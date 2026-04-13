@@ -1,0 +1,137 @@
+{
+	"nodes": [
+		{
+			"id": "src_data_cards_index_ts",
+			"label": "index.ts",
+			"file_type": "code",
+			"source_file": "src/data/cards/index.ts",
+			"source_location": "L1"
+		},
+		{
+			"id": "index_findbranchcard",
+			"label": "findBranchCard()",
+			"file_type": "code",
+			"source_file": "src/data/cards/index.ts",
+			"source_location": "L70"
+		}
+	],
+	"edges": [
+		{
+			"source": "src_data_cards_index_ts",
+			"target": "src_data_cards_types",
+			"relation": "imports_from",
+			"confidence": "EXTRACTED",
+			"source_file": "src/data/cards/index.ts",
+			"source_location": "L1",
+			"weight": 1.0
+		},
+		{
+			"source": "src_data_cards_index_ts",
+			"target": "src_data_cards_agentic_engineer",
+			"relation": "imports_from",
+			"confidence": "EXTRACTED",
+			"source_file": "src/data/cards/index.ts",
+			"source_location": "L2",
+			"weight": 1.0
+		},
+		{
+			"source": "src_data_cards_index_ts",
+			"target": "src_data_cards_branches",
+			"relation": "imports_from",
+			"confidence": "EXTRACTED",
+			"source_file": "src/data/cards/index.ts",
+			"source_location": "L3",
+			"weight": 1.0
+		},
+		{
+			"source": "src_data_cards_index_ts",
+			"target": "src_data_cards_chief_something_officer",
+			"relation": "imports_from",
+			"confidence": "EXTRACTED",
+			"source_file": "src/data/cards/index.ts",
+			"source_location": "L4",
+			"weight": 1.0
+		},
+		{
+			"source": "src_data_cards_index_ts",
+			"target": "src_data_cards_data_scientist",
+			"relation": "imports_from",
+			"confidence": "EXTRACTED",
+			"source_file": "src/data/cards/index.ts",
+			"source_location": "L5",
+			"weight": 1.0
+		},
+		{
+			"source": "src_data_cards_index_ts",
+			"target": "src_data_cards_head_of_something",
+			"relation": "imports_from",
+			"confidence": "EXTRACTED",
+			"source_file": "src/data/cards/index.ts",
+			"source_location": "L6",
+			"weight": 1.0
+		},
+		{
+			"source": "src_data_cards_index_ts",
+			"target": "src_data_cards_software_architect",
+			"relation": "imports_from",
+			"confidence": "EXTRACTED",
+			"source_file": "src/data/cards/index.ts",
+			"source_location": "L7",
+			"weight": 1.0
+		},
+		{
+			"source": "src_data_cards_index_ts",
+			"target": "src_data_cards_software_engineer",
+			"relation": "imports_from",
+			"confidence": "EXTRACTED",
+			"source_file": "src/data/cards/index.ts",
+			"source_location": "L8",
+			"weight": 1.0
+		},
+		{
+			"source": "src_data_cards_index_ts",
+			"target": "src_data_cards_something_manager",
+			"relation": "imports_from",
+			"confidence": "EXTRACTED",
+			"source_file": "src/data/cards/index.ts",
+			"source_location": "L9",
+			"weight": 1.0
+		},
+		{
+			"source": "src_data_cards_index_ts",
+			"target": "src_data_cards_tech_ai_consultant",
+			"relation": "imports_from",
+			"confidence": "EXTRACTED",
+			"source_file": "src/data/cards/index.ts",
+			"source_location": "L10",
+			"weight": 1.0
+		},
+		{
+			"source": "src_data_cards_index_ts",
+			"target": "src_data_cards_vibe_coder",
+			"relation": "imports_from",
+			"confidence": "EXTRACTED",
+			"source_file": "src/data/cards/index.ts",
+			"source_location": "L11",
+			"weight": 1.0
+		},
+		{
+			"source": "src_data_cards_index_ts",
+			"target": "src_data_cards_vibe_engineer",
+			"relation": "imports_from",
+			"confidence": "EXTRACTED",
+			"source_file": "src/data/cards/index.ts",
+			"source_location": "L12",
+			"weight": 1.0
+		},
+		{
+			"source": "src_data_cards_index_ts",
+			"target": "index_findbranchcard",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "src/data/cards/index.ts",
+			"source_location": "L70",
+			"weight": 1.0
+		}
+	]
+}

@@ -1,0 +1,79 @@
+{
+	"nodes": [
+		{
+			"id": "src_types_ts",
+			"label": "types.ts",
+			"file_type": "code",
+			"source_file": "src/types.ts",
+			"source_location": "L1"
+		},
+		{
+			"id": "types_makefeedback",
+			"label": "makeFeedback()",
+			"file_type": "code",
+			"source_file": "src/types.ts",
+			"source_location": "L22"
+		},
+		{
+			"id": "types_makeoutcome",
+			"label": "makeOutcome()",
+			"file_type": "code",
+			"source_file": "src/types.ts",
+			"source_location": "L51"
+		},
+		{
+			"id": "types_makecard",
+			"label": "makeCard()",
+			"file_type": "code",
+			"source_file": "src/types.ts",
+			"source_location": "L77"
+		}
+	],
+	"edges": [
+		{
+			"source": "src_types_ts",
+			"target": "types_makefeedback",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "src/types.ts",
+			"source_location": "L22",
+			"weight": 1.0
+		},
+		{
+			"source": "src_types_ts",
+			"target": "types_makeoutcome",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "src/types.ts",
+			"source_location": "L51",
+			"weight": 1.0
+		},
+		{
+			"source": "src_types_ts",
+			"target": "types_makecard",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "src/types.ts",
+			"source_location": "L77",
+			"weight": 1.0
+		},
+		{
+			"source": "types_makeoutcome",
+			"target": "types_makefeedback",
+			"relation": "calls",
+			"confidence": "EXTRACTED",
+			"source_file": "src/types.ts",
+			"source_location": "L60",
+			"weight": 1.0
+		},
+		{
+			"source": "types_makecard",
+			"target": "types_makeoutcome",
+			"relation": "calls",
+			"confidence": "EXTRACTED",
+			"source_file": "src/types.ts",
+			"source_location": "L96",
+			"weight": 1.0
+		}
+	]
+}

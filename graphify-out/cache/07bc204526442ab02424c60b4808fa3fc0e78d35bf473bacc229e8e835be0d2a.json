@@ -1,0 +1,56 @@
+{
+	"nodes": [
+		{
+			"id": "tests_data_card_distribution_test_ts",
+			"label": "card-distribution.test.ts",
+			"file_type": "code",
+			"source_file": "tests/data/card-distribution.test.ts",
+			"source_location": "L1"
+		},
+		{
+			"id": "card_distribution_test_countcardsbycategory",
+			"label": "countCardsByCategory()",
+			"file_type": "code",
+			"source_file": "tests/data/card-distribution.test.ts",
+			"source_location": "L44"
+		}
+	],
+	"edges": [
+		{
+			"source": "tests_data_card_distribution_test_ts",
+			"target": "vitest",
+			"relation": "imports_from",
+			"confidence": "EXTRACTED",
+			"source_file": "tests/data/card-distribution.test.ts",
+			"source_location": "L1",
+			"weight": 1.0
+		},
+		{
+			"source": "tests_data_card_distribution_test_ts",
+			"target": "tests_data_src_data_cards",
+			"relation": "imports_from",
+			"confidence": "EXTRACTED",
+			"source_file": "tests/data/card-distribution.test.ts",
+			"source_location": "L2",
+			"weight": 1.0
+		},
+		{
+			"source": "tests_data_card_distribution_test_ts",
+			"target": "tests_data_src_types",
+			"relation": "imports_from",
+			"confidence": "EXTRACTED",
+			"source_file": "tests/data/card-distribution.test.ts",
+			"source_location": "L3",
+			"weight": 1.0
+		},
+		{
+			"source": "tests_data_card_distribution_test_ts",
+			"target": "card_distribution_test_countcardsbycategory",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "tests/data/card-distribution.test.ts",
+			"source_location": "L44",
+			"weight": 1.0
+		}
+	]
+}

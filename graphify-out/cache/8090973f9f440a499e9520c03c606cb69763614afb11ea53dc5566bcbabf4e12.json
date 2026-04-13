@@ -1,0 +1,115 @@
+{
+	"nodes": [
+		{
+			"id": "scripts_find_slow_test_files_ts",
+			"label": "find-slow-test-files.ts",
+			"file_type": "code",
+			"source_file": "scripts/find-slow-test-files.ts",
+			"source_location": "L1"
+		},
+		{
+			"id": "find_slow_test_files_findspecfiles",
+			"label": "findSpecFiles()",
+			"file_type": "code",
+			"source_file": "scripts/find-slow-test-files.ts",
+			"source_location": "L18"
+		},
+		{
+			"id": "find_slow_test_files_runfile",
+			"label": "runFile()",
+			"file_type": "code",
+			"source_file": "scripts/find-slow-test-files.ts",
+			"source_location": "L25"
+		},
+		{
+			"id": "find_slow_test_files_main",
+			"label": "main()",
+			"file_type": "code",
+			"source_file": "scripts/find-slow-test-files.ts",
+			"source_location": "L39"
+		}
+	],
+	"edges": [
+		{
+			"source": "scripts_find_slow_test_files_ts",
+			"target": "node_child_process",
+			"relation": "imports_from",
+			"confidence": "EXTRACTED",
+			"source_file": "scripts/find-slow-test-files.ts",
+			"source_location": "L7",
+			"weight": 1.0
+		},
+		{
+			"source": "scripts_find_slow_test_files_ts",
+			"target": "node_fs",
+			"relation": "imports_from",
+			"confidence": "EXTRACTED",
+			"source_file": "scripts/find-slow-test-files.ts",
+			"source_location": "L8",
+			"weight": 1.0
+		},
+		{
+			"source": "scripts_find_slow_test_files_ts",
+			"target": "node_path",
+			"relation": "imports_from",
+			"confidence": "EXTRACTED",
+			"source_file": "scripts/find-slow-test-files.ts",
+			"source_location": "L9",
+			"weight": 1.0
+		},
+		{
+			"source": "scripts_find_slow_test_files_ts",
+			"target": "node_url",
+			"relation": "imports_from",
+			"confidence": "EXTRACTED",
+			"source_file": "scripts/find-slow-test-files.ts",
+			"source_location": "L10",
+			"weight": 1.0
+		},
+		{
+			"source": "scripts_find_slow_test_files_ts",
+			"target": "find_slow_test_files_findspecfiles",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "scripts/find-slow-test-files.ts",
+			"source_location": "L18",
+			"weight": 1.0
+		},
+		{
+			"source": "scripts_find_slow_test_files_ts",
+			"target": "find_slow_test_files_runfile",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "scripts/find-slow-test-files.ts",
+			"source_location": "L25",
+			"weight": 1.0
+		},
+		{
+			"source": "scripts_find_slow_test_files_ts",
+			"target": "find_slow_test_files_main",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "scripts/find-slow-test-files.ts",
+			"source_location": "L39",
+			"weight": 1.0
+		},
+		{
+			"source": "find_slow_test_files_main",
+			"target": "find_slow_test_files_findspecfiles",
+			"relation": "calls",
+			"confidence": "EXTRACTED",
+			"source_file": "scripts/find-slow-test-files.ts",
+			"source_location": "L40",
+			"weight": 1.0
+		},
+		{
+			"source": "find_slow_test_files_main",
+			"target": "find_slow_test_files_runfile",
+			"relation": "calls",
+			"confidence": "EXTRACTED",
+			"source_file": "scripts/find-slow-test-files.ts",
+			"source_location": "L47",
+			"weight": 1.0
+		}
+	]
+}

@@ -1,0 +1,49 @@
+{
+	"nodes": [
+		{
+			"id": "scripts_local_api_ts",
+			"label": "local-api.ts",
+			"file_type": "code",
+			"source_file": "scripts/local-api.ts",
+			"source_location": "L1"
+		}
+	],
+	"edges": [
+		{
+			"source": "scripts_local_api_ts",
+			"target": "node_fs",
+			"relation": "imports_from",
+			"confidence": "EXTRACTED",
+			"source_file": "scripts/local-api.ts",
+			"source_location": "L1",
+			"weight": 1.0
+		},
+		{
+			"source": "scripts_local_api_ts",
+			"target": "node_http",
+			"relation": "imports_from",
+			"confidence": "EXTRACTED",
+			"source_file": "scripts/local-api.ts",
+			"source_location": "L2",
+			"weight": 1.0
+		},
+		{
+			"source": "scripts_local_api_ts",
+			"target": "node_path",
+			"relation": "imports_from",
+			"confidence": "EXTRACTED",
+			"source_file": "scripts/local-api.ts",
+			"source_location": "L3",
+			"weight": 1.0
+		},
+		{
+			"source": "scripts_local_api_ts",
+			"target": "genai",
+			"relation": "imports_from",
+			"confidence": "EXTRACTED",
+			"source_file": "scripts/local-api.ts",
+			"source_location": "L4",
+			"weight": 1.0
+		}
+	]
+}

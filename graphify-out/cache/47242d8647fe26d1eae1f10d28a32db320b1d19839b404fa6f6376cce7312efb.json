@@ -1,0 +1,22 @@
+{
+	"nodes": [
+		{
+			"id": "src_components_game_selectionstagestyles_ts",
+			"label": "selectionStageStyles.ts",
+			"file_type": "code",
+			"source_file": "src/components/game/selectionStageStyles.ts",
+			"source_location": "L1"
+		}
+	],
+	"edges": [
+		{
+			"source": "src_components_game_selectionstagestyles_ts",
+			"target": "src_components_game_types",
+			"relation": "imports_from",
+			"confidence": "EXTRACTED",
+			"source_file": "src/components/game/selectionStageStyles.ts",
+			"source_location": "L1",
+			"weight": 1.0
+		}
+	]
+}

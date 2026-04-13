@@ -1,0 +1,81 @@
+{
+	"nodes": [
+		{
+			"id": "unit_failurelessons_test_ts",
+			"label": "failureLessons.test.ts",
+			"file_type": "code",
+			"source_file": "unit/failureLessons.test.ts",
+			"source_location": "L1"
+		},
+		{
+			"id": "failurelessons_test_expectexplanationvalid",
+			"label": "expectExplanationValid()",
+			"file_type": "code",
+			"source_file": "unit/failureLessons.test.ts",
+			"source_location": "L10"
+		},
+		{
+			"id": "failurelessons_test_expectpromptvalid",
+			"label": "expectPromptValid()",
+			"file_type": "code",
+			"source_file": "unit/failureLessons.test.ts",
+			"source_location": "L16"
+		}
+	],
+	"edges": [
+		{
+			"source": "unit_failurelessons_test_ts",
+			"target": "vitest",
+			"relation": "imports_from",
+			"confidence": "EXTRACTED",
+			"source_file": "unit/failureLessons.test.ts",
+			"source_location": "L1",
+			"weight": 1.0
+		},
+		{
+			"source": "unit_failurelessons_test_ts",
+			"target": "unit_src_data_failurelessons",
+			"relation": "imports_from",
+			"confidence": "EXTRACTED",
+			"source_file": "unit/failureLessons.test.ts",
+			"source_location": "L2",
+			"weight": 1.0
+		},
+		{
+			"source": "unit_failurelessons_test_ts",
+			"target": "unit_src_types",
+			"relation": "imports_from",
+			"confidence": "EXTRACTED",
+			"source_file": "unit/failureLessons.test.ts",
+			"source_location": "L7",
+			"weight": 1.0
+		},
+		{
+			"source": "unit_failurelessons_test_ts",
+			"target": "unit_testhelpers",
+			"relation": "imports_from",
+			"confidence": "EXTRACTED",
+			"source_file": "unit/failureLessons.test.ts",
+			"source_location": "L8",
+			"weight": 1.0
+		},
+		{
+			"source": "unit_failurelessons_test_ts",
+			"target": "failurelessons_test_expectexplanationvalid",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "unit/failureLessons.test.ts",
+			"source_location": "L10",
+			"weight": 1.0
+		},
+		{
+			"source": "unit_failurelessons_test_ts",
+			"target": "failurelessons_test_expectpromptvalid",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "unit/failureLessons.test.ts",
+			"source_location": "L16",
+			"weight": 1.0
+		}
+	]
+}

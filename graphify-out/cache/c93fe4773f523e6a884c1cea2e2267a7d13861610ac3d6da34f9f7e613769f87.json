@@ -1,0 +1,276 @@
+{
+	"nodes": [
+		{
+			"id": "src_components_game_debrief_debriefpage1collapse_tsx",
+			"label": "DebriefPage1Collapse.tsx",
+			"file_type": "code",
+			"source_file": "src/components/game/debrief/DebriefPage1Collapse.tsx",
+			"source_location": "L1"
+		},
+		{
+			"id": "debriefpage1collapse_statcard",
+			"label": "StatCard()",
+			"file_type": "code",
+			"source_file": "src/components/game/debrief/DebriefPage1Collapse.tsx",
+			"source_location": "L35"
+		},
+		{
+			"id": "debriefpage1collapse_statsgrid",
+			"label": "StatsGrid()",
+			"file_type": "code",
+			"source_file": "src/components/game/debrief/DebriefPage1Collapse.tsx",
+			"source_location": "L48"
+		},
+		{
+			"id": "debriefpage1collapse_endingicongrid",
+			"label": "EndingIconGrid()",
+			"file_type": "code",
+			"source_file": "src/components/game/debrief/DebriefPage1Collapse.tsx",
+			"source_location": "L73"
+		},
+		{
+			"id": "debriefpage1collapse_getrandomlesson",
+			"label": "getRandomLesson()",
+			"file_type": "code",
+			"source_file": "src/components/game/debrief/DebriefPage1Collapse.tsx",
+			"source_location": "L98"
+		},
+		{
+			"id": "debriefpage1collapse_kirkendingbatch7",
+			"label": "KirkEndingBatch7()",
+			"file_type": "code",
+			"source_file": "src/components/game/debrief/DebriefPage1Collapse.tsx",
+			"source_location": "L104"
+		},
+		{
+			"id": "debriefpage1collapse_kirkbreachheader",
+			"label": "KirkBreachHeader()",
+			"file_type": "code",
+			"source_file": "src/components/game/debrief/DebriefPage1Collapse.tsx",
+			"source_location": "L133"
+		},
+		{
+			"id": "debriefpage1collapse_deathendingcard",
+			"label": "DeathEndingCard()",
+			"file_type": "code",
+			"source_file": "src/components/game/debrief/DebriefPage1Collapse.tsx",
+			"source_location": "L155"
+		},
+		{
+			"id": "debriefpage1collapse_failurelessoncard",
+			"label": "FailureLessonCard()",
+			"file_type": "code",
+			"source_file": "src/components/game/debrief/DebriefPage1Collapse.tsx",
+			"source_location": "L185"
+		}
+	],
+	"edges": [
+		{
+			"source": "src_components_game_debrief_debriefpage1collapse_tsx",
+			"target": "react",
+			"relation": "imports_from",
+			"confidence": "EXTRACTED",
+			"source_file": "src/components/game/debrief/DebriefPage1Collapse.tsx",
+			"source_location": "L1",
+			"weight": 1.0
+		},
+		{
+			"source": "src_components_game_debrief_debriefpage1collapse_tsx",
+			"target": "react",
+			"relation": "imports_from",
+			"confidence": "EXTRACTED",
+			"source_file": "src/components/game/debrief/DebriefPage1Collapse.tsx",
+			"source_location": "L2",
+			"weight": 1.0
+		},
+		{
+			"source": "src_components_game_debrief_debriefpage1collapse_tsx",
+			"target": "src_components_game_debrief_data",
+			"relation": "imports_from",
+			"confidence": "EXTRACTED",
+			"source_file": "src/components/game/debrief/DebriefPage1Collapse.tsx",
+			"source_location": "L3",
+			"weight": 1.0
+		},
+		{
+			"source": "src_components_game_debrief_debriefpage1collapse_tsx",
+			"target": "src_components_game_debrief_data_imagemap",
+			"relation": "imports_from",
+			"confidence": "EXTRACTED",
+			"source_file": "src/components/game/debrief/DebriefPage1Collapse.tsx",
+			"source_location": "L9",
+			"weight": 1.0
+		},
+		{
+			"source": "src_components_game_debrief_debriefpage1collapse_tsx",
+			"target": "src_components_game_debrief_hooks",
+			"relation": "imports_from",
+			"confidence": "EXTRACTED",
+			"source_file": "src/components/game/debrief/DebriefPage1Collapse.tsx",
+			"source_location": "L10",
+			"weight": 1.0
+		},
+		{
+			"source": "src_components_game_debrief_debriefpage1collapse_tsx",
+			"target": "src_components_game_debrief_lib_audio",
+			"relation": "imports_from",
+			"confidence": "EXTRACTED",
+			"source_file": "src/components/game/debrief/DebriefPage1Collapse.tsx",
+			"source_location": "L11",
+			"weight": 1.0
+		},
+		{
+			"source": "src_components_game_debrief_debriefpage1collapse_tsx",
+			"target": "src_components_game_debrief_lib_buttonstyles",
+			"relation": "imports_from",
+			"confidence": "EXTRACTED",
+			"source_file": "src/components/game/debrief/DebriefPage1Collapse.tsx",
+			"source_location": "L12",
+			"weight": 1.0
+		},
+		{
+			"source": "src_components_game_debrief_debriefpage1collapse_tsx",
+			"target": "src_components_game_debrief_lib_formatting",
+			"relation": "imports_from",
+			"confidence": "EXTRACTED",
+			"source_file": "src/components/game/debrief/DebriefPage1Collapse.tsx",
+			"source_location": "L13",
+			"weight": 1.0
+		},
+		{
+			"source": "src_components_game_debrief_debriefpage1collapse_tsx",
+			"target": "src_components_game_debrief_services_kirkaudio",
+			"relation": "imports_from",
+			"confidence": "EXTRACTED",
+			"source_file": "src/components/game/debrief/DebriefPage1Collapse.tsx",
+			"source_location": "L14",
+			"weight": 1.0
+		},
+		{
+			"source": "src_components_game_debrief_debriefpage1collapse_tsx",
+			"target": "src_components_game_debrief_types",
+			"relation": "imports_from",
+			"confidence": "EXTRACTED",
+			"source_file": "src/components/game/debrief/DebriefPage1Collapse.tsx",
+			"source_location": "L18",
+			"weight": 1.0
+		},
+		{
+			"source": "src_components_game_debrief_debriefpage1collapse_tsx",
+			"target": "src_components_game_debrief_utils_kirktext",
+			"relation": "imports_from",
+			"confidence": "EXTRACTED",
+			"source_file": "src/components/game/debrief/DebriefPage1Collapse.tsx",
+			"source_location": "L19",
+			"weight": 1.0
+		},
+		{
+			"source": "src_components_game_debrief_debriefpage1collapse_tsx",
+			"target": "src_components_game_debrief_imagewithfallback",
+			"relation": "imports_from",
+			"confidence": "EXTRACTED",
+			"source_file": "src/components/game/debrief/DebriefPage1Collapse.tsx",
+			"source_location": "L20",
+			"weight": 1.0
+		},
+		{
+			"source": "src_components_game_debrief_debriefpage1collapse_tsx",
+			"target": "src_components_game_debrief_layoutshell",
+			"relation": "imports_from",
+			"confidence": "EXTRACTED",
+			"source_file": "src/components/game/debrief/DebriefPage1Collapse.tsx",
+			"source_location": "L21",
+			"weight": 1.0
+		},
+		{
+			"source": "src_components_game_debrief_debriefpage1collapse_tsx",
+			"target": "src_components_game_debrief_selectionstagestyles",
+			"relation": "imports_from",
+			"confidence": "EXTRACTED",
+			"source_file": "src/components/game/debrief/DebriefPage1Collapse.tsx",
+			"source_location": "L22",
+			"weight": 1.0
+		},
+		{
+			"source": "src_components_game_debrief_debriefpage1collapse_tsx",
+			"target": "src_components_game_debrief_explanationcard",
+			"relation": "imports_from",
+			"confidence": "EXTRACTED",
+			"source_file": "src/components/game/debrief/DebriefPage1Collapse.tsx",
+			"source_location": "L27",
+			"weight": 1.0
+		},
+		{
+			"source": "src_components_game_debrief_debriefpage1collapse_tsx",
+			"target": "debriefpage1collapse_statcard",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "src/components/game/debrief/DebriefPage1Collapse.tsx",
+			"source_location": "L35",
+			"weight": 1.0
+		},
+		{
+			"source": "src_components_game_debrief_debriefpage1collapse_tsx",
+			"target": "debriefpage1collapse_statsgrid",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "src/components/game/debrief/DebriefPage1Collapse.tsx",
+			"source_location": "L48",
+			"weight": 1.0
+		},
+		{
+			"source": "src_components_game_debrief_debriefpage1collapse_tsx",
+			"target": "debriefpage1collapse_endingicongrid",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "src/components/game/debrief/DebriefPage1Collapse.tsx",
+			"source_location": "L73",
+			"weight": 1.0
+		},
+		{
+			"source": "src_components_game_debrief_debriefpage1collapse_tsx",
+			"target": "debriefpage1collapse_getrandomlesson",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "src/components/game/debrief/DebriefPage1Collapse.tsx",
+			"source_location": "L98",
+			"weight": 1.0
+		},
+		{
+			"source": "src_components_game_debrief_debriefpage1collapse_tsx",
+			"target": "debriefpage1collapse_kirkendingbatch7",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "src/components/game/debrief/DebriefPage1Collapse.tsx",
+			"source_location": "L104",
+			"weight": 1.0
+		},
+		{
+			"source": "src_components_game_debrief_debriefpage1collapse_tsx",
+			"target": "debriefpage1collapse_kirkbreachheader",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "src/components/game/debrief/DebriefPage1Collapse.tsx",
+			"source_location": "L133",
+			"weight": 1.0
+		},
+		{
+			"source": "src_components_game_debrief_debriefpage1collapse_tsx",
+			"target": "debriefpage1collapse_deathendingcard",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "src/components/game/debrief/DebriefPage1Collapse.tsx",
+			"source_location": "L155",
+			"weight": 1.0
+		},
+		{
+			"source": "src_components_game_debrief_debriefpage1collapse_tsx",
+			"target": "debriefpage1collapse_failurelessoncard",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "src/components/game/debrief/DebriefPage1Collapse.tsx",
+			"source_location": "L185",
+			"weight": 1.0
+		}
+	]
+}

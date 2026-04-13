@@ -1,0 +1,81 @@
+{
+	"nodes": [
+		{
+			"id": "src_hooks_usepressureaudio_ts",
+			"label": "usePressureAudio.ts",
+			"file_type": "code",
+			"source_file": "src/hooks/usePressureAudio.ts",
+			"source_location": "L1"
+		},
+		{
+			"id": "usepressureaudio_resumeonfirstgesture",
+			"label": "resumeOnFirstGesture()",
+			"file_type": "code",
+			"source_file": "src/hooks/usePressureAudio.ts",
+			"source_location": "L32"
+		},
+		{
+			"id": "usepressureaudio_usepressureaudio",
+			"label": "usePressureAudio()",
+			"file_type": "code",
+			"source_file": "src/hooks/usePressureAudio.ts",
+			"source_location": "L48"
+		}
+	],
+	"edges": [
+		{
+			"source": "src_hooks_usepressureaudio_ts",
+			"target": "react",
+			"relation": "imports_from",
+			"confidence": "EXTRACTED",
+			"source_file": "src/hooks/usePressureAudio.ts",
+			"source_location": "L1",
+			"weight": 1.0
+		},
+		{
+			"source": "src_hooks_usepressureaudio_ts",
+			"target": "src_hooks_services_pressureaudio",
+			"relation": "imports_from",
+			"confidence": "EXTRACTED",
+			"source_file": "src/hooks/usePressureAudio.ts",
+			"source_location": "L2",
+			"weight": 1.0
+		},
+		{
+			"source": "src_hooks_usepressureaudio_ts",
+			"target": "src_hooks_utils_haptic",
+			"relation": "imports_from",
+			"confidence": "EXTRACTED",
+			"source_file": "src/hooks/usePressureAudio.ts",
+			"source_location": "L7",
+			"weight": 1.0
+		},
+		{
+			"source": "src_hooks_usepressureaudio_ts",
+			"target": "usepressureaudio_resumeonfirstgesture",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "src/hooks/usePressureAudio.ts",
+			"source_location": "L32",
+			"weight": 1.0
+		},
+		{
+			"source": "src_hooks_usepressureaudio_ts",
+			"target": "usepressureaudio_usepressureaudio",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "src/hooks/usePressureAudio.ts",
+			"source_location": "L48",
+			"weight": 1.0
+		},
+		{
+			"source": "usepressureaudio_usepressureaudio",
+			"target": "usepressureaudio_resumeonfirstgesture",
+			"relation": "calls",
+			"confidence": "EXTRACTED",
+			"source_file": "src/hooks/usePressureAudio.ts",
+			"source_location": "L64",
+			"weight": 1.0
+		}
+	]
+}

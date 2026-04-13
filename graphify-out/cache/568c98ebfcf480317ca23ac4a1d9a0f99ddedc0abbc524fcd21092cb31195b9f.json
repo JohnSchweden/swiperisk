@@ -1,0 +1,40 @@
+{
+	"nodes": [
+		{
+			"id": "scripts_sync_image_placeholders_ts",
+			"label": "sync-image-placeholders.ts",
+			"file_type": "code",
+			"source_file": "scripts/sync-image-placeholders.ts",
+			"source_location": "L1"
+		}
+	],
+	"edges": [
+		{
+			"source": "scripts_sync_image_placeholders_ts",
+			"target": "node_fs",
+			"relation": "imports_from",
+			"confidence": "EXTRACTED",
+			"source_file": "scripts/sync-image-placeholders.ts",
+			"source_location": "L5",
+			"weight": 1.0
+		},
+		{
+			"source": "scripts_sync_image_placeholders_ts",
+			"target": "node_path",
+			"relation": "imports_from",
+			"confidence": "EXTRACTED",
+			"source_file": "scripts/sync-image-placeholders.ts",
+			"source_location": "L6",
+			"weight": 1.0
+		},
+		{
+			"source": "scripts_sync_image_placeholders_ts",
+			"target": "scripts_data_imagemap_ts",
+			"relation": "imports_from",
+			"confidence": "EXTRACTED",
+			"source_file": "scripts/sync-image-placeholders.ts",
+			"source_location": "L7",
+			"weight": 1.0
+		}
+	]
+}

@@ -1,0 +1,142 @@
+{
+	"nodes": [
+		{
+			"id": "src_components_game_cardstack_tsx",
+			"label": "CardStack.tsx",
+			"file_type": "code",
+			"source_file": "src/components/game/CardStack.tsx",
+			"source_location": "L1"
+		},
+		{
+			"id": "cardstack_getcardtransition",
+			"label": "getCardTransition()",
+			"file_type": "code",
+			"source_file": "src/components/game/CardStack.tsx",
+			"source_location": "L25"
+		},
+		{
+			"id": "cardstack_swipepreview",
+			"label": "SwipePreview()",
+			"file_type": "code",
+			"source_file": "src/components/game/CardStack.tsx",
+			"source_location": "L123"
+		},
+		{
+			"id": "cardstack_cardstack",
+			"label": "CardStack()",
+			"file_type": "code",
+			"source_file": "src/components/game/CardStack.tsx",
+			"source_location": "L173"
+		}
+	],
+	"edges": [
+		{
+			"source": "src_components_game_cardstack_tsx",
+			"target": "react",
+			"relation": "imports_from",
+			"confidence": "EXTRACTED",
+			"source_file": "src/components/game/CardStack.tsx",
+			"source_location": "L1",
+			"weight": 1.0
+		},
+		{
+			"source": "src_components_game_cardstack_tsx",
+			"target": "react",
+			"relation": "imports_from",
+			"confidence": "EXTRACTED",
+			"source_file": "src/components/game/CardStack.tsx",
+			"source_location": "L2",
+			"weight": 1.0
+		},
+		{
+			"source": "src_components_game_cardstack_tsx",
+			"target": "react",
+			"relation": "imports_from",
+			"confidence": "EXTRACTED",
+			"source_file": "src/components/game/CardStack.tsx",
+			"source_location": "L3",
+			"weight": 1.0
+		},
+		{
+			"source": "src_components_game_cardstack_tsx",
+			"target": "src_components_game_data",
+			"relation": "imports_from",
+			"confidence": "EXTRACTED",
+			"source_file": "src/components/game/CardStack.tsx",
+			"source_location": "L4",
+			"weight": 1.0
+		},
+		{
+			"source": "src_components_game_cardstack_tsx",
+			"target": "src_components_game_data_imagemap",
+			"relation": "imports_from",
+			"confidence": "EXTRACTED",
+			"source_file": "src/components/game/CardStack.tsx",
+			"source_location": "L5",
+			"weight": 1.0
+		},
+		{
+			"source": "src_components_game_cardstack_tsx",
+			"target": "src_components_game_types",
+			"relation": "imports_from",
+			"confidence": "EXTRACTED",
+			"source_file": "src/components/game/CardStack.tsx",
+			"source_location": "L10",
+			"weight": 1.0
+		},
+		{
+			"source": "src_components_game_cardstack_tsx",
+			"target": "src_components_game_utils_preload",
+			"relation": "imports_from",
+			"confidence": "EXTRACTED",
+			"source_file": "src/components/game/CardStack.tsx",
+			"source_location": "L11",
+			"weight": 1.0
+		},
+		{
+			"source": "src_components_game_cardstack_tsx",
+			"target": "src_components_game_cardstackcomponents",
+			"relation": "imports_from",
+			"confidence": "EXTRACTED",
+			"source_file": "src/components/game/CardStack.tsx",
+			"source_location": "L12",
+			"weight": 1.0
+		},
+		{
+			"source": "src_components_game_cardstack_tsx",
+			"target": "src_components_game_selectionstagestyles",
+			"relation": "imports_from",
+			"confidence": "EXTRACTED",
+			"source_file": "src/components/game/CardStack.tsx",
+			"source_location": "L13",
+			"weight": 1.0
+		},
+		{
+			"source": "src_components_game_cardstack_tsx",
+			"target": "cardstack_getcardtransition",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "src/components/game/CardStack.tsx",
+			"source_location": "L25",
+			"weight": 1.0
+		},
+		{
+			"source": "src_components_game_cardstack_tsx",
+			"target": "cardstack_swipepreview",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "src/components/game/CardStack.tsx",
+			"source_location": "L123",
+			"weight": 1.0
+		},
+		{
+			"source": "src_components_game_cardstack_tsx",
+			"target": "cardstack_cardstack",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "src/components/game/CardStack.tsx",
+			"source_location": "L173",
+			"weight": 1.0
+		}
+	]
+}

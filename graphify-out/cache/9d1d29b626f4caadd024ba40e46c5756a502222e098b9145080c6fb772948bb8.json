@@ -1,0 +1,67 @@
+{
+	"nodes": [
+		{
+			"id": "unit_archetype_test_ts",
+			"label": "archetype.test.ts",
+			"file_type": "code",
+			"source_file": "unit/archetype.test.ts",
+			"source_location": "L1"
+		}
+	],
+	"edges": [
+		{
+			"source": "unit_archetype_test_ts",
+			"target": "react",
+			"relation": "imports_from",
+			"confidence": "EXTRACTED",
+			"source_file": "unit/archetype.test.ts",
+			"source_location": "L1",
+			"weight": 1.0
+		},
+		{
+			"source": "unit_archetype_test_ts",
+			"target": "vitest",
+			"relation": "imports_from",
+			"confidence": "EXTRACTED",
+			"source_file": "unit/archetype.test.ts",
+			"source_location": "L2",
+			"weight": 1.0
+		},
+		{
+			"source": "unit_archetype_test_ts",
+			"target": "unit_src_data_archetypes",
+			"relation": "imports_from",
+			"confidence": "EXTRACTED",
+			"source_file": "unit/archetype.test.ts",
+			"source_location": "L3",
+			"weight": 1.0
+		},
+		{
+			"source": "unit_archetype_test_ts",
+			"target": "unit_src_hooks_usearchetype",
+			"relation": "imports_from",
+			"confidence": "EXTRACTED",
+			"source_file": "unit/archetype.test.ts",
+			"source_location": "L9",
+			"weight": 1.0
+		},
+		{
+			"source": "unit_archetype_test_ts",
+			"target": "unit_src_types",
+			"relation": "imports_from",
+			"confidence": "EXTRACTED",
+			"source_file": "unit/archetype.test.ts",
+			"source_location": "L10",
+			"weight": 1.0
+		},
+		{
+			"source": "unit_archetype_test_ts",
+			"target": "unit_src_types",
+			"relation": "imports_from",
+			"confidence": "EXTRACTED",
+			"source_file": "unit/archetype.test.ts",
+			"source_location": "L11",
+			"weight": 1.0
+		}
+	]
+}

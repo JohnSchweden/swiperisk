@@ -1,0 +1,40 @@
+{
+	"nodes": [
+		{
+			"id": "unit_gamehud_spec_tsx",
+			"label": "gameHud.spec.tsx",
+			"file_type": "code",
+			"source_file": "unit/gameHud.spec.tsx",
+			"source_location": "L1"
+		}
+	],
+	"edges": [
+		{
+			"source": "unit_gamehud_spec_tsx",
+			"target": "react",
+			"relation": "imports_from",
+			"confidence": "EXTRACTED",
+			"source_file": "unit/gameHud.spec.tsx",
+			"source_location": "L1",
+			"weight": 1.0
+		},
+		{
+			"source": "unit_gamehud_spec_tsx",
+			"target": "vitest",
+			"relation": "imports_from",
+			"confidence": "EXTRACTED",
+			"source_file": "unit/gameHud.spec.tsx",
+			"source_location": "L2",
+			"weight": 1.0
+		},
+		{
+			"source": "unit_gamehud_spec_tsx",
+			"target": "unit_src_components_game_gamehud",
+			"relation": "imports_from",
+			"confidence": "EXTRACTED",
+			"source_file": "unit/gameHud.spec.tsx",
+			"source_location": "L3",
+			"weight": 1.0
+		}
+	]
+}

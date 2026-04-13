@@ -1,0 +1,38 @@
+{
+	"nodes": [
+		{
+			"id": "scripts_test_live_api_ts",
+			"label": "test-live-api.ts",
+			"file_type": "code",
+			"source_file": "scripts/test-live-api.ts",
+			"source_location": "L1"
+		},
+		{
+			"id": "test_live_api_testliveapi",
+			"label": "testLiveApi()",
+			"file_type": "code",
+			"source_file": "scripts/test-live-api.ts",
+			"source_location": "L17"
+		}
+	],
+	"edges": [
+		{
+			"source": "scripts_test_live_api_ts",
+			"target": "genai",
+			"relation": "imports_from",
+			"confidence": "EXTRACTED",
+			"source_file": "scripts/test-live-api.ts",
+			"source_location": "L6",
+			"weight": 1.0
+		},
+		{
+			"source": "scripts_test_live_api_ts",
+			"target": "test_live_api_testliveapi",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "scripts/test-live-api.ts",
+			"source_location": "L17",
+			"weight": 1.0
+		}
+	]
+}

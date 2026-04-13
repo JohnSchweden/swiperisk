@@ -1,0 +1,99 @@
+{
+	"nodes": [
+		{
+			"id": "src_components_game_taskbar_tsx",
+			"label": "Taskbar.tsx",
+			"file_type": "code",
+			"source_file": "src/components/game/Taskbar.tsx",
+			"source_location": "L1"
+		},
+		{
+			"id": "taskbar_personalityiconclass",
+			"label": "personalityIconClass()",
+			"file_type": "code",
+			"source_file": "src/components/game/Taskbar.tsx",
+			"source_location": "L7"
+		},
+		{
+			"id": "taskbar_taskbar",
+			"label": "Taskbar()",
+			"file_type": "code",
+			"source_file": "src/components/game/Taskbar.tsx",
+			"source_location": "L73"
+		}
+	],
+	"edges": [
+		{
+			"source": "src_components_game_taskbar_tsx",
+			"target": "react",
+			"relation": "imports_from",
+			"confidence": "EXTRACTED",
+			"source_file": "src/components/game/Taskbar.tsx",
+			"source_location": "L1",
+			"weight": 1.0
+		},
+		{
+			"source": "src_components_game_taskbar_tsx",
+			"target": "react",
+			"relation": "imports_from",
+			"confidence": "EXTRACTED",
+			"source_file": "src/components/game/Taskbar.tsx",
+			"source_location": "L2",
+			"weight": 1.0
+		},
+		{
+			"source": "src_components_game_taskbar_tsx",
+			"target": "src_components_game_data",
+			"relation": "imports_from",
+			"confidence": "EXTRACTED",
+			"source_file": "src/components/game/Taskbar.tsx",
+			"source_location": "L3",
+			"weight": 1.0
+		},
+		{
+			"source": "src_components_game_taskbar_tsx",
+			"target": "src_components_game_types",
+			"relation": "imports_from",
+			"confidence": "EXTRACTED",
+			"source_file": "src/components/game/Taskbar.tsx",
+			"source_location": "L4",
+			"weight": 1.0
+		},
+		{
+			"source": "src_components_game_taskbar_tsx",
+			"target": "src_components_game_starfieldbackground",
+			"relation": "imports_from",
+			"confidence": "EXTRACTED",
+			"source_file": "src/components/game/Taskbar.tsx",
+			"source_location": "L5",
+			"weight": 1.0
+		},
+		{
+			"source": "src_components_game_taskbar_tsx",
+			"target": "taskbar_personalityiconclass",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "src/components/game/Taskbar.tsx",
+			"source_location": "L7",
+			"weight": 1.0
+		},
+		{
+			"source": "src_components_game_taskbar_tsx",
+			"target": "taskbar_taskbar",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "src/components/game/Taskbar.tsx",
+			"source_location": "L73",
+			"weight": 1.0
+		},
+		{
+			"source": "taskbar_taskbar",
+			"target": "taskbar_personalityiconclass",
+			"relation": "calls",
+			"confidence": "EXTRACTED",
+			"source_file": "src/components/game/Taskbar.tsx",
+			"source_location": "L79",
+			"weight": 1.0
+		}
+	]
+}

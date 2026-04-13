@@ -1,0 +1,12 @@
+{
+	"nodes": [
+		{
+			"id": "src_data_voiceuicopy_ts",
+			"label": "voiceUiCopy.ts",
+			"file_type": "code",
+			"source_file": "src/data/voiceUiCopy.ts",
+			"source_location": "L1"
+		}
+	],
+	"edges": []
+}

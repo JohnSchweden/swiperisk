@@ -1,0 +1,88 @@
+{
+	"nodes": [
+		{
+			"id": "tests_data_feedback_voice_test_ts",
+			"label": "feedback-voice.test.ts",
+			"file_type": "code",
+			"source_file": "tests/data/feedback-voice.test.ts",
+			"source_location": "L1"
+		},
+		{
+			"id": "feedback_voice_test_appearsgeneric",
+			"label": "appearsGeneric()",
+			"file_type": "code",
+			"source_file": "tests/data/feedback-voice.test.ts",
+			"source_location": "L28"
+		},
+		{
+			"id": "feedback_voice_test_detectvoicecharacteristics",
+			"label": "detectVoiceCharacteristics()",
+			"file_type": "code",
+			"source_file": "tests/data/feedback-voice.test.ts",
+			"source_location": "L51"
+		},
+		{
+			"id": "feedback_voice_test_hasvoicemarker",
+			"label": "hasVoiceMarker()",
+			"file_type": "code",
+			"source_file": "tests/data/feedback-voice.test.ts",
+			"source_location": "L367"
+		}
+	],
+	"edges": [
+		{
+			"source": "tests_data_feedback_voice_test_ts",
+			"target": "vitest",
+			"relation": "imports_from",
+			"confidence": "EXTRACTED",
+			"source_file": "tests/data/feedback-voice.test.ts",
+			"source_location": "L1",
+			"weight": 1.0
+		},
+		{
+			"source": "tests_data_feedback_voice_test_ts",
+			"target": "tests_data_src_data_cards",
+			"relation": "imports_from",
+			"confidence": "EXTRACTED",
+			"source_file": "tests/data/feedback-voice.test.ts",
+			"source_location": "L2",
+			"weight": 1.0
+		},
+		{
+			"source": "tests_data_feedback_voice_test_ts",
+			"target": "tests_data_src_types",
+			"relation": "imports_from",
+			"confidence": "EXTRACTED",
+			"source_file": "tests/data/feedback-voice.test.ts",
+			"source_location": "L3",
+			"weight": 1.0
+		},
+		{
+			"source": "tests_data_feedback_voice_test_ts",
+			"target": "feedback_voice_test_appearsgeneric",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "tests/data/feedback-voice.test.ts",
+			"source_location": "L28",
+			"weight": 1.0
+		},
+		{
+			"source": "tests_data_feedback_voice_test_ts",
+			"target": "feedback_voice_test_detectvoicecharacteristics",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "tests/data/feedback-voice.test.ts",
+			"source_location": "L51",
+			"weight": 1.0
+		},
+		{
+			"source": "tests_data_feedback_voice_test_ts",
+			"target": "feedback_voice_test_hasvoicemarker",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "tests/data/feedback-voice.test.ts",
+			"source_location": "L367",
+			"weight": 1.0
+		}
+	]
+}

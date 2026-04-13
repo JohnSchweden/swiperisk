@@ -1,0 +1,31 @@
+{
+	"nodes": [
+		{
+			"id": "unit_slugify_test_ts",
+			"label": "slugify.test.ts",
+			"file_type": "code",
+			"source_file": "unit/slugify.test.ts",
+			"source_location": "L1"
+		}
+	],
+	"edges": [
+		{
+			"source": "unit_slugify_test_ts",
+			"target": "vitest",
+			"relation": "imports_from",
+			"confidence": "EXTRACTED",
+			"source_file": "unit/slugify.test.ts",
+			"source_location": "L1",
+			"weight": 1.0
+		},
+		{
+			"source": "unit_slugify_test_ts",
+			"target": "unit_src_lib_slugify",
+			"relation": "imports_from",
+			"confidence": "EXTRACTED",
+			"source_file": "unit/slugify.test.ts",
+			"source_location": "L2",
+			"weight": 1.0
+		}
+	]
+}

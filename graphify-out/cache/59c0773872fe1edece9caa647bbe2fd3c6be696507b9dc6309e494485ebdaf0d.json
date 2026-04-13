@@ -1,0 +1,56 @@
+{
+	"nodes": [
+		{
+			"id": "src_components_game_introscreen_tsx",
+			"label": "IntroScreen.tsx",
+			"file_type": "code",
+			"source_file": "src/components/game/IntroScreen.tsx",
+			"source_location": "L1"
+		},
+		{
+			"id": "introscreen_introscreen",
+			"label": "IntroScreen()",
+			"file_type": "code",
+			"source_file": "src/components/game/IntroScreen.tsx",
+			"source_location": "L20"
+		}
+	],
+	"edges": [
+		{
+			"source": "src_components_game_introscreen_tsx",
+			"target": "react",
+			"relation": "imports_from",
+			"confidence": "EXTRACTED",
+			"source_file": "src/components/game/IntroScreen.tsx",
+			"source_location": "L1",
+			"weight": 1.0
+		},
+		{
+			"source": "src_components_game_introscreen_tsx",
+			"target": "src_components_game_layoutshell",
+			"relation": "imports_from",
+			"confidence": "EXTRACTED",
+			"source_file": "src/components/game/IntroScreen.tsx",
+			"source_location": "L2",
+			"weight": 1.0
+		},
+		{
+			"source": "src_components_game_introscreen_tsx",
+			"target": "src_components_game_selectionstagestyles",
+			"relation": "imports_from",
+			"confidence": "EXTRACTED",
+			"source_file": "src/components/game/IntroScreen.tsx",
+			"source_location": "L3",
+			"weight": 1.0
+		},
+		{
+			"source": "src_components_game_introscreen_tsx",
+			"target": "introscreen_introscreen",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "src/components/game/IntroScreen.tsx",
+			"source_location": "L20",
+			"weight": 1.0
+		}
+	]
+}

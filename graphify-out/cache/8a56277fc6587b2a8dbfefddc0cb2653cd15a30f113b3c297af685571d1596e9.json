@@ -1,0 +1,22 @@
+{
+	"nodes": [
+		{
+			"id": "tests_summary_navigation_spec_ts",
+			"label": "summary-navigation.spec.ts",
+			"file_type": "code",
+			"source_file": "tests/summary-navigation.spec.ts",
+			"source_location": "L1"
+		}
+	],
+	"edges": [
+		{
+			"source": "tests_summary_navigation_spec_ts",
+			"target": "test",
+			"relation": "imports_from",
+			"confidence": "EXTRACTED",
+			"source_file": "tests/summary-navigation.spec.ts",
+			"source_location": "L1",
+			"weight": 1.0
+		}
+	]
+}

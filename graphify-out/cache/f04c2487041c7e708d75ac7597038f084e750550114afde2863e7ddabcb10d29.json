@@ -1,0 +1,40 @@
+{
+	"nodes": [
+		{
+			"id": "tests_voice_archetype_audio_spec_ts",
+			"label": "voice-archetype-audio.spec.ts",
+			"file_type": "code",
+			"source_file": "tests/voice-archetype-audio.spec.ts",
+			"source_location": "L1"
+		}
+	],
+	"edges": [
+		{
+			"source": "tests_voice_archetype_audio_spec_ts",
+			"target": "node_fs",
+			"relation": "imports_from",
+			"confidence": "EXTRACTED",
+			"source_file": "tests/voice-archetype-audio.spec.ts",
+			"source_location": "L1",
+			"weight": 1.0
+		},
+		{
+			"source": "tests_voice_archetype_audio_spec_ts",
+			"target": "node_path",
+			"relation": "imports_from",
+			"confidence": "EXTRACTED",
+			"source_file": "tests/voice-archetype-audio.spec.ts",
+			"source_location": "L2",
+			"weight": 1.0
+		},
+		{
+			"source": "tests_voice_archetype_audio_spec_ts",
+			"target": "test",
+			"relation": "imports_from",
+			"confidence": "EXTRACTED",
+			"source_file": "tests/voice-archetype-audio.spec.ts",
+			"source_location": "L3",
+			"weight": 1.0
+		}
+	]
+}

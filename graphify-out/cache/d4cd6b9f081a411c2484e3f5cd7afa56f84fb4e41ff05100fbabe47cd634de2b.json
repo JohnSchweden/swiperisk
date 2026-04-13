@@ -1,0 +1,31 @@
+{
+	"nodes": [
+		{
+			"id": "tests_mobile_width_spec_ts",
+			"label": "mobile-width.spec.ts",
+			"file_type": "code",
+			"source_file": "tests/mobile-width.spec.ts",
+			"source_location": "L1"
+		}
+	],
+	"edges": [
+		{
+			"source": "tests_mobile_width_spec_ts",
+			"target": "test",
+			"relation": "imports_from",
+			"confidence": "EXTRACTED",
+			"source_file": "tests/mobile-width.spec.ts",
+			"source_location": "L1",
+			"weight": 1.0
+		},
+		{
+			"source": "tests_mobile_width_spec_ts",
+			"target": "tests_helpers_navigation",
+			"relation": "imports_from",
+			"confidence": "EXTRACTED",
+			"source_file": "tests/mobile-width.spec.ts",
+			"source_location": "L2",
+			"weight": 1.0
+		}
+	]
+}

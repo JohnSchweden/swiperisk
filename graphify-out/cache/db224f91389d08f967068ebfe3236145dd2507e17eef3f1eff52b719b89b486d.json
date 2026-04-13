@@ -1,0 +1,63 @@
+{
+	"nodes": [
+		{
+			"id": "src_hooks_useemailcapture_ts",
+			"label": "useEmailCapture.ts",
+			"file_type": "code",
+			"source_file": "src/hooks/useEmailCapture.ts",
+			"source_location": "L1"
+		},
+		{
+			"id": "useemailcapture_validateemail",
+			"label": "validateEmail()",
+			"file_type": "code",
+			"source_file": "src/hooks/useEmailCapture.ts",
+			"source_location": "L21"
+		},
+		{
+			"id": "useemailcapture_useemailcapture",
+			"label": "useEmailCapture()",
+			"file_type": "code",
+			"source_file": "src/hooks/useEmailCapture.ts",
+			"source_location": "L31"
+		}
+	],
+	"edges": [
+		{
+			"source": "src_hooks_useemailcapture_ts",
+			"target": "react",
+			"relation": "imports_from",
+			"confidence": "EXTRACTED",
+			"source_file": "src/hooks/useEmailCapture.ts",
+			"source_location": "L1",
+			"weight": 1.0
+		},
+		{
+			"source": "src_hooks_useemailcapture_ts",
+			"target": "src_hooks_types",
+			"relation": "imports_from",
+			"confidence": "EXTRACTED",
+			"source_file": "src/hooks/useEmailCapture.ts",
+			"source_location": "L2",
+			"weight": 1.0
+		},
+		{
+			"source": "src_hooks_useemailcapture_ts",
+			"target": "useemailcapture_validateemail",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "src/hooks/useEmailCapture.ts",
+			"source_location": "L21",
+			"weight": 1.0
+		},
+		{
+			"source": "src_hooks_useemailcapture_ts",
+			"target": "useemailcapture_useemailcapture",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "src/hooks/useEmailCapture.ts",
+			"source_location": "L31",
+			"weight": 1.0
+		}
+	]
+}

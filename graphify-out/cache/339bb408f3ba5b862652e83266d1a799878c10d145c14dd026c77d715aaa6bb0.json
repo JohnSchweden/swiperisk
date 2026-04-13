@@ -1,0 +1,65 @@
+{
+	"nodes": [
+		{
+			"id": "src_hooks_usedebrief_ts",
+			"label": "useDebrief.ts",
+			"file_type": "code",
+			"source_file": "src/hooks/useDebrief.ts",
+			"source_location": "L1"
+		},
+		{
+			"id": "usedebrief_usedebrief",
+			"label": "useDebrief()",
+			"file_type": "code",
+			"source_file": "src/hooks/useDebrief.ts",
+			"source_location": "L25"
+		}
+	],
+	"edges": [
+		{
+			"source": "src_hooks_usedebrief_ts",
+			"target": "react",
+			"relation": "imports_from",
+			"confidence": "EXTRACTED",
+			"source_file": "src/hooks/useDebrief.ts",
+			"source_location": "L1",
+			"weight": 1.0
+		},
+		{
+			"source": "src_hooks_usedebrief_ts",
+			"target": "react",
+			"relation": "imports_from",
+			"confidence": "EXTRACTED",
+			"source_file": "src/hooks/useDebrief.ts",
+			"source_location": "L2",
+			"weight": 1.0
+		},
+		{
+			"source": "src_hooks_usedebrief_ts",
+			"target": "src_hooks_data_archetypes",
+			"relation": "imports_from",
+			"confidence": "EXTRACTED",
+			"source_file": "src/hooks/useDebrief.ts",
+			"source_location": "L3",
+			"weight": 1.0
+		},
+		{
+			"source": "src_hooks_usedebrief_ts",
+			"target": "src_hooks_types",
+			"relation": "imports_from",
+			"confidence": "EXTRACTED",
+			"source_file": "src/hooks/useDebrief.ts",
+			"source_location": "L4",
+			"weight": 1.0
+		},
+		{
+			"source": "src_hooks_usedebrief_ts",
+			"target": "usedebrief_usedebrief",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "src/hooks/useDebrief.ts",
+			"source_location": "L25",
+			"weight": 1.0
+		}
+	]
+}

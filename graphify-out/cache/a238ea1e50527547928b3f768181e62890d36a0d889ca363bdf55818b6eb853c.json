@@ -1,0 +1,115 @@
+{
+	"nodes": [
+		{
+			"id": "scripts_generate_death_zenmaster_ts",
+			"label": "generate-death-zenmaster.ts",
+			"file_type": "code",
+			"source_file": "scripts/generate-death-zenmaster.ts",
+			"source_location": "L1"
+		},
+		{
+			"id": "generate_death_zenmaster_createwavfile",
+			"label": "createWavFile()",
+			"file_type": "code",
+			"source_file": "scripts/generate-death-zenmaster.ts",
+			"source_location": "L67"
+		},
+		{
+			"id": "generate_death_zenmaster_generatevoice",
+			"label": "generateVoice()",
+			"file_type": "code",
+			"source_file": "scripts/generate-death-zenmaster.ts",
+			"source_location": "L96"
+		},
+		{
+			"id": "generate_death_zenmaster_main",
+			"label": "main()",
+			"file_type": "code",
+			"source_file": "scripts/generate-death-zenmaster.ts",
+			"source_location": "L119"
+		}
+	],
+	"edges": [
+		{
+			"source": "scripts_generate_death_zenmaster_ts",
+			"target": "node_fs",
+			"relation": "imports_from",
+			"confidence": "EXTRACTED",
+			"source_file": "scripts/generate-death-zenmaster.ts",
+			"source_location": "L1",
+			"weight": 1.0
+		},
+		{
+			"source": "scripts_generate_death_zenmaster_ts",
+			"target": "node_path",
+			"relation": "imports_from",
+			"confidence": "EXTRACTED",
+			"source_file": "scripts/generate-death-zenmaster.ts",
+			"source_location": "L2",
+			"weight": 1.0
+		},
+		{
+			"source": "scripts_generate_death_zenmaster_ts",
+			"target": "genai",
+			"relation": "imports_from",
+			"confidence": "EXTRACTED",
+			"source_file": "scripts/generate-death-zenmaster.ts",
+			"source_location": "L3",
+			"weight": 1.0
+		},
+		{
+			"source": "scripts_generate_death_zenmaster_ts",
+			"target": "scripts_compress_audio",
+			"relation": "imports_from",
+			"confidence": "EXTRACTED",
+			"source_file": "scripts/generate-death-zenmaster.ts",
+			"source_location": "L4",
+			"weight": 1.0
+		},
+		{
+			"source": "scripts_generate_death_zenmaster_ts",
+			"target": "generate_death_zenmaster_createwavfile",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "scripts/generate-death-zenmaster.ts",
+			"source_location": "L67",
+			"weight": 1.0
+		},
+		{
+			"source": "scripts_generate_death_zenmaster_ts",
+			"target": "generate_death_zenmaster_generatevoice",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "scripts/generate-death-zenmaster.ts",
+			"source_location": "L96",
+			"weight": 1.0
+		},
+		{
+			"source": "scripts_generate_death_zenmaster_ts",
+			"target": "generate_death_zenmaster_main",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "scripts/generate-death-zenmaster.ts",
+			"source_location": "L119",
+			"weight": 1.0
+		},
+		{
+			"source": "generate_death_zenmaster_main",
+			"target": "generate_death_zenmaster_generatevoice",
+			"relation": "calls",
+			"confidence": "EXTRACTED",
+			"source_file": "scripts/generate-death-zenmaster.ts",
+			"source_location": "L130",
+			"weight": 1.0
+		},
+		{
+			"source": "generate_death_zenmaster_main",
+			"target": "generate_death_zenmaster_createwavfile",
+			"relation": "calls",
+			"confidence": "EXTRACTED",
+			"source_file": "scripts/generate-death-zenmaster.ts",
+			"source_location": "L131",
+			"weight": 1.0
+		}
+	]
+}

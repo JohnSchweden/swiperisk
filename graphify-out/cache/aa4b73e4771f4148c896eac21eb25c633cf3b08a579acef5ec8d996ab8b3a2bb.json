@@ -1,0 +1,56 @@
+{
+	"nodes": [
+		{
+			"id": "tests_data_card_snapshot_test_ts",
+			"label": "card-snapshot.test.ts",
+			"file_type": "code",
+			"source_file": "tests/data/card-snapshot.test.ts",
+			"source_location": "L1"
+		},
+		{
+			"id": "card_snapshot_test_generatephase03snapshot",
+			"label": "generatePhase03Snapshot()",
+			"file_type": "code",
+			"source_file": "tests/data/card-snapshot.test.ts",
+			"source_location": "L33"
+		}
+	],
+	"edges": [
+		{
+			"source": "tests_data_card_snapshot_test_ts",
+			"target": "vitest",
+			"relation": "imports_from",
+			"confidence": "EXTRACTED",
+			"source_file": "tests/data/card-snapshot.test.ts",
+			"source_location": "L1",
+			"weight": 1.0
+		},
+		{
+			"source": "tests_data_card_snapshot_test_ts",
+			"target": "tests_data_src_data_cards",
+			"relation": "imports_from",
+			"confidence": "EXTRACTED",
+			"source_file": "tests/data/card-snapshot.test.ts",
+			"source_location": "L2",
+			"weight": 1.0
+		},
+		{
+			"source": "tests_data_card_snapshot_test_ts",
+			"target": "tests_data_src_types",
+			"relation": "imports_from",
+			"confidence": "EXTRACTED",
+			"source_file": "tests/data/card-snapshot.test.ts",
+			"source_location": "L3",
+			"weight": 1.0
+		},
+		{
+			"source": "tests_data_card_snapshot_test_ts",
+			"target": "card_snapshot_test_generatephase03snapshot",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "tests/data/card-snapshot.test.ts",
+			"source_location": "L33",
+			"weight": 1.0
+		}
+	]
+}

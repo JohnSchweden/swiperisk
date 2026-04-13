@@ -1,0 +1,117 @@
+{
+	"nodes": [
+		{
+			"id": "vite_config_ts",
+			"label": "vite.config.ts",
+			"file_type": "code",
+			"source_file": "vite.config.ts",
+			"source_location": "L1"
+		},
+		{
+			"id": "vite_config_loadallenv",
+			"label": "loadAllEnv()",
+			"file_type": "code",
+			"source_file": "vite.config.ts",
+			"source_location": "L14"
+		},
+		{
+			"id": "vite_config_apiroutesplugin",
+			"label": "apiRoutesPlugin()",
+			"file_type": "code",
+			"source_file": "vite.config.ts",
+			"source_location": "L42"
+		}
+	],
+	"edges": [
+		{
+			"source": "vite_config_ts",
+			"target": "node_fs",
+			"relation": "imports_from",
+			"confidence": "EXTRACTED",
+			"source_file": "vite.config.ts",
+			"source_location": "L1",
+			"weight": 1.0
+		},
+		{
+			"source": "vite_config_ts",
+			"target": "node_path",
+			"relation": "imports_from",
+			"confidence": "EXTRACTED",
+			"source_file": "vite.config.ts",
+			"source_location": "L2",
+			"weight": 1.0
+		},
+		{
+			"source": "vite_config_ts",
+			"target": "node_url",
+			"relation": "imports_from",
+			"confidence": "EXTRACTED",
+			"source_file": "vite.config.ts",
+			"source_location": "L3",
+			"weight": 1.0
+		},
+		{
+			"source": "vite_config_ts",
+			"target": "vite",
+			"relation": "imports_from",
+			"confidence": "EXTRACTED",
+			"source_file": "vite.config.ts",
+			"source_location": "L4",
+			"weight": 1.0
+		},
+		{
+			"source": "vite_config_ts",
+			"target": "plugin_basic_ssl",
+			"relation": "imports_from",
+			"confidence": "EXTRACTED",
+			"source_file": "vite.config.ts",
+			"source_location": "L5",
+			"weight": 1.0
+		},
+		{
+			"source": "vite_config_ts",
+			"target": "plugin_react",
+			"relation": "imports_from",
+			"confidence": "EXTRACTED",
+			"source_file": "vite.config.ts",
+			"source_location": "L6",
+			"weight": 1.0
+		},
+		{
+			"source": "vite_config_ts",
+			"target": "vite",
+			"relation": "imports_from",
+			"confidence": "EXTRACTED",
+			"source_file": "vite.config.ts",
+			"source_location": "L7",
+			"weight": 1.0
+		},
+		{
+			"source": "vite_config_ts",
+			"target": "vite",
+			"relation": "imports_from",
+			"confidence": "EXTRACTED",
+			"source_file": "vite.config.ts",
+			"source_location": "L8",
+			"weight": 1.0
+		},
+		{
+			"source": "vite_config_ts",
+			"target": "vite_config_loadallenv",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "vite.config.ts",
+			"source_location": "L14",
+			"weight": 1.0
+		},
+		{
+			"source": "vite_config_ts",
+			"target": "vite_config_apiroutesplugin",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "vite.config.ts",
+			"source_location": "L42",
+			"weight": 1.0
+		}
+	]
+}

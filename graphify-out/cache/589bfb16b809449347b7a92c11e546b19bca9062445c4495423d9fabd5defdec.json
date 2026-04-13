@@ -1,0 +1,72 @@
+{
+	"nodes": [
+		{
+			"id": "tests_data_role_adaptation_test_ts",
+			"label": "role-adaptation.test.ts",
+			"file_type": "code",
+			"source_file": "tests/data/role-adaptation.test.ts",
+			"source_location": "L1"
+		},
+		{
+			"id": "role_adaptation_test_extractkeywords",
+			"label": "extractKeywords()",
+			"file_type": "code",
+			"source_file": "tests/data/role-adaptation.test.ts",
+			"source_location": "L111"
+		},
+		{
+			"id": "role_adaptation_test_hasrolevocabulary",
+			"label": "hasRoleVocabulary()",
+			"file_type": "code",
+			"source_file": "tests/data/role-adaptation.test.ts",
+			"source_location": "L121"
+		}
+	],
+	"edges": [
+		{
+			"source": "tests_data_role_adaptation_test_ts",
+			"target": "vitest",
+			"relation": "imports_from",
+			"confidence": "EXTRACTED",
+			"source_file": "tests/data/role-adaptation.test.ts",
+			"source_location": "L1",
+			"weight": 1.0
+		},
+		{
+			"source": "tests_data_role_adaptation_test_ts",
+			"target": "tests_data_src_data_cards",
+			"relation": "imports_from",
+			"confidence": "EXTRACTED",
+			"source_file": "tests/data/role-adaptation.test.ts",
+			"source_location": "L2",
+			"weight": 1.0
+		},
+		{
+			"source": "tests_data_role_adaptation_test_ts",
+			"target": "tests_data_src_types",
+			"relation": "imports_from",
+			"confidence": "EXTRACTED",
+			"source_file": "tests/data/role-adaptation.test.ts",
+			"source_location": "L3",
+			"weight": 1.0
+		},
+		{
+			"source": "tests_data_role_adaptation_test_ts",
+			"target": "role_adaptation_test_extractkeywords",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "tests/data/role-adaptation.test.ts",
+			"source_location": "L111",
+			"weight": 1.0
+		},
+		{
+			"source": "tests_data_role_adaptation_test_ts",
+			"target": "role_adaptation_test_hasrolevocabulary",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "tests/data/role-adaptation.test.ts",
+			"source_location": "L121",
+			"weight": 1.0
+		}
+	]
+}

@@ -1,0 +1,12 @@
+{
+	"nodes": [
+		{
+			"id": "src_components_game_index_ts",
+			"label": "index.ts",
+			"file_type": "code",
+			"source_file": "src/components/game/index.ts",
+			"source_location": "L1"
+		}
+	],
+	"edges": []
+}

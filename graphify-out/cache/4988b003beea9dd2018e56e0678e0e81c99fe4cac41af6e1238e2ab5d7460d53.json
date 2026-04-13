@@ -1,0 +1,97 @@
+{
+	"nodes": [
+		{
+			"id": "tests_screenshots_phase06_verification_capture_screenshots_ts",
+			"label": "capture-screenshots.ts",
+			"file_type": "code",
+			"source_file": "tests/screenshots/phase06-verification/capture-screenshots.ts",
+			"source_location": "L1"
+		},
+		{
+			"id": "capture_screenshots_capturescreenshot",
+			"label": "captureScreenshot()",
+			"file_type": "code",
+			"source_file": "tests/screenshots/phase06-verification/capture-screenshots.ts",
+			"source_location": "L22"
+		},
+		{
+			"id": "capture_screenshots_setfullgamestate",
+			"label": "setFullGameState()",
+			"file_type": "code",
+			"source_file": "tests/screenshots/phase06-verification/capture-screenshots.ts",
+			"source_location": "L41"
+		},
+		{
+			"id": "capture_screenshots_main",
+			"label": "main()",
+			"file_type": "code",
+			"source_file": "tests/screenshots/phase06-verification/capture-screenshots.ts",
+			"source_location": "L49"
+		}
+	],
+	"edges": [
+		{
+			"source": "tests_screenshots_phase06_verification_capture_screenshots_ts",
+			"target": "playwright",
+			"relation": "imports_from",
+			"confidence": "EXTRACTED",
+			"source_file": "tests/screenshots/phase06-verification/capture-screenshots.ts",
+			"source_location": "L1",
+			"weight": 1.0
+		},
+		{
+			"source": "tests_screenshots_phase06_verification_capture_screenshots_ts",
+			"target": "tests_screenshots_phase06_verification_src_types",
+			"relation": "imports_from",
+			"confidence": "EXTRACTED",
+			"source_file": "tests/screenshots/phase06-verification/capture-screenshots.ts",
+			"source_location": "L2",
+			"weight": 1.0
+		},
+		{
+			"source": "tests_screenshots_phase06_verification_capture_screenshots_ts",
+			"target": "capture_screenshots_capturescreenshot",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "tests/screenshots/phase06-verification/capture-screenshots.ts",
+			"source_location": "L22",
+			"weight": 1.0
+		},
+		{
+			"source": "tests_screenshots_phase06_verification_capture_screenshots_ts",
+			"target": "capture_screenshots_setfullgamestate",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "tests/screenshots/phase06-verification/capture-screenshots.ts",
+			"source_location": "L41",
+			"weight": 1.0
+		},
+		{
+			"source": "tests_screenshots_phase06_verification_capture_screenshots_ts",
+			"target": "capture_screenshots_main",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "tests/screenshots/phase06-verification/capture-screenshots.ts",
+			"source_location": "L49",
+			"weight": 1.0
+		},
+		{
+			"source": "capture_screenshots_main",
+			"target": "capture_screenshots_capturescreenshot",
+			"relation": "calls",
+			"confidence": "EXTRACTED",
+			"source_file": "tests/screenshots/phase06-verification/capture-screenshots.ts",
+			"source_location": "L72",
+			"weight": 1.0
+		},
+		{
+			"source": "capture_screenshots_main",
+			"target": "capture_screenshots_setfullgamestate",
+			"relation": "calls",
+			"confidence": "EXTRACTED",
+			"source_file": "tests/screenshots/phase06-verification/capture-screenshots.ts",
+			"source_location": "L139",
+			"weight": 1.0
+		}
+	]
+}

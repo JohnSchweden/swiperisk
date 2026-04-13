@@ -1,0 +1,38 @@
+{
+	"nodes": [
+		{
+			"id": "src_hooks_usespeechrecognition_ts",
+			"label": "useSpeechRecognition.ts",
+			"file_type": "code",
+			"source_file": "src/hooks/useSpeechRecognition.ts",
+			"source_location": "L1"
+		},
+		{
+			"id": "usespeechrecognition_usespeechrecognition",
+			"label": "useSpeechRecognition()",
+			"file_type": "code",
+			"source_file": "src/hooks/useSpeechRecognition.ts",
+			"source_location": "L60"
+		}
+	],
+	"edges": [
+		{
+			"source": "src_hooks_usespeechrecognition_ts",
+			"target": "react",
+			"relation": "imports_from",
+			"confidence": "EXTRACTED",
+			"source_file": "src/hooks/useSpeechRecognition.ts",
+			"source_location": "L1",
+			"weight": 1.0
+		},
+		{
+			"source": "src_hooks_usespeechrecognition_ts",
+			"target": "usespeechrecognition_usespeechrecognition",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "src/hooks/useSpeechRecognition.ts",
+			"source_location": "L60",
+			"weight": 1.0
+		}
+	]
+}

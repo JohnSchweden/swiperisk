@@ -1,0 +1,67 @@
+{
+	"nodes": [
+		{
+			"id": "src_components_game_roleselect_tsx",
+			"label": "RoleSelect.tsx",
+			"file_type": "code",
+			"source_file": "src/components/game/RoleSelect.tsx",
+			"source_location": "L1"
+		}
+	],
+	"edges": [
+		{
+			"source": "src_components_game_roleselect_tsx",
+			"target": "react",
+			"relation": "imports_from",
+			"confidence": "EXTRACTED",
+			"source_file": "src/components/game/RoleSelect.tsx",
+			"source_location": "L1",
+			"weight": 1.0
+		},
+		{
+			"source": "src_components_game_roleselect_tsx",
+			"target": "src_components_game_data",
+			"relation": "imports_from",
+			"confidence": "EXTRACTED",
+			"source_file": "src/components/game/RoleSelect.tsx",
+			"source_location": "L2",
+			"weight": 1.0
+		},
+		{
+			"source": "src_components_game_roleselect_tsx",
+			"target": "src_components_game_lib_formatting",
+			"relation": "imports_from",
+			"confidence": "EXTRACTED",
+			"source_file": "src/components/game/RoleSelect.tsx",
+			"source_location": "L8",
+			"weight": 1.0
+		},
+		{
+			"source": "src_components_game_roleselect_tsx",
+			"target": "src_components_game_types",
+			"relation": "imports_from",
+			"confidence": "EXTRACTED",
+			"source_file": "src/components/game/RoleSelect.tsx",
+			"source_location": "L9",
+			"weight": 1.0
+		},
+		{
+			"source": "src_components_game_roleselect_tsx",
+			"target": "src_components_game_layoutshell",
+			"relation": "imports_from",
+			"confidence": "EXTRACTED",
+			"source_file": "src/components/game/RoleSelect.tsx",
+			"source_location": "L10",
+			"weight": 1.0
+		},
+		{
+			"source": "src_components_game_roleselect_tsx",
+			"target": "src_components_game_selectionstagestyles",
+			"relation": "imports_from",
+			"confidence": "EXTRACTED",
+			"source_file": "src/components/game/RoleSelect.tsx",
+			"source_location": "L11",
+			"weight": 1.0
+		}
+	]
+}

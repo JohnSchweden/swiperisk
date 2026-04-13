@@ -1,0 +1,185 @@
+{
+	"nodes": [
+		{
+			"id": "src_components_game_debrief_debriefpage3verdict_tsx",
+			"label": "DebriefPage3Verdict.tsx",
+			"file_type": "code",
+			"source_file": "src/components/game/debrief/DebriefPage3Verdict.tsx",
+			"source_location": "L1"
+		},
+		{
+			"id": "debriefpage3verdict_getresiliencecontext",
+			"label": "getResilienceContext()",
+			"file_type": "code",
+			"source_file": "src/components/game/debrief/DebriefPage3Verdict.tsx",
+			"source_location": "L38"
+		},
+		{
+			"id": "debriefpage3verdict_getarchetypecolor",
+			"label": "getArchetypeColor()",
+			"file_type": "code",
+			"source_file": "src/components/game/debrief/DebriefPage3Verdict.tsx",
+			"source_location": "L45"
+		},
+		{
+			"id": "debriefpage3verdict_updatemetatags",
+			"label": "updateMetaTags()",
+			"file_type": "code",
+			"source_file": "src/components/game/debrief/DebriefPage3Verdict.tsx",
+			"source_location": "L52"
+		},
+		{
+			"id": "debriefpage3verdict_handlecopy",
+			"label": "handleCopy()",
+			"file_type": "code",
+			"source_file": "src/components/game/debrief/DebriefPage3Verdict.tsx",
+			"source_location": "L148"
+		}
+	],
+	"edges": [
+		{
+			"source": "src_components_game_debrief_debriefpage3verdict_tsx",
+			"target": "react",
+			"relation": "imports_from",
+			"confidence": "EXTRACTED",
+			"source_file": "src/components/game/debrief/DebriefPage3Verdict.tsx",
+			"source_location": "L1",
+			"weight": 1.0
+		},
+		{
+			"source": "src_components_game_debrief_debriefpage3verdict_tsx",
+			"target": "react",
+			"relation": "imports_from",
+			"confidence": "EXTRACTED",
+			"source_file": "src/components/game/debrief/DebriefPage3Verdict.tsx",
+			"source_location": "L2",
+			"weight": 1.0
+		},
+		{
+			"source": "src_components_game_debrief_debriefpage3verdict_tsx",
+			"target": "src_components_game_debrief_data",
+			"relation": "imports_from",
+			"confidence": "EXTRACTED",
+			"source_file": "src/components/game/debrief/DebriefPage3Verdict.tsx",
+			"source_location": "L3",
+			"weight": 1.0
+		},
+		{
+			"source": "src_components_game_debrief_debriefpage3verdict_tsx",
+			"target": "src_components_game_debrief_data_imagemap",
+			"relation": "imports_from",
+			"confidence": "EXTRACTED",
+			"source_file": "src/components/game/debrief/DebriefPage3Verdict.tsx",
+			"source_location": "L4",
+			"weight": 1.0
+		},
+		{
+			"source": "src_components_game_debrief_debriefpage3verdict_tsx",
+			"target": "src_components_game_debrief_hooks",
+			"relation": "imports_from",
+			"confidence": "EXTRACTED",
+			"source_file": "src/components/game/debrief/DebriefPage3Verdict.tsx",
+			"source_location": "L5",
+			"weight": 1.0
+		},
+		{
+			"source": "src_components_game_debrief_debriefpage3verdict_tsx",
+			"target": "src_components_game_debrief_lib_buttonstyles",
+			"relation": "imports_from",
+			"confidence": "EXTRACTED",
+			"source_file": "src/components/game/debrief/DebriefPage3Verdict.tsx",
+			"source_location": "L6",
+			"weight": 1.0
+		},
+		{
+			"source": "src_components_game_debrief_debriefpage3verdict_tsx",
+			"target": "src_components_game_debrief_lib_publicgameurl",
+			"relation": "imports_from",
+			"confidence": "EXTRACTED",
+			"source_file": "src/components/game/debrief/DebriefPage3Verdict.tsx",
+			"source_location": "L7",
+			"weight": 1.0
+		},
+		{
+			"source": "src_components_game_debrief_debriefpage3verdict_tsx",
+			"target": "src_components_game_debrief_types",
+			"relation": "imports_from",
+			"confidence": "EXTRACTED",
+			"source_file": "src/components/game/debrief/DebriefPage3Verdict.tsx",
+			"source_location": "L8",
+			"weight": 1.0
+		},
+		{
+			"source": "src_components_game_debrief_debriefpage3verdict_tsx",
+			"target": "src_components_game_debrief_utils_linkedin_share",
+			"relation": "imports_from",
+			"confidence": "EXTRACTED",
+			"source_file": "src/components/game/debrief/DebriefPage3Verdict.tsx",
+			"source_location": "L15",
+			"weight": 1.0
+		},
+		{
+			"source": "src_components_game_debrief_debriefpage3verdict_tsx",
+			"target": "src_components_game_debrief_imagewithfallback",
+			"relation": "imports_from",
+			"confidence": "EXTRACTED",
+			"source_file": "src/components/game/debrief/DebriefPage3Verdict.tsx",
+			"source_location": "L20",
+			"weight": 1.0
+		},
+		{
+			"source": "src_components_game_debrief_debriefpage3verdict_tsx",
+			"target": "src_components_game_debrief_layoutshell",
+			"relation": "imports_from",
+			"confidence": "EXTRACTED",
+			"source_file": "src/components/game/debrief/DebriefPage3Verdict.tsx",
+			"source_location": "L21",
+			"weight": 1.0
+		},
+		{
+			"source": "src_components_game_debrief_debriefpage3verdict_tsx",
+			"target": "src_components_game_debrief_selectionstagestyles",
+			"relation": "imports_from",
+			"confidence": "EXTRACTED",
+			"source_file": "src/components/game/debrief/DebriefPage3Verdict.tsx",
+			"source_location": "L22",
+			"weight": 1.0
+		},
+		{
+			"source": "src_components_game_debrief_debriefpage3verdict_tsx",
+			"target": "debriefpage3verdict_getresiliencecontext",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "src/components/game/debrief/DebriefPage3Verdict.tsx",
+			"source_location": "L38",
+			"weight": 1.0
+		},
+		{
+			"source": "src_components_game_debrief_debriefpage3verdict_tsx",
+			"target": "debriefpage3verdict_getarchetypecolor",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "src/components/game/debrief/DebriefPage3Verdict.tsx",
+			"source_location": "L45",
+			"weight": 1.0
+		},
+		{
+			"source": "src_components_game_debrief_debriefpage3verdict_tsx",
+			"target": "debriefpage3verdict_updatemetatags",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "src/components/game/debrief/DebriefPage3Verdict.tsx",
+			"source_location": "L52",
+			"weight": 1.0
+		},
+		{
+			"source": "src_components_game_debrief_debriefpage3verdict_tsx",
+			"target": "debriefpage3verdict_handlecopy",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "src/components/game/debrief/DebriefPage3Verdict.tsx",
+			"source_location": "L148",
+			"weight": 1.0
+		}
+	]
+}

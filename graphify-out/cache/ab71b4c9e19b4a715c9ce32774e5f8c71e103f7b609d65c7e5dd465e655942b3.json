@@ -1,0 +1,56 @@
+{
+	"nodes": [
+		{
+			"id": "src_hooks_usebossfight_ts",
+			"label": "useBossFight.ts",
+			"file_type": "code",
+			"source_file": "src/hooks/useBossFight.ts",
+			"source_location": "L1"
+		},
+		{
+			"id": "usebossfight_usebossfight",
+			"label": "useBossFight()",
+			"file_type": "code",
+			"source_file": "src/hooks/useBossFight.ts",
+			"source_location": "L31"
+		}
+	],
+	"edges": [
+		{
+			"source": "src_hooks_usebossfight_ts",
+			"target": "react",
+			"relation": "imports_from",
+			"confidence": "EXTRACTED",
+			"source_file": "src/hooks/useBossFight.ts",
+			"source_location": "L1",
+			"weight": 1.0
+		},
+		{
+			"source": "src_hooks_usebossfight_ts",
+			"target": "src_hooks_data",
+			"relation": "imports_from",
+			"confidence": "EXTRACTED",
+			"source_file": "src/hooks/useBossFight.ts",
+			"source_location": "L2",
+			"weight": 1.0
+		},
+		{
+			"source": "src_hooks_usebossfight_ts",
+			"target": "src_hooks_types",
+			"relation": "imports_from",
+			"confidence": "EXTRACTED",
+			"source_file": "src/hooks/useBossFight.ts",
+			"source_location": "L3",
+			"weight": 1.0
+		},
+		{
+			"source": "src_hooks_usebossfight_ts",
+			"target": "usebossfight_usebossfight",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "src/hooks/useBossFight.ts",
+			"source_location": "L31",
+			"weight": 1.0
+		}
+	]
+}

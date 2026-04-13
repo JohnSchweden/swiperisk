@@ -1,0 +1,227 @@
+{
+	"nodes": [
+		{
+			"id": "src_data_imagemap_ts",
+			"label": "imageMap.ts",
+			"file_type": "code",
+			"source_file": "src/data/imageMap.ts",
+			"source_location": "L1"
+		},
+		{
+			"id": "imagemap_extractincidentslugs",
+			"label": "extractIncidentSlugs()",
+			"file_type": "code",
+			"source_file": "src/data/imageMap.ts",
+			"source_location": "L35"
+		},
+		{
+			"id": "imagemap_buildincidentimages",
+			"label": "buildIncidentImages()",
+			"file_type": "code",
+			"source_file": "src/data/imageMap.ts",
+			"source_location": "L65"
+		},
+		{
+			"id": "imagemap_extracthosoutcomepairs",
+			"label": "extractHosOutcomePairs()",
+			"file_type": "code",
+			"source_file": "src/data/imageMap.ts",
+			"source_location": "L90"
+		},
+		{
+			"id": "imagemap_buildoutcomeimages",
+			"label": "buildOutcomeImages()",
+			"file_type": "code",
+			"source_file": "src/data/imageMap.ts",
+			"source_location": "L142"
+		},
+		{
+			"id": "imagemap_getincidentimagepath",
+			"label": "getIncidentImagePath()",
+			"file_type": "code",
+			"source_file": "src/data/imageMap.ts",
+			"source_location": "L205"
+		},
+		{
+			"id": "imagemap_getoutcomeimagepath",
+			"label": "getOutcomeImagePath()",
+			"file_type": "code",
+			"source_file": "src/data/imageMap.ts",
+			"source_location": "L213"
+		},
+		{
+			"id": "imagemap_getarchetypeimagepath",
+			"label": "getArchetypeImagePath()",
+			"file_type": "code",
+			"source_file": "src/data/imageMap.ts",
+			"source_location": "L253"
+		},
+		{
+			"id": "imagemap_getdeathimagepath",
+			"label": "getDeathImagePath()",
+			"file_type": "code",
+			"source_file": "src/data/imageMap.ts",
+			"source_location": "L263"
+		},
+		{
+			"id": "imagemap_getarchetypegifpath",
+			"label": "getArchetypeGifPath()",
+			"file_type": "code",
+			"source_file": "src/data/imageMap.ts",
+			"source_location": "L270"
+		},
+		{
+			"id": "imagemap_getdeathgifpath",
+			"label": "getDeathGifPath()",
+			"file_type": "code",
+			"source_file": "src/data/imageMap.ts",
+			"source_location": "L277"
+		}
+	],
+	"edges": [
+		{
+			"source": "src_data_imagemap_ts",
+			"target": "src_data_lib_slugify",
+			"relation": "imports_from",
+			"confidence": "EXTRACTED",
+			"source_file": "src/data/imageMap.ts",
+			"source_location": "L1",
+			"weight": 1.0
+		},
+		{
+			"source": "src_data_imagemap_ts",
+			"target": "src_data_types",
+			"relation": "imports_from",
+			"confidence": "EXTRACTED",
+			"source_file": "src/data/imageMap.ts",
+			"source_location": "L2",
+			"weight": 1.0
+		},
+		{
+			"source": "src_data_imagemap_ts",
+			"target": "src_data_cards",
+			"relation": "imports_from",
+			"confidence": "EXTRACTED",
+			"source_file": "src/data/imageMap.ts",
+			"source_location": "L3",
+			"weight": 1.0
+		},
+		{
+			"source": "src_data_imagemap_ts",
+			"target": "src_data_cards_head_of_something",
+			"relation": "imports_from",
+			"confidence": "EXTRACTED",
+			"source_file": "src/data/imageMap.ts",
+			"source_location": "L4",
+			"weight": 1.0
+		},
+		{
+			"source": "src_data_imagemap_ts",
+			"target": "imagemap_extractincidentslugs",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "src/data/imageMap.ts",
+			"source_location": "L35",
+			"weight": 1.0
+		},
+		{
+			"source": "src_data_imagemap_ts",
+			"target": "imagemap_buildincidentimages",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "src/data/imageMap.ts",
+			"source_location": "L65",
+			"weight": 1.0
+		},
+		{
+			"source": "src_data_imagemap_ts",
+			"target": "imagemap_extracthosoutcomepairs",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "src/data/imageMap.ts",
+			"source_location": "L90",
+			"weight": 1.0
+		},
+		{
+			"source": "src_data_imagemap_ts",
+			"target": "imagemap_buildoutcomeimages",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "src/data/imageMap.ts",
+			"source_location": "L142",
+			"weight": 1.0
+		},
+		{
+			"source": "src_data_imagemap_ts",
+			"target": "imagemap_getincidentimagepath",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "src/data/imageMap.ts",
+			"source_location": "L205",
+			"weight": 1.0
+		},
+		{
+			"source": "src_data_imagemap_ts",
+			"target": "imagemap_getoutcomeimagepath",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "src/data/imageMap.ts",
+			"source_location": "L213",
+			"weight": 1.0
+		},
+		{
+			"source": "src_data_imagemap_ts",
+			"target": "imagemap_getarchetypeimagepath",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "src/data/imageMap.ts",
+			"source_location": "L253",
+			"weight": 1.0
+		},
+		{
+			"source": "src_data_imagemap_ts",
+			"target": "imagemap_getdeathimagepath",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "src/data/imageMap.ts",
+			"source_location": "L263",
+			"weight": 1.0
+		},
+		{
+			"source": "src_data_imagemap_ts",
+			"target": "imagemap_getarchetypegifpath",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "src/data/imageMap.ts",
+			"source_location": "L270",
+			"weight": 1.0
+		},
+		{
+			"source": "src_data_imagemap_ts",
+			"target": "imagemap_getdeathgifpath",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "src/data/imageMap.ts",
+			"source_location": "L277",
+			"weight": 1.0
+		},
+		{
+			"source": "imagemap_buildincidentimages",
+			"target": "imagemap_extractincidentslugs",
+			"relation": "calls",
+			"confidence": "EXTRACTED",
+			"source_file": "src/data/imageMap.ts",
+			"source_location": "L66",
+			"weight": 1.0
+		},
+		{
+			"source": "imagemap_buildoutcomeimages",
+			"target": "imagemap_extracthosoutcomepairs",
+			"relation": "calls",
+			"confidence": "EXTRACTED",
+			"source_file": "src/data/imageMap.ts",
+			"source_location": "L143",
+			"weight": 1.0
+		}
+	]
+}

@@ -1,0 +1,31 @@
+{
+	"nodes": [
+		{
+			"id": "unit_formatting_test_ts",
+			"label": "formatting.test.ts",
+			"file_type": "code",
+			"source_file": "unit/formatting.test.ts",
+			"source_location": "L1"
+		}
+	],
+	"edges": [
+		{
+			"source": "unit_formatting_test_ts",
+			"target": "vitest",
+			"relation": "imports_from",
+			"confidence": "EXTRACTED",
+			"source_file": "unit/formatting.test.ts",
+			"source_location": "L1",
+			"weight": 1.0
+		},
+		{
+			"source": "unit_formatting_test_ts",
+			"target": "unit_src_lib_formatting",
+			"relation": "imports_from",
+			"confidence": "EXTRACTED",
+			"source_file": "unit/formatting.test.ts",
+			"source_location": "L2",
+			"weight": 1.0
+		}
+	]
+}

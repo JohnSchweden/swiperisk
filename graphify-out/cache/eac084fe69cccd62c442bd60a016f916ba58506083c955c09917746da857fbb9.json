@@ -1,0 +1,147 @@
+{
+	"nodes": [
+		{
+			"id": "src_hooks_usegamestate_hydration_ts",
+			"label": "hydration.ts",
+			"file_type": "code",
+			"source_file": "src/hooks/useGameState/hydration.ts",
+			"source_location": "L1"
+		},
+		{
+			"id": "hydration_getsavedstate",
+			"label": "getSavedState()",
+			"file_type": "code",
+			"source_file": "src/hooks/useGameState/hydration.ts",
+			"source_location": "L53"
+		},
+		{
+			"id": "hydration_getroleselectstate",
+			"label": "getRoleSelectState()",
+			"file_type": "code",
+			"source_file": "src/hooks/useGameState/hydration.ts",
+			"source_location": "L61"
+		},
+		{
+			"id": "hydration_getplayingstate",
+			"label": "getPlayingState()",
+			"file_type": "code",
+			"source_file": "src/hooks/useGameState/hydration.ts",
+			"source_location": "L79"
+		},
+		{
+			"id": "hydration_getdebugstate",
+			"label": "getDebugState()",
+			"file_type": "code",
+			"source_file": "src/hooks/useGameState/hydration.ts",
+			"source_location": "L98"
+		},
+		{
+			"id": "hydration_gethydratedstate",
+			"label": "getHydratedState()",
+			"file_type": "code",
+			"source_file": "src/hooks/useGameState/hydration.ts",
+			"source_location": "L133"
+		}
+	],
+	"edges": [
+		{
+			"source": "src_hooks_usegamestate_hydration_ts",
+			"target": "src_hooks_usegamestate_lib_safecoercion_ts",
+			"relation": "imports_from",
+			"confidence": "EXTRACTED",
+			"source_file": "src/hooks/useGameState/hydration.ts",
+			"source_location": "L1",
+			"weight": 1.0
+		},
+		{
+			"source": "src_hooks_usegamestate_hydration_ts",
+			"target": "src_hooks_usegamestate_types_ts",
+			"relation": "imports_from",
+			"confidence": "EXTRACTED",
+			"source_file": "src/hooks/useGameState/hydration.ts",
+			"source_location": "L8",
+			"weight": 1.0
+		},
+		{
+			"source": "src_hooks_usegamestate_hydration_ts",
+			"target": "hydration_getsavedstate",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "src/hooks/useGameState/hydration.ts",
+			"source_location": "L53",
+			"weight": 1.0
+		},
+		{
+			"source": "src_hooks_usegamestate_hydration_ts",
+			"target": "hydration_getroleselectstate",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "src/hooks/useGameState/hydration.ts",
+			"source_location": "L61",
+			"weight": 1.0
+		},
+		{
+			"source": "src_hooks_usegamestate_hydration_ts",
+			"target": "hydration_getplayingstate",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "src/hooks/useGameState/hydration.ts",
+			"source_location": "L79",
+			"weight": 1.0
+		},
+		{
+			"source": "src_hooks_usegamestate_hydration_ts",
+			"target": "hydration_getdebugstate",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "src/hooks/useGameState/hydration.ts",
+			"source_location": "L98",
+			"weight": 1.0
+		},
+		{
+			"source": "src_hooks_usegamestate_hydration_ts",
+			"target": "hydration_gethydratedstate",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "src/hooks/useGameState/hydration.ts",
+			"source_location": "L133",
+			"weight": 1.0
+		},
+		{
+			"source": "hydration_gethydratedstate",
+			"target": "hydration_getdebugstate",
+			"relation": "calls",
+			"confidence": "EXTRACTED",
+			"source_file": "src/hooks/useGameState/hydration.ts",
+			"source_location": "L136",
+			"weight": 1.0
+		},
+		{
+			"source": "hydration_gethydratedstate",
+			"target": "hydration_getsavedstate",
+			"relation": "calls",
+			"confidence": "EXTRACTED",
+			"source_file": "src/hooks/useGameState/hydration.ts",
+			"source_location": "L139",
+			"weight": 1.0
+		},
+		{
+			"source": "hydration_gethydratedstate",
+			"target": "hydration_getroleselectstate",
+			"relation": "calls",
+			"confidence": "EXTRACTED",
+			"source_file": "src/hooks/useGameState/hydration.ts",
+			"source_location": "L142",
+			"weight": 1.0
+		},
+		{
+			"source": "hydration_gethydratedstate",
+			"target": "hydration_getplayingstate",
+			"relation": "calls",
+			"confidence": "EXTRACTED",
+			"source_file": "src/hooks/useGameState/hydration.ts",
+			"source_location": "L142",
+			"weight": 1.0
+		}
+	]
+}

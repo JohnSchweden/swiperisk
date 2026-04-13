@@ -1,0 +1,12 @@
+{
+	"nodes": [
+		{
+			"id": "src_data_choicelabels_ts",
+			"label": "choiceLabels.ts",
+			"file_type": "code",
+			"source_file": "src/data/choiceLabels.ts",
+			"source_location": "L1"
+		}
+	],
+	"edges": []
+}

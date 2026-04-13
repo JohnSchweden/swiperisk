@@ -1,0 +1,324 @@
+{
+	"nodes": [
+		{
+			"id": "scripts_generate_audio_ts",
+			"label": "generate-audio.ts",
+			"file_type": "code",
+			"source_file": "scripts/generate-audio.ts",
+			"source_location": "L1"
+		},
+		{
+			"id": "generate_audio_parseargs",
+			"label": "parseArgs()",
+			"file_type": "code",
+			"source_file": "scripts/generate-audio.ts",
+			"source_location": "L38"
+		},
+		{
+			"id": "generate_audio_validateargs",
+			"label": "validateArgs()",
+			"file_type": "code",
+			"source_file": "scripts/generate-audio.ts",
+			"source_location": "L65"
+		},
+		{
+			"id": "generate_audio_personalitytocliname",
+			"label": "personalityToCLIName()",
+			"file_type": "code",
+			"source_file": "scripts/generate-audio.ts",
+			"source_location": "L89"
+		},
+		{
+			"id": "generate_audio_clinametopersonality",
+			"label": "cliNameToPersonality()",
+			"file_type": "code",
+			"source_file": "scripts/generate-audio.ts",
+			"source_location": "L107"
+		},
+		{
+			"id": "generate_audio_getpersonalitiesforgeneration",
+			"label": "getPersonalitiesForGeneration()",
+			"file_type": "code",
+			"source_file": "scripts/generate-audio.ts",
+			"source_location": "L123"
+		},
+		{
+			"id": "generate_audio_loadcarddecks",
+			"label": "loadCardDecks()",
+			"file_type": "code",
+			"source_file": "scripts/generate-audio.ts",
+			"source_location": "L137"
+		},
+		{
+			"id": "generate_audio_getdeck",
+			"label": "getDeck()",
+			"file_type": "code",
+			"source_file": "scripts/generate-audio.ts",
+			"source_location": "L172"
+		},
+		{
+			"id": "generate_audio_printdryrun",
+			"label": "printDryRun()",
+			"file_type": "code",
+			"source_file": "scripts/generate-audio.ts",
+			"source_location": "L188"
+		},
+		{
+			"id": "generate_audio_generateaudio",
+			"label": "generateAudio()",
+			"file_type": "code",
+			"source_file": "scripts/generate-audio.ts",
+			"source_location": "L215"
+		},
+		{
+			"id": "generate_audio_generatecoreaudio",
+			"label": "generateCoreAudio()",
+			"file_type": "code",
+			"source_file": "scripts/generate-audio.ts",
+			"source_location": "L260"
+		},
+		{
+			"id": "generate_audio_main",
+			"label": "main()",
+			"file_type": "code",
+			"source_file": "scripts/generate-audio.ts",
+			"source_location": "L273"
+		}
+	],
+	"edges": [
+		{
+			"source": "scripts_generate_audio_ts",
+			"target": "node_fs",
+			"relation": "imports_from",
+			"confidence": "EXTRACTED",
+			"source_file": "scripts/generate-audio.ts",
+			"source_location": "L13",
+			"weight": 1.0
+		},
+		{
+			"source": "scripts_generate_audio_ts",
+			"target": "node_path",
+			"relation": "imports_from",
+			"confidence": "EXTRACTED",
+			"source_file": "scripts/generate-audio.ts",
+			"source_location": "L14",
+			"weight": 1.0
+		},
+		{
+			"source": "scripts_generate_audio_ts",
+			"target": "scripts_src_types",
+			"relation": "imports_from",
+			"confidence": "EXTRACTED",
+			"source_file": "scripts/generate-audio.ts",
+			"source_location": "L15",
+			"weight": 1.0
+		},
+		{
+			"source": "scripts_generate_audio_ts",
+			"target": "scripts_src_types",
+			"relation": "imports_from",
+			"confidence": "EXTRACTED",
+			"source_file": "scripts/generate-audio.ts",
+			"source_location": "L16",
+			"weight": 1.0
+		},
+		{
+			"source": "scripts_generate_audio_ts",
+			"target": "scripts_lib_audio_spec",
+			"relation": "imports_from",
+			"confidence": "EXTRACTED",
+			"source_file": "scripts/generate-audio.ts",
+			"source_location": "L17",
+			"weight": 1.0
+		},
+		{
+			"source": "scripts_generate_audio_ts",
+			"target": "scripts_tts_utils",
+			"relation": "imports_from",
+			"confidence": "EXTRACTED",
+			"source_file": "scripts/generate-audio.ts",
+			"source_location": "L24",
+			"weight": 1.0
+		},
+		{
+			"source": "scripts_generate_audio_ts",
+			"target": "generate_audio_parseargs",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "scripts/generate-audio.ts",
+			"source_location": "L38",
+			"weight": 1.0
+		},
+		{
+			"source": "scripts_generate_audio_ts",
+			"target": "generate_audio_validateargs",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "scripts/generate-audio.ts",
+			"source_location": "L65",
+			"weight": 1.0
+		},
+		{
+			"source": "scripts_generate_audio_ts",
+			"target": "generate_audio_personalitytocliname",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "scripts/generate-audio.ts",
+			"source_location": "L89",
+			"weight": 1.0
+		},
+		{
+			"source": "scripts_generate_audio_ts",
+			"target": "generate_audio_clinametopersonality",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "scripts/generate-audio.ts",
+			"source_location": "L107",
+			"weight": 1.0
+		},
+		{
+			"source": "scripts_generate_audio_ts",
+			"target": "generate_audio_getpersonalitiesforgeneration",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "scripts/generate-audio.ts",
+			"source_location": "L123",
+			"weight": 1.0
+		},
+		{
+			"source": "scripts_generate_audio_ts",
+			"target": "generate_audio_loadcarddecks",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "scripts/generate-audio.ts",
+			"source_location": "L137",
+			"weight": 1.0
+		},
+		{
+			"source": "scripts_generate_audio_ts",
+			"target": "generate_audio_getdeck",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "scripts/generate-audio.ts",
+			"source_location": "L172",
+			"weight": 1.0
+		},
+		{
+			"source": "scripts_generate_audio_ts",
+			"target": "generate_audio_printdryrun",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "scripts/generate-audio.ts",
+			"source_location": "L188",
+			"weight": 1.0
+		},
+		{
+			"source": "scripts_generate_audio_ts",
+			"target": "generate_audio_generateaudio",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "scripts/generate-audio.ts",
+			"source_location": "L215",
+			"weight": 1.0
+		},
+		{
+			"source": "scripts_generate_audio_ts",
+			"target": "generate_audio_generatecoreaudio",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "scripts/generate-audio.ts",
+			"source_location": "L260",
+			"weight": 1.0
+		},
+		{
+			"source": "scripts_generate_audio_ts",
+			"target": "generate_audio_main",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "scripts/generate-audio.ts",
+			"source_location": "L273",
+			"weight": 1.0
+		},
+		{
+			"source": "generate_audio_getpersonalitiesforgeneration",
+			"target": "generate_audio_clinametopersonality",
+			"relation": "calls",
+			"confidence": "EXTRACTED",
+			"source_file": "scripts/generate-audio.ts",
+			"source_location": "L131",
+			"weight": 1.0
+		},
+		{
+			"source": "generate_audio_getdeck",
+			"target": "generate_audio_loadcarddecks",
+			"relation": "calls",
+			"confidence": "EXTRACTED",
+			"source_file": "scripts/generate-audio.ts",
+			"source_location": "L173",
+			"weight": 1.0
+		},
+		{
+			"source": "generate_audio_main",
+			"target": "generate_audio_parseargs",
+			"relation": "calls",
+			"confidence": "EXTRACTED",
+			"source_file": "scripts/generate-audio.ts",
+			"source_location": "L274",
+			"weight": 1.0
+		},
+		{
+			"source": "generate_audio_main",
+			"target": "generate_audio_validateargs",
+			"relation": "calls",
+			"confidence": "EXTRACTED",
+			"source_file": "scripts/generate-audio.ts",
+			"source_location": "L277",
+			"weight": 1.0
+		},
+		{
+			"source": "generate_audio_main",
+			"target": "generate_audio_getdeck",
+			"relation": "calls",
+			"confidence": "EXTRACTED",
+			"source_file": "scripts/generate-audio.ts",
+			"source_location": "L289",
+			"weight": 1.0
+		},
+		{
+			"source": "generate_audio_main",
+			"target": "generate_audio_getpersonalitiesforgeneration",
+			"relation": "calls",
+			"confidence": "EXTRACTED",
+			"source_file": "scripts/generate-audio.ts",
+			"source_location": "L290",
+			"weight": 1.0
+		},
+		{
+			"source": "generate_audio_main",
+			"target": "generate_audio_generatecoreaudio",
+			"relation": "calls",
+			"confidence": "EXTRACTED",
+			"source_file": "scripts/generate-audio.ts",
+			"source_location": "L301",
+			"weight": 1.0
+		},
+		{
+			"source": "generate_audio_main",
+			"target": "generate_audio_printdryrun",
+			"relation": "calls",
+			"confidence": "EXTRACTED",
+			"source_file": "scripts/generate-audio.ts",
+			"source_location": "L311",
+			"weight": 1.0
+		},
+		{
+			"source": "generate_audio_main",
+			"target": "generate_audio_generateaudio",
+			"relation": "calls",
+			"confidence": "EXTRACTED",
+			"source_file": "scripts/generate-audio.ts",
+			"source_location": "L313",
+			"weight": 1.0
+		}
+	]
+}

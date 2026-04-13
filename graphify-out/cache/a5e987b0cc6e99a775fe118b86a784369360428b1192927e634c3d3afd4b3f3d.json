@@ -1,0 +1,56 @@
+{
+	"nodes": [
+		{
+			"id": "src_hooks_useroast_ts",
+			"label": "useRoast.ts",
+			"file_type": "code",
+			"source_file": "src/hooks/useRoast.ts",
+			"source_location": "L1"
+		},
+		{
+			"id": "useroast_useroast",
+			"label": "useRoast()",
+			"file_type": "code",
+			"source_file": "src/hooks/useRoast.ts",
+			"source_location": "L23"
+		}
+	],
+	"edges": [
+		{
+			"source": "src_hooks_useroast_ts",
+			"target": "react",
+			"relation": "imports_from",
+			"confidence": "EXTRACTED",
+			"source_file": "src/hooks/useRoast.ts",
+			"source_location": "L1",
+			"weight": 1.0
+		},
+		{
+			"source": "src_hooks_useroast_ts",
+			"target": "src_hooks_services_roastservice",
+			"relation": "imports_from",
+			"confidence": "EXTRACTED",
+			"source_file": "src/hooks/useRoast.ts",
+			"source_location": "L2",
+			"weight": 1.0
+		},
+		{
+			"source": "src_hooks_useroast_ts",
+			"target": "src_hooks_types",
+			"relation": "imports_from",
+			"confidence": "EXTRACTED",
+			"source_file": "src/hooks/useRoast.ts",
+			"source_location": "L6",
+			"weight": 1.0
+		},
+		{
+			"source": "src_hooks_useroast_ts",
+			"target": "useroast_useroast",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "src/hooks/useRoast.ts",
+			"source_location": "L23",
+			"weight": 1.0
+		}
+	]
+}

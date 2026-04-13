@@ -1,0 +1,408 @@
+{
+	"nodes": [
+		{
+			"id": "src_hooks_usegamestate_ts",
+			"label": "useGameState.ts",
+			"file_type": "code",
+			"source_file": "src/hooks/useGameState.ts",
+			"source_location": "L1"
+		},
+		{
+			"id": "usegamestate_getinitialbudgetforrole",
+			"label": "getInitialBudgetForRole()",
+			"file_type": "code",
+			"source_file": "src/hooks/useGameState.ts",
+			"source_location": "L25"
+		},
+		{
+			"id": "usegamestate_isvalidstagetransition",
+			"label": "isValidStageTransition()",
+			"file_type": "code",
+			"source_file": "src/hooks/useGameState.ts",
+			"source_location": "L86"
+		},
+		{
+			"id": "usegamestate_loginvalidtransition",
+			"label": "logInvalidTransition()",
+			"file_type": "code",
+			"source_file": "src/hooks/useGameState.ts",
+			"source_location": "L90"
+		},
+		{
+			"id": "usegamestate_buildstageupdate",
+			"label": "buildStageUpdate()",
+			"file_type": "code",
+			"source_file": "src/hooks/useGameState.ts",
+			"source_location": "L96"
+		},
+		{
+			"id": "usegamestate_handlestagechange",
+			"label": "handleStageChange()",
+			"file_type": "code",
+			"source_file": "src/hooks/useGameState.ts",
+			"source_location": "L118"
+		},
+		{
+			"id": "usegamestate_handlechoicemade",
+			"label": "handleChoiceMade()",
+			"file_type": "code",
+			"source_file": "src/hooks/useGameState.ts",
+			"source_location": "L130"
+		},
+		{
+			"id": "usegamestate_handlebossanswer",
+			"label": "handleBossAnswer()",
+			"file_type": "code",
+			"source_file": "src/hooks/useGameState.ts",
+			"source_location": "L146"
+		},
+		{
+			"id": "usegamestate_handlebosscomplete",
+			"label": "handleBossComplete()",
+			"file_type": "code",
+			"source_file": "src/hooks/useGameState.ts",
+			"source_location": "L157"
+		},
+		{
+			"id": "usegamestate_handlekirkrefusal",
+			"label": "handleKirkRefusal()",
+			"file_type": "code",
+			"source_file": "src/hooks/useGameState.ts",
+			"source_location": "L168"
+		},
+		{
+			"id": "usegamestate_handlenextincident",
+			"label": "handleNextIncident()",
+			"file_type": "code",
+			"source_file": "src/hooks/useGameState.ts",
+			"source_location": "L188"
+		},
+		{
+			"id": "usegamestate_gamereducer",
+			"label": "gameReducer()",
+			"file_type": "code",
+			"source_file": "src/hooks/useGameState.ts",
+			"source_location": "L234"
+		},
+		{
+			"id": "usegamestate_createactiondispatchers",
+			"label": "createActionDispatchers()",
+			"file_type": "code",
+			"source_file": "src/hooks/useGameState.ts",
+			"source_location": "L274"
+		},
+		{
+			"id": "usegamestate_usedebugstatesync",
+			"label": "useDebugStateSync()",
+			"file_type": "code",
+			"source_file": "src/hooks/useGameState.ts",
+			"source_location": "L311"
+		},
+		{
+			"id": "usegamestate_usegamestate",
+			"label": "useGameState()",
+			"file_type": "code",
+			"source_file": "src/hooks/useGameState.ts",
+			"source_location": "L325"
+		}
+	],
+	"edges": [
+		{
+			"source": "src_hooks_usegamestate_ts",
+			"target": "react",
+			"relation": "imports_from",
+			"confidence": "EXTRACTED",
+			"source_file": "src/hooks/useGameState.ts",
+			"source_location": "L1",
+			"weight": 1.0
+		},
+		{
+			"source": "src_hooks_usegamestate_ts",
+			"target": "react",
+			"relation": "imports_from",
+			"confidence": "EXTRACTED",
+			"source_file": "src/hooks/useGameState.ts",
+			"source_location": "L2",
+			"weight": 1.0
+		},
+		{
+			"source": "src_hooks_usegamestate_ts",
+			"target": "src_hooks_data",
+			"relation": "imports_from",
+			"confidence": "EXTRACTED",
+			"source_file": "src/hooks/useGameState.ts",
+			"source_location": "L3",
+			"weight": 1.0
+		},
+		{
+			"source": "src_hooks_usegamestate_ts",
+			"target": "src_hooks_data_kirkcards_ts",
+			"relation": "imports_from",
+			"confidence": "EXTRACTED",
+			"source_file": "src/hooks/useGameState.ts",
+			"source_location": "L4",
+			"weight": 1.0
+		},
+		{
+			"source": "src_hooks_usegamestate_ts",
+			"target": "src_hooks_lib_deck_ts",
+			"relation": "imports_from",
+			"confidence": "EXTRACTED",
+			"source_file": "src/hooks/useGameState.ts",
+			"source_location": "L5",
+			"weight": 1.0
+		},
+		{
+			"source": "src_hooks_usegamestate_ts",
+			"target": "src_hooks_types_ts",
+			"relation": "imports_from",
+			"confidence": "EXTRACTED",
+			"source_file": "src/hooks/useGameState.ts",
+			"source_location": "L6",
+			"weight": 1.0
+		},
+		{
+			"source": "src_hooks_usegamestate_ts",
+			"target": "src_hooks_usegamestate_deathresolver_ts",
+			"relation": "imports_from",
+			"confidence": "EXTRACTED",
+			"source_file": "src/hooks/useGameState.ts",
+			"source_location": "L15",
+			"weight": 1.0
+		},
+		{
+			"source": "src_hooks_usegamestate_ts",
+			"target": "src_hooks_usegamestate_hydration_ts",
+			"relation": "imports_from",
+			"confidence": "EXTRACTED",
+			"source_file": "src/hooks/useGameState.ts",
+			"source_location": "L21",
+			"weight": 1.0
+		},
+		{
+			"source": "src_hooks_usegamestate_ts",
+			"target": "usegamestate_getinitialbudgetforrole",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "src/hooks/useGameState.ts",
+			"source_location": "L25",
+			"weight": 1.0
+		},
+		{
+			"source": "src_hooks_usegamestate_ts",
+			"target": "usegamestate_isvalidstagetransition",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "src/hooks/useGameState.ts",
+			"source_location": "L86",
+			"weight": 1.0
+		},
+		{
+			"source": "src_hooks_usegamestate_ts",
+			"target": "usegamestate_loginvalidtransition",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "src/hooks/useGameState.ts",
+			"source_location": "L90",
+			"weight": 1.0
+		},
+		{
+			"source": "src_hooks_usegamestate_ts",
+			"target": "usegamestate_buildstageupdate",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "src/hooks/useGameState.ts",
+			"source_location": "L96",
+			"weight": 1.0
+		},
+		{
+			"source": "src_hooks_usegamestate_ts",
+			"target": "usegamestate_handlestagechange",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "src/hooks/useGameState.ts",
+			"source_location": "L118",
+			"weight": 1.0
+		},
+		{
+			"source": "src_hooks_usegamestate_ts",
+			"target": "usegamestate_handlechoicemade",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "src/hooks/useGameState.ts",
+			"source_location": "L130",
+			"weight": 1.0
+		},
+		{
+			"source": "src_hooks_usegamestate_ts",
+			"target": "usegamestate_handlebossanswer",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "src/hooks/useGameState.ts",
+			"source_location": "L146",
+			"weight": 1.0
+		},
+		{
+			"source": "src_hooks_usegamestate_ts",
+			"target": "usegamestate_handlebosscomplete",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "src/hooks/useGameState.ts",
+			"source_location": "L157",
+			"weight": 1.0
+		},
+		{
+			"source": "src_hooks_usegamestate_ts",
+			"target": "usegamestate_handlekirkrefusal",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "src/hooks/useGameState.ts",
+			"source_location": "L168",
+			"weight": 1.0
+		},
+		{
+			"source": "src_hooks_usegamestate_ts",
+			"target": "usegamestate_handlenextincident",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "src/hooks/useGameState.ts",
+			"source_location": "L188",
+			"weight": 1.0
+		},
+		{
+			"source": "src_hooks_usegamestate_ts",
+			"target": "usegamestate_gamereducer",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "src/hooks/useGameState.ts",
+			"source_location": "L234",
+			"weight": 1.0
+		},
+		{
+			"source": "src_hooks_usegamestate_ts",
+			"target": "usegamestate_createactiondispatchers",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "src/hooks/useGameState.ts",
+			"source_location": "L274",
+			"weight": 1.0
+		},
+		{
+			"source": "src_hooks_usegamestate_ts",
+			"target": "usegamestate_usedebugstatesync",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "src/hooks/useGameState.ts",
+			"source_location": "L311",
+			"weight": 1.0
+		},
+		{
+			"source": "src_hooks_usegamestate_ts",
+			"target": "usegamestate_usegamestate",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "src/hooks/useGameState.ts",
+			"source_location": "L325",
+			"weight": 1.0
+		},
+		{
+			"source": "usegamestate_buildstageupdate",
+			"target": "usegamestate_getinitialbudgetforrole",
+			"relation": "calls",
+			"confidence": "EXTRACTED",
+			"source_file": "src/hooks/useGameState.ts",
+			"source_location": "L106",
+			"weight": 1.0
+		},
+		{
+			"source": "usegamestate_handlestagechange",
+			"target": "usegamestate_isvalidstagetransition",
+			"relation": "calls",
+			"confidence": "EXTRACTED",
+			"source_file": "src/hooks/useGameState.ts",
+			"source_location": "L122",
+			"weight": 1.0
+		},
+		{
+			"source": "usegamestate_handlestagechange",
+			"target": "usegamestate_loginvalidtransition",
+			"relation": "calls",
+			"confidence": "EXTRACTED",
+			"source_file": "src/hooks/useGameState.ts",
+			"source_location": "L123",
+			"weight": 1.0
+		},
+		{
+			"source": "usegamestate_handlestagechange",
+			"target": "usegamestate_buildstageupdate",
+			"relation": "calls",
+			"confidence": "EXTRACTED",
+			"source_file": "src/hooks/useGameState.ts",
+			"source_location": "L127",
+			"weight": 1.0
+		},
+		{
+			"source": "usegamestate_gamereducer",
+			"target": "usegamestate_handlestagechange",
+			"relation": "calls",
+			"confidence": "EXTRACTED",
+			"source_file": "src/hooks/useGameState.ts",
+			"source_location": "L237",
+			"weight": 1.0
+		},
+		{
+			"source": "usegamestate_gamereducer",
+			"target": "usegamestate_handlechoicemade",
+			"relation": "calls",
+			"confidence": "EXTRACTED",
+			"source_file": "src/hooks/useGameState.ts",
+			"source_location": "L239",
+			"weight": 1.0
+		},
+		{
+			"source": "usegamestate_gamereducer",
+			"target": "usegamestate_handlenextincident",
+			"relation": "calls",
+			"confidence": "EXTRACTED",
+			"source_file": "src/hooks/useGameState.ts",
+			"source_location": "L241",
+			"weight": 1.0
+		},
+		{
+			"source": "usegamestate_gamereducer",
+			"target": "usegamestate_handlebossanswer",
+			"relation": "calls",
+			"confidence": "EXTRACTED",
+			"source_file": "src/hooks/useGameState.ts",
+			"source_location": "L243",
+			"weight": 1.0
+		},
+		{
+			"source": "usegamestate_gamereducer",
+			"target": "usegamestate_handlebosscomplete",
+			"relation": "calls",
+			"confidence": "EXTRACTED",
+			"source_file": "src/hooks/useGameState.ts",
+			"source_location": "L245",
+			"weight": 1.0
+		},
+		{
+			"source": "usegamestate_gamereducer",
+			"target": "usegamestate_handlekirkrefusal",
+			"relation": "calls",
+			"confidence": "EXTRACTED",
+			"source_file": "src/hooks/useGameState.ts",
+			"source_location": "L247",
+			"weight": 1.0
+		},
+		{
+			"source": "usegamestate_usegamestate",
+			"target": "usegamestate_usedebugstatesync",
+			"relation": "calls",
+			"confidence": "EXTRACTED",
+			"source_file": "src/hooks/useGameState.ts",
+			"source_location": "L327",
+			"weight": 1.0
+		}
+	]
+}

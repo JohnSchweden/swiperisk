@@ -1,0 +1,63 @@
+{
+	"nodes": [
+		{
+			"id": "src_hooks_useliveapispeechrecognition_ts",
+			"label": "useLiveAPISpeechRecognition.ts",
+			"file_type": "code",
+			"source_file": "src/hooks/useLiveAPISpeechRecognition.ts",
+			"source_location": "L1"
+		},
+		{
+			"id": "useliveapispeechrecognition_startmiccapture",
+			"label": "startMicCapture()",
+			"file_type": "code",
+			"source_file": "src/hooks/useLiveAPISpeechRecognition.ts",
+			"source_location": "L68"
+		},
+		{
+			"id": "useliveapispeechrecognition_useliveapispeechrecognition",
+			"label": "useLiveAPISpeechRecognition()",
+			"file_type": "code",
+			"source_file": "src/hooks/useLiveAPISpeechRecognition.ts",
+			"source_location": "L129"
+		}
+	],
+	"edges": [
+		{
+			"source": "src_hooks_useliveapispeechrecognition_ts",
+			"target": "genai",
+			"relation": "imports_from",
+			"confidence": "EXTRACTED",
+			"source_file": "src/hooks/useLiveAPISpeechRecognition.ts",
+			"source_location": "L1",
+			"weight": 1.0
+		},
+		{
+			"source": "src_hooks_useliveapispeechrecognition_ts",
+			"target": "react",
+			"relation": "imports_from",
+			"confidence": "EXTRACTED",
+			"source_file": "src/hooks/useLiveAPISpeechRecognition.ts",
+			"source_location": "L2",
+			"weight": 1.0
+		},
+		{
+			"source": "src_hooks_useliveapispeechrecognition_ts",
+			"target": "useliveapispeechrecognition_startmiccapture",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "src/hooks/useLiveAPISpeechRecognition.ts",
+			"source_location": "L68",
+			"weight": 1.0
+		},
+		{
+			"source": "src_hooks_useliveapispeechrecognition_ts",
+			"target": "useliveapispeechrecognition_useliveapispeechrecognition",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "src/hooks/useLiveAPISpeechRecognition.ts",
+			"source_location": "L129",
+			"weight": 1.0
+		}
+	]
+}

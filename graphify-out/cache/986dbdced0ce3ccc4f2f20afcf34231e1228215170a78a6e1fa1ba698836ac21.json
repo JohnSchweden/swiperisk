@@ -1,0 +1,49 @@
+{
+	"nodes": [
+		{
+			"id": "src_data_cards_software_engineer_ts",
+			"label": "software-engineer.ts",
+			"file_type": "code",
+			"source_file": "src/data/cards/software-engineer.ts",
+			"source_location": "L1"
+		}
+	],
+	"edges": [
+		{
+			"source": "src_data_cards_software_engineer_ts",
+			"target": "src_data_cards_types",
+			"relation": "imports_from",
+			"confidence": "EXTRACTED",
+			"source_file": "src/data/cards/software-engineer.ts",
+			"source_location": "L1",
+			"weight": 1.0
+		},
+		{
+			"source": "src_data_cards_software_engineer_ts",
+			"target": "src_data_cards_choicelabels",
+			"relation": "imports_from",
+			"confidence": "EXTRACTED",
+			"source_file": "src/data/cards/software-engineer.ts",
+			"source_location": "L2",
+			"weight": 1.0
+		},
+		{
+			"source": "src_data_cards_software_engineer_ts",
+			"target": "src_data_cards_incidents",
+			"relation": "imports_from",
+			"confidence": "EXTRACTED",
+			"source_file": "src/data/cards/software-engineer.ts",
+			"source_location": "L3",
+			"weight": 1.0
+		},
+		{
+			"source": "src_data_cards_software_engineer_ts",
+			"target": "src_data_cards_violations",
+			"relation": "imports_from",
+			"confidence": "EXTRACTED",
+			"source_file": "src/data/cards/software-engineer.ts",
+			"source_location": "L4",
+			"weight": 1.0
+		}
+	]
+}

@@ -1,0 +1,106 @@
+{
+	"nodes": [
+		{
+			"id": "scripts_test_changed_ts",
+			"label": "test-changed.ts",
+			"file_type": "code",
+			"source_file": "scripts/test-changed.ts",
+			"source_location": "L1"
+		},
+		{
+			"id": "test_changed_getchangedfiles",
+			"label": "getChangedFiles()",
+			"file_type": "code",
+			"source_file": "scripts/test-changed.ts",
+			"source_location": "L49"
+		},
+		{
+			"id": "test_changed_filestoareas",
+			"label": "filesToAreas()",
+			"file_type": "code",
+			"source_file": "scripts/test-changed.ts",
+			"source_location": "L62"
+		},
+		{
+			"id": "test_changed_main",
+			"label": "main()",
+			"file_type": "code",
+			"source_file": "scripts/test-changed.ts",
+			"source_location": "L74"
+		}
+	],
+	"edges": [
+		{
+			"source": "scripts_test_changed_ts",
+			"target": "node_child_process",
+			"relation": "imports_from",
+			"confidence": "EXTRACTED",
+			"source_file": "scripts/test-changed.ts",
+			"source_location": "L14",
+			"weight": 1.0
+		},
+		{
+			"source": "scripts_test_changed_ts",
+			"target": "node_path",
+			"relation": "imports_from",
+			"confidence": "EXTRACTED",
+			"source_file": "scripts/test-changed.ts",
+			"source_location": "L15",
+			"weight": 1.0
+		},
+		{
+			"source": "scripts_test_changed_ts",
+			"target": "node_url",
+			"relation": "imports_from",
+			"confidence": "EXTRACTED",
+			"source_file": "scripts/test-changed.ts",
+			"source_location": "L16",
+			"weight": 1.0
+		},
+		{
+			"source": "scripts_test_changed_ts",
+			"target": "test_changed_getchangedfiles",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "scripts/test-changed.ts",
+			"source_location": "L49",
+			"weight": 1.0
+		},
+		{
+			"source": "scripts_test_changed_ts",
+			"target": "test_changed_filestoareas",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "scripts/test-changed.ts",
+			"source_location": "L62",
+			"weight": 1.0
+		},
+		{
+			"source": "scripts_test_changed_ts",
+			"target": "test_changed_main",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "scripts/test-changed.ts",
+			"source_location": "L74",
+			"weight": 1.0
+		},
+		{
+			"source": "test_changed_main",
+			"target": "test_changed_getchangedfiles",
+			"relation": "calls",
+			"confidence": "EXTRACTED",
+			"source_file": "scripts/test-changed.ts",
+			"source_location": "L78",
+			"weight": 1.0
+		},
+		{
+			"source": "test_changed_main",
+			"target": "test_changed_filestoareas",
+			"relation": "calls",
+			"confidence": "EXTRACTED",
+			"source_file": "scripts/test-changed.ts",
+			"source_location": "L89",
+			"weight": 1.0
+		}
+	]
+}

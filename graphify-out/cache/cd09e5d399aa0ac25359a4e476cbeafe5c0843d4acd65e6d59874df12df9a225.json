@@ -1,0 +1,47 @@
+{
+	"nodes": [
+		{
+			"id": "src_components_dev_webmcptoolsprovider_tsx",
+			"label": "WebMCPToolsProvider.tsx",
+			"file_type": "code",
+			"source_file": "src/components/dev/WebMCPToolsProvider.tsx",
+			"source_location": "L1"
+		},
+		{
+			"id": "webmcptoolsprovider_webmcptoolsprovider",
+			"label": "WebMCPToolsProvider()",
+			"file_type": "code",
+			"source_file": "src/components/dev/WebMCPToolsProvider.tsx",
+			"source_location": "L9"
+		}
+	],
+	"edges": [
+		{
+			"source": "src_components_dev_webmcptoolsprovider_tsx",
+			"target": "usewebmcptools",
+			"relation": "imports_from",
+			"confidence": "EXTRACTED",
+			"source_file": "src/components/dev/WebMCPToolsProvider.tsx",
+			"source_location": "L1",
+			"weight": 1.0
+		},
+		{
+			"source": "src_components_dev_webmcptoolsprovider_tsx",
+			"target": "usewebmcptools",
+			"relation": "imports_from",
+			"confidence": "EXTRACTED",
+			"source_file": "src/components/dev/WebMCPToolsProvider.tsx",
+			"source_location": "L2",
+			"weight": 1.0
+		},
+		{
+			"source": "src_components_dev_webmcptoolsprovider_tsx",
+			"target": "webmcptoolsprovider_webmcptoolsprovider",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "src/components/dev/WebMCPToolsProvider.tsx",
+			"source_location": "L9",
+			"weight": 1.0
+		}
+	]
+}

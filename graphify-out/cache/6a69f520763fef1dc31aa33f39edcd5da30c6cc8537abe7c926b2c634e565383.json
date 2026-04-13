@@ -1,0 +1,324 @@
+{
+	"nodes": [
+		{
+			"id": "scripts_benchmark_tests_ts",
+			"label": "benchmark-tests.ts",
+			"file_type": "code",
+			"source_file": "scripts/benchmark-tests.ts",
+			"source_location": "L1"
+		},
+		{
+			"id": "benchmark_tests_extracttestsfromsuite",
+			"label": "extractTestsFromSuite()",
+			"file_type": "code",
+			"source_file": "scripts/benchmark-tests.ts",
+			"source_location": "L64"
+		},
+		{
+			"id": "benchmark_tests_extracttests",
+			"label": "extractTests()",
+			"file_type": "code",
+			"source_file": "scripts/benchmark-tests.ts",
+			"source_location": "L99"
+		},
+		{
+			"id": "benchmark_tests_bucketkey",
+			"label": "bucketKey()",
+			"file_type": "code",
+			"source_file": "scripts/benchmark-tests.ts",
+			"source_location": "L107"
+		},
+		{
+			"id": "benchmark_tests_computesummary",
+			"label": "computeSummary()",
+			"file_type": "code",
+			"source_file": "scripts/benchmark-tests.ts",
+			"source_location": "L114"
+		},
+		{
+			"id": "benchmark_tests_formatms",
+			"label": "formatMs()",
+			"file_type": "code",
+			"source_file": "scripts/benchmark-tests.ts",
+			"source_location": "L145"
+		},
+		{
+			"id": "benchmark_tests_printsummary",
+			"label": "printSummary()",
+			"file_type": "code",
+			"source_file": "scripts/benchmark-tests.ts",
+			"source_location": "L150"
+		},
+		{
+			"id": "benchmark_tests_runbenchmark",
+			"label": "runBenchmark()",
+			"file_type": "code",
+			"source_file": "scripts/benchmark-tests.ts",
+			"source_location": "L177"
+		},
+		{
+			"id": "benchmark_tests_savebaseline",
+			"label": "saveBaseline()",
+			"file_type": "code",
+			"source_file": "scripts/benchmark-tests.ts",
+			"source_location": "L219"
+		},
+		{
+			"id": "benchmark_tests_loadbaseline",
+			"label": "loadBaseline()",
+			"file_type": "code",
+			"source_file": "scripts/benchmark-tests.ts",
+			"source_location": "L230"
+		},
+		{
+			"id": "benchmark_tests_comparebaselines",
+			"label": "compareBaselines()",
+			"file_type": "code",
+			"source_file": "scripts/benchmark-tests.ts",
+			"source_location": "L235"
+		},
+		{
+			"id": "benchmark_tests_main",
+			"label": "main()",
+			"file_type": "code",
+			"source_file": "scripts/benchmark-tests.ts",
+			"source_location": "L290"
+		}
+	],
+	"edges": [
+		{
+			"source": "scripts_benchmark_tests_ts",
+			"target": "node_child_process",
+			"relation": "imports_from",
+			"confidence": "EXTRACTED",
+			"source_file": "scripts/benchmark-tests.ts",
+			"source_location": "L8",
+			"weight": 1.0
+		},
+		{
+			"source": "scripts_benchmark_tests_ts",
+			"target": "node_fs",
+			"relation": "imports_from",
+			"confidence": "EXTRACTED",
+			"source_file": "scripts/benchmark-tests.ts",
+			"source_location": "L9",
+			"weight": 1.0
+		},
+		{
+			"source": "scripts_benchmark_tests_ts",
+			"target": "node_path",
+			"relation": "imports_from",
+			"confidence": "EXTRACTED",
+			"source_file": "scripts/benchmark-tests.ts",
+			"source_location": "L10",
+			"weight": 1.0
+		},
+		{
+			"source": "scripts_benchmark_tests_ts",
+			"target": "node_url",
+			"relation": "imports_from",
+			"confidence": "EXTRACTED",
+			"source_file": "scripts/benchmark-tests.ts",
+			"source_location": "L11",
+			"weight": 1.0
+		},
+		{
+			"source": "scripts_benchmark_tests_ts",
+			"target": "benchmark_tests_extracttestsfromsuite",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "scripts/benchmark-tests.ts",
+			"source_location": "L64",
+			"weight": 1.0
+		},
+		{
+			"source": "scripts_benchmark_tests_ts",
+			"target": "benchmark_tests_extracttests",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "scripts/benchmark-tests.ts",
+			"source_location": "L99",
+			"weight": 1.0
+		},
+		{
+			"source": "scripts_benchmark_tests_ts",
+			"target": "benchmark_tests_bucketkey",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "scripts/benchmark-tests.ts",
+			"source_location": "L107",
+			"weight": 1.0
+		},
+		{
+			"source": "scripts_benchmark_tests_ts",
+			"target": "benchmark_tests_computesummary",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "scripts/benchmark-tests.ts",
+			"source_location": "L114",
+			"weight": 1.0
+		},
+		{
+			"source": "scripts_benchmark_tests_ts",
+			"target": "benchmark_tests_formatms",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "scripts/benchmark-tests.ts",
+			"source_location": "L145",
+			"weight": 1.0
+		},
+		{
+			"source": "scripts_benchmark_tests_ts",
+			"target": "benchmark_tests_printsummary",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "scripts/benchmark-tests.ts",
+			"source_location": "L150",
+			"weight": 1.0
+		},
+		{
+			"source": "scripts_benchmark_tests_ts",
+			"target": "benchmark_tests_runbenchmark",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "scripts/benchmark-tests.ts",
+			"source_location": "L177",
+			"weight": 1.0
+		},
+		{
+			"source": "scripts_benchmark_tests_ts",
+			"target": "benchmark_tests_savebaseline",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "scripts/benchmark-tests.ts",
+			"source_location": "L219",
+			"weight": 1.0
+		},
+		{
+			"source": "scripts_benchmark_tests_ts",
+			"target": "benchmark_tests_loadbaseline",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "scripts/benchmark-tests.ts",
+			"source_location": "L230",
+			"weight": 1.0
+		},
+		{
+			"source": "scripts_benchmark_tests_ts",
+			"target": "benchmark_tests_comparebaselines",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "scripts/benchmark-tests.ts",
+			"source_location": "L235",
+			"weight": 1.0
+		},
+		{
+			"source": "scripts_benchmark_tests_ts",
+			"target": "benchmark_tests_main",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "scripts/benchmark-tests.ts",
+			"source_location": "L290",
+			"weight": 1.0
+		},
+		{
+			"source": "benchmark_tests_extracttests",
+			"target": "benchmark_tests_extracttestsfromsuite",
+			"relation": "calls",
+			"confidence": "EXTRACTED",
+			"source_file": "scripts/benchmark-tests.ts",
+			"source_location": "L102",
+			"weight": 1.0
+		},
+		{
+			"source": "benchmark_tests_computesummary",
+			"target": "benchmark_tests_bucketkey",
+			"relation": "calls",
+			"confidence": "EXTRACTED",
+			"source_file": "scripts/benchmark-tests.ts",
+			"source_location": "L126",
+			"weight": 1.0
+		},
+		{
+			"source": "benchmark_tests_printsummary",
+			"target": "benchmark_tests_formatms",
+			"relation": "calls",
+			"confidence": "EXTRACTED",
+			"source_file": "scripts/benchmark-tests.ts",
+			"source_location": "L173",
+			"weight": 1.0
+		},
+		{
+			"source": "benchmark_tests_runbenchmark",
+			"target": "benchmark_tests_extracttests",
+			"relation": "calls",
+			"confidence": "EXTRACTED",
+			"source_file": "scripts/benchmark-tests.ts",
+			"source_location": "L197",
+			"weight": 1.0
+		},
+		{
+			"source": "benchmark_tests_runbenchmark",
+			"target": "benchmark_tests_computesummary",
+			"relation": "calls",
+			"confidence": "EXTRACTED",
+			"source_file": "scripts/benchmark-tests.ts",
+			"source_location": "L200",
+			"weight": 1.0
+		},
+		{
+			"source": "benchmark_tests_comparebaselines",
+			"target": "benchmark_tests_formatms",
+			"relation": "calls",
+			"confidence": "EXTRACTED",
+			"source_file": "scripts/benchmark-tests.ts",
+			"source_location": "L266",
+			"weight": 1.0
+		},
+		{
+			"source": "benchmark_tests_main",
+			"target": "benchmark_tests_loadbaseline",
+			"relation": "calls",
+			"confidence": "EXTRACTED",
+			"source_file": "scripts/benchmark-tests.ts",
+			"source_location": "L318",
+			"weight": 1.0
+		},
+		{
+			"source": "benchmark_tests_main",
+			"target": "benchmark_tests_runbenchmark",
+			"relation": "calls",
+			"confidence": "EXTRACTED",
+			"source_file": "scripts/benchmark-tests.ts",
+			"source_location": "L321",
+			"weight": 1.0
+		},
+		{
+			"source": "benchmark_tests_main",
+			"target": "benchmark_tests_printsummary",
+			"relation": "calls",
+			"confidence": "EXTRACTED",
+			"source_file": "scripts/benchmark-tests.ts",
+			"source_location": "L322",
+			"weight": 1.0
+		},
+		{
+			"source": "benchmark_tests_main",
+			"target": "benchmark_tests_savebaseline",
+			"relation": "calls",
+			"confidence": "EXTRACTED",
+			"source_file": "scripts/benchmark-tests.ts",
+			"source_location": "L324",
+			"weight": 1.0
+		},
+		{
+			"source": "benchmark_tests_main",
+			"target": "benchmark_tests_comparebaselines",
+			"relation": "calls",
+			"confidence": "EXTRACTED",
+			"source_file": "scripts/benchmark-tests.ts",
+			"source_location": "L328",
+			"weight": 1.0
+		}
+	]
+}

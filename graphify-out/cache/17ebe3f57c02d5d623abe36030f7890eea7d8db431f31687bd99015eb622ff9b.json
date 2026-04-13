@@ -1,0 +1,54 @@
+{
+	"nodes": [
+		{
+			"id": "src_data_bgmplaylist_ts",
+			"label": "bgmPlaylist.ts",
+			"file_type": "code",
+			"source_file": "src/data/bgmPlaylist.ts",
+			"source_location": "L1"
+		},
+		{
+			"id": "bgmplaylist_bgmdisplaytitlefromstem",
+			"label": "bgmDisplayTitleFromStem()",
+			"file_type": "code",
+			"source_file": "src/data/bgmPlaylist.ts",
+			"source_location": "L27"
+		},
+		{
+			"id": "bgmplaylist_getbgmurl",
+			"label": "getBgmUrl()",
+			"file_type": "code",
+			"source_file": "src/data/bgmPlaylist.ts",
+			"source_location": "L39"
+		}
+	],
+	"edges": [
+		{
+			"source": "src_data_bgmplaylist_ts",
+			"target": "src_data_services_audioutils",
+			"relation": "imports_from",
+			"confidence": "EXTRACTED",
+			"source_file": "src/data/bgmPlaylist.ts",
+			"source_location": "L1",
+			"weight": 1.0
+		},
+		{
+			"source": "src_data_bgmplaylist_ts",
+			"target": "bgmplaylist_bgmdisplaytitlefromstem",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "src/data/bgmPlaylist.ts",
+			"source_location": "L27",
+			"weight": 1.0
+		},
+		{
+			"source": "src_data_bgmplaylist_ts",
+			"target": "bgmplaylist_getbgmurl",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "src/data/bgmPlaylist.ts",
+			"source_location": "L39",
+			"weight": 1.0
+		}
+	]
+}

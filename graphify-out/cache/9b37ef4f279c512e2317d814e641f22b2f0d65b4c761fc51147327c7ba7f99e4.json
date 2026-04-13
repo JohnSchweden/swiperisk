@@ -1,0 +1,72 @@
+{
+	"nodes": [
+		{
+			"id": "tests_data_card_penalties_test_ts",
+			"label": "card-penalties.test.ts",
+			"file_type": "code",
+			"source_file": "tests/data/card-penalties.test.ts",
+			"source_location": "L1"
+		},
+		{
+			"id": "card_penalties_test_calculatepenaltymagnitude",
+			"label": "calculatePenaltyMagnitude()",
+			"file_type": "code",
+			"source_file": "tests/data/card-penalties.test.ts",
+			"source_location": "L11"
+		},
+		{
+			"id": "card_penalties_test_isfreepath",
+			"label": "isFreePath()",
+			"file_type": "code",
+			"source_file": "tests/data/card-penalties.test.ts",
+			"source_location": "L25"
+		}
+	],
+	"edges": [
+		{
+			"source": "tests_data_card_penalties_test_ts",
+			"target": "vitest",
+			"relation": "imports_from",
+			"confidence": "EXTRACTED",
+			"source_file": "tests/data/card-penalties.test.ts",
+			"source_location": "L1",
+			"weight": 1.0
+		},
+		{
+			"source": "tests_data_card_penalties_test_ts",
+			"target": "tests_data_src_data_cards",
+			"relation": "imports_from",
+			"confidence": "EXTRACTED",
+			"source_file": "tests/data/card-penalties.test.ts",
+			"source_location": "L2",
+			"weight": 1.0
+		},
+		{
+			"source": "tests_data_card_penalties_test_ts",
+			"target": "tests_data_src_types",
+			"relation": "imports_from",
+			"confidence": "EXTRACTED",
+			"source_file": "tests/data/card-penalties.test.ts",
+			"source_location": "L3",
+			"weight": 1.0
+		},
+		{
+			"source": "tests_data_card_penalties_test_ts",
+			"target": "card_penalties_test_calculatepenaltymagnitude",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "tests/data/card-penalties.test.ts",
+			"source_location": "L11",
+			"weight": 1.0
+		},
+		{
+			"source": "tests_data_card_penalties_test_ts",
+			"target": "card_penalties_test_isfreepath",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "tests/data/card-penalties.test.ts",
+			"source_location": "L25",
+			"weight": 1.0
+		}
+	]
+}

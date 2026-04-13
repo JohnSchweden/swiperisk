@@ -1,0 +1,530 @@
+{
+	"nodes": [
+		{
+			"id": "scripts_generate_images_ts",
+			"label": "generate-images.ts",
+			"file_type": "code",
+			"source_file": "scripts/generate-images.ts",
+			"source_location": "L1"
+		},
+		{
+			"id": "generate_images_parseargs",
+			"label": "parseArgs()",
+			"file_type": "code",
+			"source_file": "scripts/generate-images.ts",
+			"source_location": "L28"
+		},
+		{
+			"id": "generate_images_resolvescopedrolename",
+			"label": "resolveScopedRoleName()",
+			"file_type": "code",
+			"source_file": "scripts/generate-images.ts",
+			"source_location": "L75"
+		},
+		{
+			"id": "generate_images_extractincidents",
+			"label": "extractIncidents()",
+			"file_type": "code",
+			"source_file": "scripts/generate-images.ts",
+			"source_location": "L84"
+		},
+		{
+			"id": "generate_images_getarchetypes",
+			"label": "getArchetypes()",
+			"file_type": "code",
+			"source_file": "scripts/generate-images.ts",
+			"source_location": "L122"
+		},
+		{
+			"id": "generate_images_getdeaths",
+			"label": "getDeaths()",
+			"file_type": "code",
+			"source_file": "scripts/generate-images.ts",
+			"source_location": "L137"
+		},
+		{
+			"id": "generate_images_getrandommemeformat",
+			"label": "getRandomMemeFormat()",
+			"file_type": "code",
+			"source_file": "scripts/generate-images.ts",
+			"source_location": "L164"
+		},
+		{
+			"id": "generate_images_generateincidentprompt",
+			"label": "generateIncidentPrompt()",
+			"file_type": "code",
+			"source_file": "scripts/generate-images.ts",
+			"source_location": "L171"
+		},
+		{
+			"id": "generate_images_extractoutcomesforincident",
+			"label": "extractOutcomesForIncident()",
+			"file_type": "code",
+			"source_file": "scripts/generate-images.ts",
+			"source_location": "L206"
+		},
+		{
+			"id": "generate_images_extracthosoutcomesbylabel",
+			"label": "extractHosOutcomesByLabel()",
+			"file_type": "code",
+			"source_file": "scripts/generate-images.ts",
+			"source_location": "L249"
+		},
+		{
+			"id": "generate_images_generateoutcomeprompt",
+			"label": "generateOutcomePrompt()",
+			"file_type": "code",
+			"source_file": "scripts/generate-images.ts",
+			"source_location": "L311"
+		},
+		{
+			"id": "generate_images_generatearchetypeprompt",
+			"label": "generateArchetypePrompt()",
+			"file_type": "code",
+			"source_file": "scripts/generate-images.ts",
+			"source_location": "L358"
+		},
+		{
+			"id": "generate_images_generatedeathprompt",
+			"label": "generateDeathPrompt()",
+			"file_type": "code",
+			"source_file": "scripts/generate-images.ts",
+			"source_location": "L401"
+		},
+		{
+			"id": "generate_images_exportpromptstomarkdown",
+			"label": "exportPromptsToMarkdown()",
+			"file_type": "code",
+			"source_file": "scripts/generate-images.ts",
+			"source_location": "L452"
+		},
+		{
+			"id": "generate_images_converttowebp",
+			"label": "convertToWebP()",
+			"file_type": "code",
+			"source_file": "scripts/generate-images.ts",
+			"source_location": "L526"
+		},
+		{
+			"id": "generate_images_generateandsaveimage",
+			"label": "generateAndSaveImage()",
+			"file_type": "code",
+			"source_file": "scripts/generate-images.ts",
+			"source_location": "L555"
+		},
+		{
+			"id": "generate_images_main",
+			"label": "main()",
+			"file_type": "code",
+			"source_file": "scripts/generate-images.ts",
+			"source_location": "L686"
+		}
+	],
+	"edges": [
+		{
+			"source": "scripts_generate_images_ts",
+			"target": "node_fs",
+			"relation": "imports_from",
+			"confidence": "EXTRACTED",
+			"source_file": "scripts/generate-images.ts",
+			"source_location": "L1",
+			"weight": 1.0
+		},
+		{
+			"source": "scripts_generate_images_ts",
+			"target": "node_path",
+			"relation": "imports_from",
+			"confidence": "EXTRACTED",
+			"source_file": "scripts/generate-images.ts",
+			"source_location": "L2",
+			"weight": 1.0
+		},
+		{
+			"source": "scripts_generate_images_ts",
+			"target": "promises",
+			"relation": "imports_from",
+			"confidence": "EXTRACTED",
+			"source_file": "scripts/generate-images.ts",
+			"source_location": "L3",
+			"weight": 1.0
+		},
+		{
+			"source": "scripts_generate_images_ts",
+			"target": "genai",
+			"relation": "imports_from",
+			"confidence": "EXTRACTED",
+			"source_file": "scripts/generate-images.ts",
+			"source_location": "L4",
+			"weight": 1.0
+		},
+		{
+			"source": "scripts_generate_images_ts",
+			"target": "sharp",
+			"relation": "imports_from",
+			"confidence": "EXTRACTED",
+			"source_file": "scripts/generate-images.ts",
+			"source_location": "L5",
+			"weight": 1.0
+		},
+		{
+			"source": "scripts_generate_images_ts",
+			"target": "scripts_data_archetypes",
+			"relation": "imports_from",
+			"confidence": "EXTRACTED",
+			"source_file": "scripts/generate-images.ts",
+			"source_location": "L6",
+			"weight": 1.0
+		},
+		{
+			"source": "scripts_generate_images_ts",
+			"target": "scripts_data_cards",
+			"relation": "imports_from",
+			"confidence": "EXTRACTED",
+			"source_file": "scripts/generate-images.ts",
+			"source_location": "L7",
+			"weight": 1.0
+		},
+		{
+			"source": "scripts_generate_images_ts",
+			"target": "scripts_data_cards_head_of_something",
+			"relation": "imports_from",
+			"confidence": "EXTRACTED",
+			"source_file": "scripts/generate-images.ts",
+			"source_location": "L8",
+			"weight": 1.0
+		},
+		{
+			"source": "scripts_generate_images_ts",
+			"target": "scripts_data_deathendings",
+			"relation": "imports_from",
+			"confidence": "EXTRACTED",
+			"source_file": "scripts/generate-images.ts",
+			"source_location": "L9",
+			"weight": 1.0
+		},
+		{
+			"source": "scripts_generate_images_ts",
+			"target": "scripts_data_imagemap",
+			"relation": "imports_from",
+			"confidence": "EXTRACTED",
+			"source_file": "scripts/generate-images.ts",
+			"source_location": "L10",
+			"weight": 1.0
+		},
+		{
+			"source": "scripts_generate_images_ts",
+			"target": "scripts_types",
+			"relation": "imports_from",
+			"confidence": "EXTRACTED",
+			"source_file": "scripts/generate-images.ts",
+			"source_location": "L11",
+			"weight": 1.0
+		},
+		{
+			"source": "scripts_generate_images_ts",
+			"target": "generate_images_parseargs",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "scripts/generate-images.ts",
+			"source_location": "L28",
+			"weight": 1.0
+		},
+		{
+			"source": "scripts_generate_images_ts",
+			"target": "generate_images_resolvescopedrolename",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "scripts/generate-images.ts",
+			"source_location": "L75",
+			"weight": 1.0
+		},
+		{
+			"source": "scripts_generate_images_ts",
+			"target": "generate_images_extractincidents",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "scripts/generate-images.ts",
+			"source_location": "L84",
+			"weight": 1.0
+		},
+		{
+			"source": "scripts_generate_images_ts",
+			"target": "generate_images_getarchetypes",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "scripts/generate-images.ts",
+			"source_location": "L122",
+			"weight": 1.0
+		},
+		{
+			"source": "scripts_generate_images_ts",
+			"target": "generate_images_getdeaths",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "scripts/generate-images.ts",
+			"source_location": "L137",
+			"weight": 1.0
+		},
+		{
+			"source": "scripts_generate_images_ts",
+			"target": "generate_images_getrandommemeformat",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "scripts/generate-images.ts",
+			"source_location": "L164",
+			"weight": 1.0
+		},
+		{
+			"source": "scripts_generate_images_ts",
+			"target": "generate_images_generateincidentprompt",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "scripts/generate-images.ts",
+			"source_location": "L171",
+			"weight": 1.0
+		},
+		{
+			"source": "scripts_generate_images_ts",
+			"target": "generate_images_extractoutcomesforincident",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "scripts/generate-images.ts",
+			"source_location": "L206",
+			"weight": 1.0
+		},
+		{
+			"source": "scripts_generate_images_ts",
+			"target": "generate_images_extracthosoutcomesbylabel",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "scripts/generate-images.ts",
+			"source_location": "L249",
+			"weight": 1.0
+		},
+		{
+			"source": "scripts_generate_images_ts",
+			"target": "generate_images_generateoutcomeprompt",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "scripts/generate-images.ts",
+			"source_location": "L311",
+			"weight": 1.0
+		},
+		{
+			"source": "scripts_generate_images_ts",
+			"target": "generate_images_generatearchetypeprompt",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "scripts/generate-images.ts",
+			"source_location": "L358",
+			"weight": 1.0
+		},
+		{
+			"source": "scripts_generate_images_ts",
+			"target": "generate_images_generatedeathprompt",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "scripts/generate-images.ts",
+			"source_location": "L401",
+			"weight": 1.0
+		},
+		{
+			"source": "scripts_generate_images_ts",
+			"target": "generate_images_exportpromptstomarkdown",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "scripts/generate-images.ts",
+			"source_location": "L452",
+			"weight": 1.0
+		},
+		{
+			"source": "scripts_generate_images_ts",
+			"target": "generate_images_converttowebp",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "scripts/generate-images.ts",
+			"source_location": "L526",
+			"weight": 1.0
+		},
+		{
+			"source": "scripts_generate_images_ts",
+			"target": "generate_images_generateandsaveimage",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "scripts/generate-images.ts",
+			"source_location": "L555",
+			"weight": 1.0
+		},
+		{
+			"source": "scripts_generate_images_ts",
+			"target": "generate_images_main",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "scripts/generate-images.ts",
+			"source_location": "L686",
+			"weight": 1.0
+		},
+		{
+			"source": "generate_images_extractincidents",
+			"target": "generate_images_resolvescopedrolename",
+			"relation": "calls",
+			"confidence": "EXTRACTED",
+			"source_file": "scripts/generate-images.ts",
+			"source_location": "L86",
+			"weight": 1.0
+		},
+		{
+			"source": "generate_images_generateincidentprompt",
+			"target": "generate_images_getrandommemeformat",
+			"relation": "calls",
+			"confidence": "EXTRACTED",
+			"source_file": "scripts/generate-images.ts",
+			"source_location": "L175",
+			"weight": 1.0
+		},
+		{
+			"source": "generate_images_generateoutcomeprompt",
+			"target": "generate_images_getrandommemeformat",
+			"relation": "calls",
+			"confidence": "EXTRACTED",
+			"source_file": "scripts/generate-images.ts",
+			"source_location": "L316",
+			"weight": 1.0
+		},
+		{
+			"source": "generate_images_generatearchetypeprompt",
+			"target": "generate_images_getrandommemeformat",
+			"relation": "calls",
+			"confidence": "EXTRACTED",
+			"source_file": "scripts/generate-images.ts",
+			"source_location": "L362",
+			"weight": 1.0
+		},
+		{
+			"source": "generate_images_generatedeathprompt",
+			"target": "generate_images_getrandommemeformat",
+			"relation": "calls",
+			"confidence": "EXTRACTED",
+			"source_file": "scripts/generate-images.ts",
+			"source_location": "L405",
+			"weight": 1.0
+		},
+		{
+			"source": "generate_images_generateandsaveimage",
+			"target": "generate_images_converttowebp",
+			"relation": "calls",
+			"confidence": "EXTRACTED",
+			"source_file": "scripts/generate-images.ts",
+			"source_location": "L651",
+			"weight": 1.0
+		},
+		{
+			"source": "generate_images_main",
+			"target": "generate_images_parseargs",
+			"relation": "calls",
+			"confidence": "EXTRACTED",
+			"source_file": "scripts/generate-images.ts",
+			"source_location": "L687",
+			"weight": 1.0
+		},
+		{
+			"source": "generate_images_main",
+			"target": "generate_images_extractincidents",
+			"relation": "calls",
+			"confidence": "EXTRACTED",
+			"source_file": "scripts/generate-images.ts",
+			"source_location": "L721",
+			"weight": 1.0
+		},
+		{
+			"source": "generate_images_main",
+			"target": "generate_images_extracthosoutcomesbylabel",
+			"relation": "calls",
+			"confidence": "EXTRACTED",
+			"source_file": "scripts/generate-images.ts",
+			"source_location": "L722",
+			"weight": 1.0
+		},
+		{
+			"source": "generate_images_main",
+			"target": "generate_images_getarchetypes",
+			"relation": "calls",
+			"confidence": "EXTRACTED",
+			"source_file": "scripts/generate-images.ts",
+			"source_location": "L723",
+			"weight": 1.0
+		},
+		{
+			"source": "generate_images_main",
+			"target": "generate_images_getdeaths",
+			"relation": "calls",
+			"confidence": "EXTRACTED",
+			"source_file": "scripts/generate-images.ts",
+			"source_location": "L724",
+			"weight": 1.0
+		},
+		{
+			"source": "generate_images_main",
+			"target": "generate_images_generateincidentprompt",
+			"relation": "calls",
+			"confidence": "EXTRACTED",
+			"source_file": "scripts/generate-images.ts",
+			"source_location": "L728",
+			"weight": 1.0
+		},
+		{
+			"source": "generate_images_main",
+			"target": "generate_images_generateoutcomeprompt",
+			"relation": "calls",
+			"confidence": "EXTRACTED",
+			"source_file": "scripts/generate-images.ts",
+			"source_location": "L733",
+			"weight": 1.0
+		},
+		{
+			"source": "generate_images_main",
+			"target": "generate_images_generatearchetypeprompt",
+			"relation": "calls",
+			"confidence": "EXTRACTED",
+			"source_file": "scripts/generate-images.ts",
+			"source_location": "L750",
+			"weight": 1.0
+		},
+		{
+			"source": "generate_images_main",
+			"target": "generate_images_generatedeathprompt",
+			"relation": "calls",
+			"confidence": "EXTRACTED",
+			"source_file": "scripts/generate-images.ts",
+			"source_location": "L765",
+			"weight": 1.0
+		},
+		{
+			"source": "generate_images_main",
+			"target": "generate_images_extractoutcomesforincident",
+			"relation": "calls",
+			"confidence": "EXTRACTED",
+			"source_file": "scripts/generate-images.ts",
+			"source_location": "L806",
+			"weight": 1.0
+		},
+		{
+			"source": "generate_images_main",
+			"target": "generate_images_exportpromptstomarkdown",
+			"relation": "calls",
+			"confidence": "EXTRACTED",
+			"source_file": "scripts/generate-images.ts",
+			"source_location": "L905",
+			"weight": 1.0
+		},
+		{
+			"source": "generate_images_main",
+			"target": "generate_images_generateandsaveimage",
+			"relation": "calls",
+			"confidence": "EXTRACTED",
+			"source_file": "scripts/generate-images.ts",
+			"source_location": "L923",
+			"weight": 1.0
+		}
+	]
+}

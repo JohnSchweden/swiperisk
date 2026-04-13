@@ -1,0 +1,180 @@
+{
+	"nodes": [
+		{
+			"id": "src_app_tsx",
+			"label": "App.tsx",
+			"file_type": "code",
+			"source_file": "src/App.tsx",
+			"source_location": "L1"
+		},
+		{
+			"id": "app_handlekeydown",
+			"label": "handleKeyDown()",
+			"file_type": "code",
+			"source_file": "src/App.tsx",
+			"source_location": "L463"
+		},
+		{
+			"id": "app_unlock",
+			"label": "unlock()",
+			"file_type": "code",
+			"source_file": "src/App.tsx",
+			"source_location": "L477"
+		}
+	],
+	"edges": [
+		{
+			"source": "src_app_tsx",
+			"target": "react",
+			"relation": "imports_from",
+			"confidence": "EXTRACTED",
+			"source_file": "src/App.tsx",
+			"source_location": "L1",
+			"weight": 1.0
+		},
+		{
+			"source": "src_app_tsx",
+			"target": "react",
+			"relation": "imports_from",
+			"confidence": "EXTRACTED",
+			"source_file": "src/App.tsx",
+			"source_location": "L2",
+			"weight": 1.0
+		},
+		{
+			"source": "src_app_tsx",
+			"target": "react",
+			"relation": "imports_from",
+			"confidence": "EXTRACTED",
+			"source_file": "src/App.tsx",
+			"source_location": "L3",
+			"weight": 1.0
+		},
+		{
+			"source": "src_app_tsx",
+			"target": "src_components_game",
+			"relation": "imports_from",
+			"confidence": "EXTRACTED",
+			"source_file": "src/App.tsx",
+			"source_location": "L12",
+			"weight": 1.0
+		},
+		{
+			"source": "src_app_tsx",
+			"target": "src_data",
+			"relation": "imports_from",
+			"confidence": "EXTRACTED",
+			"source_file": "src/App.tsx",
+			"source_location": "L33",
+			"weight": 1.0
+		},
+		{
+			"source": "src_app_tsx",
+			"target": "src_data_imagemap",
+			"relation": "imports_from",
+			"confidence": "EXTRACTED",
+			"source_file": "src/App.tsx",
+			"source_location": "L34",
+			"weight": 1.0
+		},
+		{
+			"source": "src_app_tsx",
+			"target": "src_hooks",
+			"relation": "imports_from",
+			"confidence": "EXTRACTED",
+			"source_file": "src/App.tsx",
+			"source_location": "L35",
+			"weight": 1.0
+		},
+		{
+			"source": "src_app_tsx",
+			"target": "src_lib_deck",
+			"relation": "imports_from",
+			"confidence": "EXTRACTED",
+			"source_file": "src/App.tsx",
+			"source_location": "L48",
+			"weight": 1.0
+		},
+		{
+			"source": "src_app_tsx",
+			"target": "src_lib_feedbackaudiochoice",
+			"relation": "imports_from",
+			"confidence": "EXTRACTED",
+			"source_file": "src/App.tsx",
+			"source_location": "L49",
+			"weight": 1.0
+		},
+		{
+			"source": "src_app_tsx",
+			"target": "src_services_kirkaudio",
+			"relation": "imports_from",
+			"confidence": "EXTRACTED",
+			"source_file": "src/App.tsx",
+			"source_location": "L53",
+			"weight": 1.0
+		},
+		{
+			"source": "src_app_tsx",
+			"target": "src_services_pressureaudio",
+			"relation": "imports_from",
+			"confidence": "EXTRACTED",
+			"source_file": "src/App.tsx",
+			"source_location": "L54",
+			"weight": 1.0
+		},
+		{
+			"source": "src_app_tsx",
+			"target": "src_services_voiceplayback",
+			"relation": "imports_from",
+			"confidence": "EXTRACTED",
+			"source_file": "src/App.tsx",
+			"source_location": "L60",
+			"weight": 1.0
+		},
+		{
+			"source": "src_app_tsx",
+			"target": "src_types",
+			"relation": "imports_from",
+			"confidence": "EXTRACTED",
+			"source_file": "src/App.tsx",
+			"source_location": "L61",
+			"weight": 1.0
+		},
+		{
+			"source": "src_app_tsx",
+			"target": "src_utils_haptic",
+			"relation": "imports_from",
+			"confidence": "EXTRACTED",
+			"source_file": "src/App.tsx",
+			"source_location": "L62",
+			"weight": 1.0
+		},
+		{
+			"source": "src_app_tsx",
+			"target": "src_utils_preload",
+			"relation": "imports_from",
+			"confidence": "EXTRACTED",
+			"source_file": "src/App.tsx",
+			"source_location": "L63",
+			"weight": 1.0
+		},
+		{
+			"source": "src_app_tsx",
+			"target": "app_handlekeydown",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "src/App.tsx",
+			"source_location": "L463",
+			"weight": 1.0
+		},
+		{
+			"source": "src_app_tsx",
+			"target": "app_unlock",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "src/App.tsx",
+			"source_location": "L477",
+			"weight": 1.0
+		}
+	]
+}

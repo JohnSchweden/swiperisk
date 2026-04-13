@@ -1,0 +1,165 @@
+{
+	"nodes": [
+		{
+			"id": "scripts_lib_audio_spec_ts",
+			"label": "audio-spec.ts",
+			"file_type": "code",
+			"source_file": "scripts/lib/audio-spec.ts",
+			"source_location": "L1"
+		},
+		{
+			"id": "audio_spec_derivefeedbackspecs",
+			"label": "deriveFeedbackSpecs()",
+			"file_type": "code",
+			"source_file": "scripts/lib/audio-spec.ts",
+			"source_location": "L38"
+		},
+		{
+			"id": "audio_spec_derivedeathspecs",
+			"label": "deriveDeathSpecs()",
+			"file_type": "code",
+			"source_file": "scripts/lib/audio-spec.ts",
+			"source_location": "L128"
+		},
+		{
+			"id": "audio_spec_getfolderforpersonality",
+			"label": "getFolderForPersonality()",
+			"file_type": "code",
+			"source_file": "scripts/lib/audio-spec.ts",
+			"source_location": "L174"
+		},
+		{
+			"id": "audio_spec_getfeedbacksubfolder",
+			"label": "getFeedbackSubfolder()",
+			"file_type": "code",
+			"source_file": "scripts/lib/audio-spec.ts",
+			"source_location": "L192"
+		},
+		{
+			"id": "audio_spec_getvoiceforpersonality",
+			"label": "getVoiceForPersonality()",
+			"file_type": "code",
+			"source_file": "scripts/lib/audio-spec.ts",
+			"source_location": "L210"
+		}
+	],
+	"edges": [
+		{
+			"source": "scripts_lib_audio_spec_ts",
+			"target": "node_path",
+			"relation": "imports_from",
+			"confidence": "EXTRACTED",
+			"source_file": "scripts/lib/audio-spec.ts",
+			"source_location": "L1",
+			"weight": 1.0
+		},
+		{
+			"source": "scripts_lib_audio_spec_ts",
+			"target": "scripts_lib_src_data_deathendings",
+			"relation": "imports_from",
+			"confidence": "EXTRACTED",
+			"source_file": "scripts/lib/audio-spec.ts",
+			"source_location": "L2",
+			"weight": 1.0
+		},
+		{
+			"source": "scripts_lib_audio_spec_ts",
+			"target": "scripts_lib_src_lib_slugify",
+			"relation": "imports_from",
+			"confidence": "EXTRACTED",
+			"source_file": "scripts/lib/audio-spec.ts",
+			"source_location": "L3",
+			"weight": 1.0
+		},
+		{
+			"source": "scripts_lib_audio_spec_ts",
+			"target": "scripts_lib_src_types",
+			"relation": "imports_from",
+			"confidence": "EXTRACTED",
+			"source_file": "scripts/lib/audio-spec.ts",
+			"source_location": "L4",
+			"weight": 1.0
+		},
+		{
+			"source": "scripts_lib_audio_spec_ts",
+			"target": "scripts_lib_src_types",
+			"relation": "imports_from",
+			"confidence": "EXTRACTED",
+			"source_file": "scripts/lib/audio-spec.ts",
+			"source_location": "L5",
+			"weight": 1.0
+		},
+		{
+			"source": "scripts_lib_audio_spec_ts",
+			"target": "audio_spec_derivefeedbackspecs",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "scripts/lib/audio-spec.ts",
+			"source_location": "L38",
+			"weight": 1.0
+		},
+		{
+			"source": "scripts_lib_audio_spec_ts",
+			"target": "audio_spec_derivedeathspecs",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "scripts/lib/audio-spec.ts",
+			"source_location": "L128",
+			"weight": 1.0
+		},
+		{
+			"source": "scripts_lib_audio_spec_ts",
+			"target": "audio_spec_getfolderforpersonality",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "scripts/lib/audio-spec.ts",
+			"source_location": "L174",
+			"weight": 1.0
+		},
+		{
+			"source": "scripts_lib_audio_spec_ts",
+			"target": "audio_spec_getfeedbacksubfolder",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "scripts/lib/audio-spec.ts",
+			"source_location": "L192",
+			"weight": 1.0
+		},
+		{
+			"source": "scripts_lib_audio_spec_ts",
+			"target": "audio_spec_getvoiceforpersonality",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "scripts/lib/audio-spec.ts",
+			"source_location": "L210",
+			"weight": 1.0
+		},
+		{
+			"source": "audio_spec_derivefeedbackspecs",
+			"target": "audio_spec_getfolderforpersonality",
+			"relation": "calls",
+			"confidence": "EXTRACTED",
+			"source_file": "scripts/lib/audio-spec.ts",
+			"source_location": "L78",
+			"weight": 1.0
+		},
+		{
+			"source": "audio_spec_derivefeedbackspecs",
+			"target": "audio_spec_getfeedbacksubfolder",
+			"relation": "calls",
+			"confidence": "EXTRACTED",
+			"source_file": "scripts/lib/audio-spec.ts",
+			"source_location": "L80",
+			"weight": 1.0
+		},
+		{
+			"source": "audio_spec_derivedeathspecs",
+			"target": "audio_spec_getfolderforpersonality",
+			"relation": "calls",
+			"confidence": "EXTRACTED",
+			"source_file": "scripts/lib/audio-spec.ts",
+			"source_location": "L160",
+			"weight": 1.0
+		}
+	]
+}

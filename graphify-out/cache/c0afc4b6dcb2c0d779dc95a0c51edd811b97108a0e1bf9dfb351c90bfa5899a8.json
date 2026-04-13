@@ -1,0 +1,349 @@
+{
+	"nodes": [
+		{
+			"id": "lib_meme_downloader_ts",
+			"label": "meme-downloader.ts",
+			"file_type": "code",
+			"source_file": "lib/meme-downloader.ts",
+			"source_location": "L1"
+		},
+		{
+			"id": "meme_downloader_downloadimage",
+			"label": "downloadImage()",
+			"file_type": "code",
+			"source_file": "lib/meme-downloader.ts",
+			"source_location": "L84"
+		},
+		{
+			"id": "meme_downloader_downloadmeme",
+			"label": "downloadMeme()",
+			"file_type": "code",
+			"source_file": "lib/meme-downloader.ts",
+			"source_location": "L119"
+		},
+		{
+			"id": "meme_downloader_getdeathtemplate",
+			"label": "getDeathTemplate()",
+			"file_type": "code",
+			"source_file": "lib/meme-downloader.ts",
+			"source_location": "L177"
+		},
+		{
+			"id": "meme_downloader_getarchetypetemplate",
+			"label": "getArchetypeTemplate()",
+			"file_type": "code",
+			"source_file": "lib/meme-downloader.ts",
+			"source_location": "L198"
+		},
+		{
+			"id": "meme_downloader_getdeathmemepath",
+			"label": "getDeathMemePath()",
+			"file_type": "code",
+			"source_file": "lib/meme-downloader.ts",
+			"source_location": "L219"
+		},
+		{
+			"id": "meme_downloader_getarchetypememepath",
+			"label": "getArchetypeMemePath()",
+			"file_type": "code",
+			"source_file": "lib/meme-downloader.ts",
+			"source_location": "L231"
+		},
+		{
+			"id": "meme_downloader_getdeathgiftemplate",
+			"label": "getDeathGifTemplate()",
+			"file_type": "code",
+			"source_file": "lib/meme-downloader.ts",
+			"source_location": "L243"
+		},
+		{
+			"id": "meme_downloader_getarchetypegiftemplate",
+			"label": "getArchetypeGifTemplate()",
+			"file_type": "code",
+			"source_file": "lib/meme-downloader.ts",
+			"source_location": "L259"
+		},
+		{
+			"id": "meme_downloader_getdeathgifpath",
+			"label": "getDeathGifPath()",
+			"file_type": "code",
+			"source_file": "lib/meme-downloader.ts",
+			"source_location": "L275"
+		},
+		{
+			"id": "meme_downloader_getarchetypegifpath",
+			"label": "getArchetypeGifPath()",
+			"file_type": "code",
+			"source_file": "lib/meme-downloader.ts",
+			"source_location": "L287"
+		},
+		{
+			"id": "meme_downloader_getfeedbackoutcometemplate",
+			"label": "getFeedbackOutcomeTemplate()",
+			"file_type": "code",
+			"source_file": "lib/meme-downloader.ts",
+			"source_location": "L303"
+		},
+		{
+			"id": "meme_downloader_getfeedbackoutcomememepath",
+			"label": "getFeedbackOutcomeMemePath()",
+			"file_type": "code",
+			"source_file": "lib/meme-downloader.ts",
+			"source_location": "L313"
+		}
+	],
+	"edges": [
+		{
+			"source": "lib_meme_downloader_ts",
+			"target": "node_fs",
+			"relation": "imports_from",
+			"confidence": "EXTRACTED",
+			"source_file": "lib/meme-downloader.ts",
+			"source_location": "L1",
+			"weight": 1.0
+		},
+		{
+			"source": "lib_meme_downloader_ts",
+			"target": "node_http",
+			"relation": "imports_from",
+			"confidence": "EXTRACTED",
+			"source_file": "lib/meme-downloader.ts",
+			"source_location": "L2",
+			"weight": 1.0
+		},
+		{
+			"source": "lib_meme_downloader_ts",
+			"target": "node_https",
+			"relation": "imports_from",
+			"confidence": "EXTRACTED",
+			"source_file": "lib/meme-downloader.ts",
+			"source_location": "L3",
+			"weight": 1.0
+		},
+		{
+			"source": "lib_meme_downloader_ts",
+			"target": "node_path",
+			"relation": "imports_from",
+			"confidence": "EXTRACTED",
+			"source_file": "lib/meme-downloader.ts",
+			"source_location": "L4",
+			"weight": 1.0
+		},
+		{
+			"source": "lib_meme_downloader_ts",
+			"target": "lib_data_templates_meme_templates_json",
+			"relation": "imports_from",
+			"confidence": "EXTRACTED",
+			"source_file": "lib/meme-downloader.ts",
+			"source_location": "L5",
+			"weight": 1.0
+		},
+		{
+			"source": "lib_meme_downloader_ts",
+			"target": "meme_downloader_downloadimage",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "lib/meme-downloader.ts",
+			"source_location": "L84",
+			"weight": 1.0
+		},
+		{
+			"source": "lib_meme_downloader_ts",
+			"target": "meme_downloader_downloadmeme",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "lib/meme-downloader.ts",
+			"source_location": "L119",
+			"weight": 1.0
+		},
+		{
+			"source": "lib_meme_downloader_ts",
+			"target": "meme_downloader_getdeathtemplate",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "lib/meme-downloader.ts",
+			"source_location": "L177",
+			"weight": 1.0
+		},
+		{
+			"source": "lib_meme_downloader_ts",
+			"target": "meme_downloader_getarchetypetemplate",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "lib/meme-downloader.ts",
+			"source_location": "L198",
+			"weight": 1.0
+		},
+		{
+			"source": "lib_meme_downloader_ts",
+			"target": "meme_downloader_getdeathmemepath",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "lib/meme-downloader.ts",
+			"source_location": "L219",
+			"weight": 1.0
+		},
+		{
+			"source": "lib_meme_downloader_ts",
+			"target": "meme_downloader_getarchetypememepath",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "lib/meme-downloader.ts",
+			"source_location": "L231",
+			"weight": 1.0
+		},
+		{
+			"source": "lib_meme_downloader_ts",
+			"target": "meme_downloader_getdeathgiftemplate",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "lib/meme-downloader.ts",
+			"source_location": "L243",
+			"weight": 1.0
+		},
+		{
+			"source": "lib_meme_downloader_ts",
+			"target": "meme_downloader_getarchetypegiftemplate",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "lib/meme-downloader.ts",
+			"source_location": "L259",
+			"weight": 1.0
+		},
+		{
+			"source": "lib_meme_downloader_ts",
+			"target": "meme_downloader_getdeathgifpath",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "lib/meme-downloader.ts",
+			"source_location": "L275",
+			"weight": 1.0
+		},
+		{
+			"source": "lib_meme_downloader_ts",
+			"target": "meme_downloader_getarchetypegifpath",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "lib/meme-downloader.ts",
+			"source_location": "L287",
+			"weight": 1.0
+		},
+		{
+			"source": "lib_meme_downloader_ts",
+			"target": "meme_downloader_getfeedbackoutcometemplate",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "lib/meme-downloader.ts",
+			"source_location": "L303",
+			"weight": 1.0
+		},
+		{
+			"source": "lib_meme_downloader_ts",
+			"target": "meme_downloader_getfeedbackoutcomememepath",
+			"relation": "contains",
+			"confidence": "EXTRACTED",
+			"source_file": "lib/meme-downloader.ts",
+			"source_location": "L313",
+			"weight": 1.0
+		},
+		{
+			"source": "meme_downloader_downloadmeme",
+			"target": "meme_downloader_downloadimage",
+			"relation": "calls",
+			"confidence": "EXTRACTED",
+			"source_file": "lib/meme-downloader.ts",
+			"source_location": "L164",
+			"weight": 1.0
+		},
+		{
+			"source": "meme_downloader_getdeathmemepath",
+			"target": "meme_downloader_getdeathtemplate",
+			"relation": "calls",
+			"confidence": "EXTRACTED",
+			"source_file": "lib/meme-downloader.ts",
+			"source_location": "L222",
+			"weight": 1.0
+		},
+		{
+			"source": "meme_downloader_getdeathmemepath",
+			"target": "meme_downloader_downloadmeme",
+			"relation": "calls",
+			"confidence": "EXTRACTED",
+			"source_file": "lib/meme-downloader.ts",
+			"source_location": "L225",
+			"weight": 1.0
+		},
+		{
+			"source": "meme_downloader_getarchetypememepath",
+			"target": "meme_downloader_getarchetypetemplate",
+			"relation": "calls",
+			"confidence": "EXTRACTED",
+			"source_file": "lib/meme-downloader.ts",
+			"source_location": "L234",
+			"weight": 1.0
+		},
+		{
+			"source": "meme_downloader_getarchetypememepath",
+			"target": "meme_downloader_downloadmeme",
+			"relation": "calls",
+			"confidence": "EXTRACTED",
+			"source_file": "lib/meme-downloader.ts",
+			"source_location": "L237",
+			"weight": 1.0
+		},
+		{
+			"source": "meme_downloader_getdeathgifpath",
+			"target": "meme_downloader_getdeathgiftemplate",
+			"relation": "calls",
+			"confidence": "EXTRACTED",
+			"source_file": "lib/meme-downloader.ts",
+			"source_location": "L278",
+			"weight": 1.0
+		},
+		{
+			"source": "meme_downloader_getdeathgifpath",
+			"target": "meme_downloader_downloadmeme",
+			"relation": "calls",
+			"confidence": "EXTRACTED",
+			"source_file": "lib/meme-downloader.ts",
+			"source_location": "L281",
+			"weight": 1.0
+		},
+		{
+			"source": "meme_downloader_getarchetypegifpath",
+			"target": "meme_downloader_getarchetypegiftemplate",
+			"relation": "calls",
+			"confidence": "EXTRACTED",
+			"source_file": "lib/meme-downloader.ts",
+			"source_location": "L290",
+			"weight": 1.0
+		},
+		{
+			"source": "meme_downloader_getarchetypegifpath",
+			"target": "meme_downloader_downloadmeme",
+			"relation": "calls",
+			"confidence": "EXTRACTED",
+			"source_file": "lib/meme-downloader.ts",
+			"source_location": "L293",
+			"weight": 1.0
+		},
+		{
+			"source": "meme_downloader_getfeedbackoutcomememepath",
+			"target": "meme_downloader_getfeedbackoutcometemplate",
+			"relation": "calls",
+			"confidence": "EXTRACTED",
+			"source_file": "lib/meme-downloader.ts",
+			"source_location": "L316",
+			"weight": 1.0
+		},
+		{
+			"source": "meme_downloader_getfeedbackoutcomememepath",
+			"target": "meme_downloader_downloadmeme",
+			"relation": "calls",
+			"confidence": "EXTRACTED",
+			"source_file": "lib/meme-downloader.ts",
+			"source_location": "L319",
+			"weight": 1.0
+		}
+	]
+}

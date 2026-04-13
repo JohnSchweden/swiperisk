@@ -37,7 +37,8 @@ export const IntroScreen: React.FC<IntroScreenProps> = ({ onStart }) => {
 
 			{/* Notice — moved to top */}
 			<p className="max-w-xl text-[#B8962E] mono text-sm md:text-base mb-4 md:mb-6 px-4 text-center font-bold">
-				[NOTICE: Built for people who hate f*cking boring compliance training]
+				[NOTICE: F*ck mandatory slides. Stress-test the calls you&apos;d
+				normally sign off on]
 			</p>
 
 			{/* Main Hook Block */}

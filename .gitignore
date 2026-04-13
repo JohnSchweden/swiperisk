@@ -31,6 +31,10 @@ playwright-report/
 # Reports
 reports/
 
+# Graphify generated output
+graphify-repo/
+graphify-out/
+
 # Claude Code auto-memory
 .claude/auto-memory/dirty-files
 

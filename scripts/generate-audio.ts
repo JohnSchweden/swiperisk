@@ -86,7 +86,7 @@ function validateArgs(args: CliArgs): void {
 /**
  * Map CLI personality names to enum values
  */
-function personalityToCLIName(
+function _personalityToCLIName(
 	personality: PersonalityType,
 ): "roaster" | "zen" | "lovebomber" {
 	switch (personality) {
@@ -152,7 +152,7 @@ function loadCardDecks(): Record<string, Card[]> {
 				module.CARDS ||
 				module.default?.CARDS ||
 				Object.values(module).find(
-					(v: any) => Array.isArray(v) && v.length > 0,
+					(v: unknown) => Array.isArray(v) && v.length > 0,
 				);
 
 			if (cardsExport && Array.isArray(cardsExport)) {
@@ -187,7 +187,7 @@ function getDeck(deckName: string): Card[] {
  */
 function printDryRun(
 	specs: (FeedbackAudioSpec | DeathAudioSpec)[],
-	args: CliArgs,
+	_args: CliArgs,
 ): void {
 	console.log(`\n=== DRY RUN: ${specs.length} files would be generated ===\n`);
 
@@ -257,7 +257,10 @@ async function generateAudio(
 /**
  * Load and process core personality audio (onboarding, victory, failure)
  */
-async function generateCoreAudio(_client: any, _args: CliArgs): Promise<void> {
+async function generateCoreAudio(
+	_client: unknown,
+	_args: CliArgs,
+): Promise<void> {
 	console.log("\n=== Generating Core Personality Audio ===\n");
 	console.log(
 		"Core audio generation not yet implemented. Use generate-all.ts for now.",
@@ -286,7 +289,7 @@ async function main(): Promise<void> {
 		let specs: (FeedbackAudioSpec | DeathAudioSpec)[] = [];
 
 		if (args.type === "feedback") {
-			const deck = getDeck(args.deck!);
+			const deck = getDeck(args.deck ?? "");
 			const personalities = getPersonalitiesForGeneration(args.personality);
 			const cardIds = args.ids
 				? args.ids.split(",").map((id) => id.trim())

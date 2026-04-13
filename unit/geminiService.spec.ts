@@ -35,10 +35,12 @@ describe("Gemini Service", () => {
 		};
 
 		vi.stubGlobal("fetch", mockFetch);
-		vi.stubGlobal(
-			"AudioContext",
-			vi.fn(() => mockAudioContext),
-		);
+		// Create constructor that returns mock when called with new
+		// eslint-disable-next-line @typescript-eslint/no-explicit-any
+		const AudioContextConstructor = function (this: any) {
+			Object.assign(this, mockAudioContext);
+		};
+		vi.stubGlobal("AudioContext", AudioContextConstructor);
 
 		vi.mock("../src/services/radioEffect", () => ({
 			createRadioSession: vi.fn(() => ({

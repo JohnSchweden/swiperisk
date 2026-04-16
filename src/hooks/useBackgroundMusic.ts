@@ -16,8 +16,12 @@ const STORAGE = {
 	SESSION_TIME: "k-maru-bgm-session-time",
 } as const;
 
+/** Default BGM volume on desktop viewports (>= 768px width) */
+const VOLUME_DEFAULT_DESKTOP = 0.2;
+/** Default BGM volume on mobile viewports (< 768px width) */
+const VOLUME_DEFAULT_MOBILE = 0.15;
+
 const VOLUME = {
-	DEFAULT: 0.2,
 	MIN: 0,
 	MAX: 1,
 	STEP: 0.05,
@@ -37,6 +41,13 @@ function voiceDuckMultForViewport(): number {
 	return window.matchMedia(VOICE_DUCK_MOBILE_MQ).matches
 		? VOICE_DUCK_MULT_MOBILE
 		: VOICE_DUCK_MULT_DESKTOP;
+}
+
+function defaultVolumeForViewport(): number {
+	if (typeof window === "undefined") return VOLUME_DEFAULT_DESKTOP;
+	return window.matchMedia(VOICE_DUCK_MOBILE_MQ).matches
+		? VOLUME_DEFAULT_MOBILE
+		: VOLUME_DEFAULT_DESKTOP;
 }
 
 function safeParse<T>(
@@ -92,7 +103,7 @@ function readStoredVolume(): number {
 			const n = parseFloat(raw);
 			return Number.isFinite(n) ? clamp(n, VOLUME.MIN, VOLUME.MAX) : null;
 		},
-		VOLUME.DEFAULT,
+		defaultVolumeForViewport(),
 	);
 }
 
@@ -288,10 +299,35 @@ export function useBackgroundMusic() {
 		if (!el) return;
 		if (!enabled) {
 			el.pause();
+			// On mobile, iOS may suspend the AudioContext when the element pauses.
+			// Re-resume immediately so the voice AudioContext (separate) is not affected.
+			// BGM gain is already 0 when suspended, so re-resuming BGM ctx is harmless.
+			const ctx = bgmCtxRef.current;
+			if (ctx && ctx.state === "suspended") {
+				void ctx.resume().catch(() => {});
+			}
 			return;
 		}
 		tryPlay();
 	}, [enabled, tryPlay]);
+
+	// Mobile keepalive: if BGM is disabled/paused, iOS may auto-suspend the BGM
+	// AudioContext. Resuming it does NOT restart playback (element is paused)
+	// but keeps the AudioSession alive so the voice AudioContext stays running.
+	useEffect(() => {
+		if (enabled) return; // Only needed when BGM is paused
+		const ctx = bgmCtxRef.current;
+		if (!ctx) return;
+		const onStateChange = () => {
+			if (ctx.state === "suspended" && !enabledRef.current) {
+				void ctx.resume().catch(() => {});
+			}
+		};
+		ctx.addEventListener("statechange", onStateChange);
+		// Also resume immediately if already suspended
+		if (ctx.state === "suspended") void ctx.resume().catch(() => {});
+		return () => ctx.removeEventListener("statechange", onStateChange);
+	}, [enabled]);
 
 	useEffect(() => {
 		userVolumeRef.current = userVolume;
@@ -399,6 +435,7 @@ export function useBackgroundMusic() {
 	// iOS always blocks autoplay — first touch unmutes and starts music.
 	// Desktop: AudioContext starts suspended even when el.play() succeeds; resume it on
 	// first mousemove/keydown so music plays without requiring a click.
+	// iOS note: touchend (not touchstart) counts as user activation during scroll gestures.
 	useEffect(() => {
 		const unlock = () => {
 			const el = audioRef.current;
@@ -415,7 +452,7 @@ export function useBackgroundMusic() {
 				tryPlay();
 			}
 		};
-		document.addEventListener("touchstart", unlock, {
+		document.addEventListener("touchend", unlock, {
 			capture: true,
 			passive: true,
 		});
@@ -429,7 +466,7 @@ export function useBackgroundMusic() {
 		});
 		document.addEventListener("keydown", unlock, { capture: true, once: true });
 		return () => {
-			document.removeEventListener("touchstart", unlock, { capture: true });
+			document.removeEventListener("touchend", unlock, { capture: true });
 			document.removeEventListener("click", unlock, { capture: true });
 			document.removeEventListener("pointerdown", unlock, { capture: true });
 			document.removeEventListener("keydown", unlock, { capture: true });

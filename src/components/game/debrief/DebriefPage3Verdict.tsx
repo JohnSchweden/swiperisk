@@ -16,6 +16,7 @@ import {
 	encodeLinkedInShareUrl,
 	formatShareText,
 	getShareUrl,
+	openLinkedInShare,
 } from "../../../utils/linkedin-share";
 import { ImageWithFallback } from "../../ImageWithFallback";
 import LayoutShell from "../../LayoutShell";
@@ -231,7 +232,7 @@ export const DebriefPage3Verdict: React.FC<DebriefPage3VerdictProps> = ({
 
 				{/* LinkedIn share hint */}
 				<p className="text-xs text-slate-500 mb-4 text-center px-2">
-					Copy the post text first — LinkedIn usually shows the site&apos;s
+					Copy the post text first: LinkedIn usually shows the site&apos;s
 					static preview, not text from this screen.
 				</p>
 
@@ -242,7 +243,7 @@ export const DebriefPage3Verdict: React.FC<DebriefPage3VerdictProps> = ({
 							type="button"
 							onClick={handleCopy}
 							disabled={!shareText}
-							className={`${BTN_DEBRIEF_NAV} flex h-[40px] md:h-[48px] items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed`}
+							className={`${BTN_DEBRIEF_NAV} flex h-[44px] md:h-[48px] items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed`}
 							aria-label="Copy share text to clipboard"
 						>
 							<i className="fa-regular fa-copy text-lg leading-none"></i>
@@ -250,16 +251,18 @@ export const DebriefPage3Verdict: React.FC<DebriefPage3VerdictProps> = ({
 						</button>
 					</div>
 					<div className="flex w-full justify-center">
-						<a
-							href={linkedInShareUrl ?? undefined}
-							target="_self"
-							rel="noopener noreferrer"
-							className={`${BTN_DEBRIEF_NAV} flex h-[40px] md:h-[48px] items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed`}
+						<button
+							type="button"
+							onClick={() => {
+								if (linkedInShareUrl) openLinkedInShare(linkedInShareUrl);
+							}}
+							disabled={!linkedInShareUrl}
+							className={`${BTN_DEBRIEF_NAV} flex h-[44px] md:h-[48px] items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed`}
 							aria-label="Share on LinkedIn"
 						>
 							<i className="fa-brands fa-linkedin text-lg leading-none"></i>
 							2. Share on LinkedIn
-						</a>
+						</button>
 					</div>
 				</div>
 

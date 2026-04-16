@@ -2,16 +2,16 @@
 gsd_state_version: 1.0
 milestone: v1.2
 milestone_name: Kobayashi Maru — AI Governance Simulator
-current_phase: 26-preload-outcome-ending-assets
-current_plan: 02 (complete — Phase 26 complete)
+current_phase: 27-mobile-ux-fixes-audio-isolation-button-heights-linkedin-share-copy-link-debrief-text-uiux-sizing-audit
+current_plan: 01 (complete)
 status: ready
-last_updated: "2026-04-11T16:55:00.000Z"
-last_activity: "2026-04-11 - Completed Phase 26: Preload outcome & ending assets — 2/2 plans, 5 commits, 8 files modified"
+last_updated: "2026-04-16T22:02:00.000Z"
+last_activity: "2026-04-16 - Completed Phase 27 Plan 01: Audio isolation, volume defaults, scroll unlock — 3 tasks, 1 commit, 1 file modified"
 progress:
   total_phases: 28
   completed_phases: 18
   total_plans: 137
-  completed_plans: 121
+  completed_plans: 122
 ---
 
 # Session State
@@ -23,12 +23,17 @@ See: .planning/PROJECT.md
 ## Position
 
 **Milestone:** v1.2 Kobayashi Maru — AI Governance Simulator
-**Current phase:** 26-preload-outcome-ending-assets
-**Current plan:** 02 (complete — Phase 26 complete)
-**Status:** Ready for next phase
+**Current phase:** 27-mobile-ux-fixes-audio-isolation-button-heights-linkedin-share-copy-link-debrief-text-uiux-sizing-audit
+**Current plan:** 01 (complete)
+**Status:** Ready for Phase 27 Plan 02
 
 ## Session Log
 
+- 2026-04-16: Completed Phase 27 Plan 01: Audio isolation, volume defaults, scroll unlock — 3 tasks, 1 commit, 1 file modified
+  - Task 1: Viewport-aware BGM defaults (15% mobile, 20% desktop) via matchMedia
+  - Task 2: BGM pause isolation with AudioContext resume keepalive on iOS
+  - Task 3: iOS scroll unlock via touchend (not touchstart)
+  - Verification: typecheck clean, lint clean, 168 smoke tests passed
 - 2026-04-11: Completed Phase 26: Preload outcome & ending assets — 2/2 plans, 5 commits, 8 files modified
   - 26-01: preloadAsset utility + CardStack outcome preloading + App.tsx death/archetype preloading
   - 26-02: ImageWithFallback loading prop + loading="eager" on 4 above-fold image call sites
@@ -176,6 +181,9 @@ See: .planning/PROJECT.md
 - [Phase 25-hos-vera-alignment]: All roaster strings ≤20 words for punchy delivery
 - [Phase 25-hos-vera-alignment]: Applied optional trigger minimize-risks-under-oath: "Nice" → "Lovely" to avoid weak ironic punchline
 - [Phase 25-hos-vera-alignment]: Audio spec: Gemini 2.5 Flash TTS with Kore voice, MP3 128k + Opus 96k
+- [Phase 27-01]: BGM viewport-aware defaults via matchMedia (not userAgent) for accurate mobile/desktop detection
+- [Phase 27-01]: BGM pause isolation: resume AudioContext after element pause to keep voice AudioContext alive on iOS (separate Web Audio context architecture)
+- [Phase 27-01]: iOS scroll unlock: touchend (not touchstart) satisfies user activation policy during scroll gestures
 
 ## Key Metrics
 

@@ -198,6 +198,8 @@ export function useBackgroundMusic() {
 
 	const syncVolumeUnlessRamping = useCallback(() => {
 		if (volumeRampActiveRef.current) return;
+		// When BGM is disabled, gain is intentionally 0 — don't overwrite it.
+		if (!enabledRef.current) return;
 		applyDuckedVolume(
 			gainRef.current,
 			userVolumeRef.current,
@@ -298,15 +300,25 @@ export function useBackgroundMusic() {
 		const el = audioRef.current;
 		if (!el) return;
 		if (!enabled) {
-			el.pause();
+			// Silence via gain=0 instead of el.pause(). Calling el.pause() on an element
+			// connected via createMediaElementSource() triggers an iOS audio session
+			// interruption, which suspends ALL AudioContexts on the page — including the
+			// voice AudioContext. Setting gain to 0 is inaudible but keeps the pipeline
+			// alive so voice continues to work when BGM is "off".
+			cancelVolumeRamp();
+			if (gainRef.current) gainRef.current.gain.value = 0;
 			return;
 		}
-		tryPlay();
-	}, [enabled, tryPlay]);
+		// Re-enable: restore correct volume and play if the element never started.
+		syncVolumeUnlessRamping();
+		if (el.paused) tryPlay();
+	}, [enabled, tryPlay, cancelVolumeRamp, syncVolumeUnlessRamping]);
 
 	useEffect(() => {
 		userVolumeRef.current = userVolume;
 		cancelVolumeRamp();
+		// Don't restore gain when BGM is disabled (gain is intentionally 0).
+		if (!enabledRef.current) return;
 		applyDuckedVolume(
 			gainRef.current,
 			userVolume,
@@ -318,6 +330,8 @@ export function useBackgroundMusic() {
 	useEffect(() => {
 		voiceDuckingRef.current = voiceDucking;
 		if (!gainRef.current) return;
+		// BGM is disabled (gain=0) — ducking has nothing to act on.
+		if (!enabledRef.current) return;
 		if (voiceDucking) {
 			cancelVolumeRamp();
 			applyDuckedVolume(
@@ -406,77 +420,56 @@ export function useBackgroundMusic() {
 		return () => el.removeEventListener("canplaythrough", kick);
 	}, [tryPlay]);
 
-	// Autoplay unlock: resume AudioContext and unmute/play on first user interaction.
-	// iOS always blocks autoplay — first touch unmutes and starts music.
-	// Desktop: AudioContext starts suspended even when el.play() succeeds; resume it on
-	// first pointerdown/keydown so music plays without requiring a click.
-	//
-	// Two-phase iOS unlock:
-	// - touchstart: prime the AudioContext (resume ctx) at gesture START — iOS requires
-	//   this to happen as early as possible in the gesture chain for card swipes to work.
-	// - touchend: unmute + play after the gesture ends (avoids playing mid-swipe).
-	// Both events together cover taps AND swipes reliably.
+	// Autoplay unlock: boot uses muted el.play() (allowed without gesture). First gesture
+	// only resumes AudioContext and unmutes — no el.play() from the gesture (avoids iOS
+	// rejecting play() during scroll-swipes). touchstart fires at scroll-swipe start.
+	// "interrupted" state handled alongside "suspended" (howler.js PR #928).
 	useEffect(() => {
-		// Phase 1: prime AudioContext on touchstart so it's ready by touchend.
-		const primeCtx = () => {
+		const unlock = () => {
 			const ctx = bgmCtxRef.current;
-			if (ctx?.state === "suspended") {
+			if (
+				ctx?.state === "suspended" ||
+				(ctx?.state as string) === "interrupted"
+			) {
 				void ctx.resume().catch(() => {});
 			}
-		};
-
-		// Phase 2: unmute + play after gesture ends.
-		const unlock = () => {
 			const el = audioRef.current;
 			if (!el || !enabledRef.current) return;
-			const ctx = bgmCtxRef.current;
-			if (ctx?.state === "suspended") {
-				void ctx.resume();
-			}
-			if (el.muted) {
-				el.muted = false;
-				syncVolumeUnlessRamping();
-			}
+			if (!el.muted) return;
+			el.muted = false;
+			syncVolumeUnlessRamping();
 			if (el.paused) {
-				tryPlay();
+				void el
+					.play()
+					.catch((e) =>
+						logAudioError(
+							"post-unlock play failed",
+							e instanceof Error ? e : new Error(String(e)),
+						),
+					);
 			}
 		};
 
-		document.addEventListener("touchstart", primeCtx, {
-			capture: true,
-			passive: true,
-		});
-		document.addEventListener("touchend", unlock, {
+		document.addEventListener("touchstart", unlock, {
 			capture: true,
 			passive: true,
 		});
 		document.addEventListener("click", unlock, { capture: true });
-		// Desktop: resume on first pointer/keyboard interaction (no click required).
-		// pointerdown fires before click and IS a recognized Chrome activation gesture
-		// (mousemove is NOT — it doesn't satisfy Chrome's autoplay policy on production).
-		document.addEventListener("pointerdown", unlock, {
-			capture: true,
-			once: true,
-		});
-		document.addEventListener("keydown", unlock, { capture: true, once: true });
+		document.addEventListener("pointerdown", unlock, { capture: true });
+		document.addEventListener("keydown", unlock, { capture: true });
 		return () => {
-			document.removeEventListener("touchstart", primeCtx, { capture: true });
-			document.removeEventListener("touchend", unlock, { capture: true });
+			document.removeEventListener("touchstart", unlock, { capture: true });
 			document.removeEventListener("click", unlock, { capture: true });
 			document.removeEventListener("pointerdown", unlock, { capture: true });
 			document.removeEventListener("keydown", unlock, { capture: true });
 		};
-	}, [tryPlay, syncVolumeUnlessRamping]);
+	}, [syncVolumeUnlessRamping, logAudioError]);
 
 	useLayoutEffect(() => {
 		const el = new Audio();
 		el.preload = "auto";
-		// iOS always blocks unmuted autoplay — start muted and unmute on first gesture.
-		// Desktop and Android can attempt unmuted playback immediately.
-		const isIOS =
-			typeof navigator !== "undefined" &&
-			/iPhone|iPad|iPod/i.test(navigator.userAgent);
-		el.muted = isIOS;
+		// Always start muted; unmute on first user gesture (scroll-swipe unlocks on touchstart).
+		el.muted = true;
 		el.setAttribute("playsinline", "");
 		el.setAttribute("webkit-playsinline", "");
 		audioRef.current = el;
@@ -509,15 +502,12 @@ export function useBackgroundMusic() {
 
 			void el
 				.play()
-				.then(() => {
-					if (audioRef.current !== el) return;
-					el.muted = false;
-					if (ctx.state === "suspended") void ctx.resume();
-					syncVolumeUnlessRamping();
-				})
-				.catch(() => {
-					// Autoplay blocked — first pointer/key gesture will unlock
-				});
+				.catch((e) =>
+					logAudioError(
+						"muted boot play failed",
+						e instanceof Error ? e : new Error(String(e)),
+					),
+				);
 		}
 
 		if (sessionResume.time > 0 && url) {
@@ -568,6 +558,7 @@ export function useBackgroundMusic() {
 		cancelVolumeRamp,
 		tryPlay,
 		syncVolumeUnlessRamping,
+		logAudioError,
 	]);
 
 	const setUserVolume = useCallback((v: number) => {

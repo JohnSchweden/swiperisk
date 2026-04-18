@@ -102,16 +102,18 @@ class Star {
 	y = 0;
 	z = 0;
 
-	reset() {
-		this.x = Math.random() * 1600 - 800;
-		this.y = Math.random() * 1200 - 600;
+	reset(halfW: number, halfH: number) {
+		const xRange = (halfW * Z_MAX) / FOCAL_LENGTH;
+		const yRange = (halfH * Z_MAX) / FOCAL_LENGTH;
+		this.x = Math.random() * xRange * 2 - xRange;
+		this.y = Math.random() * yRange * 2 - yRange;
 		this.z = Math.random() * Z_MAX;
 	}
 
-	update(speed: number) {
+	update(speed: number, halfW: number, halfH: number) {
 		this.z -= speed;
 		if (this.z < 1) {
-			this.reset();
+			this.reset(halfW, halfH);
 			this.z = Z_MAX;
 		}
 	}
@@ -432,13 +434,10 @@ export const StarfieldBackground: React.FC<StarfieldBackgroundProps> = ({
 		const trailAlpha = reducedMotion ? TRAIL_ALPHA_REDUCED : TRAIL_ALPHA_FULL;
 
 		const dpr = Math.min(window.devicePixelRatio, 2);
-		const stars = Array.from({ length: getStarCount() }, () => {
-			const s = new Star();
-			s.reset();
-			return s;
-		});
+		const stars = Array.from({ length: getStarCount() }, () => new Star());
 
 		let rafId = 0;
+		let lastTs = 0;
 
 		const resize = () => {
 			setupCanvasSize(canvas, ctx, dpr);
@@ -447,13 +446,25 @@ export const StarfieldBackground: React.FC<StarfieldBackgroundProps> = ({
 			if (rw > 0 && rh > 0) {
 				ctx.fillStyle = CANVAS_BG;
 				ctx.fillRect(0, 0, rw, rh);
+				const halfW = rw / 2;
+				const halfH = rh / 2;
+				for (const star of stars) {
+					star.reset(halfW, halfH);
+				}
 			}
 		};
 
 		resize();
 		window.addEventListener("resize", resize);
 
-		const animate = () => {
+		// Normalize step to 60fps so speed is identical on 60Hz, 120Hz, 144Hz screens.
+		// Without delta time, a 120Hz desktop runs 2× faster than a 60Hz mobile device.
+		const TARGET_FRAME_MS = 1000 / 60;
+
+		const animate = (ts: number) => {
+			const delta = lastTs === 0 ? TARGET_FRAME_MS : Math.min(ts - lastTs, 100);
+			lastTs = ts;
+
 			const w = canvas.clientWidth;
 			const h = canvas.clientHeight;
 			if (w === 0 || h === 0) {
@@ -462,13 +473,16 @@ export const StarfieldBackground: React.FC<StarfieldBackgroundProps> = ({
 			}
 			const centerX = w / 2;
 			const centerY = h / 2;
+			const halfW = centerX;
+			const halfH = centerY;
 
 			ctx.fillStyle = `rgba(0, 0, 0, ${trailAlpha})`;
 			ctx.fillRect(0, 0, w, h);
 
-			const step = baseSpeed * speedScaleRef.current;
+			const step =
+				baseSpeed * speedScaleRef.current * (delta / TARGET_FRAME_MS);
 			for (const star of stars) {
-				star.update(step);
+				star.update(step, halfW, halfH);
 				star.draw(ctx, centerX, centerY);
 			}
 

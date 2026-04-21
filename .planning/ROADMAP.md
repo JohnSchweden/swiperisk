@@ -298,17 +298,19 @@ Update intro, onboarding, and messaging to explicitly frame the experience as:
 - FRAME-02: Add "This is a simulation" messaging throughout
 - FRAME-03: Personality onboarding acknowledges experimentation is safe
 
-### Phase 09: Visual Effects
+### Phase 09: Visual Effects (deferred)
 
 **Goal:** Add polish with general visual effects (distinct from Phase 04 stress indicators)
 **Depends on:** Phase 01
-**Plans:** 4 plans
+**Plans:** 4 plans (deferred)
 
 Plans:
 - [ ] 09-01-PLAN.md — SwipeFxLayer, bounded trails/bursts, usePrefersReducedMotion
 - [ ] 09-02-PLAN.md — Stage transitions, optional View Transition API (Safari <18 fallback)
 - [ ] 09-03-PLAN.md — Ambient menu/end-state motion (depends 01)
 - [ ] 09-04-PLAN.md — Outcome micro-effects, performance guardrails (depends 01, 02, 03)
+
+**Status:** Deferred — core gameplay features prioritized over visual polish
 
 **Details:**
 General polish and atmosphere:
@@ -324,17 +326,19 @@ General polish and atmosphere:
 - VFX-04: Outcome feedback micro-effects (success/fail visual cues)
 - VFX-05: Performance-constrained (60fps, no jank)
 
-### Phase 10: Background Audio
+### Phase 10: Background Audio (deferred)
 
 **Goal:** Add ambient music and non-voice audio (distinct from Phase 04 stress cues)
 **Depends on:** Phase 01
-**Plans:** 4 plans
+**Plans:** 4 plans (deferred)
 
 Plans:
 - [ ] 10-01-PLAN.md — Shared procedural audio engine with mix buses and voice ducking
 - [ ] 10-02-PLAN.md — Stage music orchestration and menu/navigation cues
 - [ ] 10-03-PLAN.md — Card interaction sounds for gameplay
 - [ ] 10-04-PLAN.md — Volume controls (voice, music, SFX mixer)
+
+**Status:** Deferred — voice audio and core gameplay prioritized over background music
 
 **Details:**
 General audio layer:
@@ -445,11 +449,13 @@ Generate AI images via Gemini image generation (automated pipeline — no Midjou
 
 Plans:
 - [x] 14-01-PLAN.md — ImageWithFallback component foundation with glitch placeholder; Archetype.image field; test scaffolding ✓
-- [x] 14-02-PLAN.md — Outcome overlay image (per-direction HOS lookup, fade-in, overlay width fix) ✓
+- [ ] ~~14-02-PLAN.md~~ — Outcome overlay image (per-direction HOS lookup, fade-in, overlay width fix) — **DEFERRED**
 - [x] 14-03-PLAN.md — Collapse page (debrief page 1) death image ✓
 - [x] 14-04-PLAN.md — Archetype verdict (debrief page 3) badge image + fallback glitch placeholder ✓
 - [x] 14-05-PLAN.md — Gap: KIRK collapse image rendering, CSS class consolidation ✓
 - [x] 14-06-PLAN.md — Gap: Missing DEBRIEF_PAGE_1 handler, HTTP→HTTPS fix ✓
+
+**Note:** 14-02 deferred — gap closure plans (14-05, 14-06) provided sufficient coverage
 
 **Details:**
 Integrate images from Phase 13 into 4 UI surfaces:
@@ -572,11 +578,11 @@ Automated compression pipeline to reduce bandwidth while maintaining quality:
 | 11 | Settings Integration (deferred) | v1.2 | Deferred |
 | 12 | Gameplay Tweaks & Card Variety | v1.2 | Complete (2/2) |
 | 13 | Image Asset Pipeline | v1.2 | Complete (8/8) |
-| 14 | Situational & Outcome Imagery | v1.2 | Complete (6/6) |
+| 14 | Situational & Outcome Imagery | v1.2 | Complete (5/6, 1 deferred) |
 | 15 | Voice Files Expanded | v1.2 | Complete (8/8) |
 | 16 | Ending Variety System | v1.2 | Complete (10/10) |
 | 17 | Shuffle-aware Feedback TTS | v1.2 | Complete (5/5) |
-| 18 | Meme Template System | v1.2 | In progress (1/3) |
+| 18 | Meme Template System | v1.2 | In progress (3/5, 1 deferred) |
 | 19 | refactor the design | v1.2 | Complete (13/13) |
 | 20 | Short Video Clips for Key Moments | v1.2 | Not started |
 | 21 | refactor-the-glassmorphism-design | v1.2 | Not started (1 plan) |
@@ -640,7 +646,7 @@ Plans:
 - [x] 18-02-PLAN.md — Simple download/caching service for Imgflip templates ✓ (COMPLETED 2026-04-06)
 - [ ] 18-03-PLAN.md — CLI script to download all memes at once
 - [ ] ~~18-04-PLAN.md~~ — Overlay service for adding punchlines (DEFERRED)
-- [ ] 18-05-PLAN.md — Gap closure: Kirk meme mappings + overlay implementation
+- [x] 18-05-PLAN.md — Gap closure: Kirk meme mappings ✓ (VERIFIED 2026-04-21)
 
 ### Phase 19: refactor the design
 

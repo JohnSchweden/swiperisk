@@ -29,40 +29,41 @@ async function assertRoastOutputVisibleAndInViewport(
 // Layout stability test removed: roast terminal now expands when output appears (min-h-0 → min-h-[320px]),
 // which intentionally shifts content. Card container stays fixed height; roast grows below it.
 
-test.describe("Roast console visibility @smoke @area:gameplay", () => {
-	test.beforeEach(({ page }) => mockRoastApi(page));
+test.describe
+	.serial("Roast console visibility @smoke @area:gameplay", () => {
+		test.beforeEach(({ page }) => mockRoastApi(page));
 
-	test("desktop roast output is visible and within viewport", async ({
-		page,
-	}) => {
-		await page.setViewportSize({ width: 1280, height: 720 });
-		await navigateToPlayingFast(page);
+		test("desktop roast output is visible and within viewport", async ({
+			page,
+		}) => {
+			await page.setViewportSize({ width: 1280, height: 720 });
+			await navigateToPlayingFast(page);
 
-		const textarea = page.getByLabel(
-			"Describe your use case / workflow for governance review",
-		);
-		await textarea.fill(
-			"I paste production secrets into random AI tools without reading the terms.",
-		);
+			const textarea = page.getByLabel(
+				"Describe your use case / workflow for governance review",
+			);
+			await textarea.fill(
+				"I paste production secrets into random AI tools without reading the terms.",
+			);
 
-		await page.getByRole("button", { name: /Send roast|Scanning/i }).click();
-		await assertRoastOutputVisibleAndInViewport(page);
+			await page.getByRole("button", { name: /Send roast|Scanning/i }).click();
+			await assertRoastOutputVisibleAndInViewport(page);
+		});
+
+		test("mobile roast output is visible and within viewport", async ({
+			page,
+		}) => {
+			await page.setViewportSize({ width: 393, height: 851 });
+			await navigateToPlayingFast(page);
+
+			const textarea = page.getByLabel(
+				"Describe your use case / workflow for governance review",
+			);
+			await textarea.fill(
+				"I paste production secrets into random AI tools without reading the terms.",
+			);
+
+			await page.getByRole("button", { name: /Send roast|Scanning/i }).click();
+			await assertRoastOutputVisibleAndInViewport(page);
+		});
 	});
-
-	test("mobile roast output is visible and within viewport", async ({
-		page,
-	}) => {
-		await page.setViewportSize({ width: 393, height: 851 });
-		await navigateToPlayingFast(page);
-
-		const textarea = page.getByLabel(
-			"Describe your use case / workflow for governance review",
-		);
-		await textarea.fill(
-			"I paste production secrets into random AI tools without reading the terms.",
-		);
-
-		await page.getByRole("button", { name: /Send roast|Scanning/i }).click();
-		await assertRoastOutputVisibleAndInViewport(page);
-	});
-});

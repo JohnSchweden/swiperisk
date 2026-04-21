@@ -1,0 +1,5 @@
+# Make `bun run` resolve `node` (e.g. Biome's launcher shebang) to Bun so scripts
+# don't pick Cursor's universal Node x86_64 slice under `rtk`/agent shells on Apple Silicon.
+# See: https://bun.com/docs/runtime/bunfig#runbun---auto-alias-node-to-bun
+[run]
+bun = true

@@ -45,6 +45,11 @@ audio-archive/
 # Meme template cache (downloaded images)
 data/templates/cache/
 
+# KiloCode: use `.kilocode/` for project + plugin; `.kilo/` is a duplicate/legacy path
+# from an older or parallel install and breaks if both exist.
+.kilo/
+.kilocode/package-lock.json
+
 # User-local symlinks to global ~/.agents/skills/* (machine-specific paths)
 .cursor/skills/find-skills
 .cursor/skills/vercel-react-best-practices

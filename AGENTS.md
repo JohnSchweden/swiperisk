@@ -141,3 +141,10 @@ Core workflow:
 3. Use commands like `playwright-cli click e1`, `playwright-cli fill e2 "text"`, `playwright-cli press Enter` to interact
 4. `playwright-cli screenshot` / `pdf` / storage and session commands as needed
 5. `playwright-cli close` (or `close-all` / `kill-all`) when finished
+
+## Knowledge Graph (graphify)
+
+This repo has a graphify knowledge graph at `graphify-out/` (the only project that does — these rules are repo-local on purpose).
+
+- **Read**: before answering architecture/codebase questions, read `graphify-out/GRAPH_REPORT.md` for god nodes and community structure; if `graphify-out/wiki/index.md` exists, navigate it instead of raw files. Note: the existing build may be stale — check `graphify-out/graph.json` mtime against recent code changes.
+- **Refresh**: do NOT use a raw `python3 -c "from graphify.watch ..."` one-liner — the prior `/tmp/graphify-venv` interpreter is gone and `graphify`/`graphifyy` is not currently installed. Run the **graphify skill** to rebuild; it detects/installs the interpreter (`pip install graphifyy`), writes `graphify-out/.graphify_python`, and regenerates the graph. The vendored source lives at `graphify-repo/`.

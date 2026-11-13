@@ -4,11 +4,9 @@ Patterns to prevent repeat mistakes. Update after corrections from the user.
 
 ## Tool Usage
 
-- [RULE] Always prefix ALL commands with `rtk` — no exceptions, even for simple/short commands. Full list from `rtk discover`: `rtk git log`, `rtk git diff`, `rtk bun run`, `rtk grep`, `rtk head`, `rtk ls`, `rtk find`, `rtk gh`, `rtk curl`, `rtk brew`, `rtk diff`, `rtk tsc`
-- [RULE] Never use `bunx` — use `rtk bun` instead (e.g., `rtk bun playwright test`) — bunx bypasses RTK token savings
-- [RULE] Never use bare `git` subcommands — always `rtk git log`, `rtk git diff`, `rtk git status`, etc.
-- [RULE] Chain all piped commands with rtk prefixes in one Bash call: `rtk bun ... | rtk grep ... | rtk head ...`
-- [RULE] In this repo, Cursor `preToolUse` (`.cursor/hooks.json`) runs `.cursor/hooks/rtk-rewrite.sh` → `rtk rewrite`; executed Shell may be `rtk …` even when the model typed bare `bun`/`git`/`grep`.
+- [RULE] Do not hand-prefix `rtk` on ordinary shell commands. Both harnesses driving this repo rewrite them automatically: Claude Code via `~/.claude/settings.json` (`rtk hook claude`), Cursor via `.cursor/hooks.json` `preToolUse` → `.cursor/hooks/rtk-rewrite.sh` → `rtk rewrite`. The command that actually executes may be `rtk git status` even though the model typed `git status`.
+- [RULE] `bun <script>` without `run` is the exception — `rtk rewrite 'bun playwright test'` returns nothing (verified 2026-10-07, rtk 0.51.0), as does any piped chain starting with `bun`. Type `rtk bun playwright test` yourself. `bunx <pkg>`, `bun test`, `bun run X` and `bun install` are rewritten since that version, so the bare `bunx playwright test` on `AGENTS.md` line 102 is fine now.
+- [RULE] Chain piped commands with individual rtk prefixes in one Bash call: `rtk bun ... | rtk grep ... | rtk head ...` — don't split into separate calls. Matters more here than elsewhere because this repo's pipelines usually start with `bun`, which the rewrite hook does not touch, so only the hand-typed prefix saves tokens.
 
 **Capture process:**
 1. Add learnings here after sessions
@@ -82,3 +80,9 @@ Patterns to prevent repeat mistakes. Update after corrections from the user.
 <!-- Captured 2026-04-18 via post-commit analysis -->
 - [RULE] Perspective-rendered content spawning at a fixed depth Z: calculate spawn bounds from viewport dimensions and focal length using `(halfW * Z_MAX) / FOCAL_LENGTH`, not hardcoded screen coordinates. Update on resize. — Without this, stars spawn in fixed 1600×1200 range regardless of viewport, causing out-of-bounds rendering after resize and on different screen sizes.
 - [RULE] When disabling a feature with a sentinel state value (e.g., `gain=0` for BGM), guard all effect-based state syncs with an enabled check — Prevents effects from overwriting the disabled state (e.g., voice ducking should not apply gain multipliers when BGM is disabled). Include guard in every useEffect that might mutate that state.
+
+## Verification & test hygiene
+
+<!-- Relocated from ~/.claude/lessons.md 2026-08-15 — browser-specific, not cross-project -->
+- [RULE] UAT evidence must cite observed user-facing behavior from testing, not code file references or implementation details — Code existing doesn't prove it works; only browser verification confirms actual behavior matches expected results.
+- [RULE] Never use `.click({ force: true })` in tests; it bypasses visibility/interactivity checks and masks real bugs. Use `.dispatchEvent("click")` or regular `.click()` to ensure tests validate actual user-interaction behavior.
